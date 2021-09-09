@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 4b5112c60b7e9500c583cc3151db223a7929bada
+  revision: 69fde8bb2ac6089feac3b3c79e85c513ca63d1e0
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -158,9 +158,9 @@ GEM
       rest-client (~> 2.0)
     defra_ruby_aws (0.4.1)
       aws-sdk-s3
-    defra_ruby_email (1.1.0)
+    defra_ruby_email (1.2.0)
       notifications-ruby-client
-      rails (~> 6.0.3.1)
+      rails (~> 6.0)
       sprockets (~> 3.7.2)
     defra_ruby_features (0.1.4)
       cancancan (>= 1.10)
@@ -274,7 +274,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2021.0704)
+    mime-types-data (3.2021.0901)
     mini_mime (1.1.1)
     mini_portile2 (2.5.3)
     minitest (5.14.4)
@@ -303,7 +303,7 @@ GEM
       rake (>= 0.8.1)
     pg (0.18.4)
     pgreset (0.3)
-    phonelib (0.6.51)
+    phonelib (0.6.53)
     protocol-hpack (1.4.2)
     protocol-http (0.22.0)
     protocol-http1 (0.14.1)
