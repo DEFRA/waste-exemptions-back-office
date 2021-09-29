@@ -84,5 +84,10 @@ module WasteExemptionsBackOffice
     # Version info
     config.application_name = "waste-exemptions-back-office"
     config.git_repository_url = "https://github.com/DEFRA/#{config.application_name}"
+
+    # Fix sass compilation error in govuk_frontend:
+    # SassC::SyntaxError: Error: "calc(0px)" is not a number for `max'
+    # https://github.com/alphagov/govuk-frontend/issues/1350
+    config.assets.css_compressor = nil
   end
 end
