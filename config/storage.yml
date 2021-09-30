@@ -1,0 +1,3 @@
+# In production mode, the application raises the error:
+# `Couldn't find Active Storage configuration`
+# This blank file is a workaround
