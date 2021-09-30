@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 6ef5c2b77dc94f657fcc8099efa2e29d64895906
+  revision: b5b950024bf7ff2b0dfa062b1091b4d5ba6acdd0
   branch: feature/design-system
   specs:
     waste_exemptions_engine (0.0.1)
       aasm (~> 4.12)
       defra_ruby_address
       defra_ruby_alert
-      defra_ruby_area
+      defra_ruby_area (~> 2.0)
       defra_ruby_email
       defra_ruby_validators
       has_secure_token
@@ -158,8 +158,8 @@ GEM
       rest-client (~> 2.0)
     defra_ruby_alert (2.1.1)
       airbrake
-    defra_ruby_area (0.2.0)
-      nokogiri (~> 1.10)
+    defra_ruby_area (2.0.1)
+      nokogiri (~> 1.11.1)
       rest-client (~> 2.0)
     defra_ruby_aws (0.4.1)
       aws-sdk-s3
@@ -278,14 +278,14 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0901)
     mini_mime (1.1.1)
-    mini_portile2 (2.6.1)
+    mini_portile2 (2.5.3)
     minitest (5.14.4)
     multi_json (1.15.0)
     multipart-post (2.1.1)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.11.7)
+      mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     notifications-ruby-client (5.3.0)
       jwt (>= 1.5, < 3)
