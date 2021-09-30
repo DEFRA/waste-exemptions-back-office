@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: b5b950024bf7ff2b0dfa062b1091b4d5ba6acdd0
+  revision: 999e02598eb7da3b26948e9109b212ca40863184
   branch: feature/design-system
   specs:
     waste_exemptions_engine (0.0.1)
@@ -10,7 +10,6 @@ GIT
       defra_ruby_area (~> 2.0)
       defra_ruby_email
       defra_ruby_validators
-      has_secure_token
       high_voltage (~> 3.1)
       notifications-ruby-client
       os_map_ref (~> 0.5)
@@ -239,8 +238,6 @@ GEM
       activemodel (>= 6.0)
       activesupport (>= 6.0)
       deep_merge (~> 1.2.1)
-    has_secure_token (1.0.0)
-      activerecord (>= 3.0)
     hashdiff (1.0.1)
     high_voltage (3.1.2)
     http-accept (1.7.0)
