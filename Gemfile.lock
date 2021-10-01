@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 999e02598eb7da3b26948e9109b212ca40863184
-  branch: feature/design-system
+  revision: b7cb01c4d3e41f25b8139a8b9f76293c9ff3bb4e
+  branch: main
   specs:
     waste_exemptions_engine (0.0.1)
       aasm (~> 4.12)
@@ -91,7 +91,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrake (12.0.0)
       airbrake-ruby (~> 6.0)
-    airbrake-ruby (6.0.0)
+    airbrake-ruby (6.0.1)
       rbtree3 (~> 0.5)
     ast (2.4.1)
     async (1.29.0)
@@ -157,8 +157,8 @@ GEM
       rest-client (~> 2.0)
     defra_ruby_alert (2.1.1)
       airbrake
-    defra_ruby_area (2.0.1)
-      nokogiri (~> 1.11.1)
+    defra_ruby_area (2.0.2)
+      nokogiri (>= 1.11.1, < 1.13.0)
       rest-client (~> 2.0)
     defra_ruby_aws (0.4.1)
       aws-sdk-s3
@@ -251,7 +251,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.3.0)
-    jwt (2.2.3)
+    jwt (2.3.0)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
@@ -274,15 +274,15 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0901)
-    mini_mime (1.1.1)
-    mini_portile2 (2.5.3)
+    mini_mime (1.1.2)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     multi_json (1.15.0)
     multipart-post (2.1.1)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.11.7)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     notifications-ruby-client (5.3.0)
       jwt (>= 1.5, < 3)
@@ -317,7 +317,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.6)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -467,7 +467,7 @@ GEM
       whenever
     wicked_pdf (2.1.0)
       activesupport
-    zeitwerk (2.4.2)
+    zeitwerk (2.5.0)
 
 PLATFORMS
   ruby
