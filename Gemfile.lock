@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: e01c7f520fe5a390c905207c28e6bf06f71a915d
-  branch: feature/design-system
+  revision: 9e67518f11440ad97c83b7fb8b98e8952e801093
+  branch: main
   specs:
     waste_exemptions_engine (0.0.1)
       aasm (~> 4.12)
@@ -91,7 +91,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrake (12.0.0)
       airbrake-ruby (~> 6.0)
-    airbrake-ruby (6.0.0)
+    airbrake-ruby (6.0.1)
       rbtree3 (~> 0.5)
     ast (2.4.1)
     async (1.29.0)
@@ -251,7 +251,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.3.0)
-    jwt (2.2.3)
+    jwt (2.3.0)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.1)
