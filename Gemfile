@@ -14,13 +14,14 @@ ruby "2.7.1"
 # to Heroku. Hence moved outside group till we can understand why.
 gem "github_changelog_generator", require: false
 
-# GOV.UK styling
-gem "govuk_elements_rails", "~> 3.1"
-gem "govuk_template", "~> 0.26"
+# GOV.UK design system styling
+gem "defra_ruby_template"
+# GOV.UK design system forms
+gem "govuk_design_system_formbuilder"
 # Use jquery as the JavaScript library
 gem "jquery-rails"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 0.18.4"
+gem "pg"
 # Automatically kills connections to Postgres when running rake tasks that
 # involve a database drop. Stops the error
 # PG::ObjectInUse: ERROR:  database "wex_db" is being accessed by other users
@@ -28,7 +29,7 @@ gem "pgreset"
 # See: https://github.com/sass/sassc-rails/issues/114
 gem "sassc-rails"
 # Bundle edge Rails instead: gem "rails', github: 'rails/rails'
-gem "rails", "~> 6.0.3.7"
+gem "rails", "~> 6.1"
 # Use SCSS for stylesheets
 # gem "sass-rails", "~> 5.0"
 
@@ -53,7 +54,7 @@ gem "kaminari", "~> 1.1"
 gem "whenever", "~> 1.0"
 
 # Used for auditing and version control
-gem "paper_trail", "~> 10.2.0"
+gem "paper_trail"
 
 # Use the waste exemptions engine for the user journey
 gem "waste_exemptions_engine",

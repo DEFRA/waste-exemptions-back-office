@@ -1,57 +1,54 @@
 <% content_for(:head) do %>
   <%= stylesheet_link_tag "application", media: "all" %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= yield :page_scripts %>
   <%= csrf_meta_tags %>
 <% end %>
 
 <% content_for :page_title, title %>
 
 <% content_for :header_class, "with-proposition" %>
-<% content_for :proposition_header do %>
-  <div class="header-proposition">
-    <div class="content">
-      <% if user_signed_in? %>
-        <%= link_to t(:global_proposition_header), main_app.root_path, id: "proposition-name" %>
-        <a role="button" href="#proposition-links" class="js-header-toggle menu" aria-controls="proposition-menu" aria-label="Show or hide Top Level Navigation">Menu</a>
-        <nav id="proposition-menu">
-          <ul id="proposition-links" aria-label="Top Level Navigation">
-            <li>
-              <%= link_to t("layouts.application.menu.dashboard"),
-                          main_app.root_path %>
-            </li>
-            <% if can?(:read, current_user) %>
-              <li>
-                <%= link_to t("layouts.application.menu.users"),
-                            main_app.users_path %>
-              </li>
-            <% end %>
-            <% if can?(:read, Reports::GeneratedReport) %>
-              <li>
-                <%= link_to t("layouts.application.menu.exports"),
-                            main_app.bulk_exports_path %>
-              </li>
-            <% end %>
-            <% if can?(:manage, WasteExemptionsEngine::FeatureToggle, current_user) %>
-              <li>
-                <%= link_to t("layouts.application.menu.feature_toggles"),
-                            features_engine.feature_toggles_path %>
-              </li>
-            <% end %>
-          </ul>
-        </nav>
-      <% else %>
-        <nav id="proposition-menu">
-          <%= link_to t(:global_proposition_header), main_app.root_path, id: "proposition-name" %>
-        </nav>
-      <% end %>
-    </div>
-  </div>
+<% content_for :header_content do %>
+
+  <%= link_to t(:global_proposition_header),
+      main_app.root_path,
+      class: "govuk-header__link govuk-header__link--service-name",
+      id: "proposition-name" %>
+
+  <%= link_to t(:global_proposition_header), main_app.root_path, id: "proposition-name" %>
+
+  <% if user_signed_in? %>
+    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide navigation menu">Menu</button>
+    <nav id="proposition-menu">
+      <ul id="proposition-links" class="govuk-header__navigation" aria-label="Top Level Navigation">
+        <li class="govuk-header__navigation-item">
+          <%= link_to t("layouts.application.menu.dashboard"),
+                      main_app.root_path,
+                      class: "govuk-header__link" %>
+        </li>
+        <% if can?(:read, current_user) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.users"),
+                        main_app.users_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
+        <% if can?(:read, Reports::GeneratedReport) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.exports"),
+                        main_app.bulk_exports_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
+        <% if can?(:manage, WasteExemptionsEngine::FeatureToggle, current_user) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.feature_toggles"),
+                        features_engine.feature_toggles_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+  <% end %>
 <% end %>
 
-<% content_for(:content) do %>
-  <main id="content" role="main">
-    <%= yield %>
-  </main>
-<% end %>
-
-<%= render template: "layouts/govuk_template" %>
+<%= render template: "layouts/defra_ruby_template" %>

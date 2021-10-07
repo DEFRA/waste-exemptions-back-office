@@ -50,7 +50,7 @@ class User < ::WasteExemptionsEngine::ApplicationRecord
   end
 
   def invalidate_all_sessions!
-    update_attributes(session_token: SecureRandom.hex)
+    update(session_token: SecureRandom.hex)
   end
 
   # Validations
