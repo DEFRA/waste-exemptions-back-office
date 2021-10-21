@@ -19,27 +19,27 @@
     <nav id="proposition-menu">
       <ul id="proposition-links" class="govuk-header__navigation" aria-label="Top Level Navigation">
         <li class="govuk-header__navigation-item">
-          <%= link_to t("layouts.application.menu.dashboard"),
+          <%= link_to_unless_current t("layouts.application.menu.dashboard"),
                       main_app.root_path,
                       class: "govuk-header__link" %>
         </li>
         <% if can?(:read, current_user) %>
           <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.users"),
+            <%= link_to_unless_current t("layouts.application.menu.users"),
                         main_app.users_path,
                         class: "govuk-header__link" %>
           </li>
         <% end %>
         <% if can?(:read, Reports::GeneratedReport) %>
           <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.exports"),
+            <%= link_to_unless_current t("layouts.application.menu.exports"),
                         main_app.bulk_exports_path,
                         class: "govuk-header__link" %>
           </li>
         <% end %>
         <% if can?(:manage, WasteExemptionsEngine::FeatureToggle, current_user) %>
           <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.feature_toggles"),
+            <%= link_to_unless_current t("layouts.application.menu.feature_toggles"),
                         features_engine.feature_toggles_path,
                         class: "govuk-header__link" %>
           </li>
