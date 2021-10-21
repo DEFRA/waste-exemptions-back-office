@@ -1,7 +1,10 @@
-<ul class="list list-bullet">
+<ul class="govuk-list govuk-list--bullet">
   <% resource_people.each do |person| %>
-  <li>
-    <%= person.first_name %> <%= person.last_name %> (<%= person.person_type %>)
-  </li>
+    <li>
+      <%= person.first_name %> <%= person.last_name %>
+      <% if person.person_type.present? %>
+        (<%= person.person_type %>)
+      <% end %>
+    </li>
   <% end %>
 </ul>
