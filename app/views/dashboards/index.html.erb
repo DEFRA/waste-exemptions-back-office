@@ -1,73 +1,23 @@
-<div class="grid-row">
-  <div class="column-full">
-    <h1 class="heading-large">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
       <%= t(".heading") %>
     </h1>
-  </div>
-</div>
-
-<div class="grid-row">
-  <div class="column-two-thirds">
-    <p><%= t(".search.paragraph_1") %></p>
-    <ul class="list list-bullet">
-      <% t(".search.searchable_attributes").each do |attribute| %>
-        <li><%= attribute %></li>
-      <% end %>
-    </ul>
-
-    <div class="form-group">
-      <%= form_tag(root_path, method: :get) do %>
-        <%= label_tag :term, t(".search.label"), class: "form-label visually-hidden" %>
-        <%= text_field_tag :term, @term, placeholder: t(".search.placeholder"), class: "form-control" %>
-        <%= submit_tag t(".search.submit"), class: "button" %>
-
-        <div class="filters">
-          <div class="form-group">
-            <fieldset id="search-filters">
-              <legend class="visually-hidden">
-                <%= t(".search.filters.legend") %>
-              </legend>
-              <div class="multiple-choice">
-                <%= radio_button_tag :filter,
-                                     :registrations,
-                                     preselect_registrations_radio_button? %>
-                <%= label_tag "filter_registrations",
-                              t(".search.filters.registrations") %>
-              </div>
-              <div class="multiple-choice">
-                <%= radio_button_tag :filter,
-                                     :new_registrations,
-                                     preselect_new_registrations_radio_button? %>
-                <%= label_tag "filter_new_registrations",
-                              t(".search.filters.new_registrations") %>
-              </div>
-            </fieldset>
-          </div>
-        </div>
-      <% end %>
-    </div>
+    <p class="govuk-body">
+      <%= t(".paragraph_1") %>
+      <%= t(".searchable_attributes").to_sentence %>
+    </p>
+    <%= render partial: "form" %>
   </div>
 
-  <div class="column-one-third">
-    <div class="user-info">
-      <h2 class="heading-medium">
-        <%= t(".user_info.heading") %>
-      </h2>
-      <p>
-        <%= t(".user_info.signed_in_user") %>
-        <span><%= current_user.email %></span>
-      </p>
-      <% if can? :create, WasteExemptionsEngine::Registration.new %>
-        <p><%= link_to t(".user_info.new_registration_link"), ad_privacy_policy_path %></p>
-      <% end %>
-      <p><%= link_to t(".user_info.sign_out_link"), destroy_user_session_path, class: "button" %></p>
-    </div>
+  <div class="govuk-grid-column-one-third">
+    <%= render partial: "actions" %>
   </div>
 </div>
 
 <% if flash[:message].present? || flash[:error].present? %>
-  <div class="grid-row">
-    <div class="column-full">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
       <%= render("shared/message", message: flash[:message]) if flash[:message].present? %>
       <%= render("shared/error", error: flash[:error], details: flash[:error_details]) if flash[:error].present? %>
     </div>
@@ -76,14 +26,13 @@
 
 <% if @results.present? %>
   <div id="search-results">
-  <% @results.each do |result| %>
-    <%= render("shared/search_result", result: result) %>
-  <% end %>
+    <% @results.each do |result| %>
+      <%= render("shared/search_result", result: result) %>
+    <% end %>
   </div>
-
-  <div class="grid-row">
-    <div class="column-full">
-      <nav role="navigation" class="pagination" aria-label="Pagination">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <nav role="navigation" class="pagination govuk-body" aria-label="Pagination">
         <div class="pagination__summary">
           <%= page_entries_info @results, entry_name: "item" %>
         </div>
@@ -92,9 +41,9 @@
     </div>
   </div>
 <% elsif @term.present? %>
-  <div class="grid-row">
-    <div class="column-full">
-      <%= t(".no_results") %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <p class="govuk-body"><%= t(".no_results") %></p>
     </div>
   </div>
 <% end %>

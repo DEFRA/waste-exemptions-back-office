@@ -1,0 +1,13 @@
+<div class="actions-panel">
+  <h2 class="govuk-heading-s">
+    <%= t(".user_info.heading") %>
+  </h2>
+  <p class="govuk-body">
+    <%= t(".user_info.signed_in_user") %>
+    <span><%= current_user.email %></span>
+  </p>
+  <% if can? :create, WasteExemptionsEngine::Registration.new %>
+    <p class="govuk-body"><%= link_to t(".user_info.new_registration_link"), ad_privacy_policy_path %></p>
+  <% end %>
+  <p><%= link_to t(".user_info.sign_out_link"), destroy_user_session_path, class: "govuk-button" %></p>
+</div>
