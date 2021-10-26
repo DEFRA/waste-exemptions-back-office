@@ -14,8 +14,6 @@
       class: "govuk-header__link govuk-header__link--service-name",
       id: "proposition-name" %>
 
-  <%= link_to t(:global_proposition_header), main_app.root_path, id: "proposition-name" %>
-
   <% if user_signed_in? %>
     <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide navigation menu">Menu</button>
     <nav id="proposition-menu">
