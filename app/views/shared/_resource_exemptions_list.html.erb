@@ -32,7 +32,7 @@
         <% if can? :deregister, re %>
           <a class="deregister-exemption-button" href="<%= deregister_exemptions_form_path(id: re.id) %>">
             Deregister
-            <span class="visually-hidden">
+            <span class="govuk-visually-hidden">
               exemption <%= re.exemption.code %> &mdash; <%= re.exemption.summary %>
             </span>
           </a>
