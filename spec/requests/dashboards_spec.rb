@@ -35,11 +35,12 @@ RSpec.describe "Dashboards", type: :request do
         end
       end
 
-      context "when the SearchService returns results" do
+      context "when the SearchService returns one registration and one new_registration" do
         let(:registration) { create(:registration) }
+        let(:new_registration) { create(:new_registration) }
 
         before do
-          results = Kaminari.paginate_array([registration]).page(1)
+          results = Kaminari.paginate_array([registration, new_registration]).page(1)
           allow_any_instance_of(SearchService).to receive(:search).and_return(results)
         end
 
@@ -47,6 +48,9 @@ RSpec.describe "Dashboards", type: :request do
           get "/", params: { term: "foo" }
 
           expect(response.body).to include(registration.reference)
+
+          # a new_registration does not have a reference
+          expect(response.body).to include("not yet submitted")
         end
       end
     end
