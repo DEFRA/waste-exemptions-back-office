@@ -1,0 +1,37 @@
+<%= form_tag(root_path, method: :get) do %>
+  <fieldset id="search-filters" class="govuk-fieldset">
+    <legend class="govuk-visually-hidden">
+      <%= t(".search.filters.legend") %>
+    </legend>
+
+    <div class="govuk-radios">
+      <div class="govuk-radios__item">
+        <%= radio_button_tag :filter,
+                             :registrations,
+                             preselect_registrations_radio_button?,
+                             class: "govuk-radios__input" %>
+        <%= label_tag "filter_registrations",
+                      t(".search.filters.registrations"),
+                      class: "govuk-label govuk-radios__label" %>
+      </div>
+      <div class="govuk-radios__item">
+        <%= radio_button_tag :filter,
+                             :new_registrations,
+                             preselect_new_registrations_radio_button?,
+                             class: "govuk-radios__input" %>
+        <%= label_tag "filter_new_registrations",
+                      t(".search.filters.new_registrations"),
+                      class: "govuk-label govuk-radios__label" %>
+      </div>
+    </div>
+  </fieldset>
+
+  <p>
+    <%= label_tag :term, t(".search.label"), class: "govuk-visually-hidden" %>
+    <%= text_field_tag :term, @term, placeholder: t(".search.placeholder"), class: "govuk-input" %>
+  </p>
+
+  <p>
+    <%= submit_tag t(".search.submit"), class: "govuk-button" %>
+  </p>
+<% end %>
