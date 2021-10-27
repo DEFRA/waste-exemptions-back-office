@@ -1,19 +1,18 @@
-<div class="govuk-grid-row">
-  <div class="govuk-column-full">
-    <%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
+<%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
 
-    <h1 class="govuk-heading-l">
-      <%= t(".heading") %>
-    </h1>
-  </div>
-</div>
+<h1 class="govuk-heading-l">
+  <%= t(".heading") %>
+</h1>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <p class="govuk-body"><%= link_to t(".invite_user_link_text"), new_user_invitation_path %></p>
-  </div>
-</div>
+<p class="govuk-body"><%= link_to t(".invite_user_link_text"), new_user_invitation_path %></p>
 
+<p class="govuk-body">
+  <% if @show_all_users %>
+    <%= link_to t(".show_enabled_users_only"), users_path %>
+  <% else %>
+    <%= link_to t(".show_all_users"), all_users_path %>
+  <% end %>
+</p>
 
 <% if @users.present? %>
   <div class="govuk-grid-row">
