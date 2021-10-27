@@ -1,42 +1,42 @@
-<div class="grid-row">
-  <div class="column-full">
+<div class="govuk-grid-row">
+  <div class="govuk-column-full">
     <%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
 
-    <h1 class="heading-large">
+    <h1 class="govuk-heading-l">
       <%= t(".heading") %>
     </h1>
   </div>
 </div>
 
-<div class="grid-row">
-  <div class="column-full">
-    <p><%= link_to t(".invite_user_link_text"), new_user_invitation_path %></p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <p class="govuk-body"><%= link_to t(".invite_user_link_text"), new_user_invitation_path %></p>
   </div>
 </div>
 
 
 <% if @users.present? %>
-  <div class="grid-row">
-    <div class="column-full">
-      <table>
-        <thead>
-          <tr>
-            <th><%= t(".user_list.th.email") %></th>
-            <th><%= t(".user_list.th.role") %></th>
-            <th><%= t(".user_list.th.status") %></th>
-            <th><%= t(".user_list.th.actions") %></th>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table class="govuk-table" aria-label="<%= t(".heading") %>">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col"><%= t(".user_list.th.email") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".user_list.th.role") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".user_list.th.status") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".user_list.th.actions") %></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="govuk-table__body">
           <% @users.each do |user| %>
-            <tr>
-              <td>
+             <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
                 <%= user.email %>
               </td>
-              <td>
+              <td class="govuk-table__cell">
                 <%= t(".user_list.roles.#{user.role}") %>
               </td>
-              <td>
+              <td class="govuk-table__cell">
                 <% if !user.active? %>
                   <%= t(".user_list.statuses.deactivated") %>
                 <% elsif user.invitation_token.present? %>
@@ -45,12 +45,12 @@
                   <%= t(".user_list.statuses.active") %>
                 <% end %>
               </td>
-              <td>
-                <ul>
+              <td class="govuk-table__cell">
+                <ul class="govuk-list">
                   <li>
                     <%= link_to user_role_form_path(user.id) do %>
                       <%= t(".user_list.actions.change_role.link_text") %>
-                      <span class="visually-hidden">
+                      <span class="govuk-visually-hidden">
                        <%= t(".user_list.actions.change_role.visually_hidden_text",
                              email: user.email) %>
                      </span>
@@ -60,7 +60,7 @@
                     <% if user.active? %>
                       <%= link_to deactivate_user_form_path(user.id) do %>
                         <%= t(".user_list.actions.deactivate.link_text") %>
-                        <span class="visually-hidden">
+                        <span class="govuk-visually-hidden">
                          <%= t(".user_list.actions.deactivate.visually_hidden_text",
                                email: user.email) %>
                        </span>
@@ -68,7 +68,7 @@
                    <% else %>
                      <%= link_to activate_user_form_path(user.id) do %>
                        <%= t(".user_list.actions.activate.link_text") %>
-                       <span class="visually-hidden">
+                       <span class="govuk-visually-hidden">
                         <%= t(".user_list.actions.activate.visually_hidden_text",
                               email: user.email) %>
                       </span>
@@ -81,16 +81,14 @@
           <% end %>
         </tbody>
       </table>
-    </div>
-  </div>
 
-  <div class="grid-row">
-    <div class="column-full">
       <nav role="navigation" class="pagination" aria-label="Pagination">
-        <div class="pagination__summary">
+        <div class="pagination__summary govuk-body">
           <%= page_entries_info @users, entry_name: "item" %>
         </div>
-        <%= paginate @users %>
+        <span class="govuk-body">
+          <%= paginate @users %>
+        </span>
       </nav>
     </div>
   </div>
