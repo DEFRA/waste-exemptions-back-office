@@ -3,12 +3,16 @@
 class UsersController < ApplicationController
   def index
     authorize! :read, current_user
-    @users = list_of_users.page params[:page]
+
+    @users = User.where(active: true).order(email: :asc).page(params[:page]).per(100)
   end
 
-  private
+  def all
+    authorize! :read, current_user
 
-  def list_of_users
-    User.all.order(email: :asc)
+    @users = User.all.order(email: :asc).page(params[:page]).per(100)
+
+    @show_all_users = true
+    render :index
   end
 end
