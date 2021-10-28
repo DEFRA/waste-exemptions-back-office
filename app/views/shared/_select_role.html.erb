@@ -1,4 +1,5 @@
-<div class="govuk-form-group <%= "govuk-form-group--error" if resource.errors[:role].any? %>">
+<div id="<%= "user-role-field-error" if resource.errors[:role].any? %>"
+    class="govuk-form-group <%= "govuk-form-group--error" if resource.errors[:role].any? %>">
   <fieldset id="role" class="govuk-fieldset">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
       <%= t(".roles.legend") %>
