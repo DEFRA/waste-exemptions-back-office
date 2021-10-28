@@ -11,6 +11,7 @@ Rails.application.routes.draw do
              path_names: { sign_in: "sign_in", sign_out: "sign_out" }
 
   get "/users", to: "users#index", as: :users
+  get "/users/all", to: "users#all", as: :all_users
 
   get "/users/role/:id", to: "user_roles#edit", as: :user_role_form
   post "/users/role/:id", to: "user_roles#update", as: :user_role
