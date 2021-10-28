@@ -1,24 +1,28 @@
-<div class="grid-row">
-  <div class="column-full">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
     <%= render("waste_exemptions_engine/shared/back", back_path: users_path) %>
 
     <%= form_for @user,
                  url: user_role_path(@user),
-                 html: { method: :post } do |f| %>
+                 html: { method: :post },
+                 builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
 
       <h1 class="heading-large">
         <%= t(".heading") %>
       </h1>
 
-      <%= render("waste_exemptions_engine/shared/errors", object: @user) %>
-
-      <p><%= t(".paragraph_1.#{@old_role}", email: @user.email) %></p>
+      <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">
+          <%= @user.email %>
+        </span>
+        <%= t(".paragraph_1.#{@old_role}") %>
+      </p>
 
       <%= render("shared/select_role", resource: @user, f: f) %>
 
-      <div class="form-group">
-        <%= f.submit t(".submit_button"), class: "button" %>
-      </div>
+      <%= f.govuk_submit t(".submit_button") %>
     <% end %>
   </div>
 </div>
