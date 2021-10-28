@@ -1,29 +1,29 @@
-<div class="grid-row">
-  <div class="column-two-thirds">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <%= render("waste_exemptions_engine/shared/back", back_path: registration_path(@registration.reference)) %>
 
-    <h1 class="heading-large">
+    <h1 class="govuk-heading-l">
       <%= t(".heading") %>
     </h1>
 
-    <p>
+    <p class="govuk-body">
       <%= t(".paragraph_1", reference: @registration.reference) %>
     </p>
 
-    <ul class="list">
+    <ul class="govuk-list">
       <% displayable_address(@registration.contact_address).each do |line| %>
         <li><%= line %></li>
       <% end %>
     </ul>
 
-    <p>
+    <p class="govuk-body">
       <%= t(".paragraph_2") %>
     </p>
 
-    <p>
-      <%= link_to t(".send_link"), resend_confirmation_letter_path(@registration.reference), method: :post, class: "button" %>
+    <p class="govuk-body">
+      <%= link_to t(".send_link"), resend_confirmation_letter_path(@registration.reference), method: :post, class: "govuk-button" %>
     </p>
-    <p>
+    <p class="govuk-body">
       <%= link_to t(".do_not_send_link"), registration_path(@registration.reference) %>
     </p>
   </div>
