@@ -1,29 +1,33 @@
-<div class="text">
-  <h1 class="heading-large">Sign in</h1>
+<% content_for :title, t(".heading") %>
 
-  <% if alert || notice %>
-    <div class="error-summary" role="alert">
-      <%= alert %>
-      <%= notice %>
-    </div>
-  <% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <%= render("waste_exemptions_engine/shared/errors", object: resource) %>
+    <% if alert || notice %>
+      <div class="govuk-error-summary govuk-body" role="alert">
+        <%= alert %>
+        <%= notice %>
+      </div>
+    <% end %>
 
-    <div class="form-group">
-      <%= f.label :email, class: "form-label" %>
-      <%= f.email_field :email, class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label :password, class: "form-label" %>
-      <%= f.password_field :password, class: "form-control" %>
-    </div>
+    <%= form_for(
+        resource,
+        as: resource_name,
+        url: session_path(resource_name),
+        html: { autocomplete: "off" },
+        builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
 
-    <div class="actions">
-      <%= f.submit "Sign in", class: "button" %>
-    </div>
-  <% end %>
+      <%= f.govuk_text_field :email, width: "one-half" %>
+      <%= f.govuk_password_field :password, autocomplete: :off, width: "one-half" %>
 
-  <%= render "devise/shared/links" %>
+      <%= f.submit t(".submit"),
+                   class: "govuk-button" %>
+
+    <% end %>
+
+    <span class="govuk-body">
+      <%= render "devise/shared/links" %>
+    </span>
+  </div>
 </div>
