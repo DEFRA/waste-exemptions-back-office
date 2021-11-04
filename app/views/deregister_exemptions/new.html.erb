@@ -1,64 +1,36 @@
-<div class="grid-row">
-  <div class="column-full">
-    <%= render("waste_exemptions_engine/shared/back", back_path: registration_path(reference: @deregistrations.registration_reference)) %>
-    <%= form_for(@deregister_exemptions_form, url: @deregistrations.form_path) do |f| %>
-      <%= render("waste_exemptions_engine/shared/errors", object: @deregister_exemptions_form) %>
+<% content_for :title, @deregistrations.heading %>
 
-      <h1 class="heading-large">
-        <%= @deregistrations.heading %>
-      </h1>
+<%= render("waste_exemptions_engine/shared/back", back_path: registration_path(reference: @deregistrations.registration_reference)) %>
 
-      <% if @deregister_exemptions_form.errors[:state_transition].any? %>
-      <div class="form-group form-group-error">
-      <% else %>
-      <div class="form-group">
-      <% end %>
-        <fieldset id="state_transition">
-          <% if @deregister_exemptions_form.errors[:state_transition].any? %>
-          <span class="error-message"><%= @deregister_exemptions_form.errors[:state_transition].join(", ") %></span>
-          <% end %>
+<h1 class="govuk-heading-l">
+  <%= @deregistrations.heading %>
+</h1>
 
-          <label class="form-label">
-            <%= t(".labels.state_transition") %>
-            <span class="form-hint"><%= t(".labels.state_transition_hint") %></span>
-          </label>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(
+        @deregister_exemptions_form,
+        url: @deregistrations.form_path,
+            builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
 
-          <% @deregister_exemptions_form.state_transition_options.each do |state_transition| %>
-            <div class="multiple-choice">
-              <%= f.radio_button :state_transition, state_transition %>
-              <%= f.label :state_transition, value: state_transition do %>
-                <%= t(".options.#{state_transition}") %>
-              <% end %>
-            </div>
-          <% end %>
-        </fieldset>
-      </div>
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
 
-      <% if @deregister_exemptions_form.errors[:message].any? %>
-      <div class="form-group form-group-error">
-      <% else %>
-      <div class="form-group">
-      <% end %>
-        <fieldset id="message">
-          <% if @deregister_exemptions_form.errors[:message].any? %>
-            <span class="error-message"><%= @deregister_exemptions_form.errors[:message].join(", ") %></span>
-          <% end %>
+      <%= f.govuk_collection_radio_buttons :state_transition,
+          @deregister_exemptions_form.state_transition_options_for_select,
+          :id,
+          :name,
+          legend: { text: t(".labels.state_transition"), class: "govuk-label" },
+          hint: { text: t(".labels.state_transition_hint") } %>
 
-          <legend>
-            <%= t(".labels.message") %>
-            <span class="form-hint"><%= t(".labels.message_hint") %></span>
-          </legend>
 
-          <fieldset>
-            <%= f.text_area :message, value: @deregister_exemptions_form.message, class: "form-control", rows: 4 %>
-          </fieldset>
 
-        </fieldset>
-      </div>
 
-      <div class="form-group">
-        <%= f.submit @deregistrations.submit_button, class: "button" %>
-      </div>
+      <%= f.govuk_text_area :message,
+          label: { text: t(".labels.message") },
+          hint: { text: t(".labels.message_hint") },
+          max_chars: 500 %>
+
+      <%= f.govuk_submit @deregistrations.submit_button %>
     <% end %>
   </div>
 </div>

@@ -12,8 +12,10 @@ class DeregisterExemptionsForm
     valid?
   end
 
-  def state_transition_options
-    DeregistrationStateTransitionValidator::VALID_TRANSITIONS
+  def state_transition_options_for_select
+    DeregistrationStateTransitionValidator::VALID_TRANSITIONS.map do |state_transition|
+      OpenStruct.new(id: state_transition, name: state_transition.humanize)
+    end
   end
 
   validates :state_transition, "deregistration_state_transition": true
