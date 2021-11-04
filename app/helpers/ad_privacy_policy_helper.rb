@@ -2,7 +2,11 @@
 
 module AdPrivacyPolicyHelper
   def link_to_privacy_policy
-    link_to(t(".privacy_policy"), page_path("privacy"), target: "_blank")
+    link_to(
+      t(".privacy_notice_link_text"),
+      URI.join(Rails.configuration.front_office_url, "/pages/privacy").to_s,
+      target: "_blank"
+    )
   end
 
   def destination_path
