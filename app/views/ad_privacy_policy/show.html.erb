@@ -1,64 +1,64 @@
-<div class="grid-row">
-  <div class="column-two-thirds">
+<% content_for :title, t(".heading") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     <%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
 
-    <h1 class="heading-large">
+    <h1 class="govuk-heading-l">
       <%= t(".heading") %>
     </h1>
-    <div class="panel panel-border-wide">
-      <p>
-        <%= t(".sub_heading") %>
-      </p>
+    <div class="govuk-inset-text">
+      <%= t(".sub_heading") %>
     </div>
-    <p>
+    <p class="govuk-body">
       <%= t(".first_paragraph", link_to_privacy_policy: link_to_privacy_policy).html_safe %>
     </p>
-    <p>
+    <p class="govuk-body">
       <%= t(".second_paragraph") %>
     </p>
-    <p>
+    <p class="govuk-body">
       <%= t(".third_paragraph") %>
     </p>
-    <p>
+    <p class="govuk-body">
       <%= t(".fourth_paragraph") %>
     </p>
 
-    <details>
-      <summary>
-        <span class="summary"><%= t(".privacy_policy_text.summary") %></span>
-      </summary>
-      <div class="panel panel-border-narrow">
-        <% 1.upto(13).each do |paragraph_index| %>
-          <p>
-            <%= t(".privacy_policy_text.paragraph_#{paragraph_index}") %>
-          </p>
-        <% end %>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="summary"><%= t(".contact_details_dpo.summary") %></span>
-      </summary>
-      <div class="panel panel-border-narrow">
-        <p><%= t(".contact_details_dpo.address_html") %></p>
-        <p><%= t(".contact_details_dpo.email") %></p>
-      </div>
-    </details>
-
-    <details>
-      <summary>
-        <span class="summary"><%= t(".contact_details_ico.summary") %></span>
-      </summary>
-      <div class="panel panel-border-narrow">
-        <p><%= t(".contact_details_ico.website") %></p>
-      </div>
-    </details>
-
-    <p>
-      <%= link_to "Continue", destination_path, class: "button" %>
+    <p class="govuk-body">
+      <%= link_to_privacy_policy %>
     </p>
-    <p><%= t(".last_updated") %></p>
+
+    <br/>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= t(".contact_details_dpo.summary") %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">
+          <%= t(".contact_details_dpo.address_html") %>
+        </p>
+        <p class="govuk-body">
+          <%= t(".contact_details_dpo.email") %>
+        </p>
+      </div>
+    </details>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          <%= t(".contact_details_ico.summary") %>
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <%= t(".contact_details_ico.website") %>
+      </div>
+    </details>
+
+    <p class="govuk-body">
+      <%= link_to "Continue", destination_path, class: "govuk-button" %>
+    </p>
   </div>
 </div>
 
