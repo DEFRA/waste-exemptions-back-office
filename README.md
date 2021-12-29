@@ -3,7 +3,6 @@
 ![Build Status](https://github.com/DEFRA/waste-exemptions-back-office/workflows/CI/badge.svg?branch=main)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-exemptions-back-office&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DEFRA_waste-exemptions-back-office)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-exemptions-back-office&metric=coverage)](https://sonarcloud.io/dashboard?id=DEFRA_waste-exemptions-back-office)
-[![security](https://hakiri.io/github/DEFRA/waste-exemptions-back-office/main.svg)](https://hakiri.io/github/DEFRA/waste-exemptions-back-office/main)
 [![Licence](https://img.shields.io/badge/Licence-OGLv3-blue.svg)](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3)
 
 If your business produces waste or emissions that pollute you may require an environmental permit. However you may also be able to get an exemption if your business activities are considered to be easily controlled and only create low risks of pollution.
