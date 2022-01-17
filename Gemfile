@@ -41,7 +41,7 @@ gem "turbolinks"
 gem "uglifier", ">= 1.3.0"
 
 # Use CanCanCan for user roles and permissions
-gem "cancancan", "~> 2.0"
+gem "cancancan", "~> 3.2"
 
 # Use Devise for user authentication
 gem "devise"
