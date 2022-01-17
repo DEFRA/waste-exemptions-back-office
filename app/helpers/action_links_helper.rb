@@ -2,9 +2,10 @@
 
 module ActionLinksHelper
   def view_link_for(resource)
-    if resource.is_a?(WasteExemptionsEngine::Registration)
+    case resource
+    when WasteExemptionsEngine::Registration
       registration_path(resource.reference)
-    elsif resource.is_a?(WasteExemptionsEngine::NewRegistration)
+    when WasteExemptionsEngine::NewRegistration
       new_registration_path(resource.id)
     else
       "#"

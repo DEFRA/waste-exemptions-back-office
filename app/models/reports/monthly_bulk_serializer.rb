@@ -34,6 +34,7 @@ module Reports
     ].freeze
 
     def initialize(first_day_of_the_month)
+      super()
       @first_day_of_the_month = first_day_of_the_month
     end
 

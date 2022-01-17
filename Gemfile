@@ -41,7 +41,7 @@ gem "turbolinks"
 gem "uglifier", ">= 1.3.0"
 
 # Use CanCanCan for user roles and permissions
-gem "cancancan", "~> 2.0"
+gem "cancancan", "~> 3.2"
 
 # Use Devise for user authentication
 gem "devise"
@@ -101,6 +101,7 @@ end
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
+  gem "spring-commands-rspec"
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem "web-console", "~> 2.0"
 end
