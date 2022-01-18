@@ -33,6 +33,9 @@ gem "rails", "~> 6.1"
 # Use SCSS for stylesheets
 # gem "sass-rails", "~> 5.0"
 
+# Bump the bundler gem version to avoid a deployment error
+gem "bundler", ">= 2.0"
+
 # Automatically apply http headers that are related to security
 gem "secure_headers", "~> 5.0"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
