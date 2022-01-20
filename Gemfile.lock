@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 18a10e1d5cdd841612a7dec081169df736ac7f93
+  revision: 89b492c38695db27868ad87513b6c23108236012
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -356,7 +356,7 @@ GEM
     rbtree3 (0.7.0)
     rdoc (6.3.2)
     regexp_parser (1.7.1)
-    request_store (1.5.0)
+    request_store (1.5.1)
       rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
