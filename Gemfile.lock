@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 8c2d44c2264fdc793da2653d404098135c62e761
+  revision: 18a10e1d5cdd841612a7dec081169df736ac7f93
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -89,9 +89,9 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airbrake (12.0.0)
+    airbrake (13.0.0)
       airbrake-ruby (~> 6.0)
-    airbrake-ruby (6.0.1)
+    airbrake-ruby (6.0.2)
       rbtree3 (~> 0.5)
     ast (2.4.1)
     async (1.29.0)
@@ -173,7 +173,7 @@ GEM
     defra_ruby_style (0.2.2)
       rubocop (~> 0.82)
     defra_ruby_template (3.13.0)
-    defra_ruby_validators (2.4.1)
+    defra_ruby_validators (2.5.0)
       activemodel
       os_map_ref
       phonelib
@@ -273,7 +273,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2021.1115)
+    mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     mini_portile2 (2.6.1)
     minitest (5.15.0)
@@ -302,7 +302,7 @@ GEM
       rake (>= 0.8.1)
     pg (1.2.3)
     pgreset (0.3)
-    phonelib (0.6.54)
+    phonelib (0.6.55)
     protocol-hpack (1.4.2)
     protocol-http (0.22.0)
     protocol-http1 (0.14.1)
@@ -353,7 +353,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.6)
-    rbtree3 (0.6.0)
+    rbtree3 (0.7.0)
     rdoc (6.3.2)
     regexp_parser (1.7.1)
     request_store (1.5.0)
@@ -428,7 +428,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    thor (1.1.0)
+    thor (1.2.1)
     tilt (2.0.10)
     timecop (0.9.4)
     timers (4.3.3)
@@ -469,7 +469,7 @@ GEM
       whenever
     wicked_pdf (2.1.0)
       activesupport
-    zeitwerk (2.5.2)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   ruby
