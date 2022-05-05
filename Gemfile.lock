@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: c7a0349d2b15ed82e07027b0a96362326d0b6a83
+  revision: 57c8202557c97b4dcc34f7465406334bf2ecbebb
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -91,7 +91,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrake (13.0.0)
       airbrake-ruby (~> 6.0)
-    airbrake-ruby (6.0.2)
+    airbrake-ruby (6.1.0)
       rbtree3 (~> 0.5)
     ast (2.4.1)
     async (1.29.0)
@@ -264,7 +264,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    loofah (2.16.0)
+    loofah (2.17.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -281,7 +281,7 @@ GEM
     multipart-post (2.1.1)
     netrc (0.11.0)
     nio4r (2.5.8)
-    nokogiri (1.13.4)
+    nokogiri (1.13.5)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     notifications-ruby-client (5.3.0)
@@ -467,7 +467,7 @@ GEM
       chronic (>= 0.6.3)
     whenever-test (1.0.1)
       whenever
-    wicked_pdf (2.1.0)
+    wicked_pdf (2.6.2)
       activesupport
     zeitwerk (2.5.4)
 
