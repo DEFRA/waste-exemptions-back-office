@@ -23,9 +23,9 @@ module DashboardsHelper
 
   def label_for_business(registration)
     if %w[limitedCompany limitedLiabilityPartnership].include?(registration.business_type)
-      t("registrations.generic.registered_name")
+      "Registered name"
     else
-      t("registrations.generic.operator")
+      "Operator (business) name"
     end
   end
 end
