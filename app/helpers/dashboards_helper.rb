@@ -20,4 +20,12 @@ module DashboardsHelper
   def result_name_for_visually_hidden_text(result)
     result.operator_name || result.reference || "new registration"
   end
+
+  def label_for_business(registration)
+    if %w[limitedCompany limitedLiabilityPartnership].include?(registration.business_type)
+      t("registrations.generic.registered_name")
+    else
+      t("registrations.generic.operator")
+    end
+  end
 end

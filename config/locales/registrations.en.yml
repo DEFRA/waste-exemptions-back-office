@@ -3,3 +3,6 @@ en:
     show:
       title: "Registration details"
       heading: "Registration details for %{reference}"
+    generic:
+      operator: Operator (business) name
+      regsitered_name: Registered name

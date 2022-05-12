@@ -7,7 +7,6 @@ en:
         farm: "Farm details"
         exemptions: "Exemptions"
         actions: "Actions"
-        operator: "Operator (business)"
       labels:
         workflow_state: "Workflow state"
         reference: "Reference"
