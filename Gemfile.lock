@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 6f6c93422098ca9938596ec536222240d45ebd87
+  revision: 2b53151ea584cde691edaeea173f059b50d01582
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -89,7 +89,7 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airbrake (13.0.0)
+    airbrake (13.0.1)
       airbrake-ruby (~> 6.0)
     airbrake-ruby (6.1.0)
       rbtree3 (~> 0.5)
@@ -203,7 +203,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (2.20.0)
+    faker (2.21.0)
       i18n (>= 1.8.11, < 2)
     faraday (1.4.2)
       faraday-em_http (~> 1.0)
@@ -264,7 +264,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    loofah (2.17.0)
+    loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
