@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module DashboardsHelper
+  LOCALE = "dashboards.helper"
+
   def preselect_registrations_radio_button?
     return true if @filter.blank?
 
@@ -22,10 +24,10 @@ module DashboardsHelper
   end
 
   def label_for_business(registration)
-    if %w[limitedCompany limitedLiabilityPartnership].include?(registration.business_type)
-      "Registered name"
+    if registration.llp_or_ltd?
+      t("registered_name", scope: LOCALE)
     else
-      "Operator (business) name"
+      t("operator_name", scope: LOCALE)
     end
   end
 end
