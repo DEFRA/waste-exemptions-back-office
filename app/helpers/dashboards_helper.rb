@@ -24,7 +24,7 @@ module DashboardsHelper
   end
 
   def label_for_business(registration)
-    if registration.llp_or_ltd?
+    if registration.company_no_required?
       t("registered_name", scope: LOCALE)
     else
       t("operator_name", scope: LOCALE)
