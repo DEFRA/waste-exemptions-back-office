@@ -100,4 +100,29 @@ RSpec.describe DashboardsHelper, type: :helper do
       end
     end
   end
+
+  describe "label_for_business" do
+    let(:registration) { create(:registration, business_type: business_type) }
+    let(:result) { helper.label_for_business(registration) }
+
+    context "when business type is llp" do
+      let(:business_type) { "limitedLiabilityPartnership" }
+
+      it { expect(result).to eq("Registered name") }
+    end
+
+    context "when business type is ltd" do
+      let(:business_type) { "limitedLiabilityPartnership" }
+
+      it { expect(result).to eq("Registered name") }
+    end
+
+    context "when business type is anything else" do
+      %w[soleTrader partnership localAuthority charity].each do |type|
+        let(:business_type) { type }
+
+        it { expect(helper.label_for_business(registration)).to eq("Operator (business) name") }
+      end
+    end
+  end
 end
