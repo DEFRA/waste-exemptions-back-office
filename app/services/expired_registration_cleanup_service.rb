@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OldRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
+class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
   def run
     return unless registration_ids.any?
 
@@ -17,14 +17,23 @@ class OldRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
 
   private
 
+  # registration exemptions that were deregistered (ceased or revoked)
+  # or expired over 7 years ago
   def registration_ids
-    @registration_ids ||= WasteExemptionsEngine::Registration
-                          .where("created_at < ?", date)
-                          .pluck(:id)
+    @registration_ids ||=
+      WasteExemptionsEngine::RegistrationExemption
+      .where(
+        <<~SQL
+          deregistered_at <= '#{date}'
+          OR (state = 'expired' AND updated_at <= '#{date}')
+        SQL
+      )
+      .pluck(:registration_id)
+      .uniq
   end
 
-  def registration_ids_sql
-    @registration_ids_sql ||= "(#{registration_ids.join(', ')})"
+  def date
+    @date ||= 7.years.ago.to_date
   end
 
   def clear_registrations!
@@ -56,7 +65,7 @@ class OldRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
     )
   end
 
-  def date
-    @date ||= 7.years.ago
+  def registration_ids_sql
+    @registration_ids_sql ||= "(#{registration_ids.join(', ')})"
   end
 end
