@@ -98,6 +98,13 @@ RSpec.describe "Whenever schedule" do
     expect(job_details[:every][1][:at]).to eq("00:35")
   end
 
+  it "picks up the cleanup:remove_expired_registrations run frequency and time" do
+    job_details = schedule.jobs[:rake].find { |h| h[:task] == "cleanup:remove_expired_registrations" }
+
+    expect(job_details[:every][0]).to eq(:day)
+    expect(job_details[:every][1][:at]).to eq("00:45")
+  end
+
   it "allows the `whenever` command to be called without raising an error" do
     Open3.popen3("bundle", "exec", "whenever") do |_, stdout, stderr, wait_thr|
       expect(stdout.read).to_not be_empty
