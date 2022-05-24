@@ -126,5 +126,9 @@ FactoryBot.define do
          build(:address, :site, :long_description)]
       end
     end
+
+    trait :with_people do
+      people { build_list(:person, 2) }
+    end
   end
 end

@@ -6,3 +6,10 @@ namespace :cleanup do
     TransientRegistrationCleanupService.run
   end
 end
+
+namespace :cleanup do
+  desc "Remove expired registrations older than 7 years from the database"
+  task remove_expired_registrations: :environment do
+    ExpiredRegistrationCleanupService.run
+  end
+end
