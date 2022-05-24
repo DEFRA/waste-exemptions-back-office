@@ -13,23 +13,45 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
       clear_versions!
       clear_versions_archive!
     end
+    log_references!
   end
 
   private
 
   # registration exemptions that were deregistered (ceased or revoked)
   # or expired over 7 years ago
-  def registration_ids
-    @registration_ids ||=
+  def registration_exemptions
+    @registration_exemptions ||=
       WasteExemptionsEngine::RegistrationExemption
+      .includes(:registration)
       .where("deregistered_at <= ?", date)
       .or(
         WasteExemptionsEngine::RegistrationExemption.expired.where(
           "updated_at <= ?", date
         )
       )
-      .pluck(:registration_id)
-      .uniq
+  end
+
+  def registration_ids
+    @registration_ids ||= registration_exemptions.map(&:registration_id).uniq
+  end
+
+  def log_references!
+    Rails.logger.info(
+      <<~TEXT
+        Expired registrations deleted
+        =============================
+        #{references}
+        =============================
+      TEXT
+    )
+  end
+
+  def references
+    @references ||= registration_exemptions
+                    .map { |re| re.registration.reference }
+                    .uniq
+                    .join("\n")
   end
 
   # returns string in format 2015-05-24
@@ -59,7 +81,7 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
       <<~SQL.squish
         DELETE FROM version_archives
         WHERE item_type = 'WasteExemptionsEngine::Registration'
-        AND item_id IN "(#{registration_ids.join(', ')})"
+        AND item_id IN (#{registration_ids.join(', ')})
       SQL
     )
   end
