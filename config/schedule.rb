@@ -42,10 +42,10 @@ every :day, at: (ENV["CLEANUP_TRANSIENT_REGISTRATIONS_RUN_TIME"] || "00:35"), ro
   rake "cleanup:transient_registrations"
 end
 
-# This is the old registration cleanup job which will delete all records, paper trails
+# This is the cleanup job for expired registrations which will delete all records, paper trails
 # and associated records that are more than 7 years old
-every :day, at: (ENV["CLEANUP_TRANSIENT_REGISTRATIONS_RUN_TIME"] || "00:45"), roles: [:db] do
-  rake "cleanup:old_registrations"
+every :day, at: (ENV["CLEANUP_EXPIRED_REGISTRATIONS_RUN_TIME"] || "00:45"), roles: [:db] do
+  rake "cleanup:expired_registrations"
 end
 
 # This is the Notify AD renewal letters job. When run it will send out Notify

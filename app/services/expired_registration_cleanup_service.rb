@@ -22,18 +22,19 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
   def registration_ids
     @registration_ids ||=
       WasteExemptionsEngine::RegistrationExemption
-      .where(
-        <<~SQL
-          deregistered_at <= '#{date}'
-          OR (state = 'expired' AND updated_at <= '#{date}')
-        SQL
+      .where("deregistered_at <= ?", date)
+      .or(
+        WasteExemptionsEngine::RegistrationExemption.expired.where(
+          "updated_at <= ?", date
+        )
       )
       .pluck(:registration_id)
       .uniq
   end
 
+  # returns string in format 2015-05-24
   def date
-    @date ||= 7.years.ago.to_date
+    @date ||= ENV.fetch("EXPIRED_REGISTRATION_CLEANUP_DATE", 7.years.ago.to_date)
   end
 
   def clear_registrations!
@@ -44,28 +45,22 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
 
   # Versions are auto created by the paper_trail gem
   def clear_versions!
-    ActiveRecord::Base.connection.execute(
-      <<~SQL.squish
-        DELETE FROM versions
-        WHERE item_type = 'WasteExemptionsEngine::Registration'
-        AND item_id IN #{registration_ids_sql}
-      SQL
-    )
+    PaperTrail::Version
+      .where(
+        item_type: "WasteExemptionsEngine::Registration",
+        item_id: registration_ids
+      ).delete_all
   end
 
-  # archive_versions exist because of a schema change
+  # archive_versions exist because of a schema change and has no model backing it.
   # see: https://github.com/DEFRA/waste-exemptions-engine/pull/218
   def clear_versions_archive!
     ActiveRecord::Base.connection.execute(
       <<~SQL.squish
         DELETE FROM version_archives
         WHERE item_type = 'WasteExemptionsEngine::Registration'
-        AND item_id IN #{registration_ids_sql}
+        AND item_id IN "(#{registration_ids.join(', ')})"
       SQL
     )
-  end
-
-  def registration_ids_sql
-    @registration_ids_sql ||= "(#{registration_ids.join(', ')})"
   end
 end
