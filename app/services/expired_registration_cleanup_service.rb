@@ -36,7 +36,6 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
     @registration_ids ||= registration_exemptions.map(&:registration_id).uniq
   end
 
-  # :nocov:
   def log_references!
     return references if Rails.env.test?
 
@@ -49,7 +48,6 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
       TEXT
     )
   end
-  # :nocov:
 
   def references
     @references ||= registration_exemptions
