@@ -37,7 +37,7 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
   end
 
   def log_references!
-    Rails.logger.info(
+    log(
       <<~TEXT
         Expired registrations deleted
         =============================
