@@ -17,18 +17,6 @@ RSpec.describe ExpiredRegistrationCleanupService do
         expect { service.run }.to change { WasteExemptionsEngine::Registration.where(id: id).count }.from(1).to(0)
       end
 
-      it "logs the the deleted references" do
-        expect(Rails.logger).to receive(:info).with(
-          <<~TEXT
-            Expired registrations deleted
-            =============================
-            #{registration.reference}
-            =============================
-          TEXT
-        )
-        service.run
-      end
-
       it "deletes registration addresses" do
         address_count = registration.addresses.count
 
