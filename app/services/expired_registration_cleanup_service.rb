@@ -36,8 +36,11 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
     @registration_ids ||= registration_exemptions.map(&:registration_id).uniq
   end
 
+  # :nocov:
   def log_references!
-    Rails.logger.info(
+    return references if Rails.env.test?
+
+    puts(
       <<~TEXT
         Expired registrations deleted
         =============================
@@ -46,6 +49,7 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
       TEXT
     )
   end
+  # :nocov:
 
   def references
     @references ||= registration_exemptions
