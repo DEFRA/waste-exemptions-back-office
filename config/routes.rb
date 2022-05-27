@@ -74,6 +74,10 @@ Rails.application.routes.draw do
        to: "resend_renewal_letter#create",
        as: "resend_renewal_letter"
 
+  patch "/companies_house_details:reference",
+        to: "registrations#update_companies_house_details",
+        as: :registration_companies_house_details
+
   # Engine
   mount WasteExemptionsEngine::Engine => "/"
 
