@@ -156,7 +156,7 @@
         <p class="govuk-body"><%= t(".actions.renew.renew_window_closed") %></p>
       <% end %>
 
-      <% if display_edit_link_for?(resource) %>
+      <% if display_refresh_registered_company_name_link_for?(resource) %>
           <%= link_to t(".actions.refresh_companies_house"),
                         registration_companies_house_details_path(resource.reference),
                         method: :patch %>
