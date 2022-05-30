@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: fa6e4a777a3f240817c10945a289a8a8518d27c4
+  revision: 6f80a37f8c73de26f8794491519bb27bacd51511
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -318,7 +318,7 @@ GEM
       pry (~> 0.13.0)
     public_suffix (4.0.6)
     racc (1.6.0)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.1.5.1)
