@@ -60,4 +60,10 @@ module ActionLinksHelper
       resource.in_renewal_window? &&
       resource.already_renewed?
   end
+
+  def display_refresh_registered_company_name_link_for?(resource)
+    return false unless display_edit_link_for?(resource)
+
+    resource.active? && resource.company_no_required?
+  end
 end
