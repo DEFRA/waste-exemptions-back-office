@@ -34,7 +34,7 @@ RSpec.describe "Refresh companies house", type: :request do
       it_behaves_like "all companies house details requests"
     end
 
-    context "with an existing registere company name" do
+    context "with an existing registered company name" do
       let(:old_registered_name) { Faker::Company.name }
 
       context "when the new company name is the same as the old one" do
