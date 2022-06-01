@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/letter
     body:
       encoding: UTF-8
-      string: '{"template_id":"931a9338-9177-4470-a51a-3a6991561863","personalisation":{"expiry_date":"31
-        May 2025","renewal_window_start_date":"1 May 2025","contact_name":"Firstcontact1
+      string: '{"template_id":"931a9338-9177-4470-a51a-3a6991561863","personalisation":{"expiry_date":"1
+        July 2030","renewal_window_start_date":"3 June 2030","contact_name":"Firstcontact1
         Lastcontact1","reference":"WEX000001","exemptions":["F1 Use of spam in cooking","F2
         Use of spam in cooking","F3 Use of spam in cooking"],"business_details":["Type
         of business: Limited company","Company name: Operator 1","Company registration
@@ -33,11 +33,11 @@ http_interactions:
       Content-Type:
       - application/json
       Content-Length:
-      - '1767'
+      - '1770'
       Connection:
       - keep-alive
       Date:
-      - Tue, 31 May 2022 14:43:27 GMT
+      - Wed, 01 Jun 2022 14:09:06 GMT
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
@@ -49,19 +49,19 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-B3-Spanid:
-      - 65b488b1fba78214
+      - 546d734d82d630f5
       X-B3-Traceid:
-      - 6c30006972c3df5a65b488b1fba78214
+      - 719dbdeda95534c8546d734d82d630f5
       X-Vcap-Request-Id:
-      - c615dbd8-0d15-439c-4a31-5701555957b6
+      - d3d2b1bc-11ab-41a3-5f03-109d1f31fb9f
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 4dd28c7d9439664c66fbf62f5cd00636.cloudfront.net (CloudFront)
+      - 1.1 c176cabe132d03e00f152d5649d68e96.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LHR50-P3
+      - LHR62-C3
       X-Amz-Cf-Id:
-      - DwPeq-t0Y3lYcHmCaDV95SMwcosHWooQzVbVXUWeuz8aTP9XtUDPRQ==
+      - BvaFpmXGFV8oR1T2x4CTWALTOhJCgic1JzHDkPhKl-LlNLbIRyl_hg==
     body:
       encoding: UTF-8
       string: '{"content":{"body":"Dear Firstcontact1 Lastcontact1,\r\n\r\n# Renew
@@ -80,9 +80,9 @@ http_interactions:
         of waste operation: ST 58337 72855\n* The waste is stored in an out-building
         next to the barn.\r\n\r\nRead the guidance to check that you still meet the
         exemption rules and limits: www.gov.uk/register-waste-exemption.","subject":"Renew
-        your waste exemptions by 31 May 2025. You can renew by 1 May 2025. Renewal
-        is free, and should take about 10 minutes."},"id":"ff9ab413-e943-45d7-b02e-abd8fe522551","reference":null,"scheduled_for":null,"template":{"id":"931a9338-9177-4470-a51a-3a6991561863","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/931a9338-9177-4470-a51a-3a6991561863","version":2},"uri":"https://api.notifications.service.gov.uk/v2/notifications/ff9ab413-e943-45d7-b02e-abd8fe522551"}
+        your waste exemptions by 1 July 2030. You can renew from 3 June 2030. Renewal
+        is free, and should take about 10 minutes."},"id":"328310ae-ddee-41e5-a59e-e75f7d067480","reference":null,"scheduled_for":null,"template":{"id":"931a9338-9177-4470-a51a-3a6991561863","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/931a9338-9177-4470-a51a-3a6991561863","version":3},"uri":"https://api.notifications.service.gov.uk/v2/notifications/328310ae-ddee-41e5-a59e-e75f7d067480"}
 
 '
-  recorded_at: Tue, 31 May 2022 14:43:27 GMT
+  recorded_at: Wed, 01 Jun 2022 14:09:05 GMT
 recorded_with: VCR 6.1.0

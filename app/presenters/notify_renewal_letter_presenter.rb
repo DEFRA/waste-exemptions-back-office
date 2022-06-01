@@ -10,7 +10,7 @@ class NotifyRenewalLetterPresenter < BasePresenter
   end
 
   def renewal_window_start_date
-    (first_exemption.expires_on - renewal_window_after_expiry_in_days).to_formatted_s(:day_month_year)
+    (first_exemption.expires_on - renewal_window_before_expiry_in_days).to_formatted_s(:day_month_year)
   end
 
   def contact_name
@@ -154,8 +154,8 @@ class NotifyRenewalLetterPresenter < BasePresenter
 
   # Utility methods
 
-  def renewal_window_after_expiry_in_days
-    ::WasteExemptionsEngine.configuration.renewal_window_after_expiry_in_days.days
+  def renewal_window_before_expiry_in_days
+    ::WasteExemptionsEngine.configuration.renewal_window_before_expiry_in_days.days
   end
 
   def label_and_value(label, value)
