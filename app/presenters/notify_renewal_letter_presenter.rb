@@ -155,7 +155,7 @@ class NotifyRenewalLetterPresenter < BasePresenter
   # Utility methods
 
   def renewal_window_before_expiry_in_days
-    ::WasteExemptionsEngine.configuration.renewal_window_before_expiry_in_days.days
+    ::WasteExemptionsEngine.configuration.renewal_window_before_expiry_in_days.to_i.days
   end
 
   def label_and_value(label, value)
