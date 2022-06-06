@@ -18,12 +18,13 @@ class NotifyRenewalLetterService < ::WasteExemptionsEngine::BaseService
   private
 
   def template
-    "8251a044-bdbe-4568-a82a-7b499dfe3775"
+    "931a9338-9177-4470-a51a-3a6991561863"
   end
 
   def personalisation
     {
       expiry_date: @registration.expiry_date,
+      renewal_window_start_date: @registration.renewal_window_start_date,
       contact_name: @registration.contact_name,
       reference: @registration.reference,
       exemptions: @registration.exemptions_text,

@@ -6,7 +6,11 @@ class NotifyRenewalLetterPresenter < BasePresenter
 
   def expiry_date
     # Currently you can only add exemptions when you register, so we can assume they expire at the same time
-    registration_exemptions.first.expires_on.to_formatted_s(:day_month_year)
+    first_exemption.expires_on.to_formatted_s(:day_month_year)
+  end
+
+  def renewal_window_start_date
+    (first_exemption.expires_on - renewal_window_before_expiry_in_days).to_formatted_s(:day_month_year)
   end
 
   def contact_name
@@ -45,6 +49,10 @@ class NotifyRenewalLetterPresenter < BasePresenter
   private
 
   # Exemptions
+
+  def first_exemption
+    @first_exemption ||= registration_exemptions.first
+  end
 
   def exemption_description(exemption)
     "#{exemption.code} #{exemption.summary}"
@@ -145,6 +153,10 @@ class NotifyRenewalLetterPresenter < BasePresenter
   end
 
   # Utility methods
+
+  def renewal_window_before_expiry_in_days
+    ::WasteExemptionsEngine.configuration.renewal_window_before_expiry_in_days.days
+  end
 
   def label_and_value(label, value)
     label_text = I18n.t("renewal_letter.renewal_letter_content.section_4.#{label}")
