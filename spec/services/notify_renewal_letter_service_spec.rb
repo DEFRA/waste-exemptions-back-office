@@ -10,7 +10,7 @@ RSpec.describe NotifyRenewalLetterService do
     before { registration.registration_exemptions.update_all(expires_on: Date.new(2030, 7, 1)) }
 
     it "sends a letter" do
-      VCR.use_cassette("notify_renewal_letter", record: :new_episodes) do
+      VCR.use_cassette("notify_renewal_letter") do
         # Make sure it's a real postcode for Notify validation purposes
         allow_any_instance_of(WasteExemptionsEngine::Address).to receive(:postcode).and_return("BS1 1AA")
 
