@@ -32,7 +32,6 @@ module WasteExemptionsEngine
       state == "expired"
     end
 
-    # rubocop:disable Metrics/CyclomaticComplexity
     def state
       raise "A Registration must have at least one RegistrationExemption." if registration_exemptions.empty?
 
@@ -42,7 +41,6 @@ module WasteExemptionsEngine
 
       "ceased"
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
 
     def renewable?
       in_renewal_window? && in_renewable_state?
