@@ -1,11 +1,12 @@
 # Changelog
 
-## [v2.5.1](https://github.com/defra/waste-exemptions-back-office/tree/v2.5.1) (2022-05-11)
+## [v2.5.1](https://github.com/defra/waste-exemptions-back-office/tree/v2.5.1) (2022-05-12)
 
 [Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.5.0...v2.5.1)
 
 **Fixed bugs:**
 
+- Update db schema with latest migrations [\#837](https://github.com/DEFRA/waste-exemptions-back-office/pull/837) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Revert rubocop-inspired change to config.ru to fix Rails config loading [\#796](https://github.com/DEFRA/waste-exemptions-back-office/pull/796) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 
 **Merged pull requests:**

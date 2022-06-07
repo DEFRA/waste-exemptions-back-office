@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 6f6c93422098ca9938596ec536222240d45ebd87
+  revision: 6f80a37f8c73de26f8794491519bb27bacd51511
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -89,7 +89,7 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airbrake (13.0.0)
+    airbrake (13.0.2)
       airbrake-ruby (~> 6.0)
     airbrake-ruby (6.1.0)
       rbtree3 (~> 0.5)
@@ -203,7 +203,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faker (2.20.0)
+    faker (2.21.0)
       i18n (>= 1.8.11, < 2)
     faraday (1.4.2)
       faraday-em_http (~> 1.0)
@@ -241,7 +241,7 @@ GEM
     hashdiff (1.0.1)
     high_voltage (3.1.2)
     http-accept (1.7.0)
-    http-cookie (1.0.4)
+    http-cookie (1.0.5)
       domain_name (~> 0.5)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
@@ -264,7 +264,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    loofah (2.17.0)
+    loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -318,7 +318,7 @@ GEM
       pry (~> 0.13.0)
     public_suffix (4.0.6)
     racc (1.6.0)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.1.5.1)
@@ -442,7 +442,7 @@ GEM
     uk_postcode (2.1.7)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.8.1)
+    unf_ext (0.0.8.2)
     unicode-display_width (1.7.0)
     uniform_notifier (1.14.2)
     useragent (0.16.10)
@@ -467,7 +467,7 @@ GEM
       chronic (>= 0.6.3)
     whenever-test (1.0.1)
       whenever
-    wicked_pdf (2.6.2)
+    wicked_pdf (2.6.3)
       activesupport
     zeitwerk (2.5.4)
 

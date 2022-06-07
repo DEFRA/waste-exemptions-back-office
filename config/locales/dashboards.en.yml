@@ -28,4 +28,7 @@ en:
         signed_in_user: "Signed in as"
         new_registration_link: "Start a new registration"
         sign_out_link: "Sign out"
+    helper:
+      registered_name: "Registered name"
+      operator_name: "Operator (business) name"
 
