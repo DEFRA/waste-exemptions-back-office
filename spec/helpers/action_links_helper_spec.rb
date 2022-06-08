@@ -443,4 +443,53 @@ RSpec.describe ActionLinksHelper, type: :helper do
       end
     end
   end
+
+  describe "#display_refresh_registered_company_name_link?" do
+    context "when the resource is a registration" do
+      let(:resource) { create(:registration) }
+
+      before do
+        allow(helper).to receive(:can?).with(:update, resource).and_return(can)
+      end
+
+      context "when the user has permission to update a registration" do
+        let(:can) { true }
+
+        context "when the resource is a limited company or limited liability partnership" do
+          before do
+            allow(resource).to receive(:company_no_required?).and_return(true)
+          end
+
+          it "returns true" do
+            expect(helper.display_refresh_registered_company_name_link_for?(resource)).to eq(true)
+          end
+        end
+
+        context "when the resource is neither a limited company nor a limited liability partnership" do
+          before do
+            allow(resource).to receive(:company_no_required?).and_return(false)
+          end
+
+          it "returns false" do
+            expect(helper.display_refresh_registered_company_name_link_for?(resource)).to eq(false)
+          end
+        end
+      end
+
+      context "when the user doesn't have permission to update a registration" do
+        let(:can) { false }
+        it "returns false" do
+          expect(helper.display_refresh_registered_company_name_link_for?(resource)).to eq(false)
+        end
+      end
+    end
+
+    context "when the resourse is not a registration" do
+      let(:resource) { nil }
+
+      it "returns false" do
+        expect(helper.display_refresh_registered_company_name_link_for?(resource)).to eq(false)
+      end
+    end
+  end
 end
