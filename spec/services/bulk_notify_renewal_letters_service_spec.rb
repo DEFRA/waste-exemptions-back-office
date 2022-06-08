@@ -11,6 +11,19 @@ RSpec.describe BulkNotifyRenewalLettersService do
 
     let(:expires_on) { ad_registrations.first.registration_exemptions.first.expires_on }
 
+    let(:expires_29_days_registration) do
+      create(:registration, :ad_registration,
+             registration_exemptions: build_list(:registration_exemption, 3, expires_on: expires_on - 1.day))
+    end
+    let(:expires_30_days_registration) do
+      create(:registration, :ad_registration,
+             registration_exemptions: build_list(:registration_exemption, 3, expires_on: expires_on))
+    end
+    let(:expires_31_days_registration) do
+      create(:registration, :ad_registration,
+             registration_exemptions: build_list(:registration_exemption, 3, expires_on: expires_on + 1.day))
+    end
+
     it "sends the relevant registrations to the NotifyRenewalLetterService" do
       expect(Airbrake).to_not receive(:notify)
 
@@ -20,6 +33,16 @@ RSpec.describe BulkNotifyRenewalLettersService do
       expect(NotifyRenewalLetterService).to_not receive(:run).with(registration: non_ad_registration)
       expect(NotifyRenewalLetterService).to_not receive(:run).with(registration: non_matching_date_registration)
       expect(NotifyRenewalLetterService).to_not receive(:run).with(registration: inactive_registration)
+
+      described_class.run(expires_on)
+    end
+
+    it "sends only registrations which expire in exactly 30 days" do
+      expect(Airbrake).to_not receive(:notify)
+
+      expect(NotifyRenewalLetterService).to_not receive(:run).with(registration: expires_29_days_registration)
+      expect(NotifyRenewalLetterService).to receive(:run).with(registration: expires_30_days_registration)
+      expect(NotifyRenewalLetterService).to_not receive(:run).with(registration: expires_31_days_registration)
 
       described_class.run(expires_on)
     end

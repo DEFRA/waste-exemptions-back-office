@@ -37,7 +37,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 01 Jun 2022 14:09:06 GMT
+      - Tue, 07 Jun 2022 13:24:06 GMT
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
@@ -49,19 +49,19 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-B3-Spanid:
-      - 546d734d82d630f5
+      - 3e9a01089c146783
       X-B3-Traceid:
-      - 719dbdeda95534c8546d734d82d630f5
+      - 266d0c89e823d5ae3e9a01089c146783
       X-Vcap-Request-Id:
-      - d3d2b1bc-11ab-41a3-5f03-109d1f31fb9f
+      - 4502e47f-3dd3-40e6-411b-10cb83e0c476
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 c176cabe132d03e00f152d5649d68e96.cloudfront.net (CloudFront)
+      - 1.1 59f36941a67a8e6b953ddc861721052a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LHR62-C3
+      - LHR52-C1
       X-Amz-Cf-Id:
-      - BvaFpmXGFV8oR1T2x4CTWALTOhJCgic1JzHDkPhKl-LlNLbIRyl_hg==
+      - 9QhfPOTE7zVNTUho42zvrfsjVlyIReHpeDv07Qf9g8gFGiAtHQoUSA==
     body:
       encoding: UTF-8
       string: '{"content":{"body":"Dear Firstcontact1 Lastcontact1,\r\n\r\n# Renew
@@ -81,8 +81,8 @@ http_interactions:
         next to the barn.\r\n\r\nRead the guidance to check that you still meet the
         exemption rules and limits: www.gov.uk/register-waste-exemption.","subject":"Renew
         your waste exemptions by 1 July 2030. You can renew from 3 June 2030. Renewal
-        is free, and should take about 10 minutes."},"id":"328310ae-ddee-41e5-a59e-e75f7d067480","reference":null,"scheduled_for":null,"template":{"id":"931a9338-9177-4470-a51a-3a6991561863","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/931a9338-9177-4470-a51a-3a6991561863","version":3},"uri":"https://api.notifications.service.gov.uk/v2/notifications/328310ae-ddee-41e5-a59e-e75f7d067480"}
+        is free, and should take about 10 minutes."},"id":"884e8dac-c256-4db1-bbd8-38a06f414f09","reference":null,"scheduled_for":null,"template":{"id":"931a9338-9177-4470-a51a-3a6991561863","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/931a9338-9177-4470-a51a-3a6991561863","version":3},"uri":"https://api.notifications.service.gov.uk/v2/notifications/884e8dac-c256-4db1-bbd8-38a06f414f09"}
 
 '
-  recorded_at: Wed, 01 Jun 2022 14:09:05 GMT
+  recorded_at: Tue, 07 Jun 2022 13:24:06 GMT
 recorded_with: VCR 6.1.0
