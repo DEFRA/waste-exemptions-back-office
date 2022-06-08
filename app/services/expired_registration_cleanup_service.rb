@@ -27,7 +27,7 @@ class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
       .where("deregistered_at <= ?", date)
       .or(
         WasteExemptionsEngine::RegistrationExemption.expired.where(
-          "updated_at <= ?", date
+          "expires_on <= ?", date
         )
       )
   end
