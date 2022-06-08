@@ -8,6 +8,13 @@ class RegistrationsController < ApplicationController
     authorize
   end
 
+  def update_companies_house_details
+    reference = params[:reference]
+    WasteExemptionsEngine::RefreshCompaniesHouseNameService.run(reference)
+
+    redirect_back(fallback_location: registration_path(reference))
+  end
+
   private
 
   def find_resource(reference)
