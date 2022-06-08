@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "rest-client"
+
 class RefreshCompaniesHouseNameController < ApplicationController
   include CanSetFlashMessages
 
