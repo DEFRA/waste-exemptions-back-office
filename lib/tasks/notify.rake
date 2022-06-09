@@ -5,11 +5,14 @@ namespace :notify do
   namespace :letters do
     desc "List all registrations which will receive the renewal letter"
     task ad_renewals: :environment do
-      expires_on = (1.month + 3.days).from_now
+      expires_on = WasteExemptionsBackOffice::Application.config.ad_letters_exports_expires_in
+                                                         .to_i
+                                                         .days.from_now
+                                                         .to_date
 
       registrations = BulkNotifyRenewalLettersService.run(expires_on)
 
-      if registrations.any?
+      if registrations&.any?
         Rails.logger.info "Notify AD renewal letters sent for #{registrations.map(&:reference).join(', ')}"
       else
         Rails.logger.info "No matching registrations for Notify AD renewal letters"
