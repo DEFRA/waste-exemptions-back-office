@@ -8,7 +8,7 @@ class RefreshCompaniesHouseNameController < ApplicationController
   def update_companies_house_details
     reference = params[:reference]
     begin
-      WasteExemptionsEngine::RefreshCompaniesHouseNameService.run(reference)
+      RefreshCompaniesHouseNameService.run(reference)
       flash_success(success_message)
     rescue StandardError
       Rails.logger.error "Failed to refresh"
