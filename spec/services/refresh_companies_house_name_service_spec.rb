@@ -28,6 +28,26 @@ RSpec.describe RefreshCompaniesHouseNameService do
       end
     end
 
+    context "when an error happens" do
+      before do
+        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(false)
+      end
+
+      let(:old_registered_name) { Faker::Company.name }
+
+      it "raises an error" do
+        expect { subject }.to raise_error(StandardError)
+      end
+
+      it "does not change the companies house name" do
+        begin
+          subject
+        rescue StandardError
+          expect(registration_data(registration).operator_name).to eq old_registered_name
+        end
+      end
+    end
+
     context "with an existing registered company name" do
       let(:old_registered_name) { Faker::Company.name }
 
