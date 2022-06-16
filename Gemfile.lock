@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 05b9f024af3a09d71888a94f723b1028bf5fe6a9
+  revision: 8cc717cbfaf3d9e9213cde0a8b1ed65ca43d9b96
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -91,7 +91,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrake (13.0.2)
       airbrake-ruby (~> 6.0)
-    airbrake-ruby (6.1.0)
+    airbrake-ruby (6.1.1)
       rbtree3 (~> 0.5)
     ast (2.4.1)
     async (1.29.0)
@@ -277,7 +277,7 @@ GEM
     mime-types-data (3.2022.0105)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.15.0)
+    minitest (5.16.0)
     multi_json (1.15.0)
     multipart-post (2.1.1)
     netrc (0.11.0)
@@ -344,7 +344,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.2)
+    rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
     railties (6.1.6)
       actionpack (= 6.1.6)
@@ -470,7 +470,7 @@ GEM
       whenever
     wicked_pdf (2.6.3)
       activesupport
-    zeitwerk (2.5.4)
+    zeitwerk (2.6.0)
 
 PLATFORMS
   ruby
