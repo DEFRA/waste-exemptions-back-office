@@ -17,8 +17,6 @@ class FixGridReferencesService < ::WasteExemptionsEngine::BaseService
 
   private
 
-  # registration exemptions that were deregistered (ceased or revoked)
-  # or expired over 7 years ago
   def addresses
     @addresses ||=
       WasteExemptionsEngine::Address
