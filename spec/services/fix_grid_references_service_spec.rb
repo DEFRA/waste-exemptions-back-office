@@ -4,10 +4,10 @@ require "rails_helper"
 
 RSpec.describe FixGridReferencesService do
   subject(:service) { described_class.run }
-
-  let(:wrong_ngr) { create(:address, :with_grid_reference, y: 1, mode: :lookup) }
-  let(:right_ngr) { create(:address, :with_grid_reference) }
-  let(:auto_ngr)  { create(:address, :with_grid_reference, y: 1, mode: :auto) }
+  let(:registration) { create(:registration) }
+  let(:wrong_ngr) { create(:address, :with_grid_reference, y: 1, mode: :lookup, registration: registration) }
+  let(:right_ngr) { create(:address, :with_grid_reference, registration: registration) }
+  let(:auto_ngr)  { create(:address, :with_grid_reference, y: 1, mode: :auto, registration: registration) }
 
   describe ".run" do
     it "updates the bad NGR" do

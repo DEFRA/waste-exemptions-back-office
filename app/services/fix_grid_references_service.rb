@@ -31,7 +31,7 @@ class FixGridReferencesService < ::WasteExemptionsEngine::BaseService
   end
 
   def log_ngr_update(address, from, to)
-    log("address #{address.id} (registration #{address.registration.reference}) changed from: #{from} to: #{to}")
+    log("address #{address.id} (registration #{address.registration&.reference}) changed from: #{from} to: #{to}")
   end
 
   # :nocov:
