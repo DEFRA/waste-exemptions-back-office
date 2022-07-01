@@ -36,6 +36,12 @@ FactoryBot.define do
       address_type { :contact }
     end
 
+    trait :with_grid_reference do
+      grid_reference { "ST 58337 72855" }
+      x { 358_337.0 }
+      y { 172_855.0 }
+    end
+
     trait :site do
       address_type { :site }
       mode { :auto }
