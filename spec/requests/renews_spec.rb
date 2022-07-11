@@ -6,14 +6,6 @@ require "defra_ruby_companies_house"
 RSpec.describe "Renews", type: :request do
   let(:registration) { create(:registration) }
   let(:transient_registration_token) { WasteExemptionsEngine::RenewingRegistration.last.token }
-  let(:company_name) { Faker::Company.name }
-  let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
-
-  before do
-    allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
-    allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(company_name)
-    allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(company_address)
-  end
 
   describe "GET /renews/:reference" do
     let(:request_path) { "/renew/#{registration.reference}" }
@@ -35,6 +27,12 @@ RSpec.describe "Renews", type: :request do
 
     context "when an admin agent user is signed in" do
       let(:user) { create(:user, :admin_agent) }
+
+      before do
+        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
+        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(Faker::Company.name)
+        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"])
+      end
 
       it "return a 303 redirect code and redirect to the renewal start form" do
         get request_path
