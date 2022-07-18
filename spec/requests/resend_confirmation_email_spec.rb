@@ -69,9 +69,9 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
         end
       end
 
-      context "when there is one valid recipient and one AD recipient" do
+      context "when there is one valid recipient and one blank recipient" do
         before do
-          registration.update(contact_email: "waste-exemptions@environment-agency.gov.uk")
+          registration.update(contact_email: nil)
         end
 
         it "returns a success message" do
@@ -90,7 +90,6 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
 
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
           follow_redirect!
-
           expect(response.body).to include(success_message)
         end
 
@@ -150,8 +149,8 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
 
       context "when there are no recipients" do
         before do
-          registration.update(applicant_email: "waste-exemptions@environment-agency.gov.uk",
-                              contact_email: "waste-exemptions@environment-agency.gov.uk")
+          registration.update(applicant_email: nil,
+                              contact_email: nil)
         end
 
         it "returns a success message" do

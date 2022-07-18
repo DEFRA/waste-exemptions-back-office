@@ -41,7 +41,7 @@ class ResendConfirmationEmailController < ApplicationController
 
   def emails_to_contact
     emails = [registration.applicant_email, registration.contact_email]
-    emails.delete(WasteExemptionsEngine.configuration.assisted_digital_email)
+    emails.compact!
     emails.uniq
   end
 

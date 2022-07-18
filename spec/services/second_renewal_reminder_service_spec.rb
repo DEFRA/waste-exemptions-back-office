@@ -72,10 +72,10 @@ RSpec.describe SecondRenewalReminderService do
       described_class.run
     end
 
-    it "do not send emails to AD NCCC email addresses" do
+    it "do not send emails to blank email addresses" do
       create(
         :registration,
-        contact_email: "waste-exemptions@environment-agency.gov.uk",
+        contact_email: nil,
         registration_exemptions: [
           build(:registration_exemption, :active, expires_on: 2.weeks.from_now.to_date),
           build(:registration_exemption, :revoked, expires_on: 2.weeks.from_now.to_date)
