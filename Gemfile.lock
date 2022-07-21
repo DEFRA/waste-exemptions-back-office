@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 1aaa114523eff5d371304b97433678a936fe33c7
+  revision: 70dc4068ee1d1da43915c4ec62911a4dbb56effd
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -436,7 +436,7 @@ GEM
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
