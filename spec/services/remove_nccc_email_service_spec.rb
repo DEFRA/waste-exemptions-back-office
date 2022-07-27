@@ -2,6 +2,6 @@
 
 require "rails_helper"
 
-RSpec.describe RemoveNcccEmailService
+RSpec.describe RemoveNcccEmailService do
 
 end
