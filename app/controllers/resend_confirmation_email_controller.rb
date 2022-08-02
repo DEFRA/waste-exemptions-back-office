@@ -40,9 +40,9 @@ class ResendConfirmationEmailController < ApplicationController
   end
 
   def emails_to_contact
-    emails = [registration.applicant_email, registration.contact_email]
-    emails.compact!
-    emails.uniq
+    [registration.applicant_email, registration.contact_email]
+      .compact
+      .uniq
   end
 
   def success_message

@@ -13,15 +13,20 @@ class RemoveNcccEmailService < ::WasteExemptionsEngine::BaseService
   # rubocop:enable Style/StringLiterals
 
   def run
-    matching_registrations = find_email_variations(:applicant_email)
+    clean_up_applicant_email
+    clean_up_contact_email
+  end
 
+  def clean_up_applicant_email
+    matching_registrations = find_email_variations(:applicant_email)
     return unless matching_registrations.any?
 
     Rails.logger.info "Clearing wex applicant email addresses: #{matching_registrations.pluck(:applicant_email)}"
     matching_registrations.update_all(applicant_email: nil)
+  end
 
+  def clean_up_contact_email
     matching_registrations = find_email_variations(:contact_email)
-
     return unless matching_registrations.any?
 
     Rails.logger.info "Clearing wex contact email addresses: #{matching_registrations.pluck(:contact_email)}"
