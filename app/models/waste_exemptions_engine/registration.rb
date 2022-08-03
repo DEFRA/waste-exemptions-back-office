@@ -16,7 +16,7 @@ module WasteExemptionsEngine
 
     scope :renewals, -> { where.not(referring_registration_id: nil) }
 
-    scope :contact_email_is_not_blank, -> { where.not(contact_email: nil) }
+    scope :contact_email_present, -> { where.not(contact_email: nil) }
 
     scope :site_address_is_not_nccc, lambda {
       joins(:addresses).merge(Address.site.not_nccc)

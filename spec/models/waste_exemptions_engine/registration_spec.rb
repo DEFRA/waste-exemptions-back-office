@@ -19,13 +19,13 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
     end
   end
 
-  describe ".contact_email_is_not_blank" do
+  describe ".contact_email_present" do
     let(:registration) { create(:registration) }
 
     it "returns registrations that don't have a blank contact email" do
       registration.update(contact_email: "test@example.com")
 
-      result = described_class.contact_email_is_not_blank
+      result = described_class.contact_email_present
 
       expect(result).to include(registration)
     end
@@ -33,7 +33,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
     it "does not return registrations that do have a blank contact email" do
       registration.update(contact_email: nil)
 
-      result = described_class.contact_email_is_not_blank
+      result = described_class.contact_email_present
 
       expect(result).to_not include(registration)
     end
