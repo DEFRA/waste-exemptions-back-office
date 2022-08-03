@@ -6,8 +6,6 @@ module WasteExemptionsEngine
   class Registration < ::WasteExemptionsEngine::ApplicationRecord
     include CanBeSearchedLikeRegistration
 
-    NCCC_EMAIL = WasteExemptionsEngine.configuration.assisted_digital_email
-
     scope :search_for_site_address_postcode, lambda { |term|
       joins(:addresses).merge(Address.search_for_postcode(term).site)
     }
@@ -18,7 +16,7 @@ module WasteExemptionsEngine
 
     scope :renewals, -> { where.not(referring_registration_id: nil) }
 
-    scope :contact_email_is_not_nccc, -> { where.not(contact_email: NCCC_EMAIL) }
+    scope :contact_email_present, -> { where.not(contact_email: nil) }
 
     scope :site_address_is_not_nccc, lambda {
       joins(:addresses).merge(Address.site.not_nccc)
