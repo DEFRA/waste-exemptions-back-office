@@ -3,7 +3,6 @@
 # rubocop:disable Layout/LineLength
 class RemoveNcccEmailService < ::WasteExemptionsEngine::BaseService
 
-  # https://rubular.com/r/LPHA79nxD5k2ff
   # rubocop:disable Style/StringLiterals
   WASTE_EXEMPTIONS_EMAIL_VARIATIONS = '^(w|a)[qaste]?\w{2,}(-?(e|-)|)(.?e)\w{7,}@(e|a|n)\w{5,17}(.|-)(ag?(ency|ancy|ncy)|gov).(gov.uk|uk)'
 
