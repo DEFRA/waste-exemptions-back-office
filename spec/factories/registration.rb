@@ -115,8 +115,8 @@ FactoryBot.define do
       end
     end
 
-    trait :ad_registration do
-      contact_email { "waste-exemptions@environment-agency.gov.uk" }
+    trait :has_no_email do
+      contact_email { nil }
     end
 
     trait :with_long_site_description do
