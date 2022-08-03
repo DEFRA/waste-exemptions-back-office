@@ -24,7 +24,7 @@ class BulkNotifyRenewalLettersService < ::WasteExemptionsEngine::BaseService
     @_ad_expiring_registrations ||= lambda do
       WasteExemptionsEngine::Registration
         .order(:reference)
-        .where(contact_email: WasteExemptionsEngine.configuration.assisted_digital_email)
+        .where(contact_email: nil)
         .where(
           id: WasteExemptionsEngine::RegistrationExemption
                 .all_active_exemptions
