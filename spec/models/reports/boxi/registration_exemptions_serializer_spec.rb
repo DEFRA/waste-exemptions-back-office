@@ -17,6 +17,7 @@ module Reports
           result_lines = result.split("\n")
 
           expect(result_lines.first.split(",")).to include(*WasteExemptionsEngine::RegistrationExemption.column_names)
+          expect(result_lines.first.split(",")).to include("renewal")
           expect(result_lines.count).to eq(2)
         end
 
