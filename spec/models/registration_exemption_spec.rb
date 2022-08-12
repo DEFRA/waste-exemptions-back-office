@@ -57,4 +57,24 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
       end
     end
   end
+
+  describe "#renewal" do
+    subject(:registration_exemption) { registration.registration_exemptions.first }
+
+    context "without a referring registration" do
+      let(:registration) { build(:registration) }
+
+      it "returns false" do
+        expect(subject.renewal).to eq "No"
+      end
+    end
+
+    context "with a referring registration" do
+      let(:registration) { build(:registration, referring_registration: build(:registration)) }
+
+      it "returns true" do
+        expect(subject.renewal).to eq "Yes"
+      end
+    end
+  end
 end
