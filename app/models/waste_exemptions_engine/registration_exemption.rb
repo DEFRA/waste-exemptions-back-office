@@ -31,7 +31,7 @@ module WasteExemptionsEngine
     # This is called "renewal" rather than "renewal?" so that it can behave
     # like an attribute in the Boxi export service without any mapping logic.
     def renewal
-      registration&.renewal? ? "Yes" : "No"
+      registration&.renewal?
     end
   end
 end

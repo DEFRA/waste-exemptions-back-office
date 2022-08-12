@@ -65,7 +65,7 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
       let(:registration) { build(:registration) }
 
       it "returns false" do
-        expect(subject.renewal).to eq "No"
+        expect(subject.renewal).to be false
       end
     end
 
@@ -73,7 +73,7 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
       let(:registration) { build(:registration, referring_registration: build(:registration)) }
 
       it "returns true" do
-        expect(subject.renewal).to eq "Yes"
+        expect(subject.renewal).to be true
       end
     end
   end
