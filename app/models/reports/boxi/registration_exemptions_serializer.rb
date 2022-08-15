@@ -3,7 +3,7 @@
 module Reports
   module Boxi
     class RegistrationExemptionsSerializer < BaseSerializer
-      ATTRIBUTES = WasteExemptionsEngine::RegistrationExemption.column_names
+      ATTRIBUTES = WasteExemptionsEngine::RegistrationExemption.column_names + ["renewal"]
 
       def file_name
         "registration_exemptions.csv"

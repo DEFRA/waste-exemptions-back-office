@@ -27,5 +27,11 @@ module WasteExemptionsEngine
         .includes(registration: :addresses)
         .order(:registered_on, :registration_id)
     }
+
+    # This is called "renewal" rather than "renewal?" so that it can behave
+    # like an attribute in the Boxi export service without any mapping logic.
+    def renewal
+      registration&.renewal?
+    end
   end
 end
