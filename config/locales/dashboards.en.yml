@@ -11,6 +11,7 @@ en:
         - "applicant name"
         - "applicant email"
         - "contact name"
+        - "telephone number"
         - "contact email"
       no_results: "No results"
     form:
