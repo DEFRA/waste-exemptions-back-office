@@ -43,6 +43,19 @@ RSpec.describe SearchService do
       end
     end
 
+    context "when the model is set to new_registrations" do
+      let(:model) { :new_registrations }
+      let(:term) { new_registration.contact_phone }
+
+      it "should return matching new_registrations" do
+        expect(results).to include(new_registration)
+      end
+
+      it "should not return non-matching new_registrations" do
+        expect(results).to_not include(other_new_registration)
+      end
+    end
+
     context "when the search term has excess whitespace" do
       let(:term) { "  foo  " }
 
