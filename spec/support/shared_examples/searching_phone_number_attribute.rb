@@ -18,6 +18,7 @@ RSpec.shared_examples "searching phone number attribute" do |phone_type|
   let(:number_with_dashes) { "012-3456-7890" }
   let(:number_starting_with_44) { "+441234567890" }
   let(:interntational_number) { "+78121234567" }
+  let(:number_with_text) { "Landline 01234567890" }
 
   before do
     non_matching_registration.update_attribute(:applicant_phone, "0121117890")
@@ -87,6 +88,18 @@ RSpec.shared_examples "searching phone number attribute" do |phone_type|
 
       before do
         matching_registration.update_attribute(phone_type, interntational_number)
+      end
+
+      it_behaves_like "matching and non matching registrations"
+    end
+  end
+
+  context "when the database telephone number has text with it" do
+    context "it matches the phone number" do
+      let(:term) { normal_number.to_s }
+
+      before do
+        matching_registration.update_attribute(phone_type, number_with_text)
       end
 
       it_behaves_like "matching and non matching registrations"

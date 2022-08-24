@@ -22,7 +22,7 @@ module CanBeSearchedLikeTelephone
       end
 
       # Regex can search for a number with spaces and dashes anywhere and for UK numbers either starting in 0 or +44
-      regex = "^(\\+44|0|\\+)?[\\s-]*" + telephone_number.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join
+      regex = "(\\+44|0|\\+)?[\\s-]*" + telephone_number.scan(/\d/).map { |c| "#{c}[\\s-]*" }.join
 
       where(
         "contact_phone ~* ?\
