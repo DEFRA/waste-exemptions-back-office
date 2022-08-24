@@ -13,6 +13,17 @@ RSpec.shared_examples "matching and non matching registrations" do
 end
 
 RSpec.shared_examples "searching phone number attribute" do |phone_type|
+  let(:normal_number) { "01234567890" }
+  let(:number_with_spaces) { "012 3456 7890" }
+  let(:number_with_dashes) { "012-3456-7890" }
+  let(:number_starting_with_44) { "+441234567890" }
+  let(:interntational_number) { "+78121234567" }
+
+  before do
+    non_matching_registration.update_attribute(:applicant_phone, "0121117890")
+    non_matching_registration.update_attribute(:contact_phone, "0121117890")
+  end
+
   context "when the number in the database has not got any spaces or dashes and doesn't start in +44" do
     before do
       matching_registration.update_attribute(phone_type, normal_number)
@@ -66,6 +77,18 @@ RSpec.shared_examples "searching phone number attribute" do |phone_type|
       before do
         matching_registration.update_attribute(phone_type, number_starting_with_44)
       end
+      it_behaves_like "matching and non matching registrations"
+    end
+  end
+
+  context "when the search term is an international number" do
+    context "it only produces exact matches" do
+      let(:term) { interntational_number.to_s }
+
+      before do
+        matching_registration.update_attribute(phone_type, interntational_number)
+      end
+
       it_behaves_like "matching and non matching registrations"
     end
   end

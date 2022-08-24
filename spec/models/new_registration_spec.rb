@@ -31,16 +31,6 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
     end
 
     context "when the search is a phone number" do
-      let(:normal_number) { "01234567890" }
-      let(:number_with_spaces) { "012 3456 7890" }
-      let(:number_with_dashes) { "012-3456-7890" }
-      let(:number_starting_with_44) { "+441234567890" }
-
-      before do
-        non_matching_registration.update_attribute(:applicant_phone, "0121117890")
-        non_matching_registration.update_attribute(:contact_phone, "0121117890")
-      end
-
       context "when searching applicant number" do
         it_behaves_like "searching phone number attribute", :applicant_phone
       end
