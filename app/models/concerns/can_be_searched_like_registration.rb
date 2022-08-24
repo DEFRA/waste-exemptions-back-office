@@ -7,7 +7,8 @@ module CanBeSearchedLikeRegistration
     scope :search_registration_and_relations, lambda { |term|
       where(id: search_registration(term).ids +
                 search_for_site_address_postcode(term).ids +
-                search_for_person_name(term).ids)
+                search_for_person_name(term).ids +
+                search_for_telephone(term).ids)
     }
 
     scope :search_registration, lambda { |term|
