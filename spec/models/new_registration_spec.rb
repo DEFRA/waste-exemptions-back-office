@@ -205,26 +205,3 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
     end
   end
 end
-
-################
-# Need contact phone term
-#   -normal
-#   -dashes
-#   -space
-#   -+44
-# contact phone db
-#   -normal
-#   -dashes
-#   -space
-#   -+44
-# applicant phone term
-#   -normal
-#   -dashes
-#   -space
-#   -+44
-# applicant phone db
-#   -normal
-#   -dashes
-#   -space
-#   -+44
-################
