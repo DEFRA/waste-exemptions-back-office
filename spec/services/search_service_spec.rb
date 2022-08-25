@@ -3,11 +3,12 @@
 require "rails_helper"
 
 RSpec.describe SearchService do
-  let(:registration) { create(:registration) }
-  let(:other_registration) { create(:registration) }
 
-  let(:new_registration) { create(:new_registration) }
-  let(:other_new_registration) { create(:new_registration) }
+  # Use let! to ensure all test model instances are in the DB even if not exlicitly referenced in the examples
+  let!(:registration) { create(:registration) }
+  let!(:other_registration) { create(:registration) }
+  let!(:new_registration) { create(:new_registration) }
+  let!(:other_new_registration) { create(:new_registration) }
 
   let(:model) { nil }
 
@@ -41,6 +42,14 @@ RSpec.describe SearchService do
 
         it_behaves_like "registration matches and non-matches"
       end
+
+      context "with no matches on any attribute" do
+        let(:term) { "this search term does not match any model attribute" }
+
+        it "should not return any matches" do
+          expect(results).to be_empty
+        end
+      end
     end
 
     context "when the model is set to new_registrations" do
@@ -67,7 +76,14 @@ RSpec.describe SearchService do
 
         it_behaves_like "new_registration matches and non-matches"
       end
-    end
+
+      context "with no matches on any attribute" do
+        let(:term) { "this search term does not match any model attribute" }
+
+        it "should not return any matches" do
+          expect(results).to be_empty
+        end
+      end    end
 
     context "when the search term has excess whitespace" do
       let(:term) { "  foo  " }
