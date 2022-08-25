@@ -83,7 +83,8 @@ RSpec.describe SearchService do
         it "should not return any matches" do
           expect(results).to be_empty
         end
-      end    end
+      end
+    end
 
     context "when the search term has excess whitespace" do
       let(:term) { "  foo  " }
