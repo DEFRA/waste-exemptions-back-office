@@ -41,7 +41,7 @@ FactoryBot.define do
     end
 
     sequence :applicant_phone do |n|
-      "0123456789#{n}"
+      "0987654321#{n}"
     end
 
     sequence :operator_name do |n|
