@@ -143,6 +143,16 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
       end
     end
 
+    context "when the search is a phone number" do
+      context "when searching applicant number" do
+        it_behaves_like "searching phone number attribute", :applicant_phone
+      end
+
+      context "when searching contact number" do
+        it_behaves_like "searching phone number attribute", :contact_phone
+      end
+    end
+
     context "when the search term is an applicant_first_name" do
       let(:term) { matching_registration.applicant_first_name }
 
