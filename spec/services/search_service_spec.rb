@@ -3,13 +3,13 @@
 require "rails_helper"
 
 RSpec.describe SearchService do
-  let(:registration) { create(:registration) }
-  let(:other_registration) { create(:registration) }
 
-  let(:new_registration) { create(:new_registration) }
-  let(:other_new_registration) { create(:new_registration) }
+  # Use let! to ensure all test model instances are in the DB even if not exlicitly referenced in the examples
+  let!(:registration) { create(:registration) }
+  let!(:other_registration) { create(:registration) }
+  let!(:new_registration) { create(:new_registration) }
+  let!(:other_new_registration) { create(:new_registration) }
 
-  let(:term) { registration.reference }
   let(:model) { nil }
 
   let(:results) do
@@ -21,51 +21,68 @@ RSpec.describe SearchService do
     context "when the model is set to registrations" do
       let(:model) { :registrations }
 
-      it "should return matching registrations" do
-        expect(results).to include(registration)
+      shared_examples "registration matches and non-matches" do
+        it "should return matching registrations" do
+          expect(results).to include(registration)
+        end
+
+        it "should not return non-matching registrations" do
+          expect(results).to_not include(other_registration)
+        end
       end
 
-      it "should not return non-matching registrations" do
-        expect(results).to_not include(other_registration)
+      context "with matches on reference" do
+        let(:term) { registration.reference }
+
+        it_behaves_like "registration matches and non-matches"
+      end
+
+      context "with matches on contact_phone" do
+        let(:term) { registration.contact_phone }
+
+        it_behaves_like "registration matches and non-matches"
+      end
+
+      context "with no matches on any attribute" do
+        let(:term) { "this search term does not match any model attribute" }
+
+        it "should not return any matches" do
+          expect(results).to be_empty
+        end
       end
     end
 
     context "when the model is set to new_registrations" do
       let(:model) { :new_registrations }
-      let(:term) { new_registration.applicant_first_name }
 
-      it "should return matching new_registrations" do
-        expect(results).to include(new_registration)
+      shared_examples "new_registration matches and non-matches" do
+        it "should return matching new_registrations" do
+          expect(results).to include(new_registration)
+        end
+
+        it "should not return non-matching new_registrations" do
+          expect(results).to_not include(other_new_registration)
+        end
       end
 
-      it "should not return non-matching new_registrations" do
-        expect(results).to_not include(other_new_registration)
-      end
-    end
+      context "with matches on applicant_first_name" do
+        let(:term) { new_registration.applicant_first_name }
 
-    context "when the model is set to new_registrations" do
-      let(:model) { :new_registrations }
-      let(:term) { new_registration.contact_phone }
-
-      it "should return matching new_registrations" do
-        expect(results).to include(new_registration)
+        it_behaves_like "new_registration matches and non-matches"
       end
 
-      it "should not return non-matching new_registrations" do
-        expect(results).to_not include(other_new_registration)
-      end
-    end
+      context "with matches on contact_phone" do
+        let(:term) { new_registration.contact_phone }
 
-    context "when the model is set to registration" do
-      let(:model) { :registrations }
-      let(:term) { registration.contact_phone }
-
-      it "should return matching new_registrations" do
-        expect(results).to include(registration)
+        it_behaves_like "new_registration matches and non-matches"
       end
 
-      it "should not return non-matching new_registrations" do
-        expect(results).to_not include(other_new_registration)
+      context "with no matches on any attribute" do
+        let(:term) { "this search term does not match any model attribute" }
+
+        it "should not return any matches" do
+          expect(results).to be_empty
+        end
       end
     end
 

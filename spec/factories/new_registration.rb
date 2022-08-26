@@ -35,7 +35,7 @@ FactoryBot.define do
     end
 
     sequence :applicant_phone do |n|
-      "0123456789#{n}"
+      "9876543210#{n}"
     end
 
     transient_addresses do

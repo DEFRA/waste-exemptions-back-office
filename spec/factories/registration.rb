@@ -3,8 +3,6 @@
 FactoryBot.define do
   factory :registration, class: WasteExemptionsEngine::Registration do
     location { "england" }
-    applicant_phone { "01234567890" }
-    contact_phone { "01234567890" }
     business_type { "limitedCompany" }
     company_no { "09360070" }
     on_a_farm { true }
@@ -36,6 +34,14 @@ FactoryBot.define do
 
     sequence :contact_last_name do |n|
       "Lastcontact#{n}"
+    end
+
+    sequence :contact_phone do |n|
+      "0123456789#{n}"
+    end
+
+    sequence :applicant_phone do |n|
+      "0987654321#{n}"
     end
 
     sequence :operator_name do |n|
