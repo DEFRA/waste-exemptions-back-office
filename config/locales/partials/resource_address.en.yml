@@ -8,6 +8,7 @@ en:
         site: "Site location"
       labels:
         mode: "Mode"
+        grid_reference: "Site grid reference"
         description: "Description"
         x: "X coordinate"
         y: "Y coordinate"

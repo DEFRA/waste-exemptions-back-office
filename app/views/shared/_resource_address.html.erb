@@ -7,7 +7,10 @@
     <% end %>
   </dt>
   <dd class="govuk-summary-list__value">
-    <% if address.located_by_grid_reference? %>
+    <p class="govuk-body govuk-!-font-weight-bold">
+      <%= t(".labels.grid_reference") %>
+    </p>
+    <% if address.grid_reference.present? %>
       <p class=govuk-body>
         <%= address.grid_reference %>
       </p>
