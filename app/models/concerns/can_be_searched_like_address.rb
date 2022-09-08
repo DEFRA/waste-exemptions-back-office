@@ -10,6 +10,6 @@ module CanBeSearchedLikeAddress
 
     scope :site, -> { where(address_type: 3) }
     scope :contact, -> { where(address_type: 2) }
-    scope :operator, -> { where(address_type: 1 ) }
+    scope :operator, -> { where(address_type: 1) }
   end
 end

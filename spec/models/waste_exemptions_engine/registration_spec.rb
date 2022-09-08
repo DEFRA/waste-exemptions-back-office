@@ -291,14 +291,6 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
         end
       end
 
-      #context "when the address is not a site address" do
-      #  let(:address) { matching_registration.addresses.first }
-#
-      #  it "is not included in the scope" do
-      #    expect(scope).to_not include(matching_registration)
-      #  end
-      #end
-
       it "does not return others" do
         expect(scope).not_to include(non_matching_registration)
       end
