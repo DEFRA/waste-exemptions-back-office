@@ -11,6 +11,14 @@ module WasteExemptionsEngine
       joins(:transient_addresses).merge(TransientAddress.search_for_postcode(term).site)
     }
 
+    scope :search_for_contact_address_postcode, lambda { |term|
+      joins(:transient_addresses).merge(TransientAddress.search_for_postcode(term).contact)
+    }
+
+    scope :search_for_operator_address_postcode, lambda { |term|
+      joins(:transient_addresses).merge(TransientAddress.search_for_postcode(term).operator)
+    }
+
     scope :search_for_person_name, lambda { |term|
       joins(:transient_people).merge(TransientPerson.search_for_name(term))
     }

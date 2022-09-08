@@ -166,11 +166,15 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
         end
       end
 
-      context "when the address is not a site address" do
-        let(:address) { matching_registration.transient_addresses.first }
+      context "when the address is a contact address" do
+        it "is included in the scope" do
+          expect(scope).to include(matching_registration)
+        end
+      end
 
-        it "is not included in the scope" do
-          expect(scope).to_not include(matching_registration)
+      context "when the address is a operator address" do
+        it "is included in the scope" do
+          expect(scope).to include(matching_registration)
         end
       end
 
