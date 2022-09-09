@@ -7,13 +7,21 @@
     <% end %>
   </dt>
   <dd class="govuk-summary-list__value">
-    <% if address.located_by_grid_reference? %>
+  <% if address.address_type == 'site' %>
+    <p class="govuk-body govuk-!-font-weight-bold">
+      <%= t(".labels.grid_reference") %>
+    </p>
+    <% if address.grid_reference.present? %>
       <p class=govuk-body>
         <%= address.grid_reference %>
       </p>
     <% end %>
+  <% end %>
 
     <% if address.postcode.present? %>
+      <p class="govuk-body govuk-!-font-weight-bold">
+        <%= t(".labels.site_address") %>
+      </p>
       <ul class="govuk-list">
         <% displayable_address(address).each do |line| %>
           <li>
