@@ -287,7 +287,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
       end
 
       context "when the address is an operator address" do
-        let(:operator_address) { matching_registration.operator_address}
+        let(:operator_address) { matching_registration.operator_address }
         let(:term) { operator_address.postcode }
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
