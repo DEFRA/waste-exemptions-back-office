@@ -42,7 +42,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
   describe "#contact" do
     let(:scope) { WasteExemptionsEngine::Address.contact }
 
-    it "returns site addresses" do
+    it "returns contact addresses" do
       expect(scope).to include(matching_address_contact)
     end
 
@@ -54,7 +54,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
   describe "#operator" do
     let(:scope) { WasteExemptionsEngine::Address.operator }
 
-    it "returns site addresses" do
+    it "returns operator addresses" do
       expect(scope).to include(matching_address_operator)
     end
 
