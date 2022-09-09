@@ -157,22 +157,25 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
     end
 
     context "when the search term is a related address's postcode" do
-      let(:address) { matching_registration.transient_addresses.last }
-      let(:term) { address.postcode }
-
       context "when the address is a site address" do
+        let(:site_address) { matching_registration.site_address }
+        let(:term) { site_address.postcode }
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
       end
 
       context "when the address is a contact address" do
+        let(:contact_address) { matching_registration.contact_address }
+        let(:term) { contact_address.postcode }
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
       end
 
       context "when the address is a operator address" do
+        let(:operator_address) { matching_registration.operator_address }
+        let(:term) { operator_address.postcode }
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
