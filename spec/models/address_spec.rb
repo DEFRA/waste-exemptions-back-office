@@ -3,8 +3,10 @@
 require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::Address, type: :model do
-  let(:matching_address) { create(:address, :site_uses_address) }
-  let(:non_matching_address) { create(:address, :contact) }
+  let(:matching_address_site) { create(:address, :site_uses_address) }
+  let(:matching_address_contact) { create(:address, :contact_uses_address) }
+  let(:matching_address_operator) { create(:address, :operator_uses_address) }
+  let(:non_matching_address) { create(:address) }
   let(:nccc_address) { create(:address, :contact, postcode: "S9 4WF") }
   let(:non_nccc_address) { create(:address, :contact, postcode: "AA1 1AA") }
 
@@ -13,10 +15,10 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
     let(:scope) { WasteExemptionsEngine::Address.search_for_postcode(term) }
 
     context "when the search term is a postcode" do
-      let(:term) { matching_address.postcode }
+      let(:term) { matching_address_site.postcode }
 
       it "returns addresses with a matching postcode" do
-        expect(scope).to include(matching_address)
+        expect(scope).to include(matching_address_site)
       end
 
       it "does not return others" do
@@ -29,7 +31,31 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
     let(:scope) { WasteExemptionsEngine::Address.site }
 
     it "returns site addresses" do
-      expect(scope).to include(matching_address)
+      expect(scope).to include(matching_address_site)
+    end
+
+    it "does not return others" do
+      expect(scope).not_to include(non_matching_address)
+    end
+  end
+
+  describe "#contact" do
+    let(:scope) { WasteExemptionsEngine::Address.contact }
+
+    it "returns contact addresses" do
+      expect(scope).to include(matching_address_contact)
+    end
+
+    it "does not return others" do
+      expect(scope).not_to include(non_matching_address)
+    end
+  end
+
+  describe "#operator" do
+    let(:scope) { WasteExemptionsEngine::Address.operator }
+
+    it "returns operator addresses" do
+      expect(scope).to include(matching_address_operator)
     end
 
     it "does not return others" do

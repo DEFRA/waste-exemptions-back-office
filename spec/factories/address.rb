@@ -70,6 +70,16 @@ FactoryBot.define do
       mode { :lookup }
     end
 
+    trait :operator_uses_address do
+      address_type { :operator }
+      mode { :lookup }
+    end
+
+    trait :contact_uses_address do
+      address_type { :contact }
+      mode { :lookup }
+    end
+
     trait :short_description do
       description { Faker::Lorem.sentence(word_count: 3) }
     end
