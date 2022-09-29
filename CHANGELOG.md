@@ -1,5 +1,39 @@
 # Changelog
 
+## [v2.6.1](https://github.com/defra/waste-exemptions-back-office/tree/v2.6.1) (2022-09-15)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.6.0...v2.6.1)
+
+**Implemented enhancements:**
+
+- Updating back office search hint text [\#921](https://github.com/DEFRA/waste-exemptions-back-office/pull/921) ([timstone](https://github.com/timstone))
+- Feature/postcode search for all address [\#919](https://github.com/DEFRA/waste-exemptions-back-office/pull/919) ([Beckyrose200](https://github.com/Beckyrose200))
+- Feature/site grid reference [\#918](https://github.com/DEFRA/waste-exemptions-back-office/pull/918) ([Beckyrose200](https://github.com/Beckyrose200))
+- Adding telephone to the search criteria [\#911](https://github.com/DEFRA/waste-exemptions-back-office/pull/911) ([Beckyrose200](https://github.com/Beckyrose200))
+- Add renewals column to boxi exemptions export [\#904](https://github.com/DEFRA/waste-exemptions-back-office/pull/904) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+
+**Fixed bugs:**
+
+- Fix address sub-headings on details page [\#923](https://github.com/DEFRA/waste-exemptions-back-office/pull/923) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix search issue [\#914](https://github.com/DEFRA/waste-exemptions-back-office/pull/914) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+
+**Merged pull requests:**
+
+- Bump rails from 6.1.6.1 to 6.1.7 [\#922](https://github.com/DEFRA/waste-exemptions-back-office/pull/922) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `8ab6047` to `4e96995` [\#920](https://github.com/DEFRA/waste-exemptions-back-office/pull/920) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump faker from 2.22.0 to 2.23.0 [\#917](https://github.com/DEFRA/waste-exemptions-back-office/pull/917) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump defra\_ruby\_aws from 0.4.1 to 0.5.0 [\#915](https://github.com/DEFRA/waste-exemptions-back-office/pull/915) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump webmock from 3.17.1 to 3.18.1 [\#913](https://github.com/DEFRA/waste-exemptions-back-office/pull/913) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pry-byebug from 3.9.0 to 3.10.1 [\#912](https://github.com/DEFRA/waste-exemptions-back-office/pull/912) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `9c9b495` to `8ab6047` [\#910](https://github.com/DEFRA/waste-exemptions-back-office/pull/910) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump paper\_trail from 12.3.0 to 13.0.0 [\#909](https://github.com/DEFRA/waste-exemptions-back-office/pull/909) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump govuk\_design\_system\_formbuilder from 3.1.1 to 3.1.2 [\#908](https://github.com/DEFRA/waste-exemptions-back-office/pull/908) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump bullet from 7.0.2 to 7.0.3 [\#906](https://github.com/DEFRA/waste-exemptions-back-office/pull/906) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `6120260` to `9c9b495` [\#905](https://github.com/DEFRA/waste-exemptions-back-office/pull/905) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#903](https://github.com/DEFRA/waste-exemptions-back-office/pull/903) ([Beckyrose200](https://github.com/Beckyrose200))
+- Bump webmock from 3.16.0 to 3.17.1 [\#901](https://github.com/DEFRA/waste-exemptions-back-office/pull/901) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pg from 1.4.2 to 1.4.3 [\#900](https://github.com/DEFRA/waste-exemptions-back-office/pull/900) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v2.6.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.6.0) (2022-08-10)
 
 [Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.5.1...v2.6.0)
