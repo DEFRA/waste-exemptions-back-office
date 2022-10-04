@@ -39,6 +39,20 @@ RSpec.describe ActionLinksHelper, type: :helper do
         path = WasteExemptionsEngine::Engine.routes.url_helpers.new_start_form_path(resource.token)
         expect(helper.resume_link_for(resource)).to eq(path)
       end
+
+      context "when the registration was started in the back office" do
+        it "does not change the assistance_mode" do
+          expect { helper.resume_link_for(resource) }.not_to change(resource, :assistance_mode)
+        end
+      end
+
+      context "when the registration was started in the front office" do
+        before { resource.assistance_mode = nil }
+
+        it "changes the assistance mode to partial" do
+          expect { helper.resume_link_for(resource) }.to change(resource, :assistance_mode).to("partial")
+        end
+      end
     end
 
     context "when the resource is not a new_registration" do
