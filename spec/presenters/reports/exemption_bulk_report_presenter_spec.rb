@@ -378,7 +378,15 @@ module Reports
         let(:assistance_mode) { nil }
 
         it "returns the string 'unassisted'" do
-          expect(exemption_bulk_report_presenter.assistance_type).to eq("unassisted")
+          expect(exemption_bulk_report_presenter.assistance_type).to eq("Unassisted")
+        end
+      end
+
+      context "when assistance_mode is set to 'partial'" do
+        let(:assistance_mode) { "partial" }
+
+        it "returns the string 'Partially assisted'" do
+          expect(exemption_bulk_report_presenter.assistance_type).to eq("Partially assisted")
         end
       end
 
@@ -386,7 +394,7 @@ module Reports
         let(:assistance_mode) { "full" }
 
         it "returns the string 'fully assisted'" do
-          expect(exemption_bulk_report_presenter.assistance_type).to eq("fully assisted")
+          expect(exemption_bulk_report_presenter.assistance_type).to eq("Fully assisted")
         end
       end
     end

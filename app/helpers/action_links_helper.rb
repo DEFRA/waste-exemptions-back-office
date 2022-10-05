@@ -15,6 +15,9 @@ module ActionLinksHelper
   def resume_link_for(resource)
     return "#" unless resource.is_a?(WasteExemptionsEngine::NewRegistration)
 
+    # If the assistance_mode is nil, the registration was started in the front-office
+    resource.update(assistance_mode: "partial") unless resource.assistance_mode.present?
+
     token = resource.token
     path = "new_#{resource.workflow_state}_path".to_sym
     WasteExemptionsEngine::Engine.routes.url_helpers.public_send(path, token)

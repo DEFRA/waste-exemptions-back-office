@@ -112,10 +112,13 @@ module Reports
     end
 
     def assistance_type
-      if registration.assistance_mode == "full"
-        "fully assisted"
+      case registration.assistance_mode
+      when "full"
+        "Fully assisted"
+      when "partial"
+        "Partially assisted"
       else
-        "unassisted"
+        "Unassisted"
       end
     end
 
