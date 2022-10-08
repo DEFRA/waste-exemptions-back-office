@@ -58,12 +58,12 @@ module WasteExemptionsBackOffice
 
     # Companies House config
     config.companies_house_host = ENV["COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk/company/"
-    config.companies_house_api_key = ENV["COMPANIES_HOUSE_API_KEY"]
+    config.companies_house_api_key = ENV.fetch("COMPANIES_HOUSE_API_KEY", nil)
 
     # Data export config
-    config.bulk_reports_bucket_name = ENV["AWS_BULK_EXPORT_BUCKET"]
-    config.epr_reports_bucket_name = ENV["AWS_DAILY_EXPORT_BUCKET"]
-    config.boxi_exports_bucket_name = ENV["AWS_BOXI_EXPORT_BUCKET"]
+    config.bulk_reports_bucket_name = ENV.fetch("AWS_BULK_EXPORT_BUCKET", nil)
+    config.epr_reports_bucket_name = ENV.fetch("AWS_DAILY_EXPORT_BUCKET", nil)
+    config.boxi_exports_bucket_name = ENV.fetch("AWS_BOXI_EXPORT_BUCKET", nil)
     config.epr_export_filename = ENV["EPR_DAILY_REPORT_FILE_NAME"] || "waste_exemptions_epr_daily_full"
     config.export_batch_size = ENV["EXPORT_SERVICE_BATCH_SIZE"] || 1000
 
@@ -75,7 +75,7 @@ module WasteExemptionsBackOffice
     config.easting_and_northing_lookup_run_for = ENV["EASTING_AND_NORTHING_LOOKUP_RUN_FOR"] || 60
 
     # Emails
-    config.email_test_address = ENV["EMAIL_TEST_ADDRESS"]
+    config.email_test_address = ENV.fetch("EMAIL_TEST_ADDRESS", nil)
     config.second_renewal_email_reminder_days = ENV["SECOND_RENEWAL_EMAIL_BEFORE_DAYS"] || 14
 
     # Database cleanup

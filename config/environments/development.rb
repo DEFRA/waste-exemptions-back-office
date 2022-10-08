@@ -39,8 +39,8 @@ Rails.application.configure do
 
   # Default settings are for mailcatcher
   config.action_mailer.smtp_settings = {
-    user_name: ENV["EMAIL_USERNAME"],
-    password: ENV["EMAIL_PASSWORD"],
+    user_name: ENV.fetch("EMAIL_USERNAME", nil),
+    password: ENV.fetch("EMAIL_PASSWORD", nil),
     domain: config.back_office_url,
     address: ENV["EMAIL_HOST"] || "localhost",
     port: ENV["EMAIL_PORT"] || 1025,
