@@ -4,7 +4,7 @@ require "cancan/matchers"
 require "rails_helper"
 
 RSpec.describe Ability, type: :model do
-  subject(:ability) { Ability.new(user) }
+  subject(:ability) { described_class.new(user) }
 
   let(:registration) { build(:registration) }
   let(:registration_exemption) { build(:registration_exemption) }
@@ -63,8 +63,8 @@ RSpec.describe Ability, type: :model do
   context "when the user account is inactive" do
     let(:user) { build(:user, :data_agent, :inactive) }
 
-    it "should not be able to use the back office" do
-      should_not be_able_to(:use_back_office, :all)
+    it "is not able to use the back office" do
+      expect(ability).not_to be_able_to(:use_back_office, :all)
     end
   end
 end

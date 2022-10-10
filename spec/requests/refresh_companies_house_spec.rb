@@ -11,7 +11,7 @@ RSpec.describe "Refresh companies house", type: :request do
 
       it "redirects to the same page" do
         subject
-        expect(response.status).to eq 302
+        expect(response).to have_http_status(:found)
         expect(response.location).to end_with registration_path(registration.reference)
       end
 
@@ -61,7 +61,7 @@ RSpec.describe "Refresh companies house", type: :request do
       let(:old_registered_name) { Faker::Company.name }
 
       before do
-        expect(RefreshCompaniesHouseNameService).to receive(:run).and_raise(StandardError)
+        allow(RefreshCompaniesHouseNameService).to receive(:run).and_raise(StandardError)
       end
 
       it "returns an error message" do

@@ -16,7 +16,7 @@ module ActionLinksHelper
     return "#" unless resource.is_a?(WasteExemptionsEngine::NewRegistration)
 
     # If the assistance_mode is nil, the registration was started in the front-office
-    resource.update(assistance_mode: "partial") unless resource.assistance_mode.present?
+    resource.update(assistance_mode: "partial") if resource.assistance_mode.blank?
 
     token = resource.token
     path = "new_#{resource.workflow_state}_path".to_sym

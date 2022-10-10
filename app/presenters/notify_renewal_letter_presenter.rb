@@ -167,7 +167,7 @@ class NotifyRenewalLetterPresenter < BasePresenter
     return [] unless address
 
     address_fields = %i[organisation premises street_address locality city postcode]
-    address_fields.map { |field| address.public_send(field) }.reject(&:blank?)
+    address_fields.map { |field| address.public_send(field) }.compact_blank
   end
 end
 # rubocop:enable Metrics/ClassLength

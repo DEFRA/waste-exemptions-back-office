@@ -10,7 +10,7 @@ RSpec.describe RegistrationsHelper, type: :helper do
       before { resource.applicant_first_name = "Foo" }
 
       it "returns true" do
-        expect(helper.applicant_data_present?(resource)).to eq(true)
+        expect(helper.applicant_data_present?(resource)).to be(true)
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe RegistrationsHelper, type: :helper do
       end
 
       it "returns true" do
-        expect(helper.applicant_data_present?(resource)).to eq(false)
+        expect(helper.applicant_data_present?(resource)).to be(false)
       end
     end
   end
@@ -33,7 +33,7 @@ RSpec.describe RegistrationsHelper, type: :helper do
       before { resource.contact_first_name = "Foo" }
 
       it "returns true" do
-        expect(helper.contact_data_present?(resource)).to eq(true)
+        expect(helper.contact_data_present?(resource)).to be(true)
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe RegistrationsHelper, type: :helper do
       end
 
       it "returns true" do
-        expect(helper.contact_data_present?(resource)).to eq(false)
+        expect(helper.contact_data_present?(resource)).to be(false)
       end
     end
   end

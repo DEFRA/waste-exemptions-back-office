@@ -20,7 +20,7 @@ RSpec.describe RemoveNcccEmailService do
       end
     end
 
-    context "waste exemptions email address" do
+    context "with a waste exemptions email address" do
       let(:contact_email) { "waste-exemptions@environment-agency.gov.uk" }
       let(:applicant_email) { "waste-exemptions@environment-agency.gov.uk" }
 
@@ -28,7 +28,7 @@ RSpec.describe RemoveNcccEmailService do
       it_behaves_like "removes applicant email"
     end
 
-    context "nccc email address" do
+    context "with an nccc email address" do
       let(:applicant_email) { "nccc-carrierbroker@environment-agency.gov.uk" }
       let(:contact_email) { "nccc-carrierbroker@environment-agency.gov.uk" }
 
@@ -36,7 +36,7 @@ RSpec.describe RemoveNcccEmailService do
       it_behaves_like "removes applicant email"
     end
 
-    context "nccc typos" do
+    context "with nccc typos" do
       let(:applicant_email) { "nccc-wasteexemptions@environment-agency.gov.uk" }
       let(:contact_email) { "nccc-wasteexemptions@environment-agency.gov.uk" }
 
@@ -44,7 +44,7 @@ RSpec.describe RemoveNcccEmailService do
       it_behaves_like "removes applicant email"
     end
 
-    context "waste exemptions typos in username" do
+    context "with waste exemptions typos in username" do
       let(:applicant_email) { "wqexemptions@environment-agency.gov.uk" }
       let(:contact_email) { "wqexemptions@environment-agency.gov.uk" }
 
@@ -52,7 +52,7 @@ RSpec.describe RemoveNcccEmailService do
       it_behaves_like "removes applicant email"
     end
 
-    context "waste exemptions email typos in domain name" do
+    context "with waste exemptions email typos in domain name" do
       let(:applicant_email) { "waste-exemptions@environmentagency.gov.uk" }
       let(:contact_email) { "waste-exemptions@environmentagency.gov.uk" }
 
@@ -60,7 +60,7 @@ RSpec.describe RemoveNcccEmailService do
       it_behaves_like "removes applicant email"
     end
 
-    context "waste exemptions capitalised" do
+    context "with waste exemptions capitalised" do
       let(:applicant_email) { "WASTE-exemptions@environmentagency.gov.uk" }
       let(:contact_email) { "waste-EXEMPTIONS@EnViRoNmentagency.gov.uk" }
 
@@ -68,7 +68,7 @@ RSpec.describe RemoveNcccEmailService do
       it_behaves_like "removes applicant email"
     end
 
-    context "email starting with exemptions" do
+    context "with an email starting with exemptions" do
       let(:applicant_email) { "excemptions@environment-agency.gov.uk" }
       let(:contact_email) { "exceptions@environment-agency.gov.uk" }
 
@@ -76,28 +76,29 @@ RSpec.describe RemoveNcccEmailService do
       it_behaves_like "removes applicant email"
     end
 
-    context "it doesn't remove" do
-      let(:applicant_email) { Faker::Name.first_name.to_s + Faker::Name.last_name.to_s + "@environment-agency.gov.uk" }
-      let(:contact_email) { Faker::Name.first_name.to_s + Faker::Name.last_name.to_s + "@environment-agency.gov.uk" }
+    context "with personal environment agency email as contact and applicant emails" do
+      let(:applicant_email) { "#{Faker::Name.first_name}.#{Faker::Name.last_name}@environment-agency.gov.uk" }
+      let(:contact_email) { "#{Faker::Name.first_name}.#{Faker::Name.last_name}@environment-agency.gov.uk" }
 
-      it "personal environmental agency emails from either contact email" do
-        expect { service }.to_not change { registration.contact_email }
+      it "does not remove the contact email" do
+        expect { service }.not_to change(registration, :contact_email)
       end
-      it "personal environmental agency emails from either applicant email" do
-        expect { service }.to_not change { registration.applicant_email }
+
+      it "does not remove the applicant email" do
+        expect { service }.not_to change(registration, :applicant_email)
       end
     end
 
-    context "it doesn't remove" do
+    context "with non-environment agency applicant and contact emails" do
       let(:applicant_email) { Faker::Internet.email }
       let(:contact_email) { Faker::Internet.email }
 
-      it "regular registration emails from either applicant email" do
-        expect { service }.to_not change { registration.applicant_email }
+      it "does not remove the applicant email" do
+        expect { service }.not_to change(registration, :applicant_email)
       end
 
-      it "regular registration emails from either contact email" do
-        expect { service }.to_not change { registration.contact_email }
+      it "does not remove the contact email" do
+        expect { service }.not_to change(registration, :contact_email)
       end
     end
   end

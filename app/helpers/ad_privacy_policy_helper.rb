@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
+# rubocop:disable Rails/HelperInstanceVariable
 module AdPrivacyPolicyHelper
   def link_to_privacy_policy
     link_to(
       t(".privacy_notice_link_text"),
       URI.join(Rails.configuration.front_office_url, "/pages/privacy").to_s,
-      target: "_blank"
+      target: "_blank", rel: "noopener"
     )
   end
 
@@ -17,3 +18,4 @@ module AdPrivacyPolicyHelper
     end
   end
 end
+# rubocop:enable Rails/HelperInstanceVariable

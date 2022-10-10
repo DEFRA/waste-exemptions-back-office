@@ -3,9 +3,10 @@
 require "rails_helper"
 
 RSpec.shared_examples "a letter presenter" do
-  let(:today) { Time.new(2019, 4, 2) }
-  let(:registration) { create(:registration, :with_active_exemptions) }
   subject { described_class.new(registration) }
+
+  let(:today) { Time.zone.new(2019, 4, 2) }
+  let(:registration) { create(:registration, :with_active_exemptions) }
 
   describe "#contact_full_name" do
     it "returns the registration's contact first and last name attributes as a single string" do
@@ -67,6 +68,7 @@ RSpec.shared_examples "a letter presenter" do
 
     context "when the site location is located by postcode" do
       let(:registration) { create(:registration, :site_uses_address) }
+
       it "returns a string representation of the address" do
         address = registration.site_address
         expected_address = [

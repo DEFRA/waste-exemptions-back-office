@@ -6,7 +6,7 @@ module Test
   DeregistrationStateTransitionValidatable = Struct.new(:state_transition) do
     include ActiveModel::Validations
 
-    validates :state_transition, "deregistration_state_transition": true
+    validates :state_transition, deregistration_state_transition: true
   end
 end
 

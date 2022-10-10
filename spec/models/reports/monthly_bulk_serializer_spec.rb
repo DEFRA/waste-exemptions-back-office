@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Reports
   RSpec.describe MonthlyBulkSerializer do
-    let(:first_day_of_the_month) { Date.today.beginning_of_month }
+    let(:first_day_of_the_month) { Time.zone.today.beginning_of_month }
 
     subject(:monthly_bulk_serializer) { described_class.new(first_day_of_the_month) }
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Rails/LexicallyScopedActionFilter
 class UserInvitationsController < Devise::InvitationsController
   before_action :authorize, only: %i[new create]
   before_action :configure_permitted_parameters
@@ -19,3 +20,4 @@ class UserInvitationsController < Devise::InvitationsController
     users_path
   end
 end
+# rubocop:enable Rails/LexicallyScopedActionFilter

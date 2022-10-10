@@ -32,7 +32,7 @@ module CanDeactivateExemption
 
     # Transition effects
     def update_deregistered_at
-      self.deregistered_at = Date.today
+      self.deregistered_at = Time.zone.today
       save!
     end
   end

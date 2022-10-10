@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :person, class: WasteExemptionsEngine::Person do
+  factory :person, class: "WasteExemptionsEngine::Person" do
     sequence :first_name do |n|
       "Firstperson#{n}"
     end

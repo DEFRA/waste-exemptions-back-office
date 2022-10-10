@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Rails/HelperInstanceVariable
 module DashboardsHelper
   LOCALE = "dashboards.helper"
 
@@ -31,3 +32,4 @@ module DashboardsHelper
     end
   end
 end
+# rubocop:enable Rails/HelperInstanceVariable

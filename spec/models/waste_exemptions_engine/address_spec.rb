@@ -12,7 +12,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
 
   describe "#search_for_postcode" do
     let(:term) { nil }
-    let(:scope) { WasteExemptionsEngine::Address.search_for_postcode(term) }
+    let(:scope) { described_class.search_for_postcode(term) }
 
     context "when the search term is a postcode" do
       let(:term) { matching_address_site.postcode }
@@ -28,7 +28,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
   end
 
   describe "#site" do
-    let(:scope) { WasteExemptionsEngine::Address.site }
+    let(:scope) { described_class.site }
 
     it "returns site addresses" do
       expect(scope).to include(matching_address_site)
@@ -40,7 +40,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
   end
 
   describe "#contact" do
-    let(:scope) { WasteExemptionsEngine::Address.contact }
+    let(:scope) { described_class.contact }
 
     it "returns contact addresses" do
       expect(scope).to include(matching_address_contact)
@@ -52,7 +52,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
   end
 
   describe "#operator" do
-    let(:scope) { WasteExemptionsEngine::Address.operator }
+    let(:scope) { described_class.operator }
 
     it "returns operator addresses" do
       expect(scope).to include(matching_address_operator)
@@ -64,7 +64,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
   end
 
   describe "#nccc" do
-    let(:scope) { WasteExemptionsEngine::Address.nccc }
+    let(:scope) { described_class.nccc }
 
     it "returns NCCC addresses" do
       expect(scope).to include(nccc_address)
@@ -76,7 +76,7 @@ RSpec.describe WasteExemptionsEngine::Address, type: :model do
   end
 
   describe "#not_nccc" do
-    let(:scope) { WasteExemptionsEngine::Address.not_nccc }
+    let(:scope) { described_class.not_nccc }
 
     it "returns non-NCCC addresses" do
       expect(scope).to include(non_nccc_address)

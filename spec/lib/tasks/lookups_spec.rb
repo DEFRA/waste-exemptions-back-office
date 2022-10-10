@@ -30,12 +30,13 @@ RSpec.describe "Lookups task", type: :rake, vcr: true do
   end
 
   describe "lookups:update:missing_easting_and_northing" do
-    before { VCR.insert_cassette("valid_postcode_lookup") }
-    after { VCR.eject_cassette }
-
     before do
-      expect(WasteExemptionsBackOffice::Application.config).to receive(:easting_and_northing_lookup_run_for).and_return(run_for)
+      allow(WasteExemptionsBackOffice::Application.config).to receive(:easting_and_northing_lookup_run_for).and_return(run_for)
+      allow(Airbrake).to receive(:notify)
+      VCR.insert_cassette("valid_postcode_lookup")
     end
+
+    after { VCR.eject_cassette }
 
     let(:run_for) { 10 }
 
@@ -44,10 +45,10 @@ RSpec.describe "Lookups task", type: :rake, vcr: true do
       site_address_no_postcode = create(:address, address_type: :site, x: nil, y: nil, postcode: nil)
       non_site_address = create(:address, x: nil, y: nil, postcode: "BS1 5AH")
 
-      # Expect no error
-      expect(Airbrake).to_not receive(:notify)
-
       subject.invoke
+
+      # Expect no error
+      expect(Airbrake).not_to have_received(:notify)
 
       site_address.reload
       site_address_no_postcode.reload

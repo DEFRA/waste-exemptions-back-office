@@ -5,6 +5,9 @@ require "rails_helper"
 module Reports
   RSpec.describe EprExportService do
     describe ".run" do
+
+      before { allow(Airbrake).to receive(:notify) }
+
       context "when the AWS request succeeds" do
         it "generates a CSV file containing all active exemptions and uploads it to AWS" do
           create_list(:registration_exemption, 2, :with_registration, :active)
@@ -12,10 +15,10 @@ module Reports
 
           stub_request(:put, %r{https://.*\.s3\.eu-west-1\.amazonaws\.com/EPR/#{file_name}\.csv.*})
 
-          # Expect no error gets notified
-          expect(Airbrake).to_not receive(:notify)
+          described_class.run
 
-          EprExportService.run
+          # Expect no error gets notified
+          expect(Airbrake).not_to have_received(:notify)
         end
       end
 
@@ -30,10 +33,10 @@ module Reports
             %r{https://.*\.s3\.eu-west-1\.amazonaws\.com/EPR/#{file_name}\.csv.*}
           ).to_return(status: 403)
 
-          # Expect an error to get notified
-          expect(Airbrake).to receive(:notify).once
+          described_class.run
 
-          EprExportService.run
+          # Expect an error to get notified
+          expect(Airbrake).to have_received(:notify).once
         end
       end
     end

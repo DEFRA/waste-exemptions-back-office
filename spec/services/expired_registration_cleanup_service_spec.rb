@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe ExpiredRegistrationCleanupService do
   subject(:service) { described_class }
+
   let(:id) { registration.id }
 
   describe ".run" do
@@ -11,7 +12,7 @@ RSpec.describe ExpiredRegistrationCleanupService do
       let(:registration) { create(:registration, :with_people) }
 
       before do
-        registration.registration_exemptions.update_all(state: :expired, expires_on: 7.years.ago)
+        registration.registration_exemptions.update(state: :expired, expires_on: 7.years.ago)
       end
 
       it "deletes the registration" do
@@ -49,7 +50,7 @@ RSpec.describe ExpiredRegistrationCleanupService do
       let(:registration) { create(:registration, :with_ceased_exemptions, :with_people) }
 
       before do
-        registration.registration_exemptions.update_all(deregistered_at: 7.years.ago)
+        registration.registration_exemptions.update(deregistered_at: 7.years.ago)
       end
 
       it "deletes the registration" do
@@ -87,11 +88,11 @@ RSpec.describe ExpiredRegistrationCleanupService do
       let(:registration) { create(:registration, :with_ceased_exemptions, :with_people) }
 
       before do
-        registration.registration_exemptions.update_all(deregistered_at: 6.years.ago)
+        registration.registration_exemptions.update(deregistered_at: 6.years.ago)
       end
 
       it "does not delete it" do
-        expect { service.run }.to_not change { WasteExemptionsEngine::Registration.where(id: id).count }.from(1)
+        expect { service.run }.not_to change { WasteExemptionsEngine::Registration.where(id: id).count }.from(1)
       end
     end
 
@@ -99,11 +100,11 @@ RSpec.describe ExpiredRegistrationCleanupService do
       let(:registration) { create(:registration, :with_people) }
 
       before do
-        registration.registration_exemptions.update_all(state: :expired, expires_on: 6.years.ago)
+        registration.registration_exemptions.update(state: :expired, expires_on: 6.years.ago)
       end
 
       it "does not delete it" do
-        expect { service.run }.to_not change { WasteExemptionsEngine::Registration.where(id: id).count }.from(1)
+        expect { service.run }.not_to change { WasteExemptionsEngine::Registration.where(id: id).count }.from(1)
       end
     end
   end

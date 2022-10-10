@@ -6,23 +6,21 @@ module Reports
   RSpec.describe BoxiExportService do
     describe ".run" do
       let(:zip_file_path) { Rails.root.join("tmp/waste_exemptions_rep_daily_full.zip") }
-      let(:bucket) { double(:bucket) }
-      let(:aws_response) { double(:aws_response, successful?: true) }
+      let(:bucket) { instance_double(DefraRuby::Aws::Bucket) }
+      let(:aws_response) { instance_double(DefraRuby::Aws::Response, successful?: true) }
+
+      before { allow(Airbrake).to receive(:notify) }
 
       it "generates a zip file containing data for BOXI and load it to AWS" do
         # Cleanup before run
-        File.delete(zip_file_path) if File.exist?(zip_file_path)
+        FileUtils.rm_f(zip_file_path)
 
         # Intercept zip file deletion and block it
-        allow(File).to receive(:unlink).and_call_original
-        allow(File).to receive(:unlink).with(zip_file_path)
+        allow(FileUtils).to receive(:rm_f).and_call_original
+        allow(FileUtils).to receive(:rm_f).with(zip_file_path)
 
-        # Expect file load to Aws bucket
-        expect(DefraRuby::Aws).to receive(:get_bucket).and_return(bucket)
-        expect(bucket).to receive(:load).and_return(aws_response)
-
-        # Expect no issues
-        expect(Airbrake).to_not receive(:notify)
+        allow(DefraRuby::Aws).to receive(:get_bucket).and_return(bucket)
+        allow(bucket).to receive(:load).and_return(aws_response)
 
         expect { described_class.run }.to change { File.exist?(zip_file_path) }.from(false).to(true)
 
@@ -36,17 +34,23 @@ module Reports
           expect(all_entries).to include("addresses.csv")
         end
 
+        # Expect file load to Aws bucket
+        expect(bucket).to have_received(:load)
+
+        # Expect no issues
+        expect(Airbrake).not_to have_received(:notify)
+
         # Clean up after run
         File.delete(zip_file_path)
       end
 
       context "when an error happen" do
         it "logs the issue on Airbrake" do
-          expect(Boxi::AddressesSerializer).to receive(:export_to_file).and_raise(StandardError)
-
-          expect(Airbrake).to receive(:notify)
+          allow(Reports::Boxi::AddressesSerializer).to receive(:export_to_file).and_raise(StandardError)
 
           described_class.run
+
+          expect(Airbrake).to have_received(:notify)
         end
       end
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :transient_address, class: WasteExemptionsEngine::TransientAddress do
+  factory :transient_address, class: "WasteExemptionsEngine::TransientAddress" do
     sequence :postcode do |n|
       "BS#{n}AA"
     end

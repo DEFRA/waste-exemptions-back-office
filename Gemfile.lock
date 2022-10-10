@@ -1,5 +1,7 @@
-PATH
-  remote: /vagrant/waste-exemptions-engine
+GIT
+  remote: https://github.com/DEFRA/waste-exemptions-engine
+  revision: a9cd0286b0a8f9fc3ccca00d5de152de5c9fe86a
+  branch: main
   specs:
     waste_exemptions_engine (0.0.1)
       aasm (~> 5.3)

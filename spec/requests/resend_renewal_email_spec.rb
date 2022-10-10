@@ -45,7 +45,7 @@ RSpec.describe "ResendRenewalEmail", type: :request do
 
       context "when an error happens", disable_bullet: true do
         before do
-          expect(FirstRenewalReminderEmailService).to receive(:run).and_raise(StandardError)
+          allow(FirstRenewalReminderEmailService).to receive(:run).and_raise(StandardError)
         end
 
         around do |example|

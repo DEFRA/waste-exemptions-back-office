@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable RSpec/RepeatedExampleGroupBody
 RSpec.describe "Email task", type: :rake do
   include_context "rake"
 
@@ -38,3 +39,4 @@ RSpec.describe "Email task", type: :rake do
   end
 
 end
+# rubocop:enable RSpec/RepeatedExampleGroupBody

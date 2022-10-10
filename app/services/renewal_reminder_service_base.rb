@@ -3,12 +3,10 @@
 class RenewalReminderServiceBase < ::WasteExemptionsEngine::BaseService
   def run
     expiring_registrations.each do |registration|
-      begin
-        send_email(registration)
-      rescue StandardError => e
-        Airbrake.notify e, registration: registration.reference
-        Rails.logger.error "Failed to send first renewal email for registration #{registration.reference}"
-      end
+      send_email(registration)
+    rescue StandardError => e
+      Airbrake.notify e, registration: registration.reference
+      Rails.logger.error "Failed to send first renewal email for registration #{registration.reference}"
     end
   end
 

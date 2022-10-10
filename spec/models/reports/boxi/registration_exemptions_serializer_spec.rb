@@ -25,7 +25,7 @@ module Reports
           it "generates a csv file without new lines" do
             create(:registration_exemption, deregistration_message: "sadfsa\r\nfafdafaf\r\nfdfdaf")
 
-            expect(registration_exemptions_serializer.to_csv).to_not include("\r\n")
+            expect(registration_exemptions_serializer.to_csv).not_to include("\r\n")
             expect(registration_exemptions_serializer.to_csv).to include("sadfsa fafdafaf fdfdaf")
           end
         end

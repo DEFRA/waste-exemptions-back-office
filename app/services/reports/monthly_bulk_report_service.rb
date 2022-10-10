@@ -24,7 +24,7 @@ module Reports
     private
 
     def populate_temp_file
-      File.open(file_path, "w+") { |file| file.write(bulk_report) }
+      File.write(file_path, bulk_report)
     end
 
     def file_path

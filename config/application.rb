@@ -34,7 +34,7 @@ module WasteExemptionsBackOffice
     config.time_zone = "London"
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
@@ -43,7 +43,7 @@ module WasteExemptionsBackOffice
     # rails does this it messes with the GOV.UK styling and causes checkboxes
     # and radio buttons to become invisible
     config.action_view.field_error_proc = proc { |html_tag, _instance|
-      html_tag.to_s.html_safe
+      html_tag.to_s
     }
 
     # https://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#active-record-belongs-to-required-by-default-option

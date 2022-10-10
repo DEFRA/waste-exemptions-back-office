@@ -5,7 +5,8 @@ require "rails_helper"
 RSpec.describe "Deregister Exemptions Forms", type: :request do
   let(:form) { DeregisterExemptionsForm.new }
   let(:user) { create(:user, :super_agent) }
-  before(:each) do
+
+  before do
     sign_in(user)
   end
 
@@ -54,7 +55,7 @@ RSpec.describe "Deregister Exemptions Forms", type: :request do
       end
 
       context "when the registration can be de-registered by the current_user" do
-        context "and the form is valid" do
+        context "when the form is valid" do
           status_code = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE
 
           it "renders the registration template, responds to the POST request with a #{status_code} status code and updates the registration state" do
@@ -72,7 +73,7 @@ RSpec.describe "Deregister Exemptions Forms", type: :request do
           end
         end
 
-        context "and the form is not valid" do
+        context "when the form is not valid" do
           let(:invalid_request_body) do
             { deregister_exemptions_form: { state_transition: "deactivate", message: "foo" } }
           end
@@ -143,7 +144,7 @@ RSpec.describe "Deregister Exemptions Forms", type: :request do
       end
 
       context "when the registration_exemption can be de-registered by the current_user" do
-        context "and the form is valid" do
+        context "when the form is valid" do
           status_code = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE
 
           it "renders the registration template, responds to the POST request with a #{status_code} status code and updates the registration_exemption state" do
@@ -163,7 +164,7 @@ RSpec.describe "Deregister Exemptions Forms", type: :request do
           end
         end
 
-        context "and the form is not valid" do
+        context "when the form is not valid" do
           let(:invalid_request_body) do
             { deregister_exemptions_form: { state_transition: "deactivate", message: "foo" } }
           end

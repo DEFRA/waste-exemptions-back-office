@@ -4,11 +4,16 @@ require "rails_helper"
 
 RSpec.describe SecondRenewalReminderService do
   before do
-    expect(WasteExemptionsBackOffice::Application.config).to receive(:second_renewal_email_reminder_days).and_return("14")
+    allow(SecondRenewalReminderEmailService).to receive(:run)
+    allow(WasteExemptionsBackOffice::Application.config).to receive(:second_renewal_email_reminder_days).and_return("14")
+    allow(Airbrake).to receive(:notify)
   end
 
   describe ".run" do
     context "when the email sending fails" do
+
+      before { allow(SecondRenewalReminderEmailService).to receive(:run).and_raise("An error") }
+
       it "report the error in the log and with Airbrake" do
         create(
           :registration,
@@ -17,11 +22,9 @@ RSpec.describe SecondRenewalReminderService do
           ]
         )
 
-        expect(SecondRenewalReminderEmailService).to receive(:run).and_raise("An error")
-        expect(Airbrake).to receive(:notify)
-        expect(Rails.logger).to receive(:error)
-
         described_class.run
+
+        expect(Airbrake).to have_received(:notify)
       end
     end
 
@@ -50,11 +53,11 @@ RSpec.describe SecondRenewalReminderService do
         ]
       )
 
-      expect(SecondRenewalReminderEmailService).to receive(:run).with(registration: active_expiring_registration)
-      expect(SecondRenewalReminderEmailService).to_not receive(:run).with(registration: expiring_non_active_registration)
-      expect(SecondRenewalReminderEmailService).to_not receive(:run).with(registration: non_expiring_non_active_registration)
-
       described_class.run
+
+      expect(SecondRenewalReminderEmailService).to have_received(:run).with(registration: active_expiring_registration)
+      expect(SecondRenewalReminderEmailService).not_to have_received(:run).with(registration: expiring_non_active_registration)
+      expect(SecondRenewalReminderEmailService).not_to have_received(:run).with(registration: non_expiring_non_active_registration)
     end
 
     it "do not send emails if a registration have already been renewed" do
@@ -67,9 +70,9 @@ RSpec.describe SecondRenewalReminderService do
 
       create(:registration, referring_registration: registration)
 
-      expect(SecondRenewalReminderEmailService).to_not receive(:run)
-
       described_class.run
+
+      expect(SecondRenewalReminderEmailService).not_to have_received(:run)
     end
 
     it "do not send emails to blank email addresses" do
@@ -82,9 +85,9 @@ RSpec.describe SecondRenewalReminderService do
         ]
       )
 
-      expect(SecondRenewalReminderEmailService).to_not receive(:run)
-
       described_class.run
+
+      expect(SecondRenewalReminderEmailService).not_to have_received(:run)
     end
 
     it "does not send emails to registrations with the NCCC postcode" do
@@ -97,9 +100,9 @@ RSpec.describe SecondRenewalReminderService do
       )
       registration.site_address.update(postcode: "S9 4WF")
 
-      expect(SecondRenewalReminderEmailService).to_not receive(:run)
-
       described_class.run
+
+      expect(SecondRenewalReminderEmailService).not_to have_received(:run)
     end
   end
 end

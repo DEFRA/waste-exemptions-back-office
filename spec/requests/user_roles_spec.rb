@@ -8,7 +8,7 @@ RSpec.describe "User Roles", type: :request do
 
   describe "GET /users/role/:id" do
     context "when a system user is signed in" do
-      before(:each) do
+      before do
         sign_in(system_user)
       end
 
@@ -21,7 +21,8 @@ RSpec.describe "User Roles", type: :request do
 
     context "when a non-system user is signed in" do
       let(:user) { create(:user, :data_agent) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -37,7 +38,7 @@ RSpec.describe "User Roles", type: :request do
     let(:params) { { role: "admin_agent" } }
 
     context "when a system user is signed in" do
-      before(:each) do
+      before do
         sign_in(system_user)
       end
 
@@ -72,7 +73,8 @@ RSpec.describe "User Roles", type: :request do
 
     context "when a non-system user is signed in" do
       let(:user) { create(:user, :data_agent) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 

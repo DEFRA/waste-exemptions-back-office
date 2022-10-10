@@ -6,7 +6,7 @@ module Test
   DeregistrationMessageValidatable = Struct.new(:message) do
     include ActiveModel::Validations
 
-    validates :message, "deregistration_message": true
+    validates :message, deregistration_message: true
   end
 end
 

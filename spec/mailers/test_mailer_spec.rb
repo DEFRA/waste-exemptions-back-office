@@ -10,7 +10,7 @@ RSpec.describe TestMailer, type: :mailer do
       allow(WasteExemptionsEngine.configuration).to receive(:service_name).and_return("WEX")
     end
 
-    let(:mail) { TestMailer.test_email }
+    let(:mail) { described_class.test_email }
 
     it "uses the correct 'to' address" do
       expect(mail.to).to eq(["test@example.com"])
