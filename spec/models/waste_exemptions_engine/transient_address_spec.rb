@@ -8,7 +8,7 @@ RSpec.describe WasteExemptionsEngine::TransientAddress, type: :model do
 
   describe "#search_for_postcode" do
     let(:term) { nil }
-    let(:scope) { WasteExemptionsEngine::TransientAddress.search_for_postcode(term) }
+    let(:scope) { described_class.search_for_postcode(term) }
 
     context "when the search term is a postcode" do
       let(:term) { matching_address.postcode }
@@ -24,7 +24,7 @@ RSpec.describe WasteExemptionsEngine::TransientAddress, type: :model do
   end
 
   describe "#site" do
-    let(:scope) { WasteExemptionsEngine::TransientAddress.site }
+    let(:scope) { described_class.site }
 
     it "returns site addresses" do
       expect(scope).to include(matching_address)

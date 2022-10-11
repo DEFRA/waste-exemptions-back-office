@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "2.7.1"
+ruby "3.1.2"
 
 # Allows us to automatically generate the change log from the tags, issues,
 # labels and pull requests on GitHub. Added as a dependency so all dev's have
@@ -21,6 +21,13 @@ gem "govuk_design_system_formbuilder"
 # Use jquery as the JavaScript library
 gem "jquery-rails"
 # Use postgresql as the database for Active Record
+
+gem "matrix"
+
+gem "net-imap"
+gem "net-pop"
+gem "net-smtp"
+
 gem "pg"
 # Automatically kills connections to Postgres when running rake tasks that
 # involve a database drop. Stops the error
@@ -30,28 +37,23 @@ gem "pgreset"
 gem "sassc-rails"
 # Bundle edge Rails instead: gem "rails', github: 'rails/rails'
 gem "rails", "~> 6.1"
-# Use SCSS for stylesheets
-# gem "sass-rails", "~> 5.0"
-
-# Bump the bundler gem version to avoid a deployment error
-gem "bundler", ">= 2.0"
 
 # Automatically apply http headers that are related to security
-gem "secure_headers", "~> 5.0"
+gem "secure_headers", "~> 6.3"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
 # Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
+gem "uglifier", ">= 4.2"
 
 # Use CanCanCan for user roles and permissions
-gem "cancancan", "~> 3.2"
+gem "cancancan", "~> 3.3"
 
 # Use Devise for user authentication
 gem "devise"
 gem "devise_invitable"
 
 # Use Kaminari for pagination
-gem "kaminari", "~> 1.1"
+gem "kaminari", "~> 1.2"
 
 # Use Whenever to manage cron tasks
 gem "whenever", "~> 1.0"
@@ -70,9 +72,6 @@ gem "defra_ruby_features", "~> 0.1"
 
 # Use the Defra Ruby Aws gem for loading files to AWS buckets
 gem "defra_ruby_aws", "~> 0.4"
-
-# bundle exec rake doc:rails generates the API under doc/api.
-gem "sdoc", "~> 1.1.0", group: :doc
 
 # Manage, create and open zip files https://github.com/rubyzip/rubyzip
 gem "rubyzip"
@@ -102,11 +101,13 @@ group :development, :test do
 end
 
 group :development do
+  gem "rubocop-rails"
+  gem "rubocop-rspec"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
   gem "spring-commands-rspec"
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem "web-console", "~> 2.0"
+  gem "web-console"
 end
 
 group :test do
@@ -127,8 +128,8 @@ group :test do
   gem "webmock", "~> 3.5"
 
   # Allow automated testing of the whenever schedule
-  gem "whenever-test", "~> 1.0"
+  gem "whenever-test"
 
-  # Use Bullet to find unoptimised querries
+  # Use Bullet to find unoptimised queries
   gem "bullet"
 end

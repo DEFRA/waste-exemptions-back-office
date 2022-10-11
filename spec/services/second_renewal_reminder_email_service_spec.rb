@@ -6,9 +6,10 @@ RSpec.describe SecondRenewalReminderEmailService do
   describe "run" do
     let(:registration) { create(:registration, :site_uses_address) }
     let(:service) do
-      SecondRenewalReminderEmailService.run(registration: registration)
+      described_class.run(registration: registration)
     end
 
+    # rubocop:disable RSpec/AnyInstance
     it "sends an email" do
       VCR.use_cassette("second_renewal_reminder_email") do
         expect_any_instance_of(Notifications::Client).to receive(:send_email).and_call_original
@@ -20,5 +21,6 @@ RSpec.describe SecondRenewalReminderEmailService do
         expect(response.content["subject"]).to eq("Renew your waste exemptions online now")
       end
     end
+    # rubocop:enable RSpec/AnyInstance
   end
 end

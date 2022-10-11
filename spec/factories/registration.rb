@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :registration, class: WasteExemptionsEngine::Registration do
+  factory :registration, class: "WasteExemptionsEngine::Registration" do
     location { "england" }
     business_type { "limitedCompany" }
     company_no { "09360070" }
@@ -99,8 +99,8 @@ FactoryBot.define do
       after(:build) do |reg|
         reg.registration_exemptions.each do |re|
           re.state = :active
-          re.expires_on = Date.today + 3.years
-          re.registered_on = Date.today
+          re.expires_on = Time.zone.today + 3.years
+          re.registered_on = Time.zone.today
         end
       end
     end

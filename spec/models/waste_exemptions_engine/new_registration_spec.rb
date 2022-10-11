@@ -8,7 +8,7 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
 
   describe "#search_registration_and_relations" do
     let(:term) { nil }
-    let(:scope) { WasteExemptionsEngine::NewRegistration.search_registration_and_relations(term) }
+    let(:scope) { described_class.search_registration_and_relations(term) }
 
     context "when the search term is an applicant_email" do
       let(:term) { matching_registration.applicant_email }
@@ -160,6 +160,7 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
       context "when the address is a site address" do
         let(:site_address) { matching_registration.site_address }
         let(:term) { site_address.postcode }
+
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
@@ -168,6 +169,7 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
       context "when the address is a contact address" do
         let(:contact_address) { matching_registration.contact_address }
         let(:term) { contact_address.postcode }
+
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
@@ -176,6 +178,7 @@ RSpec.describe WasteExemptionsEngine::NewRegistration, type: :model do
       context "when the address is a operator address" do
         let(:operator_address) { matching_registration.operator_address }
         let(:term) { operator_address.postcode }
+
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end

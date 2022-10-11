@@ -4,21 +4,25 @@ require "rails_helper"
 
 RSpec.describe "Dashboards", type: :request do
   describe "/" do
+    let(:results) { Kaminari.paginate_array([]).page(1) }
+
     context "when a valid user is signed in" do
+      # rubocop:disable RSpec/AnyInstance
       before do
         sign_in(create(:user))
         # Stub the service to reduce database hits
-        results = Kaminari.paginate_array([]).page(1)
         allow_any_instance_of(SearchService).to receive(:search).and_return(results)
       end
+      # rubocop:enable RSpec/AnyInstance
 
       it "renders the index template and returns a 200 response" do
         get "/"
 
         expect(response).to render_template(:index)
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
 
+      # rubocop:disable RSpec/AnyInstance
       context "when there is a term, a filter and a page" do
         it "calls a SearchService with the correct params" do
           expect_any_instance_of(SearchService).to receive(:search).with("foo", :registrations, "2")
@@ -26,6 +30,7 @@ RSpec.describe "Dashboards", type: :request do
           get "/", params: { term: "foo", filter: "registrations", page: "2" }
         end
       end
+      # rubocop:enable RSpec/AnyInstance
 
       context "when the SearchService does not return results" do
         it "says there are no results" do
@@ -38,11 +43,7 @@ RSpec.describe "Dashboards", type: :request do
       context "when the SearchService returns one registration and one new_registration" do
         let(:registration) { create(:registration) }
         let(:new_registration) { create(:new_registration) }
-
-        before do
-          results = Kaminari.paginate_array([registration, new_registration]).page(1)
-          allow_any_instance_of(SearchService).to receive(:search).and_return(results)
-        end
+        let(:results) { Kaminari.paginate_array([registration, new_registration]).page(1) }
 
         it "lists the results" do
           get "/", params: { term: "foo" }

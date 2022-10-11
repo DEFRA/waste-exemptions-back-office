@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
   subject(:registration_exemption) { build(:registration).registration_exemptions.first }
+
   let(:permitted_states) { registration_exemption.aasm.states(permitted: true).map(&:name) }
 
   deregistration_states = %i[cease revoke]
@@ -12,7 +13,7 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
 
   describe "exemption state" do
     context "when the state is 'active'" do
-      before(:each) do
+      before do
         registration_exemption.state = :active
         registration_exemption.deregistered_at = nil
       end
@@ -22,10 +23,10 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
       end
 
       transitions.zip(inactive_states).each do |transition, expected_state|
-        context "and the '#{transition}' transition is executed" do
+        context "when the '#{transition}' transition is executed" do
           it "reflects the correct state" do
             expect { registration_exemption.send("#{transition}!") }
-              .to change { registration_exemption.state }
+              .to change(registration_exemption, :state)
               .from("active")
               .to(expected_state.to_s)
           end
@@ -33,14 +34,14 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
           if deregistration_states.include? transition
             it "updates the deregistered_at time stamp" do
               expect { registration_exemption.send("#{transition}!") }
-                .to change { registration_exemption.deregistered_at }
+                .to change(registration_exemption, :deregistered_at)
                 .from(nil)
-                .to(Date.today)
+                .to(Time.zone.today)
             end
           else
             it "does not update the deregistered_at time stamp" do
               expect { registration_exemption.send("#{transition}!") }
-                .to_not change { registration_exemption.deregistered_at }
+                .not_to change(registration_exemption, :deregistered_at)
                 .from(nil)
             end
           end
@@ -50,7 +51,8 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
 
     inactive_states.each do |inactive_state|
       context "when the state is #{inactive_state}" do
-        before(:each) { registration_exemption.state = inactive_state }
+        before { registration_exemption.state = inactive_state }
+
         it "can not transition to any other status" do
           expect(permitted_states).to be_empty
         end
@@ -65,7 +67,7 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
       let(:registration) { build(:registration) }
 
       it "returns false" do
-        expect(subject.renewal).to be false
+        expect(registration_exemption.renewal).to be false
       end
     end
 
@@ -73,7 +75,7 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
       let(:registration) { build(:registration, referring_registration: build(:registration)) }
 
       it "returns true" do
-        expect(subject.renewal).to be true
+        expect(registration_exemption.renewal).to be true
       end
     end
   end

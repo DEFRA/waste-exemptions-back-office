@@ -3,6 +3,10 @@
 # rubocop:disable Metrics/ClassLength
 module Reports
   class ExemptionBulkReportPresenter < BasePresenter
+
+    delegate :code, to: :exemption, prefix: true
+    delegate :summary, to: :exemption, prefix: true
+
     def reference_number
       registration.reference
     end
@@ -81,14 +85,6 @@ module Reports
 
     def site_location_area
       site_address&.area
-    end
-
-    def exemption_code
-      exemption.code
-    end
-
-    def exemption_summary
-      exemption.summary
     end
 
     def exemption_status

@@ -6,7 +6,8 @@ RSpec.describe "Users", type: :request do
   describe "/users" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -17,17 +18,18 @@ RSpec.describe "Users", type: :request do
         get "/users"
 
         expect(response).to render_template(:index)
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
         expect(response.body).to include("Manage back office users")
         expect(response.body).to include("Show all users")
         expect(response.body).to include(active_user.email)
-        expect(response.body).to_not include(deactivated_user.email)
+        expect(response.body).not_to include(deactivated_user.email)
       end
     end
 
     context "when a non-system user is signed in" do
       let(:user) { create(:user, :data_agent) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -50,7 +52,8 @@ RSpec.describe "Users", type: :request do
   describe "/users/all" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -61,7 +64,7 @@ RSpec.describe "Users", type: :request do
         get "/users/all"
 
         expect(response).to render_template(:index)
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
         expect(response.body).to include("Show enabled users only")
         expect(response.body).to include(active_user.email)
         expect(response.body).to include(deactivated_user.email)
@@ -70,7 +73,8 @@ RSpec.describe "Users", type: :request do
 
     context "when a non-system user is signed in" do
       let(:user) { create(:user, :data_agent) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 

@@ -34,7 +34,7 @@ module WasteExemptionsBackOffice
     config.time_zone = "London"
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
@@ -43,7 +43,7 @@ module WasteExemptionsBackOffice
     # rails does this it messes with the GOV.UK styling and causes checkboxes
     # and radio buttons to become invisible
     config.action_view.field_error_proc = proc { |html_tag, _instance|
-      html_tag.to_s.html_safe
+      html_tag.to_s
     }
 
     # https://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#active-record-belongs-to-required-by-default-option
@@ -58,12 +58,12 @@ module WasteExemptionsBackOffice
 
     # Companies House config
     config.companies_house_host = ENV["COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk/company/"
-    config.companies_house_api_key = ENV["COMPANIES_HOUSE_API_KEY"]
+    config.companies_house_api_key = ENV.fetch("COMPANIES_HOUSE_API_KEY", nil)
 
     # Data export config
-    config.bulk_reports_bucket_name = ENV["AWS_BULK_EXPORT_BUCKET"]
-    config.epr_reports_bucket_name = ENV["AWS_DAILY_EXPORT_BUCKET"]
-    config.boxi_exports_bucket_name = ENV["AWS_BOXI_EXPORT_BUCKET"]
+    config.bulk_reports_bucket_name = ENV.fetch("AWS_BULK_EXPORT_BUCKET", nil)
+    config.epr_reports_bucket_name = ENV.fetch("AWS_DAILY_EXPORT_BUCKET", nil)
+    config.boxi_exports_bucket_name = ENV.fetch("AWS_BOXI_EXPORT_BUCKET", nil)
     config.epr_export_filename = ENV["EPR_DAILY_REPORT_FILE_NAME"] || "waste_exemptions_epr_daily_full"
     config.export_batch_size = ENV["EXPORT_SERVICE_BATCH_SIZE"] || 1000
 
@@ -75,7 +75,7 @@ module WasteExemptionsBackOffice
     config.easting_and_northing_lookup_run_for = ENV["EASTING_AND_NORTHING_LOOKUP_RUN_FOR"] || 60
 
     # Emails
-    config.email_test_address = ENV["EMAIL_TEST_ADDRESS"]
+    config.email_test_address = ENV.fetch("EMAIL_TEST_ADDRESS", nil)
     config.second_renewal_email_reminder_days = ENV["SECOND_RENEWAL_EMAIL_BEFORE_DAYS"] || 14
 
     # Database cleanup

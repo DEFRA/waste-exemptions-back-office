@@ -9,7 +9,7 @@ RSpec.describe TransientRegistrationCleanupService do
 
     context "when a transient_registration is older than 30 days" do
       before do
-        transient_registration.update!(created_at: Time.now - 31.days)
+        transient_registration.update!(created_at: 31.days.ago)
       end
 
       it "deletes it" do
@@ -37,7 +37,7 @@ RSpec.describe TransientRegistrationCleanupService do
 
     context "when a transient_registration is newer than 30 days" do
       it "does not delete it" do
-        expect { described_class.run }.to_not change { WasteExemptionsEngine::TransientRegistration.where(id: id).count }.from(1)
+        expect { described_class.run }.not_to change { WasteExemptionsEngine::TransientRegistration.where(id: id).count }.from(1)
       end
     end
   end

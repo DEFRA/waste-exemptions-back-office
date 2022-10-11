@@ -21,7 +21,7 @@ class RemoveNcccEmailService < ::WasteExemptionsEngine::BaseService
     return unless matching_registrations.any?
 
     Rails.logger.info "Clearing wex applicant email addresses: #{matching_registrations.pluck(:applicant_email)}"
-    matching_registrations.update_all(applicant_email: nil)
+    matching_registrations.update(applicant_email: nil)
   end
 
   def clean_up_contact_email
@@ -29,7 +29,7 @@ class RemoveNcccEmailService < ::WasteExemptionsEngine::BaseService
     return unless matching_registrations.any?
 
     Rails.logger.info "Clearing wex contact email addresses: #{matching_registrations.pluck(:contact_email)}"
-    matching_registrations.update_all(contact_email: nil)
+    matching_registrations.update(contact_email: nil)
   end
 
   def find_email_variations(email_type)

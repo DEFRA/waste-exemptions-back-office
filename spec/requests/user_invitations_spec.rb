@@ -6,7 +6,8 @@ RSpec.describe "User Invitations", type: :request do
   describe "GET /users/invitation/new" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -19,7 +20,8 @@ RSpec.describe "User Invitations", type: :request do
 
     context "when a non-system user is signed in" do
       let(:user) { create(:user, :data_agent) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -40,7 +42,8 @@ RSpec.describe "User Invitations", type: :request do
 
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -57,7 +60,8 @@ RSpec.describe "User Invitations", type: :request do
 
     context "when a non-system user is signed in" do
       let(:user) { create(:user, :data_agent) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 

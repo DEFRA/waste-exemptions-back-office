@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :registration_exemption, class: WasteExemptionsEngine::RegistrationExemption do
+  factory :registration_exemption, class: "WasteExemptionsEngine::RegistrationExemption" do
     exemption
-    expires_on { Date.today + 3.years }
-    registered_on { Date.today }
+    expires_on { Time.zone.today + 3.years }
+    registered_on { Time.zone.today }
 
     trait :active do
       state { "active" }
@@ -13,13 +13,13 @@ FactoryBot.define do
     trait :ceased do
       state { "ceased" }
       deregistration_message { "Ceased for reasons" }
-      deregistered_at { Date.today - 1.day }
+      deregistered_at { Time.zone.today - 1.day }
     end
 
     trait :revoked do
       state { "revoked" }
       deregistration_message { "Revoked for reasons" }
-      deregistered_at { Date.today - 1.day }
+      deregistered_at { Time.zone.today - 1.day }
     end
 
     trait :expired do
@@ -31,8 +31,8 @@ FactoryBot.define do
     end
 
     trait :expires_tomorrow do
-      expires_on { Date.today + 1.day }
-      registered_on { (Date.today + 1.day) - 3.years }
+      expires_on { Time.zone.today + 1.day }
+      registered_on { (Time.zone.today + 1.day) - 3.years }
     end
   end
 end

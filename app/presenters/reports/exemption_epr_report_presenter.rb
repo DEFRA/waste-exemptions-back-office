@@ -2,6 +2,9 @@
 
 module Reports
   class ExemptionEprReportPresenter < BasePresenter
+
+    delegate :code, to: :exemption, prefix: true
+
     def registration_number
       registration.reference
     end
@@ -64,10 +67,6 @@ module Reports
 
     def site_northing
       registration.site_address&.y
-    end
-
-    def exemption_code
-      exemption.code
     end
 
     def exemption_registration_date

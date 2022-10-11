@@ -6,7 +6,7 @@ module Reports
   RSpec.describe ExemptionBulkReportPresenter do
     let(:registration) { create(:registration) }
     let(:exemption) { create(:exemption) }
-    let(:registered_on) { Date.today }
+    let(:registered_on) { Time.zone.today }
 
     let(:registration_exemption) do
       create(
@@ -100,7 +100,7 @@ module Reports
         expect(exemption_bulk_report_presenter.organisation_address).to eq("Westland, 45 way, away, Erabor, HD5 JFS")
       end
 
-      context "if the registration has no organisation address" do
+      context "when the registration has no organisation address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns empty values between delimiting commas" do
@@ -144,7 +144,7 @@ module Reports
         expect(exemption_bulk_report_presenter.correspondance_contact_address).to eq("Westland, 45 way, away, Erabor, HD5 JFS")
       end
 
-      context "if the registration has no correspondance contact address" do
+      context "when the registration has no correspondance contact address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns empty values between delimiting commas" do
@@ -220,7 +220,7 @@ module Reports
         expect(exemption_bulk_report_presenter.site_location_address).to eq("Westland, 45 way, away, Erabor, HD5 JFS")
       end
 
-      context "if the address is located by grid reference" do
+      context "when the address is located by grid reference" do
         let(:site_location_address) do
           build(
             :address,
@@ -234,7 +234,7 @@ module Reports
         end
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns empty values between delimiting commas" do
@@ -258,7 +258,7 @@ module Reports
         expect(exemption_bulk_report_presenter.site_location_grid_reference).to eq("ST12345678")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -282,7 +282,7 @@ module Reports
         expect(exemption_bulk_report_presenter.site_location_description).to eq("Next to the big green tree.")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -306,7 +306,7 @@ module Reports
         expect(exemption_bulk_report_presenter.site_location_area).to eq("Site address area")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do

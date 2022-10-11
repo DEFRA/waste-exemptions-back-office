@@ -73,7 +73,7 @@ RSpec.describe "ResendConfirmationLetter", type: :request do
 
       context "when an error happens", disable_bullet: true do
         before do
-          expect(WasteExemptionsEngine::NotifyConfirmationLetterService).to receive(:run).and_raise(StandardError)
+          allow(WasteExemptionsEngine::NotifyConfirmationLetterService).to receive(:run).and_raise(StandardError)
         end
 
         it "return a 302 redirect code" do

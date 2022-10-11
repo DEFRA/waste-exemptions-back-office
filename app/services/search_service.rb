@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SearchService
-  def initialize; end
-
   def search(term, model, page)
     return empty_results(page) if term.blank?
 

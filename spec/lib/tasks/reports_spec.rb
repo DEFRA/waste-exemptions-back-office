@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable RSpec/RepeatedExampleGroupBody
 RSpec.describe "Reports task", type: :rake do
   include_context "rake"
 
@@ -24,3 +25,4 @@ RSpec.describe "Reports task", type: :rake do
   end
 
 end
+# rubocop:enable RSpec/RepeatedExampleGroupBody

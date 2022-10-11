@@ -40,7 +40,7 @@ module Reports
         expect(presenter.organisation_premises).to eq("123 ABC")
       end
 
-      context "if the registration has no organisation address" do
+      context "when the registration has no organisation address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -57,7 +57,7 @@ module Reports
         expect(presenter.organisation_street_address).to eq("32 Foo St")
       end
 
-      context "if the registration has no organisation address" do
+      context "when the registration has no organisation address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -74,7 +74,7 @@ module Reports
         expect(presenter.organisation_locality).to eq("Avon")
       end
 
-      context "if the registration has no organisation address" do
+      context "when the registration has no organisation address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -91,7 +91,7 @@ module Reports
         expect(presenter.organisation_city).to eq("Bristol")
       end
 
-      context "if the registration has no organisation address" do
+      context "when the registration has no organisation address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -117,7 +117,7 @@ module Reports
         expect(presenter.site_premises).to eq("Bar 123")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -134,7 +134,7 @@ module Reports
         expect(presenter.site_street_address).to eq("12 Baz road")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -151,7 +151,7 @@ module Reports
         expect(presenter.site_locality).to eq("Avon")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -168,7 +168,7 @@ module Reports
         expect(presenter.site_city).to eq("Bristol")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -185,7 +185,7 @@ module Reports
         expect(presenter.site_postcode).to eq("BS2 34G")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -202,7 +202,7 @@ module Reports
         expect(presenter.site_country).to eq("GB")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -219,7 +219,7 @@ module Reports
         expect(presenter.site_ngr).to eq("SB1234")
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -236,7 +236,7 @@ module Reports
         expect(presenter.site_easting).to eq(123.45)
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do
@@ -253,7 +253,7 @@ module Reports
         expect(presenter.site_northing).to eq(123.45)
       end
 
-      context "if the registration has no site address" do
+      context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
         it "returns nil" do

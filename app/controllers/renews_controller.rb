@@ -27,7 +27,7 @@ class RenewsController < ApplicationController
   end
 
   def form_path
-    @transient_registration.save unless @transient_registration.token.present?
+    @transient_registration.save if @transient_registration.token.blank?
 
     WasteExemptionsEngine::Engine.routes.url_helpers.send(
       "new_#{@transient_registration.workflow_state}_path".to_sym,

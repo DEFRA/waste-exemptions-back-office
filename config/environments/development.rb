@@ -39,8 +39,8 @@ Rails.application.configure do
 
   # Default settings are for mailcatcher
   config.action_mailer.smtp_settings = {
-    user_name: ENV["EMAIL_USERNAME"],
-    password: ENV["EMAIL_PASSWORD"],
+    user_name: ENV.fetch("EMAIL_USERNAME", nil),
+    password: ENV.fetch("EMAIL_PASSWORD", nil),
     domain: config.back_office_url,
     address: ENV["EMAIL_HOST"] || "localhost",
     port: ENV["EMAIL_PORT"] || 1025,
@@ -75,6 +75,6 @@ Rails.application.configure do
   # but just the first part of it.
   # https://github.com/rails/web-console#configuration
   # https://stackoverflow.com/a/29417509
-  config.web_console.whitelisted_ips = ENV.fetch("SSH_CLIENT", "127.0.0.1").split(" ").first
+  config.web_console.whitelisted_ips = ENV.fetch("SSH_CLIENT", "127.0.0.1").split.first
 end
 # rubocop:enable Metrics/BlockLength

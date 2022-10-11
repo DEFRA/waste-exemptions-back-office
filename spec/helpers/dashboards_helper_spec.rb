@@ -6,7 +6,7 @@ RSpec.describe DashboardsHelper, type: :helper do
   describe "preselect_registrations_radio_button?" do
     context "when @filter is blank" do
       it "returns true" do
-        expect(helper.preselect_registrations_radio_button?).to eq(true)
+        expect(helper.preselect_registrations_radio_button?).to be(true)
       end
     end
 
@@ -14,7 +14,7 @@ RSpec.describe DashboardsHelper, type: :helper do
       before { assign(:filter, :registrations) }
 
       it "returns true" do
-        expect(helper.preselect_registrations_radio_button?).to eq(true)
+        expect(helper.preselect_registrations_radio_button?).to be(true)
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe DashboardsHelper, type: :helper do
       before { assign(:filter, :new_registrations) }
 
       it "returns false" do
-        expect(helper.preselect_registrations_radio_button?).to eq(false)
+        expect(helper.preselect_registrations_radio_button?).to be(false)
       end
     end
   end
@@ -30,7 +30,7 @@ RSpec.describe DashboardsHelper, type: :helper do
   describe "preselect_new_registrations_radio_button?" do
     context "when @filter is blank" do
       it "returns false" do
-        expect(helper.preselect_new_registrations_radio_button?).to eq(false)
+        expect(helper.preselect_new_registrations_radio_button?).to be(false)
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe DashboardsHelper, type: :helper do
       before { assign(:filter, :registrations) }
 
       it "returns false" do
-        expect(helper.preselect_new_registrations_radio_button?).to eq(false)
+        expect(helper.preselect_new_registrations_radio_button?).to be(false)
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe DashboardsHelper, type: :helper do
       before { assign(:filter, :new_registrations) }
 
       it "returns true" do
-        expect(helper.preselect_new_registrations_radio_button?).to eq(true)
+        expect(helper.preselect_new_registrations_radio_button?).to be(true)
       end
     end
   end
@@ -105,7 +105,7 @@ RSpec.describe DashboardsHelper, type: :helper do
     let(:registration) { create(:registration, business_type: business_type) }
     let(:result) { helper.label_for_business(registration) }
 
-    context "when business type is llp" do
+    context "when business type is llp", :tag do
       let(:business_type) { "limitedLiabilityPartnership" }
 
       it { expect(result).to eq("Registered name") }

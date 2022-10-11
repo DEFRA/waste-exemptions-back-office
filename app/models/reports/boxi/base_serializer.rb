@@ -9,9 +9,7 @@ module Reports
         instance = new
         file_path = File.join(dir_path, instance.file_name)
 
-        File.open(file_path, "w") do |file|
-          file.write(instance.to_csv)
-        end
+        File.write(file_path, instance.to_csv)
       end
 
       def to_csv

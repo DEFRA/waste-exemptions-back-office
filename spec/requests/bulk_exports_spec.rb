@@ -5,13 +5,13 @@ require "rails_helper"
 RSpec.describe "Bulk Exports", type: :request do
   let(:user) { create(:user, :system) }
 
-  before(:each) do
+  before do
     sign_in(user)
   end
 
   describe "GET /data-exports" do
     before do
-      create(:generated_report, created_at: Time.new(2019, 6, 1, 12, 0), data_from_date: Date.new(2019, 6, 1))
+      create(:generated_report, created_at: Time.zone.local(2019, 6, 1, 12, 0), data_from_date: Date.new(2019, 6, 1))
     end
 
     it "renders the correct template, the timestamp in an accessible format and responds with a 200 status code" do

@@ -7,7 +7,7 @@ RSpec.describe "NewRegistrations", type: :request do
 
   describe "GET /new-registrations/:id" do
     context "when a user is signed in" do
-      before(:each) do
+      before do
         sign_in(create(:user))
       end
 

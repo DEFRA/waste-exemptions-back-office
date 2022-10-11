@@ -3,9 +3,10 @@
 require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::Registration, type: :model do
+  subject(:registration) { build(:registration) }
+
   let(:matching_registration) { create(:registration) }
   let(:non_matching_registration) { create(:registration) }
-  subject(:registration) { build(:registration) }
 
   describe ".renewals" do
     it "returns registrations that are renewals of older registrations" do
@@ -15,7 +16,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
       result = described_class.renewals
 
       expect(result).to include(renewal)
-      expect(result).to_not include(registration)
+      expect(result).not_to include(registration)
     end
   end
 
@@ -35,7 +36,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
 
       result = described_class.contact_email_present
 
-      expect(result).to_not include(registration)
+      expect(result).not_to include(registration)
     end
   end
 
@@ -55,41 +56,53 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
 
       result = described_class.site_address_is_not_nccc
 
-      expect(result).to_not include(registration)
+      expect(result).not_to include(registration)
     end
   end
 
   describe "#renewable?" do
 
-    context "when the registration is in a renewal window and renewal state" do
-      it "returns true" do
-        allow(registration).to receive(:in_renewal_window?).and_return(true)
-        allow(registration).to receive(:in_renewable_state?).and_return(true)
+    before do
+      allow(WasteExemptionsEngine.configuration).to receive(:renewal_window_before_expiry_in_days).and_return(28)
+      allow(WasteExemptionsEngine.configuration).to receive(:renewal_window_after_expiry_in_days).and_return(30)
+    end
 
+    let(:registration_exemption) { build(:registration_exemption, expires_on: expires_on, state: state) }
+    let(:registration) { create(:registration, registration_exemptions: [registration_exemption]) }
+
+    context "when the registration is in a renewal window and renewal state" do
+      let(:expires_on) { 10.days.from_now }
+      let(:state) { "active" }
+
+      it "returns true" do
         expect(registration).to be_renewable
       end
     end
 
     context "when the registration is not in a renewal window" do
-      it "returns false" do
-        allow(registration).to receive(:in_renewal_window?).and_return(false)
-        allow(registration).to receive(:in_renewable_state?).and_return(true)
+      let(:expires_on) { 50.days.from_now }
+      let(:state) { "active" }
 
-        expect(registration).to_not be_renewable
+      it "returns false" do
+        expect(registration).not_to be_renewable
       end
     end
 
     context "when the registration is not in a renewal state" do
-      it "returns false" do
-        allow(registration).to receive(:in_renewal_window?).and_return(true)
-        allow(registration).to receive(:in_renewable_state?).and_return(false)
+      let(:expires_on) { 10.days.from_now }
+      let(:state) { "ceased" }
 
-        expect(registration).to_not be_renewable
+      it "returns false" do
+        expect(registration).not_to be_renewable
       end
     end
   end
 
   describe "#in_renewable_state?" do
+
+    let(:registration_exemption) { build(:registration_exemption, state: state) }
+    let(:registration) { create(:registration, registration_exemptions: [registration_exemption]) }
+
     before do
       allow(registration).to receive(:state).and_return(state)
     end
@@ -114,14 +127,14 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
       let(:state) { "ceased" }
 
       it "returns false" do
-        expect(registration).to_not be_in_renewable_state
+        expect(registration).not_to be_in_renewable_state
       end
     end
   end
 
   describe "#search_registration_and_relations" do
     let(:term) { nil }
-    let(:scope) { WasteExemptionsEngine::Registration.search_registration_and_relations(term) }
+    let(:scope) { described_class.search_registration_and_relations(term) }
 
     context "when the search term is an applicant_email" do
       let(:term) { matching_registration.applicant_email }
@@ -273,6 +286,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
       context "when the address is a site address" do
         let(:site_address) { matching_registration.site_address }
         let(:term) { site_address.postcode }
+
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
@@ -281,6 +295,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
       context "when the address is a contact address" do
         let(:contact_address) { matching_registration.contact_address }
         let(:term) { contact_address.postcode }
+
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
@@ -289,6 +304,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
       context "when the address is an operator address" do
         let(:operator_address) { matching_registration.operator_address }
         let(:term) { operator_address.postcode }
+
         it "is included in the scope" do
           expect(scope).to include(matching_registration)
         end
@@ -318,19 +334,25 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
   end
 
   describe "#active?" do
+
+    let(:registration_exemption) { build(:registration_exemption, state: exemption_state) }
+    let(:registration) { create(:registration, registration_exemptions: [registration_exemption]) }
+
     context "when the state is :active" do
-      before(:each) { allow(subject).to receive(:state).and_return("active") }
+      let(:exemption_state) { "active" }
 
       it "returns `true`" do
-        expect(subject.active?).to eq true
+        expect(registration.active?).to be true
       end
     end
+
     %w[ceased revoked expired].each do |state|
       context "when the state is :#{state}" do
-        before(:each) { allow(subject).to receive(:state).and_return(state) }
+
+        let(:exemption_state) { state }
 
         it "returns `false`" do
-          expect(subject.active?).to eq false
+          expect(registration.active?).to be false
         end
       end
     end
@@ -357,7 +379,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
     context "when the registration's exemption registrations have mixed states" do
       subject(:registration) { create(:registration, registration_exemptions: registration_exemptions) }
 
-      context "When at least one exemption is in an active status" do
+      context "when at least one exemption is in an active status" do
         let(:registration_exemptions) do
           [
             build(:registration_exemption, :active),
@@ -370,7 +392,7 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
         end
       end
 
-      context "When no exemption in the registration is still active" do
+      context "when no exemption in the registration is still active" do
         let(:registration_exemptions) do
           [
             build(:registration_exemption, :revoked),
@@ -378,13 +400,13 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
           ]
         end
 
-        context "and at least one exemption is in a revoked status" do
+        context "when at least one exemption is in a revoked status" do
           it "returns revoked status" do
             expect(registration.state).to eq("revoked")
           end
         end
 
-        context "no exemption is in a revoked status" do
+        context "when no exemption is in a revoked status" do
           let(:registration_exemptions) do
             [
               build(:registration_exemption, :expired),
@@ -392,13 +414,13 @@ RSpec.describe WasteExemptionsEngine::Registration, type: :model do
             ]
           end
 
-          context "and at least one exemption is in a expired status" do
+          context "when at least one exemption is in a expired status" do
             it "returns expired status" do
               expect(registration.state).to eq("expired")
             end
           end
 
-          context "no exemption is in a expired status" do
+          context "when no exemption is in a expired status" do
             let(:registration_exemptions) do
               [
                 build(:registration_exemption, :ceased),

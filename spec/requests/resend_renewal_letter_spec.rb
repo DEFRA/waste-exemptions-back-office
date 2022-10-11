@@ -73,7 +73,7 @@ RSpec.describe "ResendRenewalLetter", type: :request do
 
       context "when an error happens", disable_bullet: true do
         before do
-          expect(NotifyRenewalLetterService).to receive(:run).and_raise(StandardError)
+          allow(NotifyRenewalLetterService).to receive(:run).and_raise(StandardError)
         end
 
         it "return a 302 redirect code" do

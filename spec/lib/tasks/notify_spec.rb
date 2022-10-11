@@ -10,10 +10,10 @@ RSpec.describe "Notify task", type: :rake do
     subject { Rake::Task["notify:letters:ad_renewals"] }
 
     # By default Rails prevents multiple invocations of the same Rake task in succession
-    after(:each) { subject.reenable }
+    after { subject.reenable }
 
     it "runs without error" do
-      expect(BulkNotifyRenewalLettersService).to receive(:run).and_return([build(:registration)])
+      allow(BulkNotifyRenewalLettersService).to receive(:run).and_return([build(:registration)])
       expect { subject.invoke }.not_to raise_error
     end
 
@@ -21,8 +21,11 @@ RSpec.describe "Notify task", type: :rake do
 
       context "with the default lead time" do
         it "runs the service with the default lead time" do
-          expect(BulkNotifyRenewalLettersService).to receive(:run).with(30.days.from_now.to_date)
+          allow(BulkNotifyRenewalLettersService).to receive(:run)
+
           subject.invoke
+
+          expect(BulkNotifyRenewalLettersService).to have_received(:run).with(30.days.from_now.to_date)
         end
       end
 
@@ -39,8 +42,11 @@ RSpec.describe "Notify task", type: :rake do
         end
 
         it "runs the service with the specified lead time" do
-          expect(BulkNotifyRenewalLettersService).to receive(:run).with(33.days.from_now.to_date)
+          allow(BulkNotifyRenewalLettersService).to receive(:run)
+
           subject.invoke
+
+          expect(BulkNotifyRenewalLettersService).to have_received(:run).with(33.days.from_now.to_date)
         end
       end
     end

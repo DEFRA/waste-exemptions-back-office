@@ -8,7 +8,10 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
   describe "GET /resend-confirmation-email/:reference" do
     let(:request_path) { "/resend-confirmation-email/#{registration.reference}" }
 
-    before { sign_in(user) if defined?(user) }
+    before do
+      sign_in(user) if defined?(user)
+      allow(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run)
+    end
 
     context "when a data agent user is signed in" do
       let(:user) { create(:user, :data_agent) }
@@ -55,7 +58,7 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
 
         context "when an error happens" do
           before do
-            expect(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).and_raise(StandardError)
+            allow(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).and_raise(StandardError)
           end
 
           it "returns an error message" do
@@ -78,24 +81,22 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
           success_message = I18n.t("resend_confirmation_email.messages.success.one",
                                    default_email: registration.applicant_email)
 
-          # Chose to stub this rather than have to deal with VCR and multiple requests
-          expect(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).with(
-            registration: registration,
-            recipient: registration.applicant_email
-          )
-          expect(WasteExemptionsEngine::ConfirmationEmailService).to_not receive(:run).with(
-            registration: registration,
-            recipient: registration.contact_email
-          )
-
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
           follow_redirect!
           expect(response.body).to include(success_message)
+          expect(WasteExemptionsEngine::ConfirmationEmailService).to have_received(:run).with(
+            registration: registration,
+            recipient: registration.applicant_email
+          )
+          expect(WasteExemptionsEngine::ConfirmationEmailService).not_to have_received(:run).with(
+            registration: registration,
+            recipient: registration.contact_email
+          )
         end
 
         context "when an error happens" do
           before do
-            expect(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).and_raise(StandardError)
+            allow(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).and_raise(StandardError)
           end
 
           it "returns an error message" do
@@ -115,25 +116,23 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
                                    applicant_email: registration.applicant_email,
                                    contact_email: registration.contact_email)
 
-          # Chose to stub this rather than have to deal with VCR and multiple requests
-          expect(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).with(
-            registration: registration,
-            recipient: registration.applicant_email
-          )
-          expect(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).with(
-            registration: registration,
-            recipient: registration.contact_email
-          )
-
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
           follow_redirect!
 
           expect(response.body).to include(success_message)
+          expect(WasteExemptionsEngine::ConfirmationEmailService).to have_received(:run).with(
+            registration: registration,
+            recipient: registration.applicant_email
+          )
+          expect(WasteExemptionsEngine::ConfirmationEmailService).to have_received(:run).with(
+            registration: registration,
+            recipient: registration.contact_email
+          )
         end
 
         context "when an error happens" do
           before do
-            expect(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).and_raise(StandardError)
+            allow(WasteExemptionsEngine::ConfirmationEmailService).to receive(:run).and_raise(StandardError)
           end
 
           it "returns an error message" do
@@ -154,14 +153,13 @@ RSpec.describe "ResendConfirmationEmail", type: :request do
         end
 
         it "returns a success message" do
-          expect(WasteExemptionsEngine::ConfirmationEmailService).to_not receive(:run)
-
           success_message = I18n.t("resend_confirmation_email.messages.success.zero")
 
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
           follow_redirect!
 
           expect(response.body).to include(success_message)
+          expect(WasteExemptionsEngine::ConfirmationEmailService).not_to have_received(:run)
         end
       end
     end

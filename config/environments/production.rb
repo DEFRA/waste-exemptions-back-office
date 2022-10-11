@@ -98,11 +98,11 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
-    user_name: ENV["EMAIL_USERNAME"],
-    password: ENV["EMAIL_PASSWORD"],
+    user_name: ENV.fetch("EMAIL_USERNAME", nil),
+    password: ENV.fetch("EMAIL_PASSWORD", nil),
     domain: config.back_office_url,
-    address: ENV["EMAIL_HOST"],
-    port: ENV["EMAIL_PORT"],
+    address: ENV.fetch("EMAIL_HOST", nil),
+    port: ENV.fetch("EMAIL_PORT", nil),
     authentication: :plain,
     enable_starttls_auto: true
   }

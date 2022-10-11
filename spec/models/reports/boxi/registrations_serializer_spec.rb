@@ -22,19 +22,19 @@ module Reports
       end
 
       describe "#parse_assistance_mode" do
-        context "for an unassisted registration" do
+        context "with an unassisted registration" do
           it "returns 'Unassisted'" do
             expect(described_class.new.parse_assistance_mode(nil)).to eq("Unassisted")
           end
         end
 
-        context "for a fully assisted registration" do
+        context "with a fully assisted registration" do
           it "returns 'Fully assisted'" do
             expect(described_class.new.parse_assistance_mode("full")).to eq("Fully assisted")
           end
         end
 
-        context "for a partially assisted registration" do
+        context "with a partially assisted registration" do
           it "returns 'Partially assisted'" do
             expect(described_class.new.parse_assistance_mode("partial")).to eq("Partially assisted")
           end

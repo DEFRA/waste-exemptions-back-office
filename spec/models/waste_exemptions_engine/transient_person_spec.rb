@@ -8,7 +8,7 @@ RSpec.describe WasteExemptionsEngine::TransientPerson, type: :model do
 
   describe "#search_for_name" do
     let(:term) { nil }
-    let(:scope) { WasteExemptionsEngine::TransientPerson.search_for_name(term) }
+    let(:scope) { described_class.search_for_name(term) }
 
     context "when the search term is a first_name" do
       let(:term) { matching_person.first_name }

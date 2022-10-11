@@ -12,7 +12,7 @@ WasteExemptionsEngine.configure do |configuration|
 
   # Companies house API config
   configuration.companies_house_host = ENV["COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk/company/"
-  configuration.companies_house_api_key = ENV["COMPANIES_HOUSE_API_KEY"]
+  configuration.companies_house_api_key = ENV.fetch("COMPANIES_HOUSE_API_KEY", nil)
 
   # Address lookup config
   configuration.address_host = ENV["ADDRESSBASE_URL"] || "http://localhost:3002"
@@ -42,12 +42,12 @@ WasteExemptionsEngine.configure do |configuration|
   configuration.renewal_window_after_expiry_in_days = ENV["RENEWAL_WINDOW_AFTER_EXPIRY_IN_DAYS"] || 30
 
   # Configure airbrake, which is done via the engine using defra_ruby_alert
-  configuration.airbrake_enabled = ENV["USE_AIRBRAKE"]
-  configuration.airbrake_host = ENV["AIRBRAKE_HOST"]
-  configuration.airbrake_project_key = ENV["AIRBRAKE_BO_PROJECT_KEY"]
+  configuration.airbrake_enabled = ENV.fetch("USE_AIRBRAKE", nil)
+  configuration.airbrake_host = ENV.fetch("AIRBRAKE_HOST", nil)
+  configuration.airbrake_project_key = ENV.fetch("AIRBRAKE_BO_PROJECT_KEY", nil)
   configuration.airbrake_blocklist = [/password/i, /authorization/i]
 
   # Notify config
-  configuration.notify_api_key = ENV["NOTIFY_API_KEY"]
+  configuration.notify_api_key = ENV.fetch("NOTIFY_API_KEY", nil)
 end
 WasteExemptionsEngine.start_airbrake

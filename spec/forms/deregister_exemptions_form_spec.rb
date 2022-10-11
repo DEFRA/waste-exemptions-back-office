@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe DeregisterExemptionsForm, type: :model do
   subject(:form) { described_class.new }
+
   let(:super_agent_user) { build(:user, :super_agent) }
   let(:active_registration_exemption) do
     reg_exemption = build(:registration).registration_exemptions.first
@@ -30,16 +31,16 @@ RSpec.describe DeregisterExemptionsForm, type: :model do
 
   describe "#submit" do
     context "when the form is valid" do
-      it "should submit" do
+      it "submits" do
         good_params = { state_transition: "revoke", message: "This exemption is no longer relevant" }
-        expect(form.submit(good_params, deregistration_service)).to eq(true)
+        expect(form.submit(good_params, deregistration_service)).to be(true)
       end
     end
 
     context "when the form is not valid" do
-      it "should not submit" do
+      it "does not submit" do
         bad_params = { state_transition: "deactivate", message: Helpers::TextGenerator.random_string(501) }
-        expect(form.submit(bad_params, deregistration_service)).to eq(false)
+        expect(form.submit(bad_params, deregistration_service)).to be(false)
       end
     end
   end

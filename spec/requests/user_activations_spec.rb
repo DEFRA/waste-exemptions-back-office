@@ -9,7 +9,8 @@ RSpec.describe "User Activations", type: :request do
   describe "GET /users/activate/:id" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -32,7 +33,8 @@ RSpec.describe "User Activations", type: :request do
 
     context "when a non-system user is signed in" do
       let(:user) { create(:user, :data_agent) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -47,7 +49,8 @@ RSpec.describe "User Activations", type: :request do
   describe "GET /users/deactivate/:id" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -72,7 +75,8 @@ RSpec.describe "User Activations", type: :request do
   describe "POST /users/activate" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -81,7 +85,7 @@ RSpec.describe "User Activations", type: :request do
           post "/users/activate/#{inactive_user.id}"
 
           expect(response).to redirect_to(users_path)
-          expect(inactive_user.reload.active?).to eq(true)
+          expect(inactive_user.reload.active?).to be(true)
         end
       end
 
@@ -98,7 +102,8 @@ RSpec.describe "User Activations", type: :request do
   describe "POST /users/deactivate" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }
-      before(:each) do
+
+      before do
         sign_in(user)
       end
 
@@ -107,7 +112,7 @@ RSpec.describe "User Activations", type: :request do
           post "/users/deactivate/#{active_user.id}"
 
           expect(response).to redirect_to(users_path)
-          expect(active_user.reload.active?).to eq(false)
+          expect(active_user.reload.active?).to be(false)
         end
       end
 

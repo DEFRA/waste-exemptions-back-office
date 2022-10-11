@@ -10,7 +10,7 @@ RSpec.describe "Renews", type: :request do
   describe "GET /renews/:reference" do
     let(:request_path) { "/renew/#{registration.reference}" }
 
-    before(:each) do
+    before do
       sign_in(user) if defined?(user)
     end
 
@@ -28,11 +28,13 @@ RSpec.describe "Renews", type: :request do
     context "when an admin agent user is signed in" do
       let(:user) { create(:user, :admin_agent) }
 
+      # rubocop:disable RSpec/AnyInstance
       before do
         allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
         allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(Faker::Company.name)
         allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"])
       end
+      # rubocop:enable RSpec/AnyInstance
 
       it "return a 303 redirect code and redirect to the renewal start form" do
         get request_path
@@ -65,7 +67,7 @@ RSpec.describe "Renews", type: :request do
       end
 
       context "when the business type is not a company or llp" do
-        before { registration.update_attribute(:business_type, "soleTrader") }
+        before { registration.update(business_type: "soleTrader") }
 
         it "redirects to the renewal start form, creates a new RenewingRegistration and returns a 303 status code" do
           get request_path

@@ -7,29 +7,35 @@ module Reports
     describe ".run" do
       let(:number_of_months) { 13 }
 
+      before do
+        allow(GeneratedReport).to receive(:delete_all)
+        allow(MonthlyBulkReportService).to receive(:run)
+      end
+
       it "clear out all existing records from the database" do
         create(:registration)
 
-        expect(GeneratedReport).to receive(:delete_all)
         stub_request(:put, %r{https://.*\.s3\.eu-west-1\.amazonaws\.com.*})
 
-        BulkExportService.run
+        described_class.run
+
+        expect(GeneratedReport).to have_received(:delete_all)
       end
 
       it "executes a MonthlyBulkReportService for every month since the first registration was submitted" do
         create(:registration, submitted_at: number_of_months.months.ago)
 
-        expect(MonthlyBulkReportService).to receive(:run).exactly(number_of_months + 1).times
+        described_class.run
 
-        BulkExportService.run
+        expect(MonthlyBulkReportService).to have_received(:run).exactly(number_of_months + 1).times
       end
 
-      context "if there are no registrations to report" do
-        it "exit and do nothing" do
-          expect(GeneratedReport).to_not receive(:delete_all)
-          expect(MonthlyBulkReportService).to_not receive(:run)
+      context "when there are no registrations to report" do
+        it "exits and does nothing" do
+          described_class.run
 
-          BulkExportService.run
+          expect(GeneratedReport).not_to have_received(:delete_all)
+          expect(MonthlyBulkReportService).not_to have_received(:run)
         end
       end
     end
