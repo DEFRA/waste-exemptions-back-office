@@ -49,5 +49,8 @@ WasteExemptionsEngine.configure do |configuration|
 
   # Notify config
   configuration.notify_api_key = ENV.fetch("NOTIFY_API_KEY", nil)
+
+  # Enable user tracking in PaperTrail
+  configuration.use_current_user_for_whodunnit = "true"
 end
 WasteExemptionsEngine.start_airbrake
