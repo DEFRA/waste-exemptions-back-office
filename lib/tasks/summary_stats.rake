@@ -56,14 +56,14 @@ namespace :summary_stats do
 
     assisted_digital_registrations = WasteExemptionsEngine::Registration.where(
       created_at: start_date.beginning_of_day..end_date.end_of_day,
-      assistance_mode: nil
+      assistance_mode: "full"
     ).count
     assisted_digital_registrations_s = number_with_delimiter(assisted_digital_registrations)
     puts "\t... assisted digital: #{assisted_digital_registrations_s}"
 
     fully_digital_registrations = WasteExemptionsEngine::Registration.where(
       created_at: start_date.beginning_of_day..end_date.end_of_day,
-      assistance_mode: "full"
+      assistance_mode: nil
     ).count
     fully_digital_registrations_s = number_with_delimiter(fully_digital_registrations)
     puts "\t... fully digital: #{fully_digital_registrations}"
