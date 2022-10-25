@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe RegistrationsHelper, type: :helper do
+RSpec.describe RegistrationsHelper do
   let(:resource) { build(:new_registration) }
 
   describe "applicant_data_present?" do

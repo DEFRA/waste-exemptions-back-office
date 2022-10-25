@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "User Activations", type: :request do
+RSpec.describe "User Activations" do
   let(:active_user) { create(:user) }
   let(:inactive_user) { create(:user, :inactive) }
 

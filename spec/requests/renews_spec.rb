@@ -3,7 +3,7 @@
 require "rails_helper"
 require "defra_ruby_companies_house"
 
-RSpec.describe "Renews", type: :request do
+RSpec.describe "Renews" do
   let(:registration) { create(:registration) }
   let(:transient_registration_token) { WasteExemptionsEngine::RenewingRegistration.last.token }
 

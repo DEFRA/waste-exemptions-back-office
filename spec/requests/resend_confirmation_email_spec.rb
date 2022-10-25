@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "ResendConfirmationEmail", type: :request do
+RSpec.describe "ResendConfirmationEmail" do
   let(:registration) { create(:registration) }
 
   describe "GET /resend-confirmation-email/:reference" do

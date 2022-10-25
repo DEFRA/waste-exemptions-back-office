@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Deregister Exemptions Forms", type: :request do
+RSpec.describe "Deregister Exemptions Forms" do
   let(:form) { DeregisterExemptionsForm.new }
   let(:user) { create(:user, :super_agent) }
 

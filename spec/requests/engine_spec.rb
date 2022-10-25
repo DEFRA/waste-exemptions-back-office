@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Waste Exemptions Engine", type: :request do
+RSpec.describe "Waste Exemptions Engine" do
   describe "/start" do
     let(:request_path) { "/start" }
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe EditHelper, type: :helper do
+RSpec.describe EditHelper do
   let(:edit_registration) { build(:edit_registration) }
 
   describe "edit_back_path" do

@@ -101,7 +101,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "rubocop-rails"
+  gem "rubocop-rails", "!= 2.17.0", "!= 2.17.1" # v2.17.0 - 2.17.1 has a problem parsing text_generator.rb
   gem "rubocop-rspec"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
