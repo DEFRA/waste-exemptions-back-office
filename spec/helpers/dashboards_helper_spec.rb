@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DashboardsHelper, type: :helper do
+RSpec.describe DashboardsHelper do
   describe "preselect_registrations_radio_button?" do
     context "when @filter is blank" do
       it "returns true" do

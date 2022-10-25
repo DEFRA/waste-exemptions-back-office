@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe WasteExemptionsEngine::TransientPerson, type: :model do
+RSpec.describe WasteExemptionsEngine::TransientPerson do
   let(:matching_person) { create(:transient_person) }
   let(:non_matching_person) { create(:transient_person) }
 

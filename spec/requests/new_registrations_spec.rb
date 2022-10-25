@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "NewRegistrations", type: :request do
+RSpec.describe "NewRegistrations" do
   let(:new_registration) { create(:new_registration) }
 
   describe "GET /new-registrations/:id" do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe WasteExemptionsEngine::Address, type: :model do
+RSpec.describe WasteExemptionsEngine::Address do
   let(:matching_address_site) { create(:address, :site_uses_address) }
   let(:matching_address_contact) { create(:address, :contact_uses_address) }
   let(:matching_address_operator) { create(:address, :operator_uses_address) }

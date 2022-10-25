@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Bulk Exports", type: :request do
+RSpec.describe "Bulk Exports" do
   let(:user) { create(:user, :system) }
 
   before do

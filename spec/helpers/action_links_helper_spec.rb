@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ActionLinksHelper, type: :helper do
+RSpec.describe ActionLinksHelper do
   include Devise::Test::ControllerHelpers
 
   describe "view_link_for" do

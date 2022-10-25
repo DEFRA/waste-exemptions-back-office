@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Users", type: :request do
+RSpec.describe "Users" do
   describe "/users" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }

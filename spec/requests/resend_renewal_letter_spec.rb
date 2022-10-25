@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "ResendRenewalLetter", type: :request do
+RSpec.describe "ResendRenewalLetter" do
   let(:registration) { create(:registration) }
 
   describe "GET /resend-renewal-letter/:reference" do

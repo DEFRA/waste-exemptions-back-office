@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe WasteExemptionsEngine::TransientAddress, type: :model do
+RSpec.describe WasteExemptionsEngine::TransientAddress do
   let(:matching_address) { create(:transient_address, :site) }
   let(:non_matching_address) { create(:transient_address, :contact) }
 

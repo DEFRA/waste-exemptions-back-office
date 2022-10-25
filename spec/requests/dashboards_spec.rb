@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Dashboards", type: :request do
+RSpec.describe "Dashboards" do
   describe "/" do
     let(:results) { Kaminari.paginate_array([]).page(1) }
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   describe "PaperTrail", versioning: true do
     let(:user) { create(:user, :data_agent) }
 

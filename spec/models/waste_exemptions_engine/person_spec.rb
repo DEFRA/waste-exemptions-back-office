@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe WasteExemptionsEngine::Person, type: :model do
+RSpec.describe WasteExemptionsEngine::Person do
   let(:matching_person) { create(:person) }
   let(:non_matching_person) { create(:person) }
 

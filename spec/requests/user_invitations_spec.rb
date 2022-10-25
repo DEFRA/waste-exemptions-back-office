@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "User Invitations", type: :request do
+RSpec.describe "User Invitations" do
   describe "GET /users/invitation/new" do
     context "when a system user is signed in" do
       let(:user) { create(:user, :system) }

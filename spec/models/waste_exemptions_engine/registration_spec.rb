@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe WasteExemptionsEngine::Registration, type: :model do
+RSpec.describe WasteExemptionsEngine::Registration do
   subject(:registration) { build(:registration) }
 
   let(:matching_registration) { create(:registration) }

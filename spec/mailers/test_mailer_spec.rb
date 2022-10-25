@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TestMailer, type: :mailer do
+RSpec.describe TestMailer do
   describe "test_email" do
     before do
       allow(Rails.configuration).to receive(:email_test_address).and_return("test@example.com")

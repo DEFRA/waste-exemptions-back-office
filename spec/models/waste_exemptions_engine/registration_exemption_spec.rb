@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe WasteExemptionsEngine::RegistrationExemption, type: :model do
+RSpec.describe WasteExemptionsEngine::RegistrationExemption do
   subject(:registration_exemption) { build(:registration).registration_exemptions.first }
 
   let(:permitted_states) { registration_exemption.aasm.states(permitted: true).map(&:name) }

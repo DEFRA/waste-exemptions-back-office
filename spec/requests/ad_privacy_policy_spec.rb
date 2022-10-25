@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Assisted digital privacy policy", type: :request do
+RSpec.describe "Assisted digital privacy policy" do
   let(:user) { create(:user, :system) }
 
   before do
