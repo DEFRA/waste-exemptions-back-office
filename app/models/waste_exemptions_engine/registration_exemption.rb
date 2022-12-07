@@ -6,6 +6,8 @@ module WasteExemptionsEngine
   class RegistrationExemption < ::WasteExemptionsEngine::ApplicationRecord
     self.table_name = "registration_exemptions"
 
+    has_paper_trail if: proc { |re| re.persist_version? }
+
     include CanDeactivateExemption
 
     scope :data_for_month, lambda { |first_day_of_the_month|
@@ -32,6 +34,10 @@ module WasteExemptionsEngine
     # like an attribute in the Boxi export service without any mapping logic.
     def renewal
       registration&.renewal?
+    end
+
+    def persist_version?
+      saved_change_to_state? && (revoked? || ceased?)
     end
   end
 end

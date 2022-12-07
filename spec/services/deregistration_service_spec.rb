@@ -51,6 +51,17 @@ RSpec.describe DeregistrationService do
                 expect(re.deregistration_message).to eq(deregistration_message)
               end
             end
+
+            it "creates a version for all of the registration_exemptions", versioning: true do
+              registration.registration_exemptions.each do |re|
+                expect(re.versions.size).to eq(0)
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              registration.registration_exemptions.each do |re|
+                expect(re.versions.size).to eq(1)
+                expect(re.versions.first.whodunnit).to eq(super_agent_user.email)
+              end
+            end
           end
 
           context "when only some of its registration_exemptions are active" do
