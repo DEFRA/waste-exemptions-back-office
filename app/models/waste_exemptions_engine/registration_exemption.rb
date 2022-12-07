@@ -37,7 +37,12 @@ module WasteExemptionsEngine
     end
 
     def persist_version?
-      saved_change_to_state? && (revoked? || ceased?)
+      # When the RE is ceased/revoked multiple saves happen, the first of which
+      # is updating the deregistered_at timestamp. Since we only persist a
+      # version on these 2 events and don't want to include this timestamp in
+      # the version being persisted, we trigger the paper_trail hooks when this
+      # timestamp is first updated.
+      saved_change_to_deregistered_at?
     end
   end
 end
