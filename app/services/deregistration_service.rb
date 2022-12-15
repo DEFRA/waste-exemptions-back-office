@@ -2,7 +2,7 @@
 
 class DeregistrationService
 
-  attr_reader :resource
+  attr_reader :current_user, :resource
 
   def initialize(current_user, resource)
     @current_user = current_user
@@ -10,16 +10,19 @@ class DeregistrationService
   end
 
   def deregister!(state_transition, deregistration_message)
-    return unless @current_user.can?(:deregister, @resource)
+    return unless current_user.can?(:deregister, resource)
 
-    if @resource.is_a?(WasteExemptionsEngine::Registration)
-      @resource.registration_exemptions.each do |re|
-        DeregistrationService.new(@current_user, re).deregister!(state_transition, deregistration_message)
+    if resource.is_a?(WasteExemptionsEngine::Registration)
+      resource.registration_exemptions.each do |re|
+        DeregistrationService.new(current_user, re).deregister!(state_transition, deregistration_message)
       end
     else
-      # Apply the new state via the AASM helper method.
-      @resource.public_send("#{state_transition}!")
-      @resource.update(deregistration_message: deregistration_message)
+      # Assign current_user's email address as version author
+      PaperTrail.request(whodunnit: current_user.email) do
+        # Apply the new state via the AASM helper method.
+        resource.public_send("#{state_transition}!")
+        resource.update(deregistration_message: deregistration_message)
+      end
     end
   end
 end
