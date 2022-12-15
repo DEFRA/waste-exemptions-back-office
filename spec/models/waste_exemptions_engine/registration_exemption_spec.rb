@@ -79,4 +79,40 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
       end
     end
   end
+
+  describe "PaperTrail", versioning: true do
+    before { registration_exemption.save! }
+
+    it "is versioned" do
+      expect(registration_exemption).to be_versioned
+    end
+
+    context "when revoking a registration exemption" do
+      it "creates a new version" do
+        expect { registration_exemption.revoke! }.to change { registration_exemption.versions.count }.by(1)
+        expect(registration_exemption.versions.first.reify.state).to eq("active")
+        expect(registration_exemption.versions.first.reify.deregistered_at).to be_nil
+        expect(registration_exemption.reload.deregistered_at).not_to be_nil
+      end
+    end
+
+    context "when ceasing a registration exemption" do
+      it "creates a new version" do
+        expect { registration_exemption.cease! }.to change { registration_exemption.versions.count }.by(1)
+        expect(registration_exemption.versions.first.reify.state).to eq("active")
+        expect(registration_exemption.versions.first.reify.deregistered_at).to be_nil
+        expect(registration_exemption.reload.deregistered_at).not_to be_nil
+      end
+    end
+
+    context "when performing a regular update" do
+      before do
+        registration_exemption.update!(deregistration_message: "foo")
+      end
+
+      it "does not create a new version" do
+        expect(registration_exemption.versions.size).to eq(0)
+      end
+    end
+  end
 end
