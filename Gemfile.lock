@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: d98fca077ca2f85834a1063dee3a8810a512dc0a
+  revision: 36ee46dda8ec0a117d051298504b911af3913b81
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -251,7 +251,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.6.2)
-    jwt (2.5.0)
+    jwt (2.6.0)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -312,7 +312,7 @@ GEM
       rake (>= 0.8.1)
     pg (1.4.5)
     pgreset (0.3)
-    phonelib (0.7.4)
+    phonelib (0.7.6)
     protocol-hpack (1.4.2)
     protocol-http (0.22.0)
     protocol-http1 (0.14.1)
