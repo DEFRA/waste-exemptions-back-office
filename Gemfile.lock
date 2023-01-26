@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 36ee46dda8ec0a117d051298504b911af3913b81
+  revision: 279f10f79063f31c04e5a8af6c67475e68326db4
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -150,7 +150,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    date (3.3.1)
+    date (3.3.3)
     defra_ruby_address (0.1.0)
       rest-client (~> 2.0)
     defra_ruby_alert (2.1.1)
