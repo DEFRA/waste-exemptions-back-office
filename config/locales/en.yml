@@ -1,5 +1,5 @@
 en:
-  global_proposition_header: Waste exemptions back office
+  global_proposition_header: "Waste exemptions back office"
   layouts:
     application:
       feedback_url: https://www.gov.uk/done/register-waste-exemption
@@ -7,6 +7,7 @@ en:
         dashboard: "Dashboard"
         users: "Manage users"
         exports: "Data exports"
+        quarterly_stats: "DEFRA quarterly statistics"
         feature_toggles: "Toggle features"
   shared:
     select_role:

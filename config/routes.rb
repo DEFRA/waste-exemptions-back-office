@@ -78,6 +78,10 @@ Rails.application.routes.draw do
         to: "refresh_companies_house_name#update_companies_house_details",
         as: :refresh_companies_house_name
 
+  get "/reports/quarterly_stats",
+      to: "quarterly_stats#show",
+      as: "quarterly_stats"
+
   # Engine
   mount WasteExemptionsEngine::Engine => "/"
 

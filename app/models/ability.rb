@@ -50,6 +50,7 @@ class Ability
     can :read, WasteExemptionsEngine::Registration
     can :read, WasteExemptionsEngine::NewRegistration
     can :read, Reports::GeneratedReport
+    can :read, Reports::DefraQuarterlyStatsService
   end
 
   # Developer users should just be those on the current delivery team and/or
