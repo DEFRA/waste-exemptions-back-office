@@ -4,7 +4,7 @@ require "zip"
 require_relative "../concerns/can_load_file_to_aws"
 
 module Reports
-  class BoxiExportService < ::WasteExemptionsEngine::BaseService
+  class BoxiExportService < WasteExemptionsEngine::BaseService
     include CanLoadFileToAws
 
     def run

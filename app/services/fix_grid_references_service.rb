@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FixGridReferencesService < ::WasteExemptionsEngine::BaseService
+class FixGridReferencesService < WasteExemptionsEngine::BaseService
   def run
     return unless addresses.any?
 
@@ -25,7 +25,7 @@ class FixGridReferencesService < ::WasteExemptionsEngine::BaseService
   end
 
   def find_grid_reference(address)
-    ::WasteExemptionsEngine::DetermineGridReferenceService
+    WasteExemptionsEngine::DetermineGridReferenceService
       .run(easting: address.x, northing: address.y)
       .presence
   end

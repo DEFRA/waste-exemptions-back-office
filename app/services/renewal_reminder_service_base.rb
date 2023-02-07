@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RenewalReminderServiceBase < ::WasteExemptionsEngine::BaseService
+class RenewalReminderServiceBase < WasteExemptionsEngine::BaseService
   def run
     expiring_registrations.each do |registration|
       send_email(registration)

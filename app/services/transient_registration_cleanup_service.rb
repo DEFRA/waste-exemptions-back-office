@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TransientRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
+class TransientRegistrationCleanupService < WasteExemptionsEngine::BaseService
   def run
     transient_registrations_to_remove.destroy_all
   end

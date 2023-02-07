@@ -3,7 +3,7 @@
 require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "registration_exemption")
 
 module WasteExemptionsEngine
-  class RegistrationExemption < ::WasteExemptionsEngine::ApplicationRecord
+  class RegistrationExemption < WasteExemptionsEngine::ApplicationRecord
     self.table_name = "registration_exemptions"
 
     has_paper_trail if: proc { |re| re.persist_version? }
