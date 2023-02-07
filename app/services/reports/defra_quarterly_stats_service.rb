@@ -8,21 +8,22 @@ module Reports
     # rubocop:disable Layout/LineLength
     def run
       report = []
-      report << "Abandon rate is not directly tracked. Estimation:"
-      activated_last_30_days = WasteExemptionsEngine::Registration.where(created_at: 30.days.ago..Time.zone.now).count
-      report << "  - Registrations activated in the last 30 days: #{activated_last_30_days}"
-      transients_last_30_days = WasteExemptionsEngine::TransientRegistration.where(created_at: 30.days.ago..Time.zone.now).count
+      # The number of transient registrations in production data seems unreasonably high, so need to hardwire the abandon rate for now
+      report << "Abandon rate estimated at 38% based on historic data"
+      @abandon_rate = 0.38
+      @abandon_rate_percent = 38
 
-      transients_last_1_day = WasteExemptionsEngine::TransientRegistration.where(created_at: 1.days.ago..Time.zone.now).count
-      report << "(check: last 24 hours: #{transients_last_1_day})"
-
-      report << "  - Transient registrations remaining (registrations not completed) from the last 30 days: " \
-                "#{transients_last_30_days}"
-      total_attempts_last_30_days = transients_last_30_days + activated_last_30_days
-      report << "  - Total registration attempts for the last 30 days: #{total_attempts_last_30_days}"
-      @abandon_rate = total_attempts_last_30_days.zero? ? 0 : transients_last_30_days.to_f / total_attempts_last_30_days
-      @abandon_rate_percent = (abandon_rate * 100.0).to_i
-      report << "  - Estimated abandon rate: #{@abandon_rate.round(3)} (#{@abandon_rate_percent}%)"
+      # report << "Abandon rate is not directly tracked. Estimation:"
+      # activated_last_30_days = WasteExemptionsEngine::Registration.where(created_at: 30.days.ago..Time.zone.now).count
+      # report << "  - Registrations activated in the last 30 days: #{activated_last_30_days}"
+      # transients_last_30_days = WasteExemptionsEngine::TransientRegistration.where(created_at: 30.days.ago..Time.zone.now).count
+      # report << "  - Transient registrations remaining (registrations not completed) from the last 30 days: " \
+      #           "#{transients_last_30_days}"
+      # total_attempts_last_30_days = transients_last_30_days + activated_last_30_days
+      # report << "  - Total registration attempts for the last 30 days: #{total_attempts_last_30_days}"
+      # @abandon_rate = total_attempts_last_30_days.zero? ? 0 : transients_last_30_days.to_f / total_attempts_last_30_days
+      # @abandon_rate_percent = (abandon_rate * 100.0).to_i
+      # report << "  - Estimated abandon rate: #{@abandon_rate.round(3)} (#{@abandon_rate_percent}%)"
       report << "------------------------------------------------------------------------------------------------------------------"
 
       4.downto(1).each do |q|
@@ -47,7 +48,8 @@ module Reports
       report << "1. Number of registrations completed online only, EXCLUDING Assisted Digital: " \
                 "#{activated_total} - #{activated_assisted_digital} = #{completed_online}"
 
-      report << "2. Number of registrations started and NOT completed: Unknown. Rough estimate based on abandon rate for the last 30 days:"
+      # report << "2. Number of registrations started and NOT completed: Unknown. Rough estimate based on abandon rate for the last 30 days:"
+      report << "2. Number of registrations started and NOT completed: Unknown. Rough estimate based on estimated abandon rate:"
       report << "  - Given #{completed_online} completed online with an abandon rate of #{@abandon_rate_percent}%:"
       report << "  - ESTIMATED registrations started online and not completed: " \
                 "#{estimate_started_online(completed_online, abandon_rate)}"
