@@ -9,9 +9,9 @@ module Reports
     def run
       report = []
       report << "Abandon rate is not directly tracked. Estimation:"
-      activated_last_30_days = WasteExemptionsEngine::Registration.where("created_at > ?", 30.days.ago).count
+      activated_last_30_days = WasteExemptionsEngine::Registration.where(created_at: 30.days.ago..Time.zone.now).count
       report << "  - Registrations activated in the last 30 days: #{activated_last_30_days}"
-      transients_last_30_days = WasteExemptionsEngine::TransientRegistration.where("created_at > ?", 30.days.ago).count
+      transients_last_30_days = WasteExemptionsEngine::TransientRegistration.where(created_at: 30.days.ago..Time.zone.now).count
       report << "  - Transient registrations remaining (registrations not completed) from the last 30 days: " \
                 "#{transients_last_30_days}"
       total_attempts_last_30_days = transients_last_30_days + activated_last_30_days
@@ -40,7 +40,7 @@ module Reports
       activated_assisted_digital = count_activations("full")
       completed_online = activated_total - activated_assisted_digital
 
-      report << "1. Number of registrations completed online only, EXCLUDING Assisted Digital : " \
+      report << "1. Number of registrations completed online only, EXCLUDING Assisted Digital: " \
                 "#{activated_total} - #{activated_assisted_digital} = #{completed_online}"
 
       report << "2. Number of registrations started and NOT completed: Unknown. Rough estimate based on abandon rate for the last 30 days:"
@@ -50,7 +50,7 @@ module Reports
 
       report << "3. Same data as 1"
 
-      report << "4. Total number of registrations completed online AND via the Back office: #{completed_online} (of which AD: " \
+      report << "4. Total number of registrations completed online AND via the Back office: #{activated_total} (of which AD: " \
                 "#{activated_assisted_digital})"
 
       report
