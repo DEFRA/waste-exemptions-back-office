@@ -13,7 +13,7 @@ module Reports
       report << "  - Registrations activated in the last 30 days: #{activated_last_30_days}"
       transients_last_30_days = WasteExemptionsEngine::TransientRegistration.where(created_at: 30.days.ago..Time.zone.now).count
 
-      transients_last_1_day = WasteExemptionsEngine::TransientRegistration.where(created_at: 1.days.ago.Time.zone.now).count
+      transients_last_1_day = WasteExemptionsEngine::TransientRegistration.where(created_at: 1.days.ago..Time.zone.now).count
       report << "(check: last 24 hours: #{transients_last_1_day})"
 
       report << "  - Transient registrations remaining (registrations not completed) from the last 30 days: " \
