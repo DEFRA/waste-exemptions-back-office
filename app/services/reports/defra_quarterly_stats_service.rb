@@ -62,11 +62,9 @@ module Reports
     def count_activations(assistance_mode = nil)
       if assistance_mode.blank?
         WasteExemptionsEngine::Registration.where(created_at: start_date.beginning_of_day..end_date.end_of_day).count
-          # .where("created_at::time BETWEEN '#{start_date.beginning_of_day}' AND '#{end_date.end_of_day}'").count
       else
         WasteExemptionsEngine::Registration
           .where(created_at: start_date.beginning_of_day..end_date.end_of_day, assistance_mode: assistance_mode).count
-          # .where("created_at::time BETWEEN '#{start_date.beginning_of_day}' AND '#{end_date.end_of_day}' and assistance_mode = '#{assistance_mode}'").count
       end
     end
 
