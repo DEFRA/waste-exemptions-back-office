@@ -16,7 +16,6 @@ RSpec.describe Ability do
     include_examples "system examples"
     include_examples "super_agent examples"
     include_examples "admin_agent examples"
-    include_examples "data_agent examples"
   end
 
   context "when the user role is super_agent" do
@@ -57,7 +56,6 @@ RSpec.describe Ability do
 
     include_examples "admin_agent examples"
     include_examples "developer examples"
-    include_examples "data_agent examples"
   end
 
   context "when the user account is inactive" do
