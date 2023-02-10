@@ -24,6 +24,7 @@ class Ability
     can :read, User
     can :change_role, User
     can :activate_or_deactivate, User
+    can :read, Reports::DefraQuarterlyStatsService
 
     permissions_for_super_agent
   end
@@ -60,5 +61,6 @@ class Ability
     permissions_for_admin_agent
 
     can :manage, WasteExemptionsEngine::FeatureToggle
+    can :read, Reports::DefraQuarterlyStatsService
   end
 end

@@ -16,4 +16,8 @@ RSpec.shared_examples "data_agent examples" do
   it "is able to view bulk exports" do
     expect(subject).to be_able_to(:read, Reports::GeneratedReport)
   end
+
+  it "is not able to view DEFRA quarterly reports" do
+    expect(subject).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService)
+  end
 end

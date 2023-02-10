@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Layout/LineLength
-class RemoveNcccEmailService < ::WasteExemptionsEngine::BaseService
+class RemoveNcccEmailService < WasteExemptionsEngine::BaseService
 
   # rubocop:disable Style/StringLiterals
   WASTE_EXEMPTIONS_EMAIL_VARIATIONS = '^(w|a)[qaste]?\w{2,}(-?(e|-)|)(.?e)\w{7,}@(e|a|n)\w{5,17}(.|-)(ag?(ency|ancy|ncy)|gov).(gov.uk|uk)'

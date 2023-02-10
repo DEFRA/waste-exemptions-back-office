@@ -37,6 +37,13 @@
                         class: "govuk-header__link" %>
           </li>
         <% end %>
+        <% if can?(:read, Reports::DefraQuarterlyStatsService) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.quarterly_stats"),
+                        main_app.quarterly_stats_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
         <% if can?(:manage, WasteExemptionsEngine::FeatureToggle, current_user) %>
           <li class="govuk-header__navigation-item">
             <%= link_to t("layouts.application.menu.feature_toggles"),

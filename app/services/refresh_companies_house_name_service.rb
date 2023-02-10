@@ -2,7 +2,7 @@
 
 require "defra_ruby_companies_house"
 
-class RefreshCompaniesHouseNameService < ::WasteExemptionsEngine::BaseService
+class RefreshCompaniesHouseNameService < WasteExemptionsEngine::BaseService
   def run(company_reference)
     registration = WasteExemptionsEngine::Registration.find_by(reference: company_reference)
     company_name = DefraRubyCompaniesHouse.new(registration.company_no).company_name

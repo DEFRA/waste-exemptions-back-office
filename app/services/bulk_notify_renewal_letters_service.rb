@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BulkNotifyRenewalLettersService < ::WasteExemptionsEngine::BaseService
+class BulkNotifyRenewalLettersService < WasteExemptionsEngine::BaseService
   def run(expires_on)
     @expires_on = expires_on
 

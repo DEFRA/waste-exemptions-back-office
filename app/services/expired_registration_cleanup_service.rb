@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ExpiredRegistrationCleanupService < ::WasteExemptionsEngine::BaseService
+class ExpiredRegistrationCleanupService < WasteExemptionsEngine::BaseService
   def run
     return unless registration_ids.any?
 
