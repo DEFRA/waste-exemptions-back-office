@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 72378b5429bdcd68ae7b1a040ac429af3afeb2c0
+  revision: ade76d272d2c119fb71e50b7f567aad5fc74ed91
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -489,7 +489,7 @@ GEM
       whenever
     wicked_pdf (2.6.3)
       activesupport
-    zeitwerk (2.6.6)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   ruby
