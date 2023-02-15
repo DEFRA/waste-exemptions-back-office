@@ -19,8 +19,12 @@ RSpec.describe "test:magic_link", type: :rake do
     $stdout = original_stdout
   end
 
-  it "runs without error" do
+  it "runs without error with a valid registration reference" do
     expect { Rake::Task[subject].invoke(registration.reference) }.not_to raise_error
+  end
+
+  it "runs without error with an invalid registration reference" do
+    expect { Rake::Task[subject].invoke("foo") }.not_to raise_error
   end
 end
 # rubocop:enable RSpec/ExpectOutput
