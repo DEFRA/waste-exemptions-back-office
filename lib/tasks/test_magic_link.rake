@@ -6,7 +6,7 @@ namespace :test do
 
     @registration = WasteExemptionsEngine::Registration.find_by(reference: args[:reference])
     if @registration.nil?
-      puts "Failed to find registration with reg_identifier \"#{args[:reference]}\""
+      puts "Failed to find registration with reference \"#{args[:reference]}\""
       exit
     end
 

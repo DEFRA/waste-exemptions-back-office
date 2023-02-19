@@ -82,6 +82,9 @@ Rails.application.routes.draw do
       to: "quarterly_stats#show",
       as: "quarterly_stats"
 
+  get "/testing/create_registration/:expiry_date",
+       to: "testing#create_registration"
+
   # Engine
   mount WasteExemptionsEngine::Engine => "/"
 
