@@ -21,6 +21,8 @@ class TestingController < ApplicationController
   private
 
   def non_production_only
-    raise ActionController::RoutingError, "Not Found" if ["production", nil].include?(ENV.fetch("AIRBRAKE_ENV_NAME"))
+    return unless ["production", nil].include?(ENV.fetch("AIRBRAKE_ENV_NAME", nil))
+
+    raise ActionController::RoutingError, "Not Found"
   end
 end
