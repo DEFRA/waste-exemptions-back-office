@@ -18,7 +18,6 @@ class TestingController < ApplicationController
                                                                                     exemption: get_exemption,
                                                                                     expires_on: expiry_date))
 
-    # Remove any exemptions no
     render :show, locals: { registration: registration }
   end
 
