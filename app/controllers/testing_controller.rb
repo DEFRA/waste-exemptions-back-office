@@ -12,8 +12,10 @@ class TestingController < ApplicationController
     # https://github.com/thoughtbot/factory_bot/blob/ca810767e70ccd85c7cb63f775bc16f653a97dc8/GETTING_STARTED.md#rails-preloaders-and-rspec
     FactoryBot.reload
 
-    registration_exemption = FactoryBot.build(:registration_exemption, expires_on: expiry_date)
-    registration = FactoryBot.create(:registration, registration_exemptions: [registration_exemption])
+    registration = FactoryBot.create(:registration,
+                                     registration_exemptions: FactoryBot.build_list(:registration_exemption,
+                                                                                    3,
+                                                                                    expires_on: expiry_date))
 
     render :show, locals: { registration: registration }
   end
