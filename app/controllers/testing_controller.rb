@@ -15,12 +15,18 @@ class TestingController < ApplicationController
     registration = FactoryBot.create(:registration,
                                      registration_exemptions: FactoryBot.build_list(:registration_exemption,
                                                                                     3,
+                                                                                    exemption: find_or_create_exemption,
                                                                                     expires_on: expiry_date))
 
     render :show, locals: { registration: registration }
   end
 
   private
+
+  def find_or_create_exemption
+    # Use an existing exemption if available, to avoid cluttering the DB
+    WasteExemptionsEngine::Exemption.order(Arel.sql("RANDOM()")).first || FactoryBot.create(:exemption)
+  end
 
   def non_production_only
     return if Rails.env.test?
