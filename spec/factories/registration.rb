@@ -109,6 +109,16 @@ FactoryBot.define do
       registration_exemptions { build_list(:registration_exemption, 3, :ceased) }
     end
 
+    trait :eligible_for_deregistration do
+      submitted_at do
+        6.months.ago.to_date - 1.day
+      end
+
+      registration_exemptions do
+        build_list(:registration_exemption, 1, :active)
+      end
+    end
+
     trait :expires_tomorrow do
       registration_exemptions { build_list(:registration_exemption, 3, :expires_tomorrow) }
     end

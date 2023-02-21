@@ -25,6 +25,8 @@ module WasteExemptionsBackOffice
   class Application < Rails::Application
     config.load_defaults 6.0
     config.autoloader = :classic
+    config.active_job.queue_adapter = :sucker_punch
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -77,6 +79,9 @@ module WasteExemptionsBackOffice
     # Emails
     config.email_test_address = ENV.fetch("EMAIL_TEST_ADDRESS", nil)
     config.second_renewal_email_reminder_days = ENV["SECOND_RENEWAL_EMAIL_BEFORE_DAYS"] || 14
+    config.registration_email_batch_size = ENV.fetch("REGISTRATION_EMAIL_BATCH_SIZE", 1000)
+    config.registration_email_batch_minimum_age_days = ENV.fetch("REGISTRATION_EMAIL_BATCH_MINIMUM_AGE",
+                                                                 6.months.in_days).to_i
 
     # Database cleanup
     config.max_transient_registration_age_days = ENV["MAX_TRANSIENT_REGISTRATION_AGE_DAYS"] || 30

@@ -36,6 +36,13 @@ namespace :email do
       end
     end
   end
+
+  namespace :deregistration_email do
+    desc "Enqueue deregistratin email batch job"
+    task send_batch: :environment do
+      SendDeregistrationEmailBatchJob.perform_later
+    end
+  end
 end
 # rubocop:enable Rails/SkipsModelValidations
 # rubocop:enable Metrics/BlockLength

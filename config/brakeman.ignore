@@ -1,0 +1,52 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "79dbcdf302c2710090776895f8eca7d4f9c63c9f2dbf2f053f0b856118288b5c",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/jobs/send_deregistration_email_batch_job.rb",
+      "line": 37,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"      CREATE TEMP TABLE #{\"deregisterable_registration_ids\"} AS\\n        SELECT DISTINCT r.id AS id\\n          FROM registrations r\\n              LEFT JOIN registration_exemptions rex\\n                  ON r.id = rex.registration_id\\n                  AND rex.state = 'active'\\n                  AND rex.expires_on - interval '#{renewal_window} days' > '#{today}'\\n        WHERE rex.id IS NOT NULL\\n          AND r.submitted_at < '#{min_submitted_at}'\\n          AND r.deregistration_email_sent_at IS NULL;\\n\".squish)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SendDeregistrationEmailBatchJob",
+        "method": "eligible_registrations_ids"
+      },
+      "user_input": "renewal_window",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "f0d415e6653b63c1bc112981fc73d4c5b7695bff6bd12ef57fc46598690afe1b",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/jobs/send_deregistration_email_batch_job.rb",
+      "line": 43,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"SELECT id FROM #{\"deregisterable_registration_ids\"} TABLESAMPLE system_rows(#{batch_size})\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SendDeregistrationEmailBatchJob",
+        "method": "eligible_registrations_ids"
+      },
+      "user_input": "batch_size",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    }
+  ],
+  "updated": "2023-02-21 07:48:24 +0000",
+  "brakeman_version": "5.4.0"
+}
