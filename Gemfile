@@ -79,6 +79,9 @@ gem "defra_ruby_aws", "~> 0.4"
 # Manage, create and open zip files https://github.com/rubyzip/rubyzip
 gem "rubyzip"
 
+# Load this in all environments, not just test, to support the /testing helper:
+gem "factory_bot_rails"
+
 group :production do
   # Web application server that replaces webrick. It handles HTTP requests,
   # manages processes and resources, and enables administration, monitoring
@@ -117,8 +120,6 @@ end
 group :test do
   # Database Cleaner is a set of strategies for cleaning your database in Ruby.
   gem "database_cleaner"
-  # Fixtures replacement
-  gem "factory_bot_rails"
   # Generate test data
   gem "faker"
   # Generates a test coverage report on every `bundle exec rspec` call. We use

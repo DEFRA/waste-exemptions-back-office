@@ -222,6 +222,7 @@ ActiveRecord::Schema.define(version: 2023_02_16_072536) do
     t.boolean "temp_reuse_applicant_name"
     t.text "workflow_history", default: [], array: true
     t.string "assistance_mode"
+    t.text "excluded_exemptions", default: [], array: true
     t.index ["token"], name: "index_transient_registrations_on_token", unique: true
   end
 
