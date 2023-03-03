@@ -9,6 +9,7 @@ module Reports
       let(:aws_response) { instance_double(DefraRuby::Aws::Response, successful?: true) }
       let(:bucket_name) { "buck-it" }
       let(:file_name) { "foo" }
+      let(:registration) { create(:registration, :eligible_for_deregistration) }
 
       subject(:service) { described_class.new }
 
@@ -25,7 +26,7 @@ module Reports
         allow(service).to receive(:file_name).and_return("foo")
         allow(DefraRuby::Aws).to receive(:get_bucket).and_return(bucket)
 
-        create(:registration, :eligible_for_deregistration)
+        registration
       end
 
       context "when succesful" do
@@ -34,7 +35,9 @@ module Reports
         end
 
         it "generates a CSV file containing all active exemptions and uploads it to AWS" do
-          service.run(batch_size: 1)
+          expect(service.run(batch_size: 1)).to be(true)
+
+          expect(registration.reload.deregistration_email_sent_at).not_to be_blank
 
           expect(bucket).to have_received(:load)
 
