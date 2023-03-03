@@ -28,7 +28,8 @@ module Reports
       relevant_exemptions = registration_exemptions.order(:exemption_id).select do |re|
         re.may_expire? || re.expired?
       end
-      relevant_exemptions.map { |ex| "#{ex.exemption.code} #{ex.exemption.summary}" }
+
+      relevant_exemptions.map { |ex| "#{ex.exemption.code} #{ex.exemption.summary}" }.join(", ")
     end
 
     private

@@ -16,6 +16,18 @@ module Reports
       options = { s3_directory: "Deregistrations" }
 
       load_file_to_aws_bucket(options)
+
+      # We want to update the timestamp on the exported registrations in one
+      # SQL statement without running validations on 1000+ rows - hence we
+      # explicitly allow #update_all here:
+      #
+      # rubocop:disable Rails/SkipsModelValidations
+      WasteExemptionsEngine::Registration
+        .where(id: serializer.eligible_registrations_ids)
+        .update_all(deregistration_email_sent_at: timestamp)
+      # rubocop:enable Rails/SkipsModelValidations
+
+      true
     rescue StandardError => e
       Airbrake.notify e, file_name: file_name
       Rails.logger.error "Generate deregistration email batch export csv error for #{file_name}:\n#{e}"
@@ -27,7 +39,7 @@ module Reports
     private
 
     def populate_temp_file
-      File.write(file_path, export)
+      File.write(file_path, serializer.to_csv)
     end
 
     def file_path
@@ -35,11 +47,15 @@ module Reports
     end
 
     def file_name
-      @file_name ||= "#{Time.now.utc.to_s.split.join('_')}-#{batch_size}"
+      @file_name ||= "#{timestamp.utc.to_s.split.join('_')}-#{batch_size}"
     end
 
-    def export
-      DeregistrationEmailBatchSerializer.new(batch_size: batch_size).to_csv
+    def serializer
+      @serializer ||= DeregistrationEmailBatchSerializer.new(batch_size: batch_size)
+    end
+
+    def timestamp
+      @timestamp ||= Time.zone.now
     end
 
     def bucket_name

@@ -25,7 +25,7 @@ RSpec.describe Reports::DeregistrationEmailBatchSerializer do
       end
 
       it "includes the correct header" do
-        expect(csv.first.map(&:to_sym)).to eq([:email, *described_class::ATTRIBUTES])
+        expect(csv.first.map(&:to_sym)).to eq([:"email address", *described_class::ATTRIBUTES])
       end
 
       it "includes the correct fields" do
@@ -37,7 +37,7 @@ RSpec.describe Reports::DeregistrationEmailBatchSerializer do
           "http://localhost:3000/renew/#{registration.renew_token}",
           registration.exemptions.map do |ex|
             "#{ex.code} #{ex.summary}"
-          end.to_s
+          end.join(", ")
         ]
 
         expect(csv.second).to eq(expected)

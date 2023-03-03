@@ -30,7 +30,7 @@ module Reports
       let(:expected) do
         registration.exemptions.map do |ex|
           "#{ex.code} #{ex.summary}"
-        end
+        end.join(", ")
       end
 
       it "returns the correct value" do

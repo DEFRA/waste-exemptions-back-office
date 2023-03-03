@@ -22,13 +22,45 @@ module Reports
 
     def to_csv
       CSV.generate do |csv|
-        csv << [:email, *self.class::ATTRIBUTES]
+        csv << ["email address", *self.class::ATTRIBUTES]
 
         registrations_data do |registration_data|
           csv << registration_data
         end
       end
     end
+
+    # rubocop:disable Metrics/MethodLength
+    def eligible_registrations_ids
+      return @eligible_registrations_ids if @eligible_registrations_ids
+
+      begin
+        conn = ActiveRecord::Base.connection
+
+        conn.execute("DROP TABLE IF EXISTS #{TEMP_TABLE_NAME}")
+
+        conn.execute <<-SQL.squish
+          CREATE TEMP TABLE #{TEMP_TABLE_NAME} AS
+            SELECT DISTINCT r.id AS id
+              FROM registrations r
+                  LEFT JOIN registration_exemptions rex
+                      ON r.id = rex.registration_id
+                      AND rex.state = 'active'
+                      AND rex.expires_on - interval '#{renewal_window} days' > '#{today}'
+            WHERE rex.id IS NOT NULL
+              AND r.submitted_at < '#{min_submitted_at}'
+              AND r.deregistration_email_sent_at IS NULL;
+        SQL
+
+        @eligible_registrations_ids =
+          conn.execute("SELECT id FROM #{TEMP_TABLE_NAME} TABLESAMPLE system_rows(#{email_batch_size})").map do |row|
+            row.fetch("id")
+          end
+      ensure
+        ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS #{TEMP_TABLE_NAME}")
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
 
     private
 
@@ -55,36 +87,6 @@ module Reports
     def scope
       WasteExemptionsEngine::Registration.where(id: eligible_registrations_ids)
     end
-
-    # rubocop:disable Metrics/MethodLength
-    def eligible_registrations_ids
-      return @eligible_registrations_ids if @eligible_registrations_ids
-
-      conn = ActiveRecord::Base.connection
-
-      conn.execute("DROP TABLE IF EXISTS #{TEMP_TABLE_NAME}")
-
-      conn.execute <<-SQL.squish
-        CREATE TEMP TABLE #{TEMP_TABLE_NAME} AS
-          SELECT DISTINCT r.id AS id
-            FROM registrations r
-                LEFT JOIN registration_exemptions rex
-                    ON r.id = rex.registration_id
-                    AND rex.state = 'active'
-                    AND rex.expires_on - interval '#{renewal_window} days' > '#{today}'
-          WHERE rex.id IS NOT NULL
-            AND r.submitted_at < '#{min_submitted_at}'
-            AND r.deregistration_email_sent_at IS NULL;
-      SQL
-
-      @eligible_registrations_ids =
-        conn.execute("SELECT id FROM #{TEMP_TABLE_NAME} TABLESAMPLE system_rows(#{email_batch_size})").map do |row|
-          row.fetch("id")
-        end
-    ensure
-      conn.execute("DROP TABLE IF EXISTS #{TEMP_TABLE_NAME}")
-    end
-    # rubocop:enable Metrics/MethodLength
 
     def renewal_window
       WasteExemptionsEngine.configuration.renewal_window_before_expiry_in_days.to_i
