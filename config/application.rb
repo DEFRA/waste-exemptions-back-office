@@ -65,6 +65,7 @@ module WasteExemptionsBackOffice
     # Data export config
     config.bulk_reports_bucket_name = ENV.fetch("AWS_BULK_EXPORT_BUCKET", nil)
     config.epr_reports_bucket_name = ENV.fetch("AWS_DAILY_EXPORT_BUCKET", nil)
+    config.deregistration_email_bucket_name = ENV.fetch("AWS_DEREGISTRATION_EMAIL_EXPORT_BUCKET", nil)
     config.boxi_exports_bucket_name = ENV.fetch("AWS_BOXI_EXPORT_BUCKET", nil)
     config.epr_export_filename = ENV["EPR_DAILY_REPORT_FILE_NAME"] || "waste_exemptions_epr_daily_full"
     config.export_batch_size = ENV["EXPORT_SERVICE_BATCH_SIZE"] || 1000

@@ -8,6 +8,7 @@ en:
         users: "Manage users"
         exports: "Data exports"
         quarterly_stats: "DEFRA quarterly statistics"
+        email_export: "Email export"
         feature_toggles: "Toggle features"
   shared:
     select_role:

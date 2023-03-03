@@ -111,7 +111,7 @@ FactoryBot.define do
 
     trait :eligible_for_deregistration do
       submitted_at do
-        6.months.ago.to_date - 1.day
+        7.months.ago.to_date
       end
 
       registration_exemptions do

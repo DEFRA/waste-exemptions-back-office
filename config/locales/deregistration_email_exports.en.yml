@@ -1,0 +1,10 @@
+en:
+  deregistration_email_exports:
+    errors:
+      service_failed: "Export service failed"
+    notices:
+      export_complete: "Export complete"
+    new:
+      heading: "Deregistration email exports"
+      submit: "Submit"
+      batch_size: "How many emails do you want in this batch?"
