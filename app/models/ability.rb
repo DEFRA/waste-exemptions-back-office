@@ -61,6 +61,7 @@ class Ability
     permissions_for_admin_agent
 
     can :manage, WasteExemptionsEngine::FeatureToggle
+    can :manage, DeregistrationEmailExportsForm
     can :read, Reports::DefraQuarterlyStatsService
   end
 end
