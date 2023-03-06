@@ -73,9 +73,11 @@ module Reports
             presenter.public_send(attribute)
           end
 
-          yield [presenter.contact_email, *data]
+          yield [presenter.contact_email, *data] if presenter.contact_email.present?
 
-          yield [presenter.applicant_email, *data] if presenter.contact_email != presenter.applicant_email
+          if presenter.applicant_email.present? && presenter.contact_email != presenter.applicant_email
+            yield [presenter.applicant_email, *data]
+          end
         end
       end
     end

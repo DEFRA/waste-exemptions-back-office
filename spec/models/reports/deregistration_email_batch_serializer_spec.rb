@@ -62,6 +62,47 @@ RSpec.describe Reports::DeregistrationEmailBatchSerializer do
       end
     end
 
+    context "with blank contact and applicant emails" do
+      let(:registration) do
+        create(:registration, :eligible_for_deregistration,
+               contact_email: "", applicant_email: "")
+      end
+
+      before { registration }
+
+      it "does not include any registrations" do
+        expect(csv.length).to eq(1) # header only
+      end
+    end
+
+    context "with applicant email only" do
+      let(:registration) do
+        create(:registration, :eligible_for_deregistration,
+               contact_email: "", applicant_email: "foo@bar.com")
+      end
+
+      before { registration }
+
+      it "includes only a row for the applicant email" do
+        expect(csv.length).to eq(2)
+        expect(csv[1][0]).to eq(registration.applicant_email)
+      end
+    end
+
+    context "with contact email only" do
+      let(:registration) do
+        create(:registration, :eligible_for_deregistration,
+               contact_email: "foo@bar.com", applicant_email: "")
+      end
+
+      before { registration }
+
+      it "includes only a row for the contact email" do
+        expect(csv.length).to eq(2)
+        expect(csv[1][0]).to eq(registration.contact_email)
+      end
+    end
+
     context "with valid registrations" do
       let(:registrations) do
         create_list(:registration, 3, :eligible_for_deregistration,
