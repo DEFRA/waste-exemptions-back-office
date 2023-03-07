@@ -36,6 +36,15 @@ namespace :email do
       end
     end
   end
+
+  namespace :export_deregistration_emails do
+    desc "Export deregistration email CSV to S3"
+    task send_batch: :environment do
+      Reports::DeregistrationEmailBatchExportService.run(
+        batch_size: ENV.fetch("BATCH_SIZE", Rails.configuration.registration_email_batch_size)
+      )
+    end
+  end
 end
 # rubocop:enable Rails/SkipsModelValidations
 # rubocop:enable Metrics/BlockLength
