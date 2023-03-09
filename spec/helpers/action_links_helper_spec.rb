@@ -196,6 +196,69 @@ RSpec.describe ActionLinksHelper do
     end
   end
 
+  describe "display_resend_deregistration_email_link_for?" do
+    context "when the resource is an active registration" do
+      let(:resource) do
+        registration = create(:registration)
+        registration.registration_exemptions.each do |re|
+          re.state = "active"
+          re.save!
+        end
+        registration
+      end
+
+      before { allow(helper).to receive(:can?).with(:resend_registration_email, resource).and_return(can) }
+
+      context "when the user has permission to deregister a registration" do
+        let(:can) { true }
+
+        it "returns true" do
+          expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(true)
+        end
+      end
+
+      context "when the user does not have permission to deregister a registration" do
+        let(:can) { false }
+
+        it "returns false" do
+          expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
+        end
+      end
+
+      context "when the resource is not inside the renewal window" do
+        let(:can) { true }
+
+        before do
+          allow(resource).to receive(:in_renewal_window?).and_return(true)
+        end
+
+        it "returns false" do
+          expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
+        end
+      end
+    end
+
+    context "when the resource is an inactive registration" do
+      let(:resource) do
+        registration = create(:registration)
+        registration.registration_exemptions.each(&:revoke!)
+        registration
+      end
+
+      it "returns false" do
+        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
+      end
+    end
+
+    context "when the resource is not a registration" do
+      let(:resource) { nil }
+
+      it "returns false" do
+        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
+      end
+    end
+  end
+
   describe "display_confirmation_letter_link_for?" do
     context "when the resource is a registration" do
       let(:resource) { create(:registration) }
