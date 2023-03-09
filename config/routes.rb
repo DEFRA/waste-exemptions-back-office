@@ -48,6 +48,9 @@ Rails.application.routes.draw do
   get "/registration-exemptions/deregister/:id", to: "deregister_exemptions#new", as: :deregister_exemptions_form
   post "/registration-exemptions/deregister/:id", to: "deregister_exemptions#update", as: :deregister_exemptions
 
+  # Resent deregistration email
+  get "/resend-deregistration-emails/:id", to: "resend_deregistration_emails#new", as: :resend_deregistration_emails
+
   # Override renew path
   get "/renew/:reference",
       to: "renews#new",

@@ -40,6 +40,7 @@ class Ability
   def permissions_for_admin_agent
     can :renew, WasteExemptionsEngine::Registration
     can :create, WasteExemptionsEngine::Registration
+    can :resend_registration_email, WasteExemptionsEngine::Registration
     can :create, WasteExemptionsEngine::NewRegistration
     can :update, WasteExemptionsEngine::NewRegistration
 

@@ -5,8 +5,11 @@ require "notifications/client"
 class DeregistrationEmailService < RenewalReminderEmailService
   attr_reader :registration, :recipient
 
+  # Use same attributes as deregistration email CSV export.
+  ATTRIBUTES = Reports::DeregistrationEmailBatchSerializer::ATTRIBUTES
+
   def run(registration:, recipient:)
-    @registration = registration
+    @registration = Reports::RegistrationDeregistrationEmailPresenter.new(registration)
     @recipient = recipient
 
     send!
@@ -27,13 +30,10 @@ class DeregistrationEmailService < RenewalReminderEmailService
   end
 
   def personalisation
-    {
-      contact_name: contact_name,
-      magic_link_url: magic_link_url,
-      reference: @registration.reference,
-      site_details: site_location,
-      exemption_details: exemptions
-    }
+    [
+      ATTRIBUTES,
+      ATTRIBUTES.map { |attr| registration.public_send(attr) }
+    ].transpose.to_h
   end
 
   def template

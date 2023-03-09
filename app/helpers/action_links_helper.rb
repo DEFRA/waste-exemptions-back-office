@@ -43,6 +43,12 @@ module ActionLinksHelper
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:deregister, resource)
   end
 
+  def display_resend_deregistration_email_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) &&
+      can?(:resend_registration_email, resource) &&
+      !resource.in_renewal_window?
+  end
+
   def display_confirmation_letter_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && resource.active?
   end
