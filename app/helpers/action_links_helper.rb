@@ -46,7 +46,8 @@ module ActionLinksHelper
   def display_resend_deregistration_email_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) &&
       can?(:resend_registration_email, resource) &&
-      !resource.in_renewal_window?
+      !resource.in_renewal_window? &&
+      !resource.already_renewed?
   end
 
   def display_confirmation_letter_link_for?(resource)

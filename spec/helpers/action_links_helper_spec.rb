@@ -197,16 +197,16 @@ RSpec.describe ActionLinksHelper do
   end
 
   describe "display_resend_deregistration_email_link_for?" do
-    context "when the resource is an active registration" do
-      let(:resource) do
-        registration = create(:registration)
-        registration.registration_exemptions.each do |re|
-          re.state = "active"
-          re.save!
-        end
-        registration
+    let(:resource) do
+      registration = create(:registration)
+      registration.registration_exemptions.each do |re|
+        re.state = "active"
+        re.save!
       end
+      registration
+    end
 
+    context "when the resource is an active registration" do
       before { allow(helper).to receive(:can?).with(:resend_registration_email, resource).and_return(can) }
 
       context "when the user has permission to deregister a registration" do
@@ -235,6 +235,16 @@ RSpec.describe ActionLinksHelper do
         it "returns false" do
           expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
         end
+      end
+    end
+
+    context "when the resource is an already renewed registration" do
+      before do
+        resource.referring_registration = create(:registration)
+      end
+
+      it "returns false" do
+        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
       end
     end
 
