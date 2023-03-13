@@ -128,6 +128,18 @@
         </p>
       <% end %>
 
+      <% if display_resend_deregistration_email_link_for?(resource) %>
+        <p class="govuk-body">
+          <%= link_to resend_deregistration_emails_path(resource), id: "resend_deregistration_email_#{resource.reference}" do %>
+            <%= t(".actions.resend_deregistration_email.link_text") %>
+            <span class="govuk-visually-hidden">
+            <%= t(".actions.resend_deregistration_email.visually_hidden_text",
+                  name: result_name_for_visually_hidden_text(resource)) %>
+          </span>
+          <% end %>
+        </p>
+      <% end %>
+
       <% if display_already_renewed_text_for?(resource) %>
         <p class="govuk-body"><%= t(".actions.renew.already_renewed") %></p>
       <% elsif display_renew_links_for?(resource) %>

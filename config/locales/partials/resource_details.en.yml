@@ -70,6 +70,9 @@ en:
           link_text: "Resend renewal email"
           visually_hidden_text: "of %{name}"
         resend_renewal_letter: "Resend renewal letter"
+        resend_deregistration_email:
+          link_text: "Send deregistration invite"
+          visually_hidden_text: "resend deregistration email of %{name}"
       no_applicant_data: "No applicant details"
       no_contact_data: "No contact details"
       no_exemptions: "No exemptions"

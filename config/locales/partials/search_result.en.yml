@@ -29,9 +29,6 @@ en:
         resume:
           link_text: "Resume"
           visually_hidden_text: "registering %{name}"
-        resend_deregistration_email:
-          link_text: "Send deregistration invite"
-          visually_hidden_text: "resend deregistration email of %{name}"
         renew:
           link_text: "Start renewal"
           visually_hidden_text: "of %{name}"
