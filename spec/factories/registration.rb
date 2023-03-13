@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :registration, class: "WasteExemptionsEngine::Registration" do
     location { "england" }
     business_type { "limitedCompany" }
-    company_no { "09360070" }
+    company_no { "10336040" }
     on_a_farm { true }
     is_a_farmer { true }
 
