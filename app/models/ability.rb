@@ -24,6 +24,7 @@ class Ability
     can :read, User
     can :change_role, User
     can :activate_or_deactivate, User
+    can :read, Reports::DefraQuarterlyStatsService
 
     permissions_for_super_agent
   end
@@ -39,6 +40,7 @@ class Ability
   def permissions_for_admin_agent
     can :renew, WasteExemptionsEngine::Registration
     can :create, WasteExemptionsEngine::Registration
+    can :resend_registration_email, WasteExemptionsEngine::Registration
     can :create, WasteExemptionsEngine::NewRegistration
     can :update, WasteExemptionsEngine::NewRegistration
 
@@ -60,5 +62,7 @@ class Ability
     permissions_for_admin_agent
 
     can :manage, WasteExemptionsEngine::FeatureToggle
+    can :manage, DeregistrationEmailExportsForm
+    can :read, Reports::DefraQuarterlyStatsService
   end
 end

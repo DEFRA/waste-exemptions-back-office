@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :registration, class: "WasteExemptionsEngine::Registration" do
     location { "england" }
     business_type { "limitedCompany" }
-    company_no { "09360070" }
+    company_no { "10336040" }
     on_a_farm { true }
     is_a_farmer { true }
 
@@ -107,6 +107,16 @@ FactoryBot.define do
 
     trait :with_ceased_exemptions do
       registration_exemptions { build_list(:registration_exemption, 3, :ceased) }
+    end
+
+    trait :eligible_for_deregistration do
+      submitted_at do
+        7.months.ago.to_date
+      end
+
+      registration_exemptions do
+        build_list(:registration_exemption, 1, :active)
+      end
     end
 
     trait :expires_tomorrow do

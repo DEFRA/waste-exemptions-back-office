@@ -3,7 +3,7 @@
 require_relative "../concerns/can_load_file_to_aws"
 
 module Reports
-  class EprExportService < ::WasteExemptionsEngine::BaseService
+  class EprExportService < WasteExemptionsEngine::BaseService
     include CanLoadFileToAws
 
     def run

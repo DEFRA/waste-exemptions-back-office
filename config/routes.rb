@@ -38,12 +38,18 @@ Rails.application.routes.draw do
   get "/registrations/deregister/:id", to: "deregister_registrations#new", as: :deregister_registrations_form
   post "/registrations/deregister/:id", to: "deregister_registrations#update", as: :deregister_registrations
 
+  # Deregistration email exports
+  resources :deregistration_email_exports, only: %i[new create]
+
   # Privacy policy
   get "/ad-privacy-policy", to: "ad_privacy_policy#show", as: :ad_privacy_policy
 
   # Deregister Exemptions
   get "/registration-exemptions/deregister/:id", to: "deregister_exemptions#new", as: :deregister_exemptions_form
   post "/registration-exemptions/deregister/:id", to: "deregister_exemptions#update", as: :deregister_exemptions
+
+  # Resent deregistration email
+  get "/resend-deregistration-emails/:id", to: "resend_deregistration_emails#new", as: :resend_deregistration_emails
 
   # Override renew path
   get "/renew/:reference",
@@ -77,6 +83,13 @@ Rails.application.routes.draw do
   patch "/companies-house-details/:reference",
         to: "refresh_companies_house_name#update_companies_house_details",
         as: :refresh_companies_house_name
+
+  get "/reports/quarterly_stats",
+      to: "quarterly_stats#show",
+      as: "quarterly_stats"
+
+  get "/testing/create_registration/:expiry_date",
+      to: "testing#create_registration"
 
   # Engine
   mount WasteExemptionsEngine::Engine => "/"

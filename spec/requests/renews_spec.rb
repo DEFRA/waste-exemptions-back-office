@@ -4,7 +4,7 @@ require "rails_helper"
 require "defra_ruby_companies_house"
 
 RSpec.describe "Renews" do
-  let(:registration) { create(:registration) }
+  let(:registration) { create(:registration, :expires_tomorrow) }
   let(:transient_registration_token) { WasteExemptionsEngine::RenewingRegistration.last.token }
 
   describe "GET /renews/:reference" do
@@ -45,36 +45,77 @@ RSpec.describe "Renews" do
       end
 
       context "when the renewal was already started" do
-        let(:renewing_registration) { create(:renewing_registration, workflow_state: "contact_name_form") }
+        let(:renewing_registration) { create(:renewing_registration, :expires_tomorrow, workflow_state: "contact_name_form") }
         let(:request_path) { "/renew/#{renewing_registration.reference}" }
 
-        it "redirects to the correct template status" do
-          get request_path
+        context "when in renewal window" do
+          it "redirects to the correct template status" do
+            get request_path
 
-          path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
-          expect(response).to redirect_to(path)
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
+            expect(response).to redirect_to(path)
+          end
+        end
+
+        context "when not in renewal window" do
+          let(:renewing_registration) { create(:renewing_registration, workflow_state: "contact_name_form") }
+
+          it "redirects to the correct template status" do
+            get request_path
+
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_exemptions_form_path(token: transient_registration_token)
+            expect(response).to redirect_to(path)
+          end
         end
       end
 
       context "when the business type is a company or llp" do
-        it "redirects to the check registered name and address form, creates a new RenewingRegistration and returns a 303 status code" do
-          get request_path
+        context "when in renewal window" do
+          it "redirects to the check registered name and address form, creates a new RenewingRegistration and returns a 303 status code" do
+            get request_path
 
-          path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
-          expect(response).to redirect_to(path)
-          expect(response.code).to eq("303")
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
+            expect(response).to redirect_to(path)
+            expect(response.code).to eq("303")
+          end
+        end
+
+        context "when not in renewal window" do
+          let(:registration) { create(:registration) }
+
+          it "redirects to the check registered name and address form, creates a new RenewingRegistration and returns a 303 status code" do
+            get request_path
+
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_exemptions_form_path(token: transient_registration_token)
+            expect(response).to redirect_to(path)
+            expect(response.code).to eq("303")
+          end
         end
       end
 
       context "when the business type is not a company or llp" do
         before { registration.update(business_type: "soleTrader") }
 
-        it "redirects to the renewal start form, creates a new RenewingRegistration and returns a 303 status code" do
-          get request_path
+        context "when in renewal window" do
+          it "redirects to the renewal start form, creates a new RenewingRegistration and returns a 303 status code" do
+            get request_path
 
-          path = WasteExemptionsEngine::Engine.routes.url_helpers.new_renewal_start_form_path(token: transient_registration_token)
-          expect(response).to redirect_to(path)
-          expect(response.code).to eq("303")
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.new_renewal_start_form_path(token: transient_registration_token)
+            expect(response).to redirect_to(path)
+            expect(response.code).to eq("303")
+          end
+        end
+
+        context "when not in renewal window" do
+          let(:registration) { create(:registration) }
+
+          it "redirects to the renewal start form, creates a new RenewingRegistration and returns a 303 status code" do
+            get request_path
+
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_exemptions_form_path(token: transient_registration_token)
+            expect(response).to redirect_to(path)
+            expect(response.code).to eq("303")
+          end
         end
       end
     end

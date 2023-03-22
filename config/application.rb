@@ -25,6 +25,8 @@ module WasteExemptionsBackOffice
   class Application < Rails::Application
     config.load_defaults 6.0
     config.autoloader = :classic
+    config.active_job.queue_adapter = :sucker_punch
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -63,6 +65,7 @@ module WasteExemptionsBackOffice
     # Data export config
     config.bulk_reports_bucket_name = ENV.fetch("AWS_BULK_EXPORT_BUCKET", nil)
     config.epr_reports_bucket_name = ENV.fetch("AWS_DAILY_EXPORT_BUCKET", nil)
+    config.deregistration_email_bucket_name = ENV.fetch("AWS_DEREGISTRATION_EMAIL_EXPORT_BUCKET", nil)
     config.boxi_exports_bucket_name = ENV.fetch("AWS_BOXI_EXPORT_BUCKET", nil)
     config.epr_export_filename = ENV["EPR_DAILY_REPORT_FILE_NAME"] || "waste_exemptions_epr_daily_full"
     config.export_batch_size = ENV["EXPORT_SERVICE_BATCH_SIZE"] || 1000
@@ -77,6 +80,9 @@ module WasteExemptionsBackOffice
     # Emails
     config.email_test_address = ENV.fetch("EMAIL_TEST_ADDRESS", nil)
     config.second_renewal_email_reminder_days = ENV["SECOND_RENEWAL_EMAIL_BEFORE_DAYS"] || 14
+    config.registration_email_batch_size = ENV.fetch("REGISTRATION_EMAIL_BATCH_SIZE", 1000)
+    config.registration_email_batch_minimum_age_days = ENV.fetch("REGISTRATION_EMAIL_BATCH_MINIMUM_AGE",
+                                                                 6.months.in_days).to_i
 
     # Database cleanup
     config.max_transient_registration_age_days = ENV["MAX_TRANSIENT_REGISTRATION_AGE_DAYS"] || 30
@@ -89,5 +95,10 @@ module WasteExemptionsBackOffice
     # SassC::SyntaxError: Error: "calc(0px)" is not a number for `max'
     # https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil
+
+    # Allow paper_trail to deserialise dates and times: https://stackoverflow.com/a/72970171
+    config.active_record.yaml_column_permitted_classes = [
+      ActiveSupport::TimeZone, ActiveSupport::TimeWithZone, Date, Time
+    ]
   end
 end

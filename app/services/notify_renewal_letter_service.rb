@@ -2,9 +2,9 @@
 
 require "notifications/client"
 
-class NotifyRenewalLetterService < ::WasteExemptionsEngine::BaseService
+class NotifyRenewalLetterService < WasteExemptionsEngine::BaseService
   # So we can use displayable_address()
-  include ::WasteExemptionsEngine::ApplicationHelper
+  include WasteExemptionsEngine::ApplicationHelper
 
   def run(registration:)
     @registration = NotifyRenewalLetterPresenter.new(registration)

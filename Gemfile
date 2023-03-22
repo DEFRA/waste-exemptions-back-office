@@ -61,6 +61,9 @@ gem "whenever", "~> 1.0"
 # Used for auditing and version control
 gem "paper_trail"
 
+# Used for handling background processes
+gem "sucker_punch", "~> 3.1"
+
 # Use the waste exemptions engine for the user journey
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
@@ -75,6 +78,9 @@ gem "defra_ruby_aws", "~> 0.4"
 
 # Manage, create and open zip files https://github.com/rubyzip/rubyzip
 gem "rubyzip"
+
+# Load this in all environments, not just test, to support the /testing helper:
+gem "factory_bot_rails"
 
 group :production do
   # Web application server that replaces webrick. It handles HTTP requests,
@@ -114,8 +120,6 @@ end
 group :test do
   # Database Cleaner is a set of strategies for cleaning your database in Ruby.
   gem "database_cleaner"
-  # Fixtures replacement
-  gem "factory_bot_rails"
   # Generate test data
   gem "faker"
   # Generates a test coverage report on every `bundle exec rspec` call. We use

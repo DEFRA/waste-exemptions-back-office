@@ -16,4 +16,8 @@ RSpec.shared_examples "system examples" do
   it "is able to activate or deactivate a user" do
     expect(subject).to be_able_to(:activate_or_deactivate, user)
   end
+
+  it "is able to view DEFRA quarterly reports" do
+    expect(subject).to be_able_to(:read, Reports::DefraQuarterlyStatsService)
+  end
 end

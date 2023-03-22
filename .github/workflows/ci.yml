@@ -5,7 +5,7 @@ on: push
 jobs:
   build:
     # You must use a Linux environment when using service containers or container jobs
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
       ADDRESS_FACADE_CLIENT_ID: ${{ secrets.ACTIONS_ADDRESS_FACADE_CLIENT_ID }}
       ADDRESS_FACADE_CLIENT_KEY: ${{ secrets.ACTIONS_ADDRESS_FACADE_CLIENT_KEY }}
@@ -18,6 +18,9 @@ jobs:
       AWS_BOXI_EXPORT_ACCESS_KEY_ID: keyid
       AWS_BOXI_EXPORT_SECRET_ACCESS_KEY: secretkey
       AWS_BOXI_EXPORT_BUCKET: boxi-exports
+      AWS_DEREGISTRATION_EMAIL_EXPORT_ACCESS_KEY_ID: keyid
+      AWS_DEREGISTRATION_EMAIL_EXPORT_SECRET_ACCESS_KEY: secretkey
+      AWS_DEREGISTRATION_EMAIL_EXPORT_BUCKET: deregistration-email-exports
       ENV_VARIABLE_TEST_FEATURE: true
       NOTIFY_API_KEY: ${{ secrets.ACTIONS_NOTIFY_API_KEY }}
       PG_HOST: localhost
@@ -47,7 +50,7 @@ jobs:
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of sonarcloud analysis
 

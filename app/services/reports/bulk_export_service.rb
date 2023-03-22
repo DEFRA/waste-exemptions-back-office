@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Reports
-  class BulkExportService < ::WasteExemptionsEngine::BaseService
+  class BulkExportService < WasteExemptionsEngine::BaseService
     def run
       return if WasteExemptionsEngine::Registration.count.zero?
 

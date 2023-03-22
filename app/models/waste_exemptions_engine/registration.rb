@@ -3,7 +3,7 @@
 require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "registration")
 
 module WasteExemptionsEngine
-  class Registration < ::WasteExemptionsEngine::ApplicationRecord
+  class Registration < WasteExemptionsEngine::ApplicationRecord
     include CanBeSearchedLikeRegistration
     include CanBeSearchedLikeTelephone
 
