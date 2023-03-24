@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: af94cbc43440798bbfb2ca182cac098716a5e001
+  revision: a3f1f938a1ff3a67f0e479e7ad29a2a045185f82
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -91,8 +91,8 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     airbrake (13.0.3)
       airbrake-ruby (~> 6.0)
-    airbrake-ruby (6.2.0)
-      rbtree3 (~> 0.5)
+    airbrake-ruby (6.2.1)
+      rbtree3 (~> 0.6)
     ast (2.4.2)
     async (1.29.0)
       console (~> 1.10)
