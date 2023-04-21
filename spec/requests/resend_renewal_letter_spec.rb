@@ -27,7 +27,7 @@ RSpec.describe "ResendRenewalLetter" do
       it "returns a 200 code and includes the correct data" do
         get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
 
-        expect(response.code).to eq("200")
+        expect(response).to have_http_status(:ok)
         expect(response.body).to include(registration.contact_address.postcode)
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe "ResendRenewalLetter" do
         VCR.use_cassette("notify_renewal_letter") do
           post request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
 
-          expect(response.code).to eq("302")
+          expect(response).to have_http_status(:found)
         end
       end
 
@@ -79,7 +79,7 @@ RSpec.describe "ResendRenewalLetter" do
         it "return a 302 redirect code" do
           post request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
 
-          expect(response.code).to eq("302")
+          expect(response).to have_http_status(:found)
         end
 
         it "return an error message" do

@@ -10,7 +10,7 @@ RSpec.shared_examples "a length validator" do |validatable_class, property, inva
 
   describe "#validate_each" do
     context "when the #{property} is not valid" do
-      context "because the #{property} is too long" do
+      context "when the #{property} is too long" do
         invalid_input = [invalid_input] unless invalid_input.is_a? Array
         validatable = validatable_class.new(*invalid_input)
         error_message = Helpers::Translator.error_message(validatable, property, :too_long)
