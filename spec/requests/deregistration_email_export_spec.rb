@@ -18,7 +18,7 @@ RSpec.describe "DeregistrationEmailExport" do
       let(:user) { create(:user, :developer) }
 
       it "renders the correct template" do
-        expect(response.code).to eq("200")
+        expect(response).to have_http_status(:ok)
         expect(response).to render_template("new")
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe "DeregistrationEmailExport" do
         let(:service_state) { true }
 
         it "redirects to the dashboard" do
-          expect(response.code).to eq("302")
+          expect(response).to have_http_status(:found)
           expect(response).to redirect_to(root_path)
         end
       end
@@ -72,7 +72,7 @@ RSpec.describe "DeregistrationEmailExport" do
         let(:service_state) { false }
 
         it "renders the new template" do
-          expect(response.code).to eq("200")
+          expect(response).to have_http_status(:ok)
           expect(response).to render_template("new")
         end
       end

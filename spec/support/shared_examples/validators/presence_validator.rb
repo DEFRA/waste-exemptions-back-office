@@ -10,7 +10,7 @@ RSpec.shared_examples "a presence validator" do |validatable_class, property|
 
   describe "#validate_each" do
     context "when the #{property} is not valid" do
-      context "because the #{property} is not present" do
+      context "when the #{property} is not present" do
         validatable = validatable_class.new
         error_message = Helpers::Translator.error_message(validatable, property, :blank)
 

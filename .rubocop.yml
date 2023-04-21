@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 inherit_gem:
   defra_ruby_style:
     - default.yml
@@ -12,6 +14,10 @@ RSpec/DescribeClass:
   # Allow more descriptive string labels for request specs
     - spec/requests/**/*
 
+# Prefer to keep numbers in some let statements
+RSpec/IndexedLet:
+  Enabled: false
+
 # These cops are n/a for rake tasks
 RSpec/ContextWording:
   Exclude:
@@ -19,17 +25,3 @@ RSpec/ContextWording:
 RSpec/NamedSubject:
   Exclude:
     - spec/lib/tasks/*
-
-# The effort to update the existing specs to align with these cops is too high.
-# Future changes to the specs should avoid adding more of these offenses
-# and, where possible, remove existing offenses.
-RSpec/ExampleLength:
-  Enabled: false
-RSpec/MultipleExpectations:
-  Enabled: false
-RSpec/MultipleMemoizedHelpers:
-  Enabled: false
-RSpec/NestedGroups:
-  Enabled: false
-RSpec/MessageSpies:
-  Enabled: false
