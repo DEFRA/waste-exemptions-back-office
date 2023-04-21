@@ -197,17 +197,12 @@ RSpec.describe ActionLinksHelper do
   end
 
   describe "display_resend_deregistration_email_link_for?" do
-    let(:resource) do
-      registration = create(:registration)
-      registration.registration_exemptions.each do |re|
-        re.state = "active"
-        re.save!
-      end
-      registration
-    end
+    let(:can) { true }
+
+    before { allow(helper).to receive(:can?).with(:resend_registration_email, resource).and_return(can) }
 
     context "when the resource is an active registration" do
-      before { allow(helper).to receive(:can?).with(:resend_registration_email, resource).and_return(can) }
+      let(:resource) { create(:registration, :with_active_exemptions) }
 
       context "when the user has permission to deregister a registration" do
         let(:can) { true }
@@ -239,21 +234,25 @@ RSpec.describe ActionLinksHelper do
     end
 
     context "when the resource is an already renewed registration" do
-      before do
-        resource.referring_registration = create(:registration)
-      end
+      let(:resource) { create(:registration, :with_active_exemptions) }
+
+      before { resource.referred_registration = create(:registration) }
 
       it "returns false" do
         expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
       end
     end
 
-    context "when the resource is an inactive registration" do
-      let(:resource) do
-        registration = create(:registration)
-        registration.registration_exemptions.each(&:revoke!)
-        registration
+    context "when the resource is a ceased registration" do
+      let(:resource) { create(:registration, :with_ceased_exemptions) }
+
+      it "returns false" do
+        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
       end
+    end
+
+    context "when the resource is an expired registration" do
+      let(:resource) { create(:registration, registration_exemptions: build_list(:registration_exemption, 3, :expired)) }
 
       it "returns false" do
         expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
