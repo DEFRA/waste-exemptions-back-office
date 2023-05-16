@@ -2,7 +2,34 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.1...HEAD)
+
+**Fixed bugs:**
+
+- Fix/resend dereg link [\#1051](https://github.com/DEFRA/waste-exemptions-back-office/pull/1051) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `f736355` to `56bb3cf` [\#1063](https://github.com/DEFRA/waste-exemptions-back-office/pull/1063) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `00475d0` to `f736355` [\#1060](https://github.com/DEFRA/waste-exemptions-back-office/pull/1060) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `3555d1c` to `00475d0` [\#1052](https://github.com/DEFRA/waste-exemptions-back-office/pull/1052) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump nokogiri from 1.14.2 to 1.14.3 [\#1047](https://github.com/DEFRA/waste-exemptions-back-office/pull/1047) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rails from 2.18.0 to 2.19.0 [\#1046](https://github.com/DEFRA/waste-exemptions-back-office/pull/1046) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `af94cbc` to `3555d1c` [\#1045](https://github.com/DEFRA/waste-exemptions-back-office/pull/1045) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump devise from 4.9.0 to 4.9.2 [\#1044](https://github.com/DEFRA/waste-exemptions-back-office/pull/1044) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `35173aa` to `af94cbc` [\#1039](https://github.com/DEFRA/waste-exemptions-back-office/pull/1039) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `8e7564a` to `35173aa` [\#1038](https://github.com/DEFRA/waste-exemptions-back-office/pull/1038) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `9c9e717` to `8e7564a` [\#1037](https://github.com/DEFRA/waste-exemptions-back-office/pull/1037) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rails from 6.1.7.2 to 6.1.7.3 [\#1034](https://github.com/DEFRA/waste-exemptions-back-office/pull/1034) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump database\_cleaner from 2.0.1 to 2.0.2 [\#1033](https://github.com/DEFRA/waste-exemptions-back-office/pull/1033) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump cancancan from 3.4.0 to 3.5.0 [\#1025](https://github.com/DEFRA/waste-exemptions-back-office/pull/1025) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rails from 2.17.4 to 2.18.0 [\#1021](https://github.com/DEFRA/waste-exemptions-back-office/pull/1021) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pg from 1.4.5 to 1.4.6 [\#1020](https://github.com/DEFRA/waste-exemptions-back-office/pull/1020) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump paper\_trail from 13.0.0 to 14.0.0 [\#964](https://github.com/DEFRA/waste-exemptions-back-office/pull/964) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.7.1](https://github.com/defra/waste-exemptions-back-office/tree/v2.7.1) (2023-03-15)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.0...v2.7.1)
 
 **Implemented enhancements:**
 
@@ -11,6 +38,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1036](https://github.com/DEFRA/waste-exemptions-back-office/pull/1036) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump waste\_exemptions\_engine from `d624ded` to `9c9e717` [\#1035](https://github.com/DEFRA/waste-exemptions-back-office/pull/1035) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Updating companies house number in factory [\#1032](https://github.com/DEFRA/waste-exemptions-back-office/pull/1032) ([timstone](https://github.com/timstone))
 
