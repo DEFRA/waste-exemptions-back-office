@@ -1,8 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
+## [v2.7.2](https://github.com/defra/waste-exemptions-back-office/tree/v2.7.2) (2023-05-19)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.1...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.1...v2.7.2)
 
 **Fixed bugs:**
 
