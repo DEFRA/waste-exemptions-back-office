@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -33,20 +32,10 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: config.back_office_url, protocol: "http" }
 
   # Don't care if the mailer can't send (if set to false)
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
-
-  # Default settings are for mailcatcher
-  config.action_mailer.smtp_settings = {
-    user_name: ENV.fetch("EMAIL_USERNAME", nil),
-    password: ENV.fetch("EMAIL_PASSWORD", nil),
-    domain: config.back_office_url,
-    address: ENV["EMAIL_HOST"] || "localhost",
-    port: ENV["EMAIL_PORT"] || 1025,
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  config.action_mailer.delivery_method = :notify_mail
+  config.action_mailer.notify_mail_settings = { api_key: ENV.fetch("NOTIFY_API_KEY") }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -77,4 +66,3 @@ Rails.application.configure do
   # https://stackoverflow.com/a/29417509
   config.web_console.whitelisted_ips = ENV.fetch("SSH_CLIENT", "127.0.0.1").split.first
 end
-# rubocop:enable Metrics/BlockLength

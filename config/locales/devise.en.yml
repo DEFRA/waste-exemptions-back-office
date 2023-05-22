@@ -20,9 +20,9 @@ en:
       confirmation_instructions:
         subject: "Confirmation instructions"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "Waste exemptions: Reset password instructions"
       unlock_instructions:
-        subject: "Unlock instructions"
+        subject: "Waste exemptions: Unlock instructions"
       email_changed:
         subject: "Email Changed"
       password_change:
