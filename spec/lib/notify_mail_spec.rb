@@ -23,6 +23,7 @@ RSpec.describe NotifyMail do
 
     context "when no errors occur" do
       it "forwards the mail message to Notify" do
+        instance.deliver!(mail)
         expect(client).to have_received(:send_email).with(
           {
             email_address: "radi.perlman@example.com",
@@ -30,11 +31,10 @@ RSpec.describe NotifyMail do
             personalisation: { name: "Radia Perlman", environment: "test" }
           }
         )
-        instance.deliver!(mail)
       end
 
       it "logs the response" do
-        expect(Rails.logger).to have_received(:info).with(response.to_json)
+        expect(Rails.logger).to receive(:info).with(response.to_json)
 
         instance.deliver!(mail)
       end
@@ -49,14 +49,14 @@ RSpec.describe NotifyMail do
     context "when an error occurs" do
       let(:error) { StandardError.new("boom") }
 
-      before { allow(client).to have_received(:send_email).and_raise(error) }
+      before { allow(client).to receive(:send_email).and_raise(error) }
 
       it "throws the error up (doesn't squash it)" do
         expect { instance.deliver!(mail) }.to raise_error(UncaughtThrowError)
       end
 
       it "logs the response" do
-        expect(Rails.logger).to have_received(:error).with(error)
+        expect(Rails.logger).to receive(:error).with(error)
 
         expect { instance.deliver!(mail) }.to raise_error(UncaughtThrowError)
       end

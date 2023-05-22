@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe UserMailer do
   let(:token) { "abcde12345" }
-  let(:user) { build(:user, :system, email: "grace.hopper@example.com", invitation_token: token) }
+  let(:user) { build(:user, :system, email: "grace.hopper@example.com", invitation_token: token, invitation_created_at: Time.zone.now) }
 
   describe "invitation_instructions" do
     let(:mail) { described_class.invitation_instructions(user, token) }
@@ -27,6 +27,7 @@ RSpec.describe UserMailer do
     it "renders the body" do
       expect(mail.body.encoded).to match("You have been invited to set up a back office account")
       expect(mail.body.encoded).to include("/users/invitation/accept?invitation_token=abcde12345")
+      expect(mail.body.encoded).to match(I18n.t("devise.mailer.invitation_instructions.paragraph_3", due_date: I18n.l(user.invitation_created_at + 2.weeks, format: :accept_until_format)))
       expect(mail.body.encoded).to match(I18n.t("devise.mailer.invitation_instructions.paragraph_4"))
     end
   end
