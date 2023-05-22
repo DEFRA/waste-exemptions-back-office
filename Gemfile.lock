@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 56bb3cf5fbcb5e8d8160f2f74554654006f29c47
+  revision: 0f1a93731e1287f5b02d6d210cf1ee8f4e3bd8e7
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -264,7 +264,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    loofah (2.21.2)
+    loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -294,8 +294,8 @@ GEM
       net-protocol
     netrc (0.11.0)
     nio4r (2.5.9)
-    nokogiri (1.14.4)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.15.1)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
       jwt (>= 1.5, < 3)
