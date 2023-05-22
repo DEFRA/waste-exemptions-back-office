@@ -34,9 +34,9 @@ RSpec.describe NotifyMail do
       end
 
       it "logs the response" do
-        expect(Rails.logger).to receive(:info).with(response.to_json)
-
+        allow(Rails.logger).to receive(:info)
         instance.deliver!(mail)
+        expect(Rails.logger).to have_received(:info).with(response.to_json)
       end
 
       it "adds the response to the mail object" do
@@ -56,9 +56,9 @@ RSpec.describe NotifyMail do
       end
 
       it "logs the response" do
-        expect(Rails.logger).to receive(:error).with(error)
-
+        allow(Rails.logger).to receive(:error)
         expect { instance.deliver!(mail) }.to raise_error(UncaughtThrowError)
+        expect(Rails.logger).to have_received(:error).with(error)
       end
     end
   end
