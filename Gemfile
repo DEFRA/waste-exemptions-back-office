@@ -18,6 +18,8 @@ gem "github_changelog_generator", require: false
 gem "defra_ruby_template"
 # GOV.UK design system forms
 gem "govuk_design_system_formbuilder"
+# GOV.UK Notify gem. Allows us to send email via the Notify web API
+gem "notifications-ruby-client"
 # Use jquery as the JavaScript library
 gem "jquery-rails"
 # Use postgresql as the database for Active Record

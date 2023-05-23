@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -95,16 +94,6 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send (if set to false)
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :smtp
-
-  config.action_mailer.smtp_settings = {
-    user_name: ENV.fetch("EMAIL_USERNAME", nil),
-    password: ENV.fetch("EMAIL_PASSWORD", nil),
-    domain: config.back_office_url,
-    address: ENV.fetch("EMAIL_HOST", nil),
-    port: ENV.fetch("EMAIL_PORT", nil),
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  config.action_mailer.delivery_method = :notify_mail
+  config.action_mailer.notify_mail_settings = { api_key: ENV.fetch("NOTIFY_API_KEY") }
 end
-# rubocop:enable Metrics/BlockLength
