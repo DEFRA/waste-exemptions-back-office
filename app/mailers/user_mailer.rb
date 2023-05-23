@@ -12,7 +12,10 @@ class UserMailer < ApplicationMailer
     @email = record.email
     @token = token
     @link = accept_user_invitation_url(invitation_token: token)
-    expiry_date = record.invitation_created_at ? I18n.l(record.invitation_created_at + User.invite_for, format: :accept_until_format) : nil
+    expiry_date = if record.invitation_created_at
+                    I18n.l(record.invitation_created_at + User.invite_for,
+                           format: :accept_until_format)
+                  end
 
     mail(
       to: @email,
