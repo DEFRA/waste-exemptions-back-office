@@ -12,6 +12,7 @@ class UserMailer < ApplicationMailer
     @email = record.email
     @token = token
     @link = accept_user_invitation_url(invitation_token: token)
+    expiry_date = record.invitation_created_at ? I18n.l(record.invitation_created_at + User.invite_for, format: :accept_until_format) : nil
 
     mail(
       to: @email,
@@ -19,7 +20,8 @@ class UserMailer < ApplicationMailer
       template_id: "9e1bad58-4c99-432a-920e-c82715c5cbdc",
       personalisation: {
         account_email: @email,
-        invite_link: @link
+        invite_link: @link,
+        link_expiry_date: expiry_date
       }
     )
   end
