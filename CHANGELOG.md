@@ -1,6 +1,22 @@
 # Changelog
 
-## [v2.7.2](https://github.com/defra/waste-exemptions-back-office/tree/v2.7.2) (2023-05-19)
+## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.2...HEAD)
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `05a3aaa` to `e55e06c` [\#1073](https://github.com/DEFRA/waste-exemptions-back-office/pull/1073) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `d1139eb` to `05a3aaa` [\#1072](https://github.com/DEFRA/waste-exemptions-back-office/pull/1072) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `8a1e9f8` to `d1139eb` [\#1071](https://github.com/DEFRA/waste-exemptions-back-office/pull/1071) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Feature/ruby 2064 wex replace send grid with notify for devise emails user invites password resets etc [\#1070](https://github.com/DEFRA/waste-exemptions-back-office/pull/1070) ([brujeo](https://github.com/brujeo))
+- Bump waste\_exemptions\_engine from `0f1a937` to `8a1e9f8` [\#1069](https://github.com/DEFRA/waste-exemptions-back-office/pull/1069) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Change production log level to :info [\#1068](https://github.com/DEFRA/waste-exemptions-back-office/pull/1068) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump waste\_exemptions\_engine from `56bb3cf` to `0f1a937` [\#1067](https://github.com/DEFRA/waste-exemptions-back-office/pull/1067) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG.md [\#1066](https://github.com/DEFRA/waste-exemptions-back-office/pull/1066) ([brujeo](https://github.com/brujeo))
+- Bump pg from 1.4.6 to 1.5.3 [\#1058](https://github.com/DEFRA/waste-exemptions-back-office/pull/1058) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.7.2](https://github.com/defra/waste-exemptions-back-office/tree/v2.7.2) (2023-05-16)
 
 [Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.1...v2.7.2)
 
@@ -10,6 +26,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1064](https://github.com/DEFRA/waste-exemptions-back-office/pull/1064) ([brujeo](https://github.com/brujeo))
 - Bump waste\_exemptions\_engine from `f736355` to `56bb3cf` [\#1063](https://github.com/DEFRA/waste-exemptions-back-office/pull/1063) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `00475d0` to `f736355` [\#1060](https://github.com/DEFRA/waste-exemptions-back-office/pull/1060) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `3555d1c` to `00475d0` [\#1052](https://github.com/DEFRA/waste-exemptions-back-office/pull/1052) ([dependabot[bot]](https://github.com/apps/dependabot))
