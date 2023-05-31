@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: d624ded0973e3e544f739fdea98c222c3312e190
+  revision: 0bf4e646633c628596a9c551ae364f47a93dc102
   branch: main
   specs:
     waste_exemptions_engine (0.0.1)
@@ -544,6 +544,7 @@ DEPENDENCIES
   webrick
   whenever (~> 1.0)
   whenever-test
+  wicked_pdf
 
 RUBY VERSION
    ruby 3.1.2p20
