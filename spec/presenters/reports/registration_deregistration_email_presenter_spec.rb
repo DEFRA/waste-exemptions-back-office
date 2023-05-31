@@ -34,7 +34,11 @@ module Reports
       end
 
       it "returns the correct value" do
-        expect(presenter.exemption_details).to eq(expected)
+        parts = presenter.exemption_details.split(", ")
+        expect(parts.count).to eq(registration.exemptions.count)
+        parts.each do |part|
+          expect(expected).to include(part)
+        end
       end
     end
   end

@@ -22,7 +22,7 @@ RSpec.describe "Bulk Exports" do
 
       expect(response).to render_template("bulk_exports/show")
       expect(response.body.scan(export_at_regex).count).to eq(1)
-      expect(response.code).to eq("200")
+      expect(response).to have_http_status(:ok)
     end
   end
 end

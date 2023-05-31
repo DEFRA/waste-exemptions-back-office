@@ -14,6 +14,8 @@ require "sprockets/railtie"
 require "rails/all"
 require "active_record/connection_adapters/postgresql_adapter"
 # require "rails/test_unit/railtie"
+# See comment 'Add custom delivery method for emails' below
+require_relative "../app/lib/notify_mail"
 
 require "defra_ruby_features"
 
@@ -100,5 +102,8 @@ module WasteExemptionsBackOffice
     config.active_record.yaml_column_permitted_classes = [
       ActiveSupport::TimeZone, ActiveSupport::TimeWithZone, Date, Time
     ]
+
+    # Add custom delivery method for emails
+    ActionMailer::Base.add_delivery_method(:notify_mail, NotifyMail)
   end
 end

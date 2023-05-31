@@ -28,7 +28,7 @@ RSpec.describe "ResendRenewalEmail" do
         VCR.use_cassette("first_renewal_reminder_email") do
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
 
-          expect(response.code).to eq("302")
+          expect(response).to have_http_status(:found)
         end
       end
 
@@ -61,7 +61,7 @@ RSpec.describe "ResendRenewalEmail" do
         it "return a 302 redirect code" do
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
 
-          expect(response.code).to eq("302")
+          expect(response).to have_http_status(:found)
         end
 
         it "return an error message" do

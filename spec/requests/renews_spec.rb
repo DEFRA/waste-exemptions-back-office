@@ -41,7 +41,7 @@ RSpec.describe "Renews" do
 
         path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
         expect(response).to redirect_to(path)
-        expect(response.code).to eq("303")
+        expect(response).to have_http_status(:see_other)
       end
 
       context "when the renewal was already started" do
@@ -76,7 +76,7 @@ RSpec.describe "Renews" do
 
             path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
             expect(response).to redirect_to(path)
-            expect(response.code).to eq("303")
+            expect(response).to have_http_status(:see_other)
           end
         end
 
@@ -88,7 +88,7 @@ RSpec.describe "Renews" do
 
             path = WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_exemptions_form_path(token: transient_registration_token)
             expect(response).to redirect_to(path)
-            expect(response.code).to eq("303")
+            expect(response).to have_http_status(:see_other)
           end
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe "Renews" do
 
             path = WasteExemptionsEngine::Engine.routes.url_helpers.new_renewal_start_form_path(token: transient_registration_token)
             expect(response).to redirect_to(path)
-            expect(response.code).to eq("303")
+            expect(response).to have_http_status(:see_other)
           end
         end
 
@@ -114,7 +114,7 @@ RSpec.describe "Renews" do
 
             path = WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_exemptions_form_path(token: transient_registration_token)
             expect(response).to redirect_to(path)
-            expect(response.code).to eq("303")
+            expect(response).to have_http_status(:see_other)
           end
         end
       end

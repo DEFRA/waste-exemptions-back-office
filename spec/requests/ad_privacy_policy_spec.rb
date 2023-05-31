@@ -14,7 +14,7 @@ RSpec.describe "Assisted digital privacy policy" do
       get ad_privacy_policy_path
 
       expect(response).to render_template("ad_privacy_policy/show")
-      expect(response.code).to eq("200")
+      expect(response).to have_http_status(:ok)
     end
   end
 end

@@ -32,7 +32,7 @@ RSpec.describe "Deregister Exemptions Forms" do
         it "responds to the GET request with a 200 status code and renders the appropriate template" do
           get good_request_path
 
-          expect(response.code).to eq("200")
+          expect(response).to have_http_status(:ok)
           expect(response).to render_template("deregister_exemptions/new")
         end
       end
@@ -82,7 +82,7 @@ RSpec.describe "Deregister Exemptions Forms" do
             post good_request_path, params: invalid_request_body
 
             expect(response).to render_template("deregister_exemptions/new")
-            expect(response.code).to eq("200")
+            expect(response).to have_http_status(:ok)
           end
         end
       end
@@ -122,7 +122,7 @@ RSpec.describe "Deregister Exemptions Forms" do
           get good_request_path
 
           expect(response).to render_template("deregister_exemptions/new")
-          expect(response.code).to eq("200")
+          expect(response).to have_http_status(:ok)
         end
       end
 
@@ -173,7 +173,7 @@ RSpec.describe "Deregister Exemptions Forms" do
             post good_request_path, params: invalid_request_body
 
             expect(response).to render_template("deregister_exemptions/new")
-            expect(response.code).to eq("200")
+            expect(response).to have_http_status(:ok)
           end
         end
       end
