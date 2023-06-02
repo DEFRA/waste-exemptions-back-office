@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "3.1.2"
+ruby "3.2.2"
 
 # Allows us to automatically generate the change log from the tags, issues,
 # labels and pull requests on GitHub. Added as a dependency so all dev's have
@@ -38,17 +38,17 @@ gem "pgreset"
 # See: https://github.com/sass/sassc-rails/issues/114
 gem "sassc-rails"
 # Bundle edge Rails instead: gem "rails', github: 'rails/rails'
-gem "rails", "~> 6.1"
+gem "rails", "~> 7.0"
 
 # Automatically apply http headers that are related to security
-gem "secure_headers", "~> 6.3"
+gem "secure_headers", "~> 6.5"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 4.2"
 
 # Use CanCanCan for user roles and permissions
-gem "cancancan", "~> 3.3"
+gem "cancancan", "~> 3.5"
 
 # Use Devise for user authentication
 gem "devise"
@@ -109,7 +109,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "rubocop-rails", "!= 2.17.0", "!= 2.17.1" # v2.17.0 - 2.17.1 has a problem parsing text_generator.rb
+  gem "rubocop-rails"
   gem "rubocop-rspec"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"
@@ -132,7 +132,7 @@ group :test do
   gem "timecop"
   # Mock HTTP requests
   gem "vcr"
-  gem "webmock", "~> 3.5"
+  gem "webmock", "~> 3.18"
 
   # Allow automated testing of the whenever schedule
   gem "whenever-test"

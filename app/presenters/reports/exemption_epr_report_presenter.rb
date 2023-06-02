@@ -70,11 +70,11 @@ module Reports
     end
 
     def exemption_registration_date
-      registered_on.to_formatted_s(:year_month_day)
+      registered_on.to_fs(:year_month_day)
     end
 
     def exemption_expiry_date
-      expires_on.to_formatted_s(:year_month_day)
+      expires_on.to_fs(:year_month_day)
     end
   end
 end

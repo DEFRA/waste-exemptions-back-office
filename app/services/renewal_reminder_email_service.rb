@@ -46,7 +46,7 @@ class RenewalReminderEmailService < WasteExemptionsEngine::BaseService
 
   def expiry_date
     # Currently you can only add exemptions when you register, so we can assume they expire at the same time
-    @registration.registration_exemptions.first.expires_on.to_formatted_s(:day_month_year)
+    @registration.registration_exemptions.first.expires_on.to_fs(:day_month_year)
   end
 
   def magic_link_url
