@@ -6,11 +6,11 @@ class NotifyRenewalLetterPresenter < BasePresenter
 
   def expiry_date
     # Currently you can only add exemptions when you register, so we can assume they expire at the same time
-    first_exemption.expires_on.to_formatted_s(:day_month_year)
+    first_exemption.expires_on.to_fs(:day_month_year)
   end
 
   def renewal_window_start_date
-    (first_exemption.expires_on - renewal_window_before_expiry_in_days).to_formatted_s(:day_month_year)
+    (first_exemption.expires_on - renewal_window_before_expiry_in_days).to_fs(:day_month_year)
   end
 
   def contact_name

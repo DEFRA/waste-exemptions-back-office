@@ -25,7 +25,7 @@ Bundler.require(*Rails.groups)
 
 module WasteExemptionsBackOffice
   class Application < Rails::Application
-    config.load_defaults 6.0
+    config.load_defaults 6.1
     config.autoloader = :classic
     config.active_job.queue_adapter = :sucker_punch
 
@@ -105,5 +105,8 @@ module WasteExemptionsBackOffice
 
     # Add custom delivery method for emails
     ActionMailer::Base.add_delivery_method(:notify_mail, NotifyMail)
+
+    # For Rails 7: https://guides.rubyonrails.org/active_record_multiple_databases.html#migrate-to-the-new-connection-handling
+    config.active_record.legacy_connection_handling = false
   end
 end
