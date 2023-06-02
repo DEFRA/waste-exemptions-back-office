@@ -51,6 +51,10 @@ module ActionLinksHelper
       !resource.already_renewed?
   end
 
+  def display_certificate_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && resource.active?
+  end
+
   def display_confirmation_letter_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && resource.active?
   end
