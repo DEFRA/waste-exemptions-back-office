@@ -553,6 +553,7 @@ DEPENDENCIES
   webrick
   whenever (~> 1.0)
   whenever-test
+  wicked_pdf
 
 RUBY VERSION
    ruby 3.2.2p53

@@ -140,6 +140,19 @@
         </p>
       <% end %>
 
+      <% if display_certificate_link_for?(resource) %>
+        <p class="govuk-body">
+        <%= link_to registration_certificate_path(resource.reference) do %>
+          <%= t(".actions.view_certificate.link_text") %>
+          <span class="govuk-visually-hidden">
+            <%= t(".actions.view_certificate.visually_hidden_text",
+                  name: result_name_for_visually_hidden_text(resource)) %>
+          </span>
+        <% end %>
+        </p>
+      <% end %>
+
+
       <% if display_already_renewed_text_for?(resource) %>
         <p class="govuk-body"><%= t(".actions.renew.already_renewed") %></p>
       <% elsif display_renew_links_for?(resource) %>

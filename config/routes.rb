@@ -31,7 +31,10 @@ Rails.application.routes.draw do
   get "/data-exports", to: "bulk_exports#show", as: :bulk_exports
 
   # Registration management
-  resources :registrations, only: :show, param: :reference
+  resources :registrations, only: :show, param: :reference do
+    get "certificate", to: "certificates#show", as: :certificate
+  end
+
   resources :new_registrations, only: :show, path: "/new-registrations"
 
   # Deregister Registrations
