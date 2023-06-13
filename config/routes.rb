@@ -35,24 +35,27 @@ Rails.application.routes.draw do
     get "certificate", to: "certificates#show", as: :certificate
   end
 
+  get "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#new", as: :modify_expiry_date_form
+  post "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#update", as: :modify_expiry_date
+
   resources :new_registrations, only: :show, path: "/new-registrations"
 
   # Deregister Registrations
   get "/registrations/deregister/:id", to: "deregister_registrations#new", as: :deregister_registrations_form
   post "/registrations/deregister/:id", to: "deregister_registrations#update", as: :deregister_registrations
 
+  # Deregister Exemptions
+  get "/registration-exemptions/deregister/:id", to: "deregister_exemptions#new", as: :deregister_exemptions_form
+  post "/registration-exemptions/deregister/:id", to: "deregister_exemptions#update", as: :deregister_exemptions
+
+  # Resend deregistration email
+  get "/resend-deregistration-emails/:id", to: "resend_deregistration_emails#new", as: :resend_deregistration_emails
+
   # Deregistration email exports
   resources :deregistration_email_exports, only: %i[new create]
 
   # Privacy policy
   get "/ad-privacy-policy", to: "ad_privacy_policy#show", as: :ad_privacy_policy
-
-  # Deregister Exemptions
-  get "/registration-exemptions/deregister/:id", to: "deregister_exemptions#new", as: :deregister_exemptions_form
-  post "/registration-exemptions/deregister/:id", to: "deregister_exemptions#update", as: :deregister_exemptions
-
-  # Resent deregistration email
-  get "/resend-deregistration-emails/:id", to: "resend_deregistration_emails#new", as: :resend_deregistration_emails
 
   # Override renew path
   get "/renew/:reference",

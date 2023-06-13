@@ -1,0 +1,31 @@
+<% content_for :title, t(".heading") %>
+
+<%= render("waste_exemptions_engine/shared/back", back_path: registration_path(reference: @registration.reference)) %>
+
+<h1 class="govuk-heading-l"> <%= t(".heading") %> </h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for(
+        @modify_expiry_date_form,
+        url: "@modify_expiry_date_path",
+        builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
+
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
+
+      <span class="govuk-hint"> <%= t(".date_hint") %> </span>
+
+      <div class="govuk-date-input__item">
+        <%= f.govuk_number_field :date_day, width: 2, label: { text: t(".date_day") } %>
+      </div>
+      <div class="govuk-date-input__item">
+        <%= f.govuk_number_field :date_month, width: 2, label: { text: t(".date_month") } %>
+      </div>
+      <div class="govuk-date-input__item">
+        <%= f.govuk_number_field :date_year, width: 4, label: { text: t(".date_year") } %>
+      </div>
+
+      <%= f.govuk_submit t(".submit") %>
+    <% end %>
+  </div>
+</div>
