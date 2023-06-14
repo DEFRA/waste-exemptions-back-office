@@ -1,7 +1,7 @@
 function sanitizeFormInput(searchForm) {
   searchForm.submit(function() {
     searchForm.find('input').each(function() {
-      let input = $(this);
+      const input = $(this);
       input.val(input.val().replace(/\t/g, ''));
     });
   });
