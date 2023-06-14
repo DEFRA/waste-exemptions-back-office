@@ -29,6 +29,12 @@ module ActionLinksHelper
     WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_form_path(resource.reference)
   end
 
+  def edit_expiry_date_link_for(resource)
+    return "#" unless resource.is_a?(WasteExemptionsEngine::Registration)
+
+    Rails.application.routes.url_helpers.modify_expiry_date_form_path(resource.reference)
+  end
+
   def display_resume_link_for?(resource)
     return false unless resource.is_a?(WasteExemptionsEngine::NewRegistration)
 
@@ -37,6 +43,12 @@ module ActionLinksHelper
 
   def display_edit_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:update, resource)
+  end
+
+  def display_edit_expiry_date_link_for?(resource)
+    return false unless resource.is_a?(WasteExemptionsEngine::Registration)
+
+    can?(:update_expiry_date, resource)
   end
 
   def display_deregister_link_for?(resource)

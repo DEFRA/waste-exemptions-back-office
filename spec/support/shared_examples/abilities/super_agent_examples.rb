@@ -5,6 +5,10 @@ RSpec.shared_examples "super_agent examples" do
     expect(subject).to be_able_to(:update, registration)
   end
 
+  it "is able to update registration expiry dates" do
+    expect(subject).to be_able_to(:update_expiry_date, registration)
+  end
+
   it "is able to deregister registrations" do
     expect(subject).to be_able_to(:deregister, registration)
   end
