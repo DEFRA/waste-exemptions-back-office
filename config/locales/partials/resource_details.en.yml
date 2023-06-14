@@ -2,81 +2,82 @@ en:
   shared:
     resource_details:
       subheadings:
-        applicant: "Applicant details"
-        contact: "Contact details"
-        farm: "Farm details"
-        exemptions: "Exemptions"
-        actions: "Actions"
+        applicant: Applicant details
+        contact: Contact details
+        farm: Farm details
+        exemptions: Exemptions
+        actions: Actions
       labels:
-        workflow_state: "Workflow state"
-        reference: "Reference"
-        location: "Location"
-        applicant_first_name: "Applicant first name"
-        applicant_last_name: "Applicant last name"
-        applicant_phone: "Applicant phone"
-        applicant_email: "Applicant email"
-        business_type: "Business type"
-        details: "Reporting information"
-        renewed_from: "Renewed from"
-        operator_name: "Operator name"
-        people: "Partners"
-        company_no: "Company number"
-        contact_first_name: "Contact first name"
-        contact_last_name: "Contact last name"
-        contact_position: "Contact position"
-        contact_phone: "Contact phone"
-        contact_email: "Contact email"
-        on_a_farm: "On a farm?"
-        is_a_farmer: "Is a farmer?"
-        assistance_mode: "Assistance mode"
-        submitted_at: "Submitted at"
+        workflow_state: Workflow state
+        reference: Reference
+        location: Location
+        applicant_first_name: Applicant first name
+        applicant_last_name: Applicant last name
+        applicant_phone: Applicant phone
+        applicant_email: Applicant email
+        business_type: Business type
+        details: Reporting information
+        renewed_from: Renewed from
+        operator_name: Operator name
+        people: Partners
+        company_no: Company number
+        contact_first_name: Contact first name
+        contact_last_name: Contact last name
+        contact_position: Contact position
+        contact_phone: Contact phone
+        contact_email: Contact email
+        on_a_farm: On a farm?
+        is_a_farmer: Is a farmer?
+        assistance_mode: Assistance mode
+        submitted_at: Submitted at
       values:
         business_type:
-          charity: "Charity or trust"
-          limitedCompany: "Limited company"
-          limitedLiabilityPartnership: "Limited liability partnership"
-          localAuthority: "Local authority or public body"
-          partnership: "Partnership"
-          soleTrader: "Individual or sole trader"
+          charity: Charity or trust
+          limitedCompany: Limited company
+          limitedLiabilityPartnership: Limited liability partnership
+          localAuthority: Local authority or public body
+          partnership: Partnership
+          soleTrader: Individual or sole trader
         is_a_farmer:
           "true": "Yes"
           "false": "No"
         location:
-          england: "England"
-          northern_ireland: "Northern Ireland"
-          scotland: "Scotland"
-          wales: "Wales"
+          england: England
+          northern_ireland: Northern Ireland
+          scotland: Scotland
+          wales: Wales
         on_a_farm:
           "true": "Yes"
           "false": "No"
         assistance_mode:
-          admin_intervention: "Admin intervention"
-          full: "Fully assisted"
-          partial: "Partially assisted"
-          none: "Unassisted"
+          admin_intervention: Admin intervention
+          full: Fully assisted
+          partial: Partially assisted
+          none: Unassisted
       actions:
-        edit: "Edit"
-        deregister: "Deregister"
-        resume: "Resume"
-        resend_confirmation_email: "Resend confirmation email"
-        resend_confirmation_letter: "Resend confirmation letter"
-        refresh_companies_house: "Refresh Companies House information"
+        edit: Edit
+        edit_expiry_date: Set a new expiry date
+        deregister: Deregister
+        resume: Resume
+        resend_confirmation_email: Resend confirmation email
+        resend_confirmation_letter: Resend confirmation letter
+        refresh_companies_house: Refresh Companies House information
         renew:
-          link_text: "Start renewal"
+          link_text: Start renewal
           visually_hidden_text: "of %{name}"
-          renew_window_closed: "Renewal period closed"
-          already_renewed: "Already renewed"
+          renew_window_closed: Renewal period closed
+          already_renewed: Already renewed
         resend_renew_email:
-          link_text: "Resend renewal email"
+          link_text: Resend renewal email
           visually_hidden_text: "of %{name}"
-        resend_renewal_letter: "Resend renewal letter"
+        resend_renewal_letter: Resend renewal letter
         resend_deregistration_email:
-          link_text: "Send deregistration invite"
+          link_text: Send deregistration invite
           visually_hidden_text: "resend deregistration email of %{name}"
         view_certificate:
-          link_text: "View certificate"
+          link_text: View certificate
           visually_hidden_text: "of %{name}"
-      no_applicant_data: "No applicant details"
-      no_contact_data: "No contact details"
-      no_exemptions: "No exemptions"
-      no_people: "No people"
+      no_applicant_data: No applicant details
+      no_contact_data: No contact details
+      no_exemptions: No exemptions
+      no_people: No people
