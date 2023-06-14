@@ -7,6 +7,10 @@ class ModifyExpiryDateForm
 
   def initialize(registration)
     @registration = registration
+    current_expiry_date = registration.registration_exemptions.first.expires_on
+    @date_day = current_expiry_date.day
+    @date_month = current_expiry_date.month
+    @date_year = current_expiry_date.year
   end
 
   def submit(params)

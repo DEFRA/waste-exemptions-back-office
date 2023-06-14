@@ -113,6 +113,12 @@
         </p>
       <% end %>
 
+      <% if display_edit_expiry_date_link_for?(resource) %>
+        <p class="govuk-body">
+          <%= link_to t(".actions.edit_expiry_date"), edit_expiry_date_link_for(resource) %>
+        </p>
+      <% end %>
+
       <% if display_resume_link_for?(resource) %>
         <p class="govuk-body">
           <%= link_to t(".actions.resume"), resume_link_for(resource) %>

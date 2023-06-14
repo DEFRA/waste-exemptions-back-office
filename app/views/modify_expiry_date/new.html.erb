@@ -8,23 +8,31 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_for(
         @modify_expiry_date_form,
-        url: "@modify_expiry_date_path",
+        url: modify_expiry_date_path,
         builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
 
       <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
 
-      <span class="govuk-hint"> <%= t(".date_hint") %> </span>
+      <% expiry_date_errors = @modify_expiry_date_form.errors[:expiry_date] %>
+			<div class="govuk-form-group <%= "govuk-form-group--error" if expiry_date_errors.any? %>">
+			  <% if expiry_date_errors.any? %>
+				  <span class="govuk-error-message" id="modify-expiry-date-form-expiry-date-field-error"><%= expiry_date_errors.join(". ") %></span>
+				<% end %>
 
-      <div class="govuk-date-input__item">
-        <%= f.govuk_number_field :date_day, width: 2, label: { text: t(".date_day") } %>
-      </div>
-      <div class="govuk-date-input__item">
-        <%= f.govuk_number_field :date_month, width: 2, label: { text: t(".date_month") } %>
-      </div>
-      <div class="govuk-date-input__item">
-        <%= f.govuk_number_field :date_year, width: 4, label: { text: t(".date_year") } %>
+        <span class="govuk-hint"> <%= t(".date_hint") %> </span>
+
+        <div class="govuk-date-input__item">
+          <%= f.govuk_number_field :date_day, width: 2, label: { text: t(".date_day") } %>
+        </div>
+        <div class="govuk-date-input__item">
+          <%= f.govuk_number_field :date_month, width: 2, label: { text: t(".date_month") } %>
+        </div>
+        <div class="govuk-date-input__item">
+          <%= f.govuk_number_field :date_year, width: 4, label: { text: t(".date_year") } %>
+        </div>
       </div>
 
+      <br>
       <%= f.govuk_submit t(".submit") %>
     <% end %>
   </div>

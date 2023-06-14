@@ -24,6 +24,6 @@ class ModifyExpiryDateController < ApplicationController
   end
 
   def registration
-    @registration ||= WasteExemptionsEngine::Registration.find(params[:id])
+    @registration ||= WasteExemptionsEngine::Registration.find_by(reference: params[:id])
   end
 end

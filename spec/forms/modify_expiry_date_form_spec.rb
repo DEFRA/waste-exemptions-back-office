@@ -7,7 +7,16 @@ RSpec.describe ModifyExpiryDateForm, type: :model do
   subject(:form) { described_class.new(registration) }
 
   let(:registration) { create(:registration, :with_active_exemptions) }
-  let(:valid_modified_date) { 1.day.from_now.to_date }
+
+  describe ".new" do
+    let(:current_date) { registration.registration_exemptions.first.expires_on }
+
+    it "populates the date fields with the current expiry date" do
+      expect(form.date_year).to eq current_date.year
+      expect(form.date_month).to eq current_date.month
+      expect(form.date_day).to eq current_date.day
+    end
+  end
 
   describe "#submit" do
     context "when the form is not valid" do
@@ -17,6 +26,8 @@ RSpec.describe ModifyExpiryDateForm, type: :model do
     end
 
     context "when the form is valid" do
+      let(:valid_modified_date) { 1.day.from_now.to_date }
+
       it "submits" do
         expect(form.submit(
                  date_day: valid_modified_date.day.to_s,

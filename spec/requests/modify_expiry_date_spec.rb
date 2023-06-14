@@ -17,7 +17,7 @@ RSpec.describe "Modify Registration Date Forms" do
 
   describe "GET /registrations/:id/modify_expiry_date_form" do
 
-    before { get modify_expiry_date_form_path(registration) }
+    before { get modify_expiry_date_form_path(registration.reference) }
 
     context "when the user is not a super_agent" do
       let(:user) { create(:user, :admin_agent) }
@@ -37,7 +37,7 @@ RSpec.describe "Modify Registration Date Forms" do
     let(:new_expiry_date) { 6.months.from_now }
     let(:request_body) { {} }
 
-    before { post modify_expiry_date_path(registration), params: request_body }
+    before { post modify_expiry_date_path(registration.reference), params: request_body }
 
     context "when the user is not a super_agent" do
       let(:user) { create(:user, :admin_agent) }
