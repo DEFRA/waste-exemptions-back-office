@@ -1,13 +1,13 @@
 function sanitizeFormInput(searchForm) {
   searchForm.submit(function() {
-    searchForm.find("input").each(function() {
-      var input = $(this);
+    searchForm.find('input').each(function() {
+      let input = $(this);
       input.val(input.val().replace(/\t/g, ''));
     });
   });
 }
 
 $(document).ready(function() {
-  var searchForm = $("#search-filters").closest("form");
+  const searchForm = $('#search-filters').closest('form');
   sanitizeFormInput(searchForm);
 });
