@@ -1,4 +1,4 @@
-# Waste Exemptions Back Office
+# Waste Exemptions Back Office  
 
 ![Build Status](https://github.com/DEFRA/waste-exemptions-back-office/workflows/CI/badge.svg?branch=main)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_waste-exemptions-back-office&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DEFRA_waste-exemptions-back-office)
