@@ -2,7 +2,7 @@ function sanitizeFormInput(searchForm) {
   searchForm.submit(function() {
     searchForm.find('input').each(function() {
       const input = $(this);
-      input.val(input.val().replace(/\t/g, ''));
+      input.val(input.val().replace(/[\t\&\<\\>"\'\/]+/ig, ''));
     });
   });
 }
