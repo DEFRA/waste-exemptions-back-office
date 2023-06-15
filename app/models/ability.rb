@@ -31,6 +31,7 @@ class Ability
 
   def permissions_for_super_agent
     can :update, WasteExemptionsEngine::Registration
+    can :update_expiry_date, WasteExemptionsEngine::Registration
     can :deregister, WasteExemptionsEngine::Registration, &:active?
     can :deregister, WasteExemptionsEngine::RegistrationExemption, &:active?
 

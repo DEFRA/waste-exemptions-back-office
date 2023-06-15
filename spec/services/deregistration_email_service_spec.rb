@@ -20,7 +20,7 @@ RSpec.describe DeregistrationEmailService do
         template_id: "9148895b-e239-4118-8ffd-dadd9b2cf462",
         personalisation: {
           contact_name: "#{registration.contact_first_name} #{registration.contact_last_name}",
-          exemption_details: registration.exemptions.map do |ex|
+          exemption_details: registration.exemptions.order(:exemption_id).map do |ex|
             "#{ex.code} #{ex.summary}"
           end.join(", "),
           magic_link_url: "http://localhost:3000/renew/#{registration.renew_token}",

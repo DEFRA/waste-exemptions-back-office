@@ -83,6 +83,25 @@ RSpec.describe ActionLinksHelper do
     end
   end
 
+  describe "edit_expiry_date_link_for" do
+    context "when the resource is a registration" do
+      let(:resource) { create(:registration) }
+
+      it "returns the correct path" do
+        path = Rails.application.routes.url_helpers.modify_expiry_date_form_path(resource.reference)
+        expect(helper.edit_expiry_date_link_for(resource)).to eq(path)
+      end
+    end
+
+    context "when the resource is not a registration" do
+      let(:resource) { nil }
+
+      it "returns the correct path" do
+        expect(helper.edit_expiry_date_link_for(resource)).to eq("#")
+      end
+    end
+  end
+
   describe "display_resume_link_for?" do
     context "when the resource is a new_registration" do
       let(:resource) { create(:new_registration) }
@@ -141,6 +160,38 @@ RSpec.describe ActionLinksHelper do
 
       it "returns false" do
         expect(helper.display_edit_link_for?(resource)).to be(false)
+      end
+    end
+  end
+
+  describe "display_edit_expiry_date_link_for?" do
+    context "when the resource is a registration" do
+      let(:resource) { create(:registration) }
+
+      before { allow(helper).to receive(:can?).with(:update_expiry_date, resource).and_return(can) }
+
+      context "when the user has permission to update a registration" do
+        let(:can) { true }
+
+        it "returns true" do
+          expect(helper.display_edit_expiry_date_link_for?(resource)).to be(true)
+        end
+      end
+
+      context "when the user does not have permission to update a registration" do
+        let(:can) { false }
+
+        it "returns false" do
+          expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false)
+        end
+      end
+    end
+
+    context "when the resource is not a registration" do
+      let(:resource) { nil }
+
+      it "returns false" do
+        expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false)
       end
     end
   end
