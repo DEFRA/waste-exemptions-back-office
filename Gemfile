@@ -127,6 +127,10 @@ group :test do
   # Generates a test coverage report on every `bundle exec rspec` call. We use
   # the output to feed CodeClimate's stats and analysis
   gem "simplecov", "~> 0.17.1", require: false
+  # Integration testing tool
+  gem "capybara"
+  # Needed for headless testing with Javascript or pages that ref external sites
+  gem "poltergeist"
   # A gem providing "time travel" and "time freezing" capabilities, making it
   # dead simple to test time-dependent code.
   gem "timecop"

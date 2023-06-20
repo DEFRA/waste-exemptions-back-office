@@ -9,6 +9,9 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
+require "capybara/poltergeist"
+Capybara.javascript_driver = :poltergeist
+Capybara.server = :webrick
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -33,7 +36,12 @@ support_files = Dir["./spec/support/**/*.rb"].reject { |file| file == "./spec/su
 support_files.each { |f| require f }
 
 RSpec.configure do |config|
+  config.use_transactional_fixtures = true
+
   config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Warden::Test::Helpers, type: :feature
+  config.include ActiveSupport::Testing::TimeHelpers
+  config.include AbstractController::Translation # enables t()
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
