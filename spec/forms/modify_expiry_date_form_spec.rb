@@ -36,15 +36,80 @@ RSpec.describe ModifyExpiryDateForm, type: :model do
                )).to be(true)
       end
 
-      it "updates the registration date for each registration_exemption" do
-        form.submit(
-          date_day: valid_modified_date.day.to_s,
-          date_month: valid_modified_date.month.to_s,
-          date_year: valid_modified_date.year.to_s
-        )
+      context "with specific exemption types" do
+        let(:modified_exemption) { registration.registration_exemptions.first }
+        let(:original_expiry_date) { modified_exemption.expires_on }
 
-        registration.registration_exemptions.each do |exemption|
-          expect(exemption.expires_on).to eq(valid_modified_date)
+        before do
+          form.submit(
+            date_day: valid_modified_date.day.to_s,
+            date_month: valid_modified_date.month.to_s,
+            date_year: valid_modified_date.year.to_s
+          )
+        end
+
+        shared_examples "all exemptions updated" do
+          it "updates the expiry date for each registration_exemption" do
+            registration.registration_exemptions.each do |exemption|
+              expect(exemption.expires_on).to eq(valid_modified_date)
+            end
+          end
+        end
+
+        shared_examples "no exemptions updated" do
+          it "does not update the expiry date for any registration_exemption" do
+            registration.registration_exemptions.each do |exemption|
+              expect(exemption.expires_on).to eq(original_expiry_date)
+            end
+          end
+        end
+
+        shared_examples "only one exemption updated" do
+          it "updates the expiry date for the first exemption" do
+            expect(modified_exemption.expires_on).to eq valid_modified_date
+          end
+        end
+
+        it "does not update the expiry date for the other exemptions" do
+          registration.registration_exemptions.each do |re|
+            next if re == modified_exemption
+
+            expect(re.expires_on).to eq original_expiry_date
+          end
+        end
+
+        context "with all active exemptions" do
+          it_behaves_like "all exemptions updated", :active
+        end
+
+        context "with all expired exemptions" do
+          before { registration.registration_exemptions.update(state: "expired") }
+
+          it_behaves_like "all exemptions updated"
+        end
+
+        context "with all ceased exemptions" do
+          before { registration.registration_exemptions.update(state: "ceased") }
+
+          it_behaves_like "no exemptions updated"
+        end
+
+        context "with all revoked exemptions" do
+          before { registration.registration_exemptions.update(state: "revoked") }
+
+          it_behaves_like "no exemptions updated"
+        end
+
+        context "with active and ceased exemptions" do
+          before { registration.registration_exemptions.first.update(state: "ceased") }
+
+          it_behaves_like "only one exemption updated"
+        end
+
+        context "with active and revoked exemptions" do
+          before { registration.registration_exemptions.first.update(state: "revoked") }
+
+          it_behaves_like "only one exemption updated"
         end
       end
     end

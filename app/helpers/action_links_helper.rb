@@ -72,12 +72,15 @@ module ActionLinksHelper
   end
 
   def display_renew_links_for?(resource)
-    can?(:renew, resource) &&
-      resource.renewable?
+    resource.is_a?(WasteExemptionsEngine::Registration) &&
+      can?(:renew, resource) &&
+      resource.renewable? &&
+      (resource.contact_email.present? || resource.applicant_email.present?)
   end
 
   def display_renew_window_closed_text_for?(resource)
-    can?(:renew, resource) &&
+    resource.present? &&
+      can?(:renew, resource) &&
       resource.in_renewable_state? &&
       resource.past_renewal_window?
   end
