@@ -109,26 +109,20 @@ RSpec.describe ActionLinksHelper do
       context "when the user has permission" do
         before { allow(helper).to receive(:can?).and_return(true) }
 
-        it "returns true" do
-          expect(helper.display_resume_link_for?(resource)).to be(true)
-        end
+        it { expect(helper.display_resume_link_for?(resource)).to be(true) }
       end
 
       context "when the user does not have permission" do
         before { allow(helper).to receive(:can?).and_return(false) }
 
-        it "returns false" do
-          expect(helper.display_resume_link_for?(resource)).to be(false)
-        end
+        it { expect(helper.display_resume_link_for?(resource)).to be(false) }
       end
     end
 
     context "when the resource is not a new_registration" do
       let(:resource) { nil }
 
-      it "returns false" do
-        expect(helper.display_resume_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_resume_link_for?(resource)).to be(false) }
     end
   end
 
@@ -141,26 +135,20 @@ RSpec.describe ActionLinksHelper do
       context "when the user has permission to update a registration" do
         let(:can) { true }
 
-        it "returns true" do
-          expect(helper.display_edit_link_for?(resource)).to be(true)
-        end
+        it { expect(helper.display_edit_link_for?(resource)).to be(true) }
       end
 
       context "when the user does not have permission to update a registration" do
         let(:can) { false }
 
-        it "returns false" do
-          expect(helper.display_edit_link_for?(resource)).to be(false)
-        end
+        it { expect(helper.display_edit_link_for?(resource)).to be(false) }
       end
     end
 
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it "returns false" do
-        expect(helper.display_edit_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_edit_link_for?(resource)).to be(false) }
     end
   end
 
@@ -173,26 +161,20 @@ RSpec.describe ActionLinksHelper do
       context "when the user has permission to update a registration" do
         let(:can) { true }
 
-        it "returns true" do
-          expect(helper.display_edit_expiry_date_link_for?(resource)).to be(true)
-        end
+        it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(true) }
       end
 
       context "when the user does not have permission to update a registration" do
         let(:can) { false }
 
-        it "returns false" do
-          expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false)
-        end
+        it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false) }
       end
     end
 
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it "returns false" do
-        expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false) }
     end
   end
 
@@ -212,17 +194,13 @@ RSpec.describe ActionLinksHelper do
       context "when the user has permission to deregister a registration" do
         let(:can) { true }
 
-        it "returns true" do
-          expect(helper.display_deregister_link_for?(resource)).to be(true)
-        end
+        it { expect(helper.display_deregister_link_for?(resource)).to be(true) }
       end
 
       context "when the user does not have permission to deregister a registration" do
         let(:can) { false }
 
-        it "returns false" do
-          expect(helper.display_deregister_link_for?(resource)).to be(false)
-        end
+        it { expect(helper.display_deregister_link_for?(resource)).to be(false) }
       end
     end
 
@@ -233,17 +211,13 @@ RSpec.describe ActionLinksHelper do
         registration
       end
 
-      it "returns false" do
-        expect(helper.display_deregister_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_deregister_link_for?(resource)).to be(false) }
     end
 
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it "returns false" do
-        expect(helper.display_deregister_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_deregister_link_for?(resource)).to be(false) }
     end
   end
 
@@ -258,29 +232,19 @@ RSpec.describe ActionLinksHelper do
       context "when the user has permission to deregister a registration" do
         let(:can) { true }
 
-        it "returns true" do
-          expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(true)
+        it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(true) }
+
+        context "when the resource is not inside the renewal window" do
+          before { allow(resource).to receive(:in_renewal_window?).and_return(true) }
+
+          it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
         end
       end
 
       context "when the user does not have permission to deregister a registration" do
         let(:can) { false }
 
-        it "returns false" do
-          expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
-        end
-      end
-
-      context "when the resource is not inside the renewal window" do
-        let(:can) { true }
-
-        before do
-          allow(resource).to receive(:in_renewal_window?).and_return(true)
-        end
-
-        it "returns false" do
-          expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
-        end
+        it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
       end
     end
 
@@ -289,33 +253,25 @@ RSpec.describe ActionLinksHelper do
 
       before { resource.referred_registration = create(:registration) }
 
-      it "returns false" do
-        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
     end
 
     context "when the resource is a ceased registration" do
       let(:resource) { create(:registration, :with_ceased_exemptions) }
 
-      it "returns false" do
-        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
     end
 
     context "when the resource is an expired registration" do
       let(:resource) { create(:registration, registration_exemptions: build_list(:registration_exemption, 3, :expired)) }
 
-      it "returns false" do
-        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
     end
 
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it "returns false" do
-        expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
     end
   end
 
@@ -324,9 +280,7 @@ RSpec.describe ActionLinksHelper do
       let(:resource) { create(:registration) }
 
       context "when the registration is active" do
-        it "returns true" do
-          expect(helper.display_confirmation_letter_link_for?(resource)).to be(true)
-        end
+        it { expect(helper.display_confirmation_letter_link_for?(resource)).to be(true) }
       end
 
       context "when the resource is an inactive registration" do
@@ -336,18 +290,14 @@ RSpec.describe ActionLinksHelper do
           registration
         end
 
-        it "returns false" do
-          expect(helper.display_confirmation_letter_link_for?(resource)).to be(false)
-        end
+        it { expect(helper.display_confirmation_letter_link_for?(resource)).to be(false) }
       end
     end
 
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it "returns false" do
-        expect(helper.display_confirmation_letter_link_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_confirmation_letter_link_for?(resource)).to be(false) }
     end
   end
 
@@ -359,6 +309,8 @@ RSpec.describe ActionLinksHelper do
         before { allow(resource).to receive(:in_renewal_window?).and_return(true) }
 
         context "when the user has permission to renew" do
+          let(:can) { true }
+
           before { allow(helper).to receive(:can?).with(:renew, resource).and_return(can) }
 
           context "when the resource has active exemptions" do
@@ -369,11 +321,7 @@ RSpec.describe ActionLinksHelper do
               end
             end
 
-            let(:can) { true }
-
-            it "returns true" do
-              expect(helper.display_renew_links_for?(resource)).to be(true)
-            end
+            it { expect(helper.display_renew_links_for?(resource)).to be(true) }
           end
 
           context "when the resource has expired exemptions" do
@@ -384,14 +332,20 @@ RSpec.describe ActionLinksHelper do
               end
             end
 
-            let(:can) { true }
-
-            it "returns true" do
-              expect(helper.display_renew_links_for?(resource)).to be(true)
-            end
+            it { expect(helper.display_renew_links_for?(resource)).to be(true) }
           end
 
-          context "when the resource has no active or expired exemptions" do
+          context "when the resource has both ceased and active exemptions" do
+            before do
+              re = resource.registration_exemptions.first
+              re.state = "ceased"
+              re.save!
+            end
+
+            it { expect(helper.display_renew_links_for?(resource)).to be(true) }
+          end
+
+          context "when the resource has ceased exemptions only" do
             before do
               resource.registration_exemptions.each do |re|
                 re.state = "ceased"
@@ -399,38 +353,69 @@ RSpec.describe ActionLinksHelper do
               end
             end
 
-            let(:can) { true }
+            it { expect(helper.display_renew_links_for?(resource)).to be(false) }
+          end
 
-            it "returns false" do
-              expect(helper.display_renew_links_for?(resource)).to be(false)
+          context "when the resource has both revoked and active exemptions" do
+            before do
+              re = resource.registration_exemptions.first
+              re.state = "revoked"
+              re.save!
             end
+
+            it { expect(helper.display_renew_links_for?(resource)).to be(true) }
+          end
+
+          context "when the resource has revoked exemptions only" do
+            before do
+              resource.registration_exemptions.each do |re|
+                re.state = "revoked"
+                re.save!
+              end
+            end
+
+            it { expect(helper.display_renew_links_for?(resource)).to be(false) }
+          end
+
+          context "when the resource has no contact email address but has an applicant email address" do
+            before do
+              resource.contact_email = nil
+              resource.applicant_email = Faker::Internet.email
+              resource.save!
+            end
+
+            it { expect(helper.display_renew_links_for?(resource)).to be(true) }
+          end
+
+          context "when the resource has neither contact email address nor applicant email address" do
+            before do
+              resource.contact_email = nil
+              resource.applicant_email = nil
+              resource.save!
+            end
+
+            it { expect(helper.display_renew_links_for?(resource)).to be(false) }
+          end
+
+          context "when the resource is not in the renewal window" do
+            before { allow(resource).to receive(:in_renewal_window?).and_return(false) }
+
+            it { expect(helper.display_renew_links_for?(resource)).to be(false) }
           end
         end
 
         context "when the user does not have permission to renew" do
           let(:can) { false }
 
-          it "returns false" do
-            expect(helper.display_renew_links_for?(resource)).to be(false)
-          end
-        end
-      end
-
-      context "when the resource is not in the renewal window" do
-        before { allow(resource).to receive(:in_renewal_window?).and_return(false) }
-
-        it "returns false" do
-          expect(helper.display_renew_links_for?(resource)).to be(false)
+          it { expect(helper.display_renew_links_for?(resource)).to be(false) }
         end
       end
     end
 
     context "when the resource is not a registration" do
-      let(:resource) { nil }
+      let(:resource) { create(:new_registration) }
 
-      it "returns false" do
-        expect(helper.display_renew_links_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_renew_links_for?(resource)).to be(false) }
     end
   end
 
@@ -442,7 +427,7 @@ RSpec.describe ActionLinksHelper do
         before { allow(resource).to receive(:past_renewal_window?).and_return(true) }
 
         context "when the user has permission to renew" do
-          before { allow(helper).to receive(:can?).with(:renew, resource).and_return(can) }
+          before { allow(helper).to receive(:can?).with(:renew, resource).and_return(true) }
 
           context "when the resource has active exemptions" do
             before do
@@ -452,11 +437,7 @@ RSpec.describe ActionLinksHelper do
               end
             end
 
-            let(:can) { true }
-
-            it "returns true" do
-              expect(helper.display_renew_window_closed_text_for?(resource)).to be(true)
-            end
+            it { expect(helper.display_renew_window_closed_text_for?(resource)).to be(true) }
           end
 
           context "when the resource has expired exemptions" do
@@ -467,11 +448,7 @@ RSpec.describe ActionLinksHelper do
               end
             end
 
-            let(:can) { true }
-
-            it "returns true" do
-              expect(helper.display_renew_window_closed_text_for?(resource)).to be(true)
-            end
+            it { expect(helper.display_renew_window_closed_text_for?(resource)).to be(true) }
           end
 
           context "when the resource has no active or expired exemptions" do
@@ -482,28 +459,20 @@ RSpec.describe ActionLinksHelper do
               end
             end
 
-            let(:can) { true }
+            it { expect(helper.display_renew_window_closed_text_for?(resource)).to be(false) }
+          end
 
-            it "returns false" do
-              expect(helper.display_renew_window_closed_text_for?(resource)).to be(false)
-            end
+          context "when the resource is past the renewal window" do
+            before { allow(resource).to receive(:past_renewal_window?).and_return(true) }
+
+            it { expect(helper.display_renew_window_closed_text_for?(resource)).to be(true) }
           end
         end
 
         context "when the user does not have permission to renew" do
           let(:can) { false }
 
-          it "returns false" do
-            expect(helper.display_renew_window_closed_text_for?(resource)).to be(false)
-          end
-        end
-      end
-
-      context "when the resource is not in the renewal window" do
-        before { allow(resource).to receive(:in_renewal_window?).and_return(false) }
-
-        it "returns false" do
-          expect(helper.display_renew_window_closed_text_for?(resource)).to be(false)
+          it { expect(helper.display_renew_window_closed_text_for?(resource)).to be(false) }
         end
       end
     end
@@ -511,9 +480,7 @@ RSpec.describe ActionLinksHelper do
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it "returns false" do
-        expect(helper.display_renew_window_closed_text_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_renew_window_closed_text_for?(resource)).to be(false) }
     end
   end
 
@@ -525,59 +492,46 @@ RSpec.describe ActionLinksHelper do
 
       context "when the user has permission to renew" do
         let(:can) { true }
+        let(:in_renewal_window) { true }
 
-        before do
-          allow(resource).to receive(:in_renewal_window?).and_return(in_renewal_window)
-        end
+        before { allow(resource).to receive(:in_renewal_window?).and_return(in_renewal_window) }
 
         context "when the resource is in the renewal window" do
           let(:in_renewal_window) { true }
 
-          before do
-            allow(resource).to receive(:already_renewed?).and_return(already_renewed)
-          end
+          before { allow(resource).to receive(:already_renewed?).and_return(already_renewed) }
 
           context "when the resource is already renewed" do
             let(:already_renewed) { true }
 
-            it "returns true" do
-              expect(helper.display_already_renewed_text_for?(resource)).to be(true)
-            end
+            it { expect(helper.display_already_renewed_text_for?(resource)).to be(true) }
           end
 
           context "when the resource is not already renewed" do
             let(:already_renewed) { false }
 
-            it "returns false" do
-              expect(helper.display_already_renewed_text_for?(resource)).to be(false)
-            end
+            it { expect(helper.display_already_renewed_text_for?(resource)).to be(false) }
           end
         end
 
         context "when the resource is not in the renewal window" do
           let(:in_renewal_window) { false }
 
-          it "returns false" do
-            expect(helper.display_already_renewed_text_for?(resource)).to be(false)
-          end
+          it { expect(helper.display_already_renewed_text_for?(resource)).to be(false) }
         end
       end
 
       context "when the user has no permission to renew" do
         let(:can) { false }
 
-        it "returns false" do
-          expect(helper.display_already_renewed_text_for?(resource)).to be(false)
-        end
+        it { expect(helper.display_already_renewed_text_for?(resource)).to be(false) }
       end
     end
 
     context "when the resource is not a registration" do
-      let(:resource) { nil }
+      let(:resource) { create(:new_registration) }
 
-      it "returns false" do
-        expect(helper.display_renew_window_closed_text_for?(resource)).to be(false)
-      end
+      it { expect(helper.display_already_renewed_text_for?(resource)).to be(false) }
     end
   end
 
@@ -585,48 +539,34 @@ RSpec.describe ActionLinksHelper do
     context "when the resource is a registration" do
       let(:resource) { create(:registration) }
 
-      before do
-        allow(helper).to receive(:can?).with(:update, resource).and_return(can)
-      end
+      before { allow(helper).to receive(:can?).with(:update, resource).and_return(can) }
 
       context "when the user has permission to update a registration" do
         let(:can) { true }
 
         context "when the resource is a limited company or limited liability partnership" do
-          before do
-            allow(resource).to receive(:company_no_required?).and_return(true)
-          end
+          before { allow(resource).to receive(:company_no_required?).and_return(true) }
 
-          it "returns true" do
-            expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(true)
-          end
+          it { expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(true) }
         end
 
         context "when the resource is neither a limited company nor a limited liability partnership" do
-          before do
-            allow(resource).to receive(:company_no_required?).and_return(false)
-          end
+          before { allow(resource).to receive(:company_no_required?).and_return(false) }
 
-          it "returns false" do
-            expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(false)
-          end
+          it { expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(false) }
+        end
+
+        context "when the resourse is not a registration" do
+          let(:resource) { nil }
+
+          it { expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(false) }
         end
       end
 
       context "when the user doesn't have permission to update a registration" do
         let(:can) { false }
 
-        it "returns false" do
-          expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(false)
-        end
-      end
-    end
-
-    context "when the resourse is not a registration" do
-      let(:resource) { nil }
-
-      it "returns false" do
-        expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(false)
+        it { expect(helper.display_refresh_registered_company_name_link_for?(resource)).to be(false) }
       end
     end
   end
