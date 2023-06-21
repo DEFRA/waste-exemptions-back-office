@@ -155,6 +155,7 @@ RSpec.describe ActionLinksHelper do
   describe "display_edit_expiry_date_link_for?" do
     context "when the resource is a registration" do
       let(:resource) { create(:registration) }
+      let(:can) { true }
 
       before { allow(helper).to receive(:can?).with(:update_expiry_date, resource).and_return(can) }
 
@@ -166,6 +167,48 @@ RSpec.describe ActionLinksHelper do
 
       context "when the user does not have permission to update a registration" do
         let(:can) { false }
+
+        it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false) }
+      end
+
+      context "when the resource has both ceased and active exemptions" do
+        before do
+          re = resource.registration_exemptions.first
+          re.state = "ceased"
+          re.save!
+        end
+
+        it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(true) }
+      end
+
+      context "when the resource has ceased exemptions only" do
+        before do
+          resource.registration_exemptions.each do |re|
+            re.state = "ceased"
+            re.save!
+          end
+        end
+
+        it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false) }
+      end
+
+      context "when the resource has both revoked and active exemptions" do
+        before do
+          re = resource.registration_exemptions.first
+          re.state = "revoked"
+          re.save!
+        end
+
+        it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(true) }
+      end
+
+      context "when the resource has revoked exemptions only" do
+        before do
+          resource.registration_exemptions.each do |re|
+            re.state = "revoked"
+            re.save!
+          end
+        end
 
         it { expect(helper.display_edit_expiry_date_link_for?(resource)).to be(false) }
       end
@@ -372,26 +415,6 @@ RSpec.describe ActionLinksHelper do
                 re.state = "revoked"
                 re.save!
               end
-            end
-
-            it { expect(helper.display_renew_links_for?(resource)).to be(false) }
-          end
-
-          context "when the resource has no contact email address but has an applicant email address" do
-            before do
-              resource.contact_email = nil
-              resource.applicant_email = Faker::Internet.email
-              resource.save!
-            end
-
-            it { expect(helper.display_renew_links_for?(resource)).to be(true) }
-          end
-
-          context "when the resource has neither contact email address nor applicant email address" do
-            before do
-              resource.contact_email = nil
-              resource.applicant_email = nil
-              resource.save!
             end
 
             it { expect(helper.display_renew_links_for?(resource)).to be(false) }

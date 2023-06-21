@@ -43,9 +43,9 @@ module WasteExemptionsEngine
     def state
       raise "A Registration must have at least one RegistrationExemption." if registration_exemptions.empty?
 
-      return "active" if registration_exemptions.select(&:active?).any?
-      return "revoked" if registration_exemptions.select(&:revoked?).any?
-      return "expired" if registration_exemptions.select(&:expired?).any?
+      return "active" if registration_exemptions.any?(&:active?)
+      return "revoked" if registration_exemptions.any?(&:revoked?)
+      return "expired" if registration_exemptions.any?(&:expired?)
 
       "ceased"
     end
