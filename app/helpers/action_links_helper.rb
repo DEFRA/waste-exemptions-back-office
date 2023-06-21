@@ -48,6 +48,8 @@ module ActionLinksHelper
   def display_edit_expiry_date_link_for?(resource)
     return false unless resource.is_a?(WasteExemptionsEngine::Registration)
 
+    return false unless %w[active expired].include?(resource.state)
+
     can?(:update_expiry_date, resource)
   end
 
@@ -74,8 +76,7 @@ module ActionLinksHelper
   def display_renew_links_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) &&
       can?(:renew, resource) &&
-      resource.renewable? &&
-      (resource.contact_email.present? || resource.applicant_email.present?)
+      resource.renewable?
   end
 
   def display_renew_window_closed_text_for?(resource)
