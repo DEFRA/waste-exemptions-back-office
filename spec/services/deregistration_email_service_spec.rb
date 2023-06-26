@@ -36,6 +36,11 @@ RSpec.describe DeregistrationEmailService do
 
       run_service
     end
+
+    it_behaves_like "CanHaveCommunicationLog" do
+      let(:service_class) { described_class }
+      let(:parameters) { { registration: create(:registration), recipient: registration.contact_email } }
+    end
   end
 end
 # rubocop:enable RSpec/AnyInstance
