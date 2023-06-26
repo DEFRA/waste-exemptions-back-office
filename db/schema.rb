@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_18_155859) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_23_084300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -53,6 +53,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_18_155859) do
     t.index ["registration_id"], name: "index_addresses_on_registration_id"
   end
 
+  create_table "communication_logs", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "message_type"
+    t.string "template_id"
+    t.string "template_label"
+    t.string "sent_to"
+  end
+
   create_table "exemptions", id: :serial, force: :cascade do |t|
     t.integer "category"
     t.string "code"
@@ -77,6 +86,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_18_155859) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["registration_id"], name: "index_people_on_registration_id"
+  end
+
+  create_table "registration_communication_logs", force: :cascade do |t|
+    t.bigint "registration_id"
+    t.bigint "communication_log_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["communication_log_id"], name: "index_registration_communication_logs_on_communication_log_id"
+    t.index ["registration_id"], name: "index_registration_communication_logs_on_registration_id"
   end
 
   create_table "registration_exemptions", id: :serial, force: :cascade do |t|
