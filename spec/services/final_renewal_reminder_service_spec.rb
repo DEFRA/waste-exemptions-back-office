@@ -18,7 +18,6 @@ RSpec.describe FinalRenewalReminderService do
         create(
           :registration,
           :with_valid_mobile_phone_number,
-          applicant_phone: "07851456789",
           registration_exemptions: [
             build(:registration_exemption, :active, expires_on: 1.week.from_now.to_date)
           ]
