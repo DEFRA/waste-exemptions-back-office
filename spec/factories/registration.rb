@@ -146,5 +146,9 @@ FactoryBot.define do
     trait :with_people do
       people { build_list(:person, 2) }
     end
+
+    trait :with_valid_mobile_phone_number do
+      applicant_phone { "07851456789" }
+    end
   end
 end
