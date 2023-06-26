@@ -82,6 +82,7 @@ module WasteExemptionsBackOffice
     # Emails
     config.email_test_address = ENV.fetch("EMAIL_TEST_ADDRESS", nil)
     config.second_renewal_email_reminder_days = ENV["SECOND_RENEWAL_EMAIL_BEFORE_DAYS"] || 14
+    config.final_renewal_text_reminder_days = ENV["FINAL_RENEWAL_TEXT_BEFORE_DAYS"] || 7
     config.registration_email_batch_size = ENV.fetch("REGISTRATION_EMAIL_BATCH_SIZE", 1000)
     config.registration_email_batch_minimum_age_days = ENV.fetch("REGISTRATION_EMAIL_BATCH_MINIMUM_AGE",
                                                                  6.months.in_days).to_i
