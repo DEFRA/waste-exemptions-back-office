@@ -83,8 +83,7 @@ RSpec.describe FinalRenewalReminderService do
     it "do not send texts to blank/non-mobile phone numbers" do
       create(
         :registration,
-        :with_valid_mobile_phone_number,
-        applicant_phone: nil,
+        contact_phone: nil,
         registration_exemptions: [
           build(:registration_exemption, :active, expires_on: 1.week.from_now.to_date),
           build(:registration_exemption, :revoked, expires_on: 1.week.from_now.to_date)

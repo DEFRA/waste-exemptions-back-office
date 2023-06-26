@@ -27,7 +27,7 @@ module WasteExemptionsEngine
 
     scope :contact_email_present, -> { where.not(contact_email: nil) }
 
-    scope :applicant_phone_present, -> { where.not(applicant_phone: nil) }
+    scope :contact_phone_present, -> { where.not(contact_phone: nil) }
 
     scope :site_address_is_not_nccc, lambda {
       joins(:addresses).merge(Address.site.not_nccc)
@@ -63,7 +63,7 @@ module WasteExemptionsEngine
 
     def valid_mobile_phone_number?
       record = clone
-      DefraRuby::Validators::PhoneNumberValidator.new(attributes: [:applicant_phone]).validate(record)
+      DefraRuby::Validators::MobilePhoneNumberValidator.new(attributes: [:contact_phone]).validate(record)
       record.errors.empty?
     end
   end

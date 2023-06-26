@@ -19,6 +19,6 @@ class RenewalReminderTextServiceBase < RenewalReminderServiceBase
   def expiring_registrations
     default_scope.where(
       id: all_active_exemptions_registration_ids
-    ).applicant_phone_present.site_address_is_not_nccc
+    ).contact_phone_present.site_address_is_not_nccc
   end
 end

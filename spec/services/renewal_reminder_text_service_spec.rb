@@ -15,14 +15,14 @@ RSpec.describe RenewalReminderTextService do
 
   describe ".run" do
     context "when registration phone number is not valid mobile number" do
-      it "stops when applicant_phone is empty" do
-        registration.update(applicant_phone: nil)
+      it "stops when contact_phone is empty" do
+        registration.update(contact_phone: nil)
         renewal_reminder_text_service.run(registration: registration)
         expect(notifications_client_instance).not_to have_received(:send_sms)
       end
 
-      it "stops when applicant_phone is not valid mobile phone" do
-        registration.update(applicant_phone: "0123456789")
+      it "stops when contact_phone is not valid mobile phone" do
+        registration.update(contact_phone: "0123456789")
         renewal_reminder_text_service.run(registration: registration)
         expect(notifications_client_instance).not_to have_received(:send_sms)
       end

@@ -10,7 +10,7 @@ class RenewalReminderTextService < RenewalReminderService
 
     client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
 
-    client.send_sms(phone_number: @registration.applicant_phone,
+    client.send_sms(phone_number: @registration.contact_phone,
                     template_id: template,
                     personalisation: personalisation)
   end
