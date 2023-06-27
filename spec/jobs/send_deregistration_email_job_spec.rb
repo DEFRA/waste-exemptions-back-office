@@ -3,69 +3,69 @@
 require "rails_helper"
 
 RSpec.describe SendDeregistrationEmailJob do
-  subject(:job) { described_class.new }
 
   describe "#perform" do
+    subject(:run_job) { described_class.new.perform(registration.id) }
+
     let(:registration) { create(:registration) }
+    let(:notifications_client) { instance_double(Notifications::Client) }
+    let(:template_label) { I18n.t("template_labels.deregistration_invitation_email") }
+
+    before do
+      allow(DeregistrationEmailService).to receive(:run).with(anything).and_call_original
+      allow(Notifications::Client).to receive(:new).and_return(notifications_client)
+      allow(notifications_client).to receive(:send_email)
+    end
 
     context "when contact_email and applicant_email are identical" do
       before { registration.update!(applicant_email: registration.contact_email) }
 
-      it "sends the email and updates the timestamp on the registration" do
-        expect(DeregistrationEmailService)
-          .to receive(:run)
-          .with(registration: registration, recipient: registration.contact_email)
-          .once
+      it "sends the email and updates the registration communications log" do
+        run_job
 
-        expect(DeregistrationEmailService)
-          .not_to receive(:run)
-          .with(registration: registration, recipient: registration.applicant_email)
-
-        job.perform(registration.id)
-
-        expect(registration.reload.deregistration_email_sent_at).not_to be_nil
+        expect(DeregistrationEmailService).to have_received(:run).once
+        expect(registration.received_comms?(template_label)).to be true
       end
     end
 
     context "when contact_email and applicant_email are different" do
-      it "sends the email and updates the timestamp on the registration" do
+      it "sends the email and updates the registration communications log" do
+
+        run_job
+
         expect(DeregistrationEmailService)
-          .to receive(:run)
+          .to have_received(:run)
           .with(registration: registration, recipient: registration.contact_email)
           .once
 
         expect(DeregistrationEmailService)
-          .to receive(:run)
+          .to have_received(:run)
           .with(registration: registration, recipient: registration.applicant_email)
           .once
 
-        job.perform(registration.id)
-
-        expect(registration.reload.deregistration_email_sent_at).not_to be_nil
+        expect(registration.received_comms?(template_label)).to be true
       end
     end
 
     context "when sending the email fails" do
       let(:error) { "failure" }
 
-      it "raises the exception and does not update the timestamp on the registration" do
+      it "raises the exception and does not update the registration communications log" do
         allow(DeregistrationEmailService).to receive(:run).and_raise(error)
 
-        expect { job.perform(registration.id) }.to raise_exception(error)
+        expect { run_job }.to raise_exception(error)
 
-        expect(registration.reload.deregistration_email_sent_at).to be_nil
+        expect(registration.received_comms?(template_label)).to be false
       end
     end
 
     context "when the email has already been sent" do
-      let(:registration) do
-        create(:registration, deregistration_email_sent_at: Time.zone.now)
-      end
+      before { registration.communication_logs << create(:communication_log, template_label: template_label) }
 
       it "does not re-send the email" do
-        expect(DeregistrationEmailService).not_to receive(:run)
+        run_job
 
-        job.perform(registration.id)
+        expect(DeregistrationEmailService).not_to have_received(:run)
       end
     end
   end

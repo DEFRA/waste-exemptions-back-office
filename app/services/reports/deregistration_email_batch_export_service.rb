@@ -17,16 +17,6 @@ module Reports
 
       load_file_to_aws_bucket(options)
 
-      # We want to update the timestamp on the exported registrations in one
-      # SQL statement without running validations on 1000+ rows - hence we
-      # explicitly allow #update_all here:
-      #
-      # rubocop:disable Rails/SkipsModelValidations
-      WasteExemptionsEngine::Registration
-        .where(id: serializer.eligible_registrations_ids)
-        .update_all(deregistration_email_sent_at: timestamp)
-      # rubocop:enable Rails/SkipsModelValidations
-
       true
     rescue StandardError => e
       Airbrake.notify e, file_name: file_name
