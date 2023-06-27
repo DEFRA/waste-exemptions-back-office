@@ -18,7 +18,7 @@ RSpec/ContextWording:
 # Offense count: 50
 # Configuration parameters: CountAsOne.
 RSpec/ExampleLength:
-  Max: 23
+  Max: 26
 
 # Offense count: 5
 # Configuration parameters: EnforcedStyle.

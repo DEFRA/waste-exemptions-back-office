@@ -85,7 +85,13 @@ every :day, at: (ENV["EXPORT_SERVICE_BOXI_EXPORT_TIME"] || "03:05"), roles: [:db
 end
 
 # This is the second renewal email reminder job. For each registration expiring
-# in 7 days time, it will generate and send the second email reminder
+# in 14 days time, it will generate and send the second email reminder
 every :day, at: (ENV["SECOND_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "04:05"), roles: [:db] do
   rake "email:renew_reminder:second:send"
+end
+
+# This is the final renewal text reminder job. For each registration expiring
+# in 7 days time, it will generate and send the final text reminder
+every :day, at: (ENV["FINAL_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "10:00"), roles: [:db] do
+  rake "text:renew_reminder:final:send"
 end
