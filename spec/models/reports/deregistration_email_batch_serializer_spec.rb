@@ -148,11 +148,9 @@ RSpec.describe Reports::DeregistrationEmailBatchSerializer do
     end
 
     context "when the de-registration email has already been sent" do
-      let(:registration) do
-        create(:registration, :eligible_for_deregistration, deregistration_email_sent_at: Time.zone.now)
-      end
+      let(:registration) { create(:registration, :eligible_for_deregistration) }
 
-      before { registration }
+      before { registration.communication_logs << create(:communication_log, template_label: I18n.t("template_labels.deregistration_invitation_email")) }
 
       it "does not include any registrations" do
         expect(csv.length).to eq(1) # header only

@@ -26,7 +26,7 @@ class DeregistrationEmailService < RenewalReminderEmailService
     {
       message_type: "email",
       template_id: template,
-      template_label: "Deregistration invitation email",
+      template_label: I18n.t("template_labels.deregistration_invitation_email"),
       sent_to: @registration.contact_email
     }
   end
