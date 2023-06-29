@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/sms
+    body:
+      encoding: UTF-8
+      string: '{"phone_number":"07851456789","template_id":"7d101a7d-9678-464e-a57d-e18714afbc5d","personalisation":{"contact_name":"Firstcontact1
+        Lastcontact1","exemptions":["F1 Use of spam in cooking","F2 Use of spam in
+        cooking","F3 Use of spam in cooking"],"expiry_date":"29 June 2026","magic_link_url":"http://localhost:3000/renew/mZgoHa4RjLriMmTHKKk3sCx3","reference":"WEX000001","site_location":"ST
+        58337 72855"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/5.4.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '128'
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 29 Jun 2023 13:37:13 GMT
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - gunicorn
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-B3-Spanid:
+      - 557c86f892c06812
+      X-B3-Traceid:
+      - 07a32ca89e177b2d557c86f892c06812
+      X-Vcap-Request-Id:
+      - 90f37dd6-dc42-42c6-5d14-362cf540a59a
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 04bb33465149b34afca4988622dca584.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - 3HmBxoZXeGSjaK1onQDDaMOB1BTM4p_WIq0YLRkJ_ErneHsQ1smtXg==
+    body:
+      encoding: UTF-8
+      string: '{"errors":[{"error":"AuthError","message":"Error: Your system clock
+        must be accurate to within 30 seconds"}],"status_code":403}
+
+        '
+  recorded_at: Thu, 29 Jun 2023 13:36:29 GMT
+recorded_with: VCR 6.2.0

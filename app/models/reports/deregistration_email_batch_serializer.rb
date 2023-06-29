@@ -4,6 +4,8 @@ require "csv"
 
 module Reports
   class DeregistrationEmailBatchSerializer
+    include WasteExemptionsEngine::CanHaveCommunicationLog
+
     TEMP_TABLE_NAME = "deregisterable_registration_ids"
 
     ATTRIBUTES = %i[
@@ -48,8 +50,7 @@ module Reports
                       AND rex.state = 'active'
                       AND rex.expires_on - interval '#{renewal_window} days' > '#{today}'
             WHERE rex.id IS NOT NULL
-              AND r.submitted_at < '#{min_submitted_at}'
-              AND r.deregistration_email_sent_at IS NULL;
+              AND r.submitted_at < '#{min_submitted_at}';
         SQL
 
         @eligible_registrations_ids =
@@ -67,6 +68,8 @@ module Reports
     def registrations_data
       scope.find_in_batches(batch_size: iteration_batch_size) do |batch|
         batch.each do |registration|
+          next if registration.received_comms?(I18n.t("template_labels.deregistration_invitation_email"))
+
           presenter = RegistrationDeregistrationEmailPresenter.new(registration)
 
           data = ATTRIBUTES.map do |attribute|
@@ -78,8 +81,24 @@ module Reports
           if presenter.applicant_email.present? && presenter.contact_email != presenter.applicant_email
             yield [presenter.applicant_email, *data]
           end
+
+          update_communications_log(registration)
         end
       end
+    end
+
+    def update_communications_log(registration)
+      # NB this may not be scalable. The original one-off batch job used a dedicated
+      # attribute and .update_all(deregistration_email_sent_at: timestamp) in the export service.
+      registration.communication_logs ||= []
+      registration.communication_logs << WasteExemptionsEngine::CommunicationLog.new(
+        {
+          message_type: "email",
+          template_id: "55faba44-2281-47e8-80a3-9ecb7556eb2e",
+          template_label: I18n.t("template_labels.deregistration_invitation_email"),
+          sent_to: registration.contact_email
+        }
+      )
     end
 
     def iteration_batch_size

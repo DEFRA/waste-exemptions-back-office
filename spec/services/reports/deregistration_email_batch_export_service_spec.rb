@@ -37,7 +37,7 @@ module Reports
         it "generates a CSV file containing all active exemptions and uploads it to AWS" do
           expect(service.run(batch_size: 1)).to be(true)
 
-          expect(registration.reload.deregistration_email_sent_at).not_to be_blank
+          expect(registration.received_comms?(I18n.t("template_labels.deregistration_invitation_email"))).to be true
 
           expect(bucket).to have_received(:load)
 

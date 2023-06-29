@@ -30,4 +30,9 @@ RSpec.describe NotifyRenewalLetterService do
     end
     # rubocop:enable RSpec/AnyInstance
   end
+
+  it_behaves_like "CanHaveCommunicationLog" do
+    let(:service_class) { described_class }
+    let(:parameters) { { registration: create(:registration) } }
+  end
 end

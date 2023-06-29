@@ -12,7 +12,7 @@ require:
 RSpec/DescribeClass:
   Exclude:
   # This cop is n/a for rake tasks
-    - spec/lib/tasks/*
+    - spec/lib/tasks/**/*
   # Allow more descriptive string labels for request specs
     - spec/requests/**/*
 

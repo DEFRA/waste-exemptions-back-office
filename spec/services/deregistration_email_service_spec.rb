@@ -2,7 +2,6 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/AnyInstance
 RSpec.describe DeregistrationEmailService do
   describe "run" do
     subject(:run_service) do
@@ -30,12 +29,22 @@ RSpec.describe DeregistrationEmailService do
       }
     end
 
-    it "sends an email" do
-      expect_any_instance_of(Notifications::Client)
-        .to receive(:send_email).with(expected_params)
+    let(:notifications_client) { instance_double(Notifications::Client) }
 
+    before do
+      allow(Notifications::Client).to receive(:new).and_return(notifications_client)
+      allow(notifications_client).to receive(:send_email)
+    end
+
+    it "sends an email" do
       run_service
+
+      expect(notifications_client).to have_received(:send_email).with(expected_params)
+    end
+
+    it_behaves_like "CanHaveCommunicationLog" do
+      let(:service_class) { described_class }
+      let(:parameters) { { registration: create(:registration), recipient: registration.contact_email } }
     end
   end
 end
-# rubocop:enable RSpec/AnyInstance

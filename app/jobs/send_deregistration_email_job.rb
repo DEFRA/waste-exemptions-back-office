@@ -5,7 +5,7 @@ class SendDeregistrationEmailJob < ApplicationJob
     ActiveRecord::Base.transaction do
       registration = WasteExemptionsEngine::Registration.find(registration_id)
 
-      next unless registration.deregistration_email_sent_at.nil?
+      next if registration.received_comms?(I18n.t("template_labels.deregistration_invitation_email"))
 
       DeregistrationEmailService.run(
         registration: registration,
@@ -18,8 +18,6 @@ class SendDeregistrationEmailJob < ApplicationJob
           recipient: registration.applicant_email
         )
       end
-
-      registration.update!(deregistration_email_sent_at: Time.zone.now)
     end
   end
 end
