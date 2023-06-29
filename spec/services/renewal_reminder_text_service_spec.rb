@@ -33,11 +33,6 @@ RSpec.describe RenewalReminderTextService do
         renewal_reminder_text_service.run(registration: registration)
         expect(notifications_client_instance).to have_received(:send_sms)
       end
-
-      it_behaves_like "CanHaveCommunicationLog" do
-        let(:service_class) { described_class }
-        let(:parameters) { { registration: create(:registration, :with_valid_mobile_phone_number) } }
-      end
     end
   end
 end

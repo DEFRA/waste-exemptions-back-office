@@ -15,6 +15,7 @@ RSpec.shared_examples "CanHaveCommunicationLog" do
         allow(Notifications::Client).to receive(:new).and_return(notifications_client)
         allow(notifications_client).to receive(:send_email)
         allow(notifications_client).to receive(:send_letter)
+        allow(notifications_client).to receive(:send_sms)
       end
 
       it { expect { run_service }.not_to raise_error }

@@ -72,6 +72,9 @@ module WasteExemptionsBackOffice
     config.epr_export_filename = ENV["EPR_DAILY_REPORT_FILE_NAME"] || "waste_exemptions_epr_daily_full"
     config.export_batch_size = ENV["EXPORT_SERVICE_BATCH_SIZE"] || 1000
 
+    config.ad_letters_exports_expires_in = ENV["AD_LETTERS_EXPORT_EXPIRES_IN"] || 30
+    config.ad_letters_delete_records_in = ENV["AD_LETTERS_DELETE_RECORDS_IN"] || 21
+
     # Minutes the EA area lookup job should run for
     config.area_lookup_run_for = ENV["AREA_LOOKUP_RUN_FOR"] || 60
     config.easting_and_northing_lookup_run_for = ENV["EASTING_AND_NORTHING_LOOKUP_RUN_FOR"] || 60

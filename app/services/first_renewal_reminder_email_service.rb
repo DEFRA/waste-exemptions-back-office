@@ -9,7 +9,7 @@ class FirstRenewalReminderEmailService < RenewalReminderEmailService
     {
       message_type: "email",
       template_id: template,
-      template_label: "First renewal reminder email",
+      template_label: "Final renewal reminder email",
       sent_to: @registration.contact_email
     }
   end

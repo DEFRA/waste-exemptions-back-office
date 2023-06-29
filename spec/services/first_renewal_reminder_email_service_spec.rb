@@ -16,10 +16,10 @@ RSpec.describe FirstRenewalReminderEmailService do
         expect(run_service.content["subject"]).to include("renew online now")
       end
     end
-  end
 
-  it_behaves_like "CanHaveCommunicationLog" do
-    let(:service_class) { described_class }
-    let(:parameters) { { registration: create(:registration) } }
+    it_behaves_like "CanHaveCommunicationLog" do
+      let(:service_class) { described_class }
+      let(:parameters) { { registration: create(:registration) } }
+    end
   end
 end
