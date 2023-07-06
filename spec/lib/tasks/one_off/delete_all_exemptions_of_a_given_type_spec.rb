@@ -4,14 +4,14 @@ require "rails_helper"
 
 RSpec.describe "one_off:delete_all_exemptions_of_a_given_type", type: :rake do
 
-  subject(:run_rake_task) { rake_task.invoke(exemption_code, cease_message) }
+  subject(:run_rake_task) { rake_task.invoke(exemption_code) }
 
   include_context "rake"
 
   let(:rake_task) { Rake::Task["one_off:delete_all_exemptions_of_a_given_type"] }
-  let(:cease_message) { "Test cease message" }
   let(:exemption_code) { "XYZ" }
   let(:xyz_exemption) { create(:exemption, code: exemption_code) }
+  let(:cease_message) { "Ceased due to #{exemption_code} bulk removal, removal of #{exemption_code} exemption" }
 
   # By default Rails prevents multiple invocations of the same Rake task in succession
   after { rake_task.reenable }

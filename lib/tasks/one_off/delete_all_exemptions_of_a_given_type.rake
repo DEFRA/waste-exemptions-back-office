@@ -3,13 +3,12 @@
 namespace :one_off do
   # https://eaflood.atlassian.net/browse/RUBY-2321
   desc "Cease all exemptions of a given type"
-  task :delete_all_exemptions_of_a_given_type, %i[exemption_code cease_message] => [:environment] do |_task, args|
+  task :delete_all_exemptions_of_a_given_type, %i[exemption_code] => [:environment] do |_task, args|
 
     exemption_code = args[:exemption_code]
-    cease_message = args[:cease_message]
-
     abort "exemption_code not specified, aborting rake task" if exemption_code.blank?
-    abort "cease_message not specified, aborting rake task" if cease_message.blank?
+
+    cease_message = "Ceased due to #{exemption_code} bulk removal, removal of #{exemption_code} exemption"
 
     exemption_to_cease = WasteExemptionsEngine::Exemption.find_by(code: exemption_code)
 
