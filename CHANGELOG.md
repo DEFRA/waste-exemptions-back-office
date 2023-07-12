@@ -6,6 +6,9 @@
 
 **Implemented enhancements:**
 
+- Feature/ruby 2321 cease t27 task [\#1104](https://github.com/DEFRA/waste-exemptions-back-office/pull/1104) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- rake task to cease registration exemptions [\#1102](https://github.com/DEFRA/waste-exemptions-back-office/pull/1102) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2841 comms history [\#1092](https://github.com/DEFRA/waste-exemptions-back-office/pull/1092) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Feature/ruby 2455 wex notify text messaging renewal reminder texts [\#1089](https://github.com/DEFRA/waste-exemptions-back-office/pull/1089) ([brujeo](https://github.com/brujeo))
 - Feature/ruby 2514 edit expiry date [\#1084](https://github.com/DEFRA/waste-exemptions-back-office/pull/1084) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - feature/RUBY 2330 wex back office view registration certificate [\#1075](https://github.com/DEFRA/waste-exemptions-back-office/pull/1075) ([jjromeo](https://github.com/jjromeo))
@@ -18,6 +21,14 @@
 
 **Merged pull requests:**
 
+- Bump waste\_exemptions\_engine from `d069eb6` to `540af98` [\#1109](https://github.com/DEFRA/waste-exemptions-back-office/pull/1109) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `05335be` to `d069eb6` [\#1108](https://github.com/DEFRA/waste-exemptions-back-office/pull/1108) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `c2a5e04` to `05335be` [\#1107](https://github.com/DEFRA/waste-exemptions-back-office/pull/1107) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `19cda07` to `c2a5e04` [\#1105](https://github.com/DEFRA/waste-exemptions-back-office/pull/1105) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `f1c22d9` to `19cda07` [\#1101](https://github.com/DEFRA/waste-exemptions-back-office/pull/1101) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `94b1036` to `f1c22d9` [\#1100](https://github.com/DEFRA/waste-exemptions-back-office/pull/1100) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rails from 7.0.5.1 to 7.0.6 [\#1099](https://github.com/DEFRA/waste-exemptions-back-office/pull/1099) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update CHANGELOG [\#1095](https://github.com/DEFRA/waste-exemptions-back-office/pull/1095) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump waste\_exemptions\_engine from `87de26e` to `eb704bf` [\#1081](https://github.com/DEFRA/waste-exemptions-back-office/pull/1081) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Modify uglifier instantiation to support ES6 [\#1080](https://github.com/DEFRA/waste-exemptions-back-office/pull/1080) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Upgrade to Rails 7 [\#1079](https://github.com/DEFRA/waste-exemptions-back-office/pull/1079) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
