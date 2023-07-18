@@ -6,6 +6,11 @@ class CertificatesController < ApplicationController
   def show
     find_resource(params[:registration_reference])
     @presenter = WasteExemptionsEngine::CertificatePresenter.new(@resource)
+  end
+
+  def pdf
+    find_resource(params[:registration_reference])
+    @presenter = WasteExemptionsEngine::CertificatePresenter.new(@resource)
 
     render pdf: @resource.reference,
            show_as_html: show_as_html?,

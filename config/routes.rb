@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   # Registration management
   resources :registrations, only: :show, param: :reference do
     get "certificate", to: "certificates#show", as: :certificate
+    get "certificate/pdf", to: "certificates#pdf", as: :certificate_pdf
   end
 
   get "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#new", as: :modify_expiry_date_form

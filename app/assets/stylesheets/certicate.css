@@ -1,0 +1,42 @@
+* {
+  font-family: Helvetica, Arial, Sans-Serif !important;
+  background: #FFF;
+}
+body {
+  margin: 40px 60px;
+}
+.table-wrapper {
+  border-left: 5px solid #005ea5;
+  padding-left: 15px;
+}
+.govuk-table__header {
+  width: 350px;
+  vertical-align: top;
+}
+
+.document {
+  background: white;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  padding: 2cm;
+}
+
+@page {
+  size: A4;
+  margin: 1cm;
+}
+.document p {
+  orphans: 4;
+  widows: 2;
+}
+
+.document h1,
+.document h2 {
+  page-break-after: avoid;
+}
+
+@media print {
+  .document {
+    box-shadow: none;
+    padding: 0;
+  }
+}
