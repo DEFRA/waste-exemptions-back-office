@@ -6,8 +6,7 @@ RSpec.describe TestMailer do
   describe "test_email" do
     before do
       allow(Rails.configuration).to receive(:email_test_address).and_return("test@example.com")
-      allow(WasteExemptionsEngine.configuration).to receive(:email_service_email).and_return("wex@example.com")
-      allow(WasteExemptionsEngine.configuration).to receive(:service_name).and_return("WEX")
+      allow(WasteExemptionsEngine.configuration).to receive_messages(email_service_email: "wex@example.com", service_name: "WEX")
     end
 
     let(:mail) { described_class.test_email }
