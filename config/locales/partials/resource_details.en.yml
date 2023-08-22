@@ -58,6 +58,7 @@ en:
         edit: Edit
         edit_expiry_date: Set a new expiry date
         deregister: Deregister
+        show_communication_history: Show communication history
         resume: Resume
         resend_confirmation_email: Resend confirmation email
         resend_confirmation_letter: Resend confirmation letter
