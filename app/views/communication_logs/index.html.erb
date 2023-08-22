@@ -1,0 +1,53 @@
+<%= render("waste_exemptions_engine/shared/back", back_path: registration_path(reference: @resource.reference)) %>
+
+<h1 class="govuk-heading-l">
+  <%= t(".heading") %>
+</h1>
+
+<% if @resource.present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table class="govuk-table" aria-label="<%= t(".heading") %>">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col"><%= t(".template_name") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".template_id") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".type") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".sent_to") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".sent_on") %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @communication_logs.each do |log| %>
+             <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= log.template_label %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= log.template_id %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= log.message_type %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= log.sent_to %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= log.created_at.to_formatted_s(:day_month_and_time) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <nav role="navigation" class="pagination" aria-label="Pagination">
+        <div class="pagination__summary govuk-body">
+          <%= page_entries_info @communication_logs, entry_name: "item" %>
+        </div>
+        <span class="govuk-body">
+          <%= paginate @communication_logs %>
+        </span>
+      </nav>
+    </div>
+  </div>
+<% end %>
