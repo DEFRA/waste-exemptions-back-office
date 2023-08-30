@@ -16,7 +16,7 @@ RSpec.describe DeregistrationEmailService do
     let(:expected_params) do
       {
         email_address: registration.contact_email,
-        template_id: "9148895b-e239-4118-8ffd-dadd9b2cf462",
+        template_id: "55faba44-2281-47e8-80a3-9ecb7556eb2e",
         personalisation: {
           contact_name: "#{registration.contact_first_name} #{registration.contact_last_name}",
           exemption_details: registration.exemptions.order(:exemption_id).map do |ex|
