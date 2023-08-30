@@ -63,6 +63,14 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  config.before { Bullet.start_request }
+  config.before do
+    # Don't make external API calls during specs
+    stub_request(:get, %r{/address-service/v1/addresses/})
+    stub_request(:get, %r{environment.data.gov.uk/spatialdata/})
+    stub_request(:post, %r{/errbit-prd.aws-int.defra.cloud/})
+    stub_request(:put, %r{/devwex.*s3.eu-west-1.amazonaws.com/})
+
+    Bullet.start_request
+  end
   config.after { Bullet.end_request }
 end
