@@ -53,6 +53,6 @@ class DeregistrationEmailService < RenewalReminderEmailService
   end
 
   def template
-    "9148895b-e239-4118-8ffd-dadd9b2cf462"
+    "55faba44-2281-47e8-80a3-9ecb7556eb2e"
   end
 end
