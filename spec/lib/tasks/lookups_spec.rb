@@ -12,6 +12,7 @@ RSpec.describe "Lookups task", type: :rake, vcr: true do
 
     before do
       allow(WasteExemptionsBackOffice::Application.config).to receive(:area_lookup_run_for).and_return(run_for)
+      allow(WasteExemptionsEngine::DetermineAreaService).to receive(:run).and_return "Wessex"
     end
 
     let(:run_for) { 10 }
@@ -32,6 +33,9 @@ RSpec.describe "Lookups task", type: :rake, vcr: true do
   describe "lookups:update:missing_easting_and_northing" do
     before do
       allow(WasteExemptionsBackOffice::Application.config).to receive(:easting_and_northing_lookup_run_for).and_return(run_for)
+      allow(WasteExemptionsEngine::DetermineAreaService).to receive(:run).and_return("Outside England")
+      allow(WasteExemptionsEngine::DetermineEastingAndNorthingService).to receive(:run)
+        .and_return({ easting: 358_205.03, northing: 172_708.07 })
       allow(Airbrake).to receive(:notify)
       VCR.insert_cassette("valid_postcode_lookup")
     end
