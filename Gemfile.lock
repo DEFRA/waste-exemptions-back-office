@@ -296,7 +296,7 @@ GEM
     mime-types-data (3.2023.0218.1)
     mini_mime (1.1.2)
     mini_portile2 (2.8.2)
-    minitest (5.18.1)
+    minitest (5.19.0)
     multi_json (1.15.0)
     net-imap (0.3.6)
       date
@@ -516,7 +516,7 @@ GEM
       chronic (>= 0.6.3)
     whenever-test (1.0.1)
       whenever
-    wicked_pdf (2.6.3)
+    wicked_pdf (2.7.0)
       activesupport
     xpath (3.2.0)
       nokogiri (~> 1.8)
