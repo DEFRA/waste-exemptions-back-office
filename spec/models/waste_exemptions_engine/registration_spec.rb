@@ -63,8 +63,8 @@ RSpec.describe WasteExemptionsEngine::Registration do
   describe "#renewable?" do
 
     before do
-      allow(WasteExemptionsEngine.configuration).to receive(:renewal_window_before_expiry_in_days).and_return(28)
-      allow(WasteExemptionsEngine.configuration).to receive(:renewal_window_after_expiry_in_days).and_return(30)
+      allow(WasteExemptionsEngine.configuration)
+        .to receive_messages(renewal_window_before_expiry_in_days: 28, renewal_window_after_expiry_in_days: 30)
     end
 
     let(:registration_exemption) { build(:registration_exemption, expires_on: expires_on, state: state) }

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe EditHelper do
-  let(:edit_registration) { build(:edit_registration) }
+  let(:edit_registration) { build(:back_office_edit_registration) }
 
   describe "edit_back_path" do
     it "returns the correct value" do
