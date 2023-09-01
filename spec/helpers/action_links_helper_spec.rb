@@ -69,7 +69,7 @@ RSpec.describe ActionLinksHelper do
       let(:resource) { create(:registration) }
 
       it "returns the correct path" do
-        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_form_path(resource.reference)
+        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_back_office_edit_form_path(resource.reference)
         expect(helper.edit_link_for(resource)).to eq(path)
       end
     end

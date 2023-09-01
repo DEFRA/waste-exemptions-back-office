@@ -26,7 +26,7 @@ module ActionLinksHelper
   def edit_link_for(resource)
     return "#" unless resource.is_a?(WasteExemptionsEngine::Registration)
 
-    WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_form_path(resource.reference)
+    WasteExemptionsEngine::Engine.routes.url_helpers.new_back_office_edit_form_path(resource.reference)
   end
 
   def edit_expiry_date_link_for(resource)
