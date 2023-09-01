@@ -97,4 +97,8 @@ module ActionLinksHelper
 
     resource.active? && resource.company_no_required?
   end
+
+  def display_communication_logs_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
+  end
 end

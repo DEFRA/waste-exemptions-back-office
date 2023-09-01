@@ -198,6 +198,12 @@
           <%= link_to t(".actions.deregister"), deregister_registrations_form_path(resource) %>
         </p>
       <% end %>
+
+      <% if display_communication_logs_link_for?(resource) %>
+        <p class="govuk-body">
+          <%= link_to t(".actions.show_communication_history"), registration_communication_logs_path(resource.reference) %>
+        </p>
+      <% end %>
     </div>
   </div>
 </div>

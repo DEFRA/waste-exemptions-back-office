@@ -1,0 +1,10 @@
+en:
+  communication_logs:
+    index:
+      title: "Communication history"
+      heading: "Communication history"
+      template_name: "Template name"
+      template_id: "Template ID"
+      type: "Type"
+      sent_to: "Sent to"
+      sent_on: "Sent on"
