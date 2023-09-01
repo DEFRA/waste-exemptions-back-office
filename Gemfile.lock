@@ -330,7 +330,7 @@ GEM
     passenger (5.3.7)
       rack
       rake (>= 0.8.1)
-    pg (1.5.3)
+    pg (1.5.4)
     pgreset (0.3)
     phonelib (0.8.3)
     poltergeist (1.18.1)
