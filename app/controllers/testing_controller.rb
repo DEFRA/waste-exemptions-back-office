@@ -15,6 +15,9 @@ class TestingController < ApplicationController
     registration = FactoryBot.create(:registration,
                                      registration_exemptions: registration_exemptions(3))
 
+    # Ensure edit_token_created_at is populated
+    registration.regenerate_and_timestamp_edit_token
+
     render :show, locals: { registration: registration }
   end
 
