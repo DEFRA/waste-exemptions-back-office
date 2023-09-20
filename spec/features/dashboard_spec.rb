@@ -16,7 +16,7 @@ RSpec.describe "Dashboard" do
     expect(page).to have_text(user.email)
   end
 
-  describe "Search", js: true do
+  describe "Search", :js do
     let(:registration) { create(:registration) }
 
     context "when search terms contain invalid characters" do
@@ -30,7 +30,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_field("term")
         fill_in "term", with: reference_with_tabs
         expect(page).to have_button("Search")
-        click_on "Search"
+        click_button "Search"
 
         expect(page).to have_text("Reference number")
         expect(page).to have_text("WEX000001")
@@ -42,7 +42,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_field("term")
         fill_in "term", with: reference_with_tabs
         expect(page).to have_button("Search")
-        click_on "Search"
+        click_button "Search"
 
         expect(page).to have_text("Reference number")
         expect(page).to have_text("WEX000001")
@@ -54,7 +54,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_field("term")
         fill_in "term", with: reference_with_tabs
         expect(page).to have_button("Search")
-        click_on "Search"
+        click_button "Search"
 
         expect(page).to have_text("Reference number")
         expect(page).to have_text("WEX000001")
@@ -66,7 +66,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_field("term")
         fill_in "term", with: reference_with_tabs
         expect(page).to have_button("Search")
-        click_on "Search"
+        click_button "Search"
 
         expect(page).to have_text("Reference number")
         expect(page).to have_text("WEX000001")
@@ -78,7 +78,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_field("term")
         fill_in "term", with: reference_with_tabs
         expect(page).to have_button("Search")
-        click_on "Search"
+        click_button "Search"
 
         expect(page).to have_text("Reference number")
         expect(page).to have_text("WEX000001")
@@ -90,7 +90,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_field("term")
         fill_in "term", with: reference_with_tabs
         expect(page).to have_button("Search")
-        click_on "Search"
+        click_button "Search"
 
         expect(page).to have_text("Reference number")
         expect(page).to have_text("WEX000001")
@@ -102,7 +102,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_field("term")
         fill_in "term", with: reference_with_tabs
         expect(page).to have_button("Search")
-        click_on "Search"
+        click_button "Search"
 
         expect(page).to have_text("Reference number")
         expect(page).to have_text("WEX000001")

@@ -71,7 +71,7 @@ RSpec.describe "ResendConfirmationLetter" do
         end
       end
 
-      context "when an error happens", disable_bullet: true do
+      context "when an error happens", :disable_bullet do
         before do
           allow(WasteExemptionsEngine::NotifyConfirmationLetterService).to receive(:run).and_raise(StandardError)
         end

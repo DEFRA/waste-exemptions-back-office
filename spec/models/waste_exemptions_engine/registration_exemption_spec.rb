@@ -80,7 +80,7 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
     end
   end
 
-  describe "PaperTrail", versioning: true do
+  describe "PaperTrail", :versioning do
     before { registration_exemption.save! }
 
     it "is versioned" do
