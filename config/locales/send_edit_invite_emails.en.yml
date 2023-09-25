@@ -1,0 +1,5 @@
+en:
+  send_edit_invite_emails:
+    flash:
+      success: Edit invite email sent successfully
+      failure: Error sending edit invite email

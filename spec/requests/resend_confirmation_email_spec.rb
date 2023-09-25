@@ -24,7 +24,7 @@ RSpec.describe "ResendConfirmationEmail" do
       end
     end
 
-    context "when an admin agent user is signed in", disable_bullet: true do
+    context "when an admin agent user is signed in", :disable_bullet do
       let(:user) { create(:user, :admin_agent) }
 
       around do |example|

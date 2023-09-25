@@ -264,10 +264,10 @@ RSpec.describe ActionLinksHelper do
     end
   end
 
-  describe "display_resend_deregistration_email_link_for?" do
+  describe "display_send_edit_invite_email_link_for?" do
     let(:can) { true }
 
-    before { allow(helper).to receive(:can?).with(:resend_registration_email, resource).and_return(can) }
+    before { allow(helper).to receive(:can?).with(:send_edit_invite_email, resource).and_return(can) }
 
     context "when the resource is an active registration" do
       let(:resource) { create(:registration, :with_active_exemptions) }
@@ -275,46 +275,32 @@ RSpec.describe ActionLinksHelper do
       context "when the user has permission to deregister a registration" do
         let(:can) { true }
 
-        it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(true) }
-
-        context "when the resource is not inside the renewal window" do
-          before { allow(resource).to receive(:in_renewal_window?).and_return(true) }
-
-          it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
-        end
+        it { expect(helper.display_send_edit_invite_email_link_for?(resource)).to be(true) }
       end
 
       context "when the user does not have permission to deregister a registration" do
         let(:can) { false }
 
-        it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
+        it { expect(helper.display_send_edit_invite_email_link_for?(resource)).to be(false) }
       end
-    end
-
-    context "when the resource is an already renewed registration" do
-      let(:resource) { create(:registration, :with_active_exemptions) }
-
-      before { resource.referred_registration = create(:registration) }
-
-      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
     end
 
     context "when the resource is a ceased registration" do
       let(:resource) { create(:registration, :with_ceased_exemptions) }
 
-      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
+      it { expect(helper.display_send_edit_invite_email_link_for?(resource)).to be(false) }
     end
 
     context "when the resource is an expired registration" do
       let(:resource) { create(:registration, registration_exemptions: build_list(:registration_exemption, 3, :expired)) }
 
-      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
+      it { expect(helper.display_send_edit_invite_email_link_for?(resource)).to be(false) }
     end
 
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it { expect(helper.display_resend_deregistration_email_link_for?(resource)).to be(false) }
+      it { expect(helper.display_send_edit_invite_email_link_for?(resource)).to be(false) }
     end
   end
 

@@ -42,7 +42,7 @@ RSpec.describe "User Roles" do
         sign_in(system_user)
       end
 
-      it "updates the user role, redirects to the user list and assigns the correct whodunnit to the version", versioning: true do
+      it "updates the user role, redirects to the user list and assigns the correct whodunnit to the version", :versioning do
         post "/users/role/#{role_change_user.id}", params: { user: params }
 
         expect(role_change_user.reload.role).to eq(params[:role])

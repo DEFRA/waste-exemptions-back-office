@@ -41,7 +41,7 @@ class Ability
   def permissions_for_admin_agent
     can :renew, WasteExemptionsEngine::Registration
     can :create, WasteExemptionsEngine::Registration
-    can :resend_registration_email, WasteExemptionsEngine::Registration
+    can :send_edit_invite_email, WasteExemptionsEngine::Registration
     can :create, WasteExemptionsEngine::NewRegistration
     can :update, WasteExemptionsEngine::NewRegistration
 
@@ -63,7 +63,6 @@ class Ability
     permissions_for_admin_agent
 
     can :manage, WasteExemptionsEngine::FeatureToggle
-    can :manage, DeregistrationEmailExportsForm
     can :read, Reports::DefraQuarterlyStatsService
   end
 end

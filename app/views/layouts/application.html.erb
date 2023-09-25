@@ -30,13 +30,6 @@
                         class: "govuk-header__link" %>
           </li>
         <% end %>
-        <% if can?(:manage, DeregistrationEmailExportsForm) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.email_export"),
-                        main_app.new_deregistration_email_export_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
         <% if can?(:read, Reports::GeneratedReport) %>
           <li class="govuk-header__navigation-item">
             <%= link_to t("layouts.application.menu.exports"),

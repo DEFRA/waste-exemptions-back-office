@@ -49,8 +49,8 @@ Rails.application.routes.draw do
   get "/registration-exemptions/deregister/:id", to: "deregister_exemptions#new", as: :deregister_exemptions_form
   post "/registration-exemptions/deregister/:id", to: "deregister_exemptions#update", as: :deregister_exemptions
 
-  # Resend deregistration email
-  get "/resend-deregistration-emails/:id", to: "resend_deregistration_emails#new", as: :resend_deregistration_emails
+  # Send edit invite email
+  get "/send-edit-invite-emails/:id", to: "send_edit_invite_emails#new", as: :send_edit_invite_emails
 
   # Deregistration email exports
   resources :deregistration_email_exports, only: %i[new create]

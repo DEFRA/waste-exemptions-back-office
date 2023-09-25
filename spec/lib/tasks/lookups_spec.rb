@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Lookups task", type: :rake, vcr: true do
+RSpec.describe "Lookups task", :vcr, type: :rake do
   include_context "rake"
 
   before { VCR.insert_cassette("valid_area_lookup", allow_playback_repeats: true) }
