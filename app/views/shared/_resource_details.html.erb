@@ -134,12 +134,12 @@
         </p>
       <% end %>
 
-      <% if display_resend_deregistration_email_link_for?(resource) %>
+      <% if display_send_edit_invite_email_link_for?(resource) %>
         <p class="govuk-body">
-          <%= link_to resend_deregistration_emails_path(resource), id: "resend_deregistration_email_#{resource.reference}" do %>
-            <%= t(".actions.resend_deregistration_email.link_text") %>
+          <%= link_to send_edit_invite_emails_path(resource), id: "send_edit_invite_email_#{resource.reference}" do %>
+            <%= t(".actions.send_edit_invite_email.link_text") %>
             <span class="govuk-visually-hidden">
-            <%= t(".actions.resend_deregistration_email.visually_hidden_text",
+            <%= t(".actions.send_edit_invite_email.visually_hidden_text",
                   name: result_name_for_visually_hidden_text(resource)) %>
           </span>
           <% end %>

@@ -52,7 +52,7 @@ RSpec.describe DeregistrationService do
               end
             end
 
-            it "creates a version for all of the registration_exemptions", versioning: true do
+            it "creates a version for all of the registration_exemptions", :versioning do
               registration.registration_exemptions.each do |re|
                 expect(re.versions.size).to eq(0)
               end

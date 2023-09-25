@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def all
     authorize! :read, current_user
 
-    @users = User.all.order(email: :asc).page(params[:page]).per(100)
+    @users = User.order(email: :asc).page(params[:page]).per(100)
 
     @show_all_users = true
     render :index

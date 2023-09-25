@@ -71,7 +71,7 @@ RSpec.describe "ResendRenewalLetter" do
         end
       end
 
-      context "when an error happens", disable_bullet: true do
+      context "when an error happens", :disable_bullet do
         before do
           allow(NotifyRenewalLetterService).to receive(:run).and_raise(StandardError)
         end

@@ -37,7 +37,7 @@ RSpec.describe ExpiredRegistrationCleanupService do
         expect { service.run }.to change { WasteExemptionsEngine::RegistrationExemption.where(registration_id: id).count }.from(re_count).to(0)
       end
 
-      it "deletes registration paper_trail version data", versioning: true do
+      it "deletes registration paper_trail version data", :versioning do
         paper_trail_count = registration.versions.count
 
         expect { service.run }.to change {
@@ -75,7 +75,7 @@ RSpec.describe ExpiredRegistrationCleanupService do
         expect { service.run }.to change { WasteExemptionsEngine::RegistrationExemption.where(registration_id: id).count }.from(re_count).to(0)
       end
 
-      it "deletes registration paper_trail version data", versioning: true do
+      it "deletes registration paper_trail version data", :versioning do
         paper_trail_count = registration.versions.count
 
         expect { service.run }.to change {

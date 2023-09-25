@@ -1,5 +1,0 @@
-en:
-  resend_deregistration_emails:
-    flash:
-      success: "Deregistration email(s) sent successfully"
-      failure: "Error sending deregistration email(s)"
