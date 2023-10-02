@@ -33,7 +33,7 @@
                 <%= log.sent_to %>
               </td>
               <td class="govuk-table__cell">
-                <%= log.created_at.to_formatted_s(:day_month_and_time) %>
+                <%= log.created_at.to_formatted_s(:time_on_day_month_year) %>
               </td>
             </tr>
           <% end %>
