@@ -22,7 +22,9 @@ namespace :one_off do
         registration.communication_logs << WasteExemptionsEngine::CommunicationLog.new(
           message_type: "email",
           template_id: "9148895b-e239-4118-8ffd-dadd9b2cf462",
-          template_label: "Deregistration confirmation email",
+          template_label: "Self serve exemption deregistration invite",
+          # override created_at to use the time the email was sent
+          created_at: registration.deregistration_email_sent_at,
           # we can't be sure whether the email was sent to the contact email, applicant email or both, so leave nil
           sent_to: nil
         )
