@@ -2,7 +2,47 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.3...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.4...HEAD)
+
+**Implemented enhancements:**
+
+- Fix/self serve edit issues [\#1148](https://github.com/DEFRA/waste-exemptions-back-office/pull/1148) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Feature/ruby 2641 wex communication history showing in back office [\#1126](https://github.com/DEFRA/waste-exemptions-back-office/pull/1126) ([brujeo](https://github.com/brujeo))
+- \[RUBY-2508\] Change notify template for Send deregistration  invite email [\#1121](https://github.com/DEFRA/waste-exemptions-back-office/pull/1121) ([jjromeo](https://github.com/jjromeo))
+
+**Fixed bugs:**
+
+- Fix/ruby 2481 comms history [\#1154](https://github.com/DEFRA/waste-exemptions-back-office/pull/1154) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Fix typo in I18n key [\#1140](https://github.com/DEFRA/waste-exemptions-back-office/pull/1140) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `bcd04ab` to `a3dce00` [\#1161](https://github.com/DEFRA/waste-exemptions-back-office/pull/1161) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `9222355` to `bcd04ab` [\#1157](https://github.com/DEFRA/waste-exemptions-back-office/pull/1157) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rails from 2.21.1 to 2.21.2 [\#1156](https://github.com/DEFRA/waste-exemptions-back-office/pull/1156) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `5fcdee1` to `9222355` [\#1155](https://github.com/DEFRA/waste-exemptions-back-office/pull/1155) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `53c74c0` to `5fcdee1` [\#1153](https://github.com/DEFRA/waste-exemptions-back-office/pull/1153) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `afd62cc` to `53c74c0` [\#1152](https://github.com/DEFRA/waste-exemptions-back-office/pull/1152) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `e62cbe0` to `afd62cc` [\#1150](https://github.com/DEFRA/waste-exemptions-back-office/pull/1150) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rspec from 2.23.2 to 2.24.1 [\#1149](https://github.com/DEFRA/waste-exemptions-back-office/pull/1149) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump net-smtp from 0.3.3 to 0.4.0 [\#1147](https://github.com/DEFRA/waste-exemptions-back-office/pull/1147) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `761e6dd` to `e62cbe0` [\#1145](https://github.com/DEFRA/waste-exemptions-back-office/pull/1145) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `c640d09` to `761e6dd` [\#1144](https://github.com/DEFRA/waste-exemptions-back-office/pull/1144) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rails from 7.0.7.2 to 7.0.8 [\#1142](https://github.com/DEFRA/waste-exemptions-back-office/pull/1142) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump web-console from 4.2.0 to 4.2.1 [\#1139](https://github.com/DEFRA/waste-exemptions-back-office/pull/1139) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Feature/edit forms [\#1138](https://github.com/DEFRA/waste-exemptions-back-office/pull/1138) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump pg from 1.5.3 to 1.5.4 [\#1137](https://github.com/DEFRA/waste-exemptions-back-office/pull/1137) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `4c8d8a2` to `34b0055` [\#1136](https://github.com/DEFRA/waste-exemptions-back-office/pull/1136) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Feature/edit forms [\#1131](https://github.com/DEFRA/waste-exemptions-back-office/pull/1131) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump webmock from 3.18.1 to 3.19.1 [\#1130](https://github.com/DEFRA/waste-exemptions-back-office/pull/1130) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump wicked\_pdf from 2.6.3 to 2.7.0 [\#1128](https://github.com/DEFRA/waste-exemptions-back-office/pull/1128) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rails from 7.0.6 to 7.0.7.2 [\#1127](https://github.com/DEFRA/waste-exemptions-back-office/pull/1127) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump net-imap from 0.3.6 to 0.3.7 [\#1116](https://github.com/DEFRA/waste-exemptions-back-office/pull/1116) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump govuk\_design\_system\_formbuilder from 4.0.0 to 4.1.1 [\#1115](https://github.com/DEFRA/waste-exemptions-back-office/pull/1115) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.7.4](https://github.com/defra/waste-exemptions-back-office/tree/v2.7.4) (2023-07-12)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.7.3...v2.7.4)
 
 **Implemented enhancements:**
 
@@ -15,12 +55,14 @@
 
 **Fixed bugs:**
 
+- Run migration and update schema.rb [\#1111](https://github.com/DEFRA/waste-exemptions-back-office/pull/1111) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - fix/action\_links [\#1088](https://github.com/DEFRA/waste-exemptions-back-office/pull/1088) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Fix/action links helper [\#1087](https://github.com/DEFRA/waste-exemptions-back-office/pull/1087) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - RUBY-2087: sanitizing search terms [\#1083](https://github.com/DEFRA/waste-exemptions-back-office/pull/1083) ([brujeo](https://github.com/brujeo))
 
 **Merged pull requests:**
 
+- Release v2.7.4 [\#1110](https://github.com/DEFRA/waste-exemptions-back-office/pull/1110) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Bump waste\_exemptions\_engine from `d069eb6` to `540af98` [\#1109](https://github.com/DEFRA/waste-exemptions-back-office/pull/1109) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `05335be` to `d069eb6` [\#1108](https://github.com/DEFRA/waste-exemptions-back-office/pull/1108) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `c2a5e04` to `05335be` [\#1107](https://github.com/DEFRA/waste-exemptions-back-office/pull/1107) ([dependabot[bot]](https://github.com/apps/dependabot))
