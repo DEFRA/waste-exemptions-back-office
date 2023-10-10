@@ -33,8 +33,6 @@ class TestingController < ApplicationController
   end
 
   def non_production_only
-    return if Rails.env.test?
-
     return unless ["production", nil].include?(ENV.fetch("AIRBRAKE_ENV_NAME", nil))
 
     raise ActionController::RoutingError, "Not Found"
