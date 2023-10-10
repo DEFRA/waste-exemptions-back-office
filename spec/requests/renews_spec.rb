@@ -36,7 +36,7 @@ RSpec.describe "Renews" do
       end
       # rubocop:enable RSpec/AnyInstance
 
-      it "return a 303 redirect code and redirect to the renewal start form" do
+      it "returns a 303 redirect code and redirect to the renewal start form" do
         get request_path
 
         path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
@@ -45,27 +45,17 @@ RSpec.describe "Renews" do
       end
 
       context "when the renewal was already started" do
-        let(:renewing_registration) { create(:renewing_registration, :expires_tomorrow, workflow_state: "contact_name_form") }
+        let(:reference) { registration.reference }
+        let(:renewing_registration) do
+          create(:renewing_registration, :expires_tomorrow, workflow_state: "contact_name_form", reference:, created_at: 3.days.ago)
+        end
         let(:request_path) { "/renew/#{renewing_registration.reference}" }
 
-        context "when in renewal window" do
-          it "redirects to the correct template status" do
-            get request_path
+        # Back office only: Clear any potentially problematic existing transient registrations
+        it "removes any existing transient registrations and creates a new one" do
+          renewing_registration # force instantation
 
-            path = WasteExemptionsEngine::Engine.routes.url_helpers.check_registered_name_and_address_forms_path(token: transient_registration_token)
-            expect(response).to redirect_to(path)
-          end
-        end
-
-        context "when not in renewal window" do
-          let(:renewing_registration) { create(:renewing_registration, workflow_state: "contact_name_form") }
-
-          it "redirects to the correct template status" do
-            get request_path
-
-            path = WasteExemptionsEngine::Engine.routes.url_helpers.new_edit_exemptions_form_path(token: transient_registration_token)
-            expect(response).to redirect_to(path)
-          end
+          expect { get request_path }.to change { WasteExemptionsEngine::RenewingRegistration.find_by(reference:).created_at }
         end
       end
 

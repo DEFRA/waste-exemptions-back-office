@@ -6,6 +6,10 @@ class RenewsController < ApplicationController
   def new
     authorize
 
+    # Back office only: Badly formed transient registrations sometimes cause renewals to fail.
+    # So we clear any existing transient registrations before starting a back-office renewal.
+    WasteExemptionsEngine::TransientRegistration.where(reference: registration.reference).destroy_all
+
     @transient_registration = WasteExemptionsEngine::RenewalStartService.run(registration: registration)
     @transient_registration.aasm.enter_initial_state
     redirect_to_correct_form
