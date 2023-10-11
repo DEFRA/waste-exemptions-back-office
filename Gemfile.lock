@@ -1,10 +1,11 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: a3dce00af2595512fd7a27d5d32f9e1cb2b43b06
+  revision: de32efa9c56345810950384e4a67d1209b98483e
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
+      activerecord (< 7.1)
       defra_ruby_address
       defra_ruby_alert
       defra_ruby_area (~> 2.0)
@@ -281,7 +282,7 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.3)
-    loofah (2.21.3)
+    loofah (2.21.4)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
