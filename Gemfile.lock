@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: d9ea6d77351d241a45b366bdf588af2bd0334e6e
+  revision: 2a4b314c9e05c862e2ac07ab194d6f1d906c1722
   branch: chore/transient_address_debug
   specs:
     waste_exemptions_engine (0.1.0)
