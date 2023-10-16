@@ -332,7 +332,7 @@ GEM
       rack
       rake (>= 0.8.1)
     pg (1.5.4)
-    pgreset (0.3)
+    pgreset (0.4)
     phonelib (0.8.4)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
