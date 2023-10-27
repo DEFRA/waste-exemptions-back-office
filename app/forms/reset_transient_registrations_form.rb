@@ -8,7 +8,9 @@ class ResetTransientRegistrationsForm
   end
 
   def submit
-    deleted_records = WasteExemptionsEngine::TransientRegistration.includes([:transient_addresses, :transient_people, :transient_registration_exemptions]).where(reference: @registration.reference).destroy_all
+    deleted_records = WasteExemptionsEngine::TransientRegistration
+                      .includes(%i[transient_addresses transient_people transient_registration_exemptions])
+                      .where(reference: @registration.reference).destroy_all
     deleted_records.any?
   end
 end

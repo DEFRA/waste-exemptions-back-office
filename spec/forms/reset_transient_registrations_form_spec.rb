@@ -15,8 +15,10 @@ RSpec.describe ResetTransientRegistrationsForm, type: :model do
 
   describe "#submit" do
     context "when there are transient registrations associated with the registration reference" do
-      let!(:renewing_registration) { create(:renewing_registration, reference: registration.reference) }
-      let!(:edit_registration) { create(:back_office_edit_registration, reference: registration.reference) }
+      before do
+        create(:renewing_registration, reference: registration.reference)
+        create(:back_office_edit_registration, reference: registration.reference)
+      end
 
       it "deletes all transient registrations associated with the registration reference" do
         expect do

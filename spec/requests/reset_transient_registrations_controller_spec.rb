@@ -36,8 +36,10 @@ RSpec.describe ResetTransientRegistrationsController do
       before { sign_in(user) }
 
       context "when there are transient registrations associated with the registration reference" do
-        let!(:renewing_registration) { create(:renewing_registration, reference: registration.reference) }
-        let!(:edit_registration) { create(:back_office_edit_registration, reference: registration.reference) }
+        before do
+          create(:renewing_registration, reference: registration.reference)
+          create(:back_office_edit_registration, reference: registration.reference)
+        end
 
         it "redirects to the registration page with a successful redirection status code" do
           post reset_transient_registrations_path(id: registration.reference)

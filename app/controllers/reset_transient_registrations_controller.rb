@@ -2,7 +2,6 @@
 
 class ResetTransientRegistrationsController < ApplicationController
   def new
-    Rails.logger.info "THE CURRENT ROLE IS: #{current_user.role}"
     authorize! :reset_transient_registrations, registration
 
     reset_transient_registrations_form
