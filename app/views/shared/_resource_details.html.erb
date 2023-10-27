@@ -119,6 +119,12 @@
         </p>
       <% end %>
 
+      <% if display_reset_transient_registrations_link_for?(resource) %>
+        <p class="govuk-body">
+          <%= link_to t(".actions.reset_transient_registrations"), reset_transient_registrations_link_for(resource) %>
+        </p>
+      <% end %>
+
       <% if display_resume_link_for?(resource) %>
         <p class="govuk-body">
           <%= link_to t(".actions.resume"), resume_link_for(resource) %>

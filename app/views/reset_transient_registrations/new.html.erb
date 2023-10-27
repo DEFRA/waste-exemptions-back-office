@@ -1,0 +1,23 @@
+<% content_for :title, t(".heading") %>
+
+<%= render("waste_exemptions_engine/shared/back", back_path: registration_path(reference: @registration.reference)) %>
+
+<h1 class="govuk-heading-l"> <%= t(".heading") %> </h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      <%= t(".paragraph") %>
+    </p>
+    <%= form_for(
+        @reset_transient_registrations_form,
+        url: reset_transient_registrations_path,
+        builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
+
+      </div>
+
+      <br>
+      <%= f.govuk_submit t(".submit") %>
+    <% end %>
+  </div>
+</div>

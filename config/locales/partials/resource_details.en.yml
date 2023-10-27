@@ -63,6 +63,7 @@ en:
         resend_confirmation_email: Resend confirmation email
         resend_confirmation_letter: Resend confirmation letter
         refresh_companies_house: Refresh Companies House information
+        reset_transient_registrations: Reset transient registrations
         renew:
           link_text: Start renewal
           visually_hidden_text: "of %{name}"

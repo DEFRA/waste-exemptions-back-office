@@ -1,0 +1,11 @@
+en:
+  reset_transient_registrations:
+    new:
+      title: Reset transient registrations
+      heading: Reset transient registrations
+      submit: Delete transient registrations
+      paragraph: >
+        This will delete all transient registrations related to this registration.
+    flash:
+      successful_reset: Transient registrations have been reset for this registration
+      no_transient_registrations: There are no transient registrations to reset for this registration
