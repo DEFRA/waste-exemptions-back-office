@@ -64,5 +64,6 @@ class Ability
 
     can :manage, WasteExemptionsEngine::FeatureToggle
     can :read, Reports::DefraQuarterlyStatsService
+    can :reset_transient_registrations, WasteExemptionsEngine::Registration
   end
 end

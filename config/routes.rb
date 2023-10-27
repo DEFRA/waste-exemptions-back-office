@@ -39,6 +39,11 @@ Rails.application.routes.draw do
   get "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#new", as: :modify_expiry_date_form
   post "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#update", as: :modify_expiry_date
 
+  get "/registrations/:id/reset_transient_registrations", to: "reset_transient_registrations#new",
+                                                          as: :reset_transient_registrations_form
+  post "/registrations/:id/reset_transient_registrations", to: "reset_transient_registrations#update",
+                                                           as: :reset_transient_registrations
+
   resources :new_registrations, only: :show, path: "/new-registrations"
 
   # Deregister Registrations

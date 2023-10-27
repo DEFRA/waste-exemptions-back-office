@@ -1,0 +1,6 @@
+en:
+  reset_transient_registrations:
+    new:
+      title: Reset transient registrations
+      heading: Reset transient registrations
+      submit: Continue

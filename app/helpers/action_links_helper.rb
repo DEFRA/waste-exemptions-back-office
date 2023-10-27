@@ -35,6 +35,12 @@ module ActionLinksHelper
     Rails.application.routes.url_helpers.modify_expiry_date_form_path(resource.reference)
   end
 
+  def reset_transient_registrations_link_for(resource)
+    return "#" unless resource.is_a?(WasteExemptionsEngine::Registration)
+
+    Rails.application.routes.url_helpers.reset_transient_registrations_path(resource.reference)
+  end
+
   def display_resume_link_for?(resource)
     return false unless resource.is_a?(WasteExemptionsEngine::NewRegistration)
 
@@ -98,5 +104,9 @@ module ActionLinksHelper
 
   def display_communication_logs_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
+  end
+
+  def display_reset_transient_registrations_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:reset_transient_registrations, resource)
   end
 end
