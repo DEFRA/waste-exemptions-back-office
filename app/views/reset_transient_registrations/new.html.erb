@@ -6,6 +6,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body">
+      <%= t(".paragraph") %>
+    </p>
     <%= form_for(
         @reset_transient_registrations_form,
         url: reset_transient_registrations_path,

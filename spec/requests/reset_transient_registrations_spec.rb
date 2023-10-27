@@ -4,8 +4,6 @@ require "rails_helper"
 
 RSpec.describe ResetTransientRegistrationsController do
   let(:registration) { create(:registration) }
-  let!(:renewing_registration) { create(:renewing_registration, reference: registration.reference) }
-  let!(:edit_registration) { create(:back_office_edit_registration, reference: registration.reference) }
 
   describe "GET #new" do
     context "when the user is a developer" do
@@ -37,11 +35,25 @@ RSpec.describe ResetTransientRegistrationsController do
 
       before { sign_in(user) }
 
-      it "redirects to the registration page with a successful redirection status code" do
-        post reset_transient_registrations_path(id: registration.reference)
-        successful_redirection = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE.to_s
-        expect(response.code).to eq(successful_redirection)
-        expect(response).to redirect_to(registration_path(reference: registration.reference))
+      context "when there are transient registrations associated with the registration reference" do
+        let!(:renewing_registration) { create(:renewing_registration, reference: registration.reference) }
+        let!(:edit_registration) { create(:back_office_edit_registration, reference: registration.reference) }
+
+        it "redirects to the registration page with a successful redirection status code" do
+          post reset_transient_registrations_path(id: registration.reference)
+          successful_redirection = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE.to_s
+          expect(response.code).to eq(successful_redirection)
+          expect(response).to redirect_to(registration_path(reference: registration.reference))
+        end
+      end
+
+      context "when there are no transient registrations associated with the registration reference" do
+        it "redirects to the registration page with an unsuccessful redirection status code" do
+          post reset_transient_registrations_path(id: registration.reference)
+          unsuccessful_redirection = WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE.to_s
+          expect(response.code).to eq(unsuccessful_redirection)
+          expect(response).to redirect_to(registration_path(reference: registration.reference))
+        end
       end
     end
 
