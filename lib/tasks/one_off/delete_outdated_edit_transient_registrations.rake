@@ -9,6 +9,8 @@ namespace :one_off do
     sql = "SELECT id FROM transient_registrations WHERE type = 'WasteExemptionsEngine::EditRegistration';"
     outdated_registration_ids = connection.execute(sql).pluck("id")
 
+    puts "Found #{outdated_registration_ids.count} outdated transient registrations"
+
     # First, delete all associated transient_addresses, transient_people, and transient_registration_exemptions
 
     WasteExemptionsEngine::TransientAddress
