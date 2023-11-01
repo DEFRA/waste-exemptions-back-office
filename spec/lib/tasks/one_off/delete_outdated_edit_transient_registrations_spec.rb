@@ -18,6 +18,13 @@ RSpec.describe "one_off:delete_outdate_edit_transient_registrations", type: :rak
           ('WasteExemptionsEngine::EditRegistration', '#{registration.reference}', NOW(), NOW());
       SQL
     )
+
+    transient_registration_id = ActiveRecord::Base.connection.execute(
+      "SELECT id FROM transient_registrations WHERE type = 'WasteExemptionsEngine::EditRegistration'"
+    ).first["id"]
+    create(:transient_address, transient_registration_id: transient_registration_id)
+    create(:transient_person, transient_registration_id: transient_registration_id)
+    create(:transient_registration_exemption, transient_registration_id: transient_registration_id)
   end
 
   after { rake_task.reenable }
@@ -26,9 +33,24 @@ RSpec.describe "one_off:delete_outdate_edit_transient_registrations", type: :rak
     expect do
       rake_task.invoke
     end.to change {
-      ActiveRecord::Base.connection.execute(
-        "SELECT COUNT(*) FROM transient_registrations WHERE type = 'WasteExemptionsEngine::EditRegistration'"
-      ).first["count"]
-    }.from(1).to(0)
+      {
+        transient_addresses: WasteExemptionsEngine::TransientAddress.count,
+        transient_people: WasteExemptionsEngine::TransientPerson.count,
+        transient_registration_exemptions: WasteExemptionsEngine::TransientRegistrationExemption.count,
+        transient_registrations: ActiveRecord::Base.connection.execute(
+          "SELECT COUNT(*) FROM transient_registrations WHERE type = 'WasteExemptionsEngine::EditRegistration'"
+        ).first["count"]
+      }
+    }.from(a_hash_including(
+             transient_addresses: 1,
+             transient_people: 1,
+             transient_registration_exemptions: 1,
+             transient_registrations: 1
+           )).to(a_hash_including(
+                   transient_addresses: 0,
+                   transient_people: 0,
+                   transient_registration_exemptions: 0,
+                   transient_registrations: 0
+                 ))
   end
 end
