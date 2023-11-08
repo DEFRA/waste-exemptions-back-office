@@ -17,10 +17,9 @@ RSpec.describe "Cleanup task", type: :rake do
         [WasteExemptionsEngine::TransientRegistration
           .where("created_at < ?", 30.days.ago)
           .count,
-        WasteExemptionsEngine::TransientRegistration
-          .where("created_at > ?", 30.days.ago)
-          .count
-        ]
+         WasteExemptionsEngine::TransientRegistration
+           .where("created_at > ?", 30.days.ago)
+           .count]
       }.from([2, 1]).to([1, 1])
     end
 
