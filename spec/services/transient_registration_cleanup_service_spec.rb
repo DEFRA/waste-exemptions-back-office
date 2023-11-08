@@ -39,6 +39,16 @@ RSpec.describe TransientRegistrationCleanupService do
       it "does not delete it" do
         expect { described_class.run }.not_to change { WasteExemptionsEngine::TransientRegistration.where(id: id).count }.from(1)
       end
+
+      context "when there are more transient_registrations than the limit" do
+        before do
+          10.times { create(:new_registration, created_at: 31.days.ago) }
+        end
+
+        it "deletes only up to the limit" do
+          expect { described_class.run(limit: 1) }.to change { WasteExemptionsEngine::TransientRegistration.where("created_at < ?", 30.days.ago).count }.by(-1)
+        end
+      end
     end
   end
 end
