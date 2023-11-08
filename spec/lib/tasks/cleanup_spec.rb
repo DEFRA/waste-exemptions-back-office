@@ -13,7 +13,7 @@ RSpec.describe "Cleanup task", type: :rake do
     end
 
     it "deletes only up to the limit number of old transient registrations" do
-      expect { subject.invoke(1) }.to change {
+      expect { subject.invoke("1") }.to change {
         [WasteExemptionsEngine::TransientRegistration
           .where("created_at < ?", 30.days.ago)
           .count,
