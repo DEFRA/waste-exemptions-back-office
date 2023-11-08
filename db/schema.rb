@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_01_155801) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_131130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -126,8 +126,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_155801) do
     t.string "renew_token"
     t.integer "referring_registration_id"
     t.datetime "companies_house_updated_at", precision: nil
+    t.datetime "deregistration_email_sent_at", precision: nil
     t.string "edit_token"
     t.datetime "edit_token_created_at"
+    t.index ["deregistration_email_sent_at"], name: "index_registrations_on_deregistration_email_sent_at"
     t.index ["edit_token"], name: "index_registrations_on_edit_token", unique: true
     t.index ["reference"], name: "index_registrations_on_reference", unique: true
     t.index ["renew_token"], name: "index_registrations_on_renew_token", unique: true
@@ -233,6 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_155801) do
     t.text "excluded_exemptions", default: [], array: true
     t.boolean "temp_confirm_exemption_edits"
     t.boolean "temp_confirm_no_exemption_changes"
+    t.index ["created_at"], name: "index_transient_registrations_on_created_at"
     t.index ["token"], name: "index_transient_registrations_on_token", unique: true
   end
 
