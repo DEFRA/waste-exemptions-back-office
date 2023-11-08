@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TransientRegistrationCleanupService < WasteExemptionsEngine::BaseService
-  LIMIT_DEFAULT = 100000
+  LIMIT_DEFAULT = 100_000
   def run(limit: LIMIT_DEFAULT)
     transient_registrations_to_remove(limit).destroy_all
   end
