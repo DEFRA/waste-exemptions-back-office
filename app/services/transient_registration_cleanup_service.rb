@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TransientRegistrationCleanupService < WasteExemptionsEngine::BaseService
+  LIMIT = 100
+
   def run
     transient_registrations_to_remove.destroy_all
   end
@@ -8,7 +10,7 @@ class TransientRegistrationCleanupService < WasteExemptionsEngine::BaseService
   private
 
   def transient_registrations_to_remove
-    WasteExemptionsEngine::TransientRegistration.where("created_at < ?", oldest_possible_date)
+    WasteExemptionsEngine::TransientRegistration.where("created_at < ?", oldest_possible_date).limit(LIMIT)
   end
 
   def oldest_possible_date
