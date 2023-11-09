@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_01_155801) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_131130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -235,6 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_155801) do
     t.text "excluded_exemptions", default: [], array: true
     t.boolean "temp_confirm_exemption_edits"
     t.boolean "temp_confirm_no_exemption_changes"
+    t.index ["created_at"], name: "index_transient_registrations_on_created_at"
     t.index ["token"], name: "index_transient_registrations_on_token", unique: true
   end
 
