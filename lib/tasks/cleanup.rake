@@ -3,7 +3,7 @@
 namespace :cleanup do
   desc "Remove old transient_registrations from the database"
   task transient_registrations: :environment do
-    limit = ENV.fetch('TRANSIENT_REGISTRATION_CLEANUP_LIMIT', 100_000).to_i
+    limit = ENV.fetch("TRANSIENT_REGISTRATION_CLEANUP_LIMIT", 100_000).to_i
     TransientRegistrationCleanupService.run(limit: limit)
   end
 end
