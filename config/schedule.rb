@@ -36,12 +36,6 @@ every :day, at: (ENV["EXPIRE_REGISTRATION_EXEMPTION_RUN_TIME"] || "00:05"), role
   rake "expire_registration:run"
 end
 
-# This is the transient registration cleanup job which will delete all records
-# that are more than 30 days old, as well as associated records
-every :day, at: (ENV["CLEANUP_TRANSIENT_REGISTRATIONS_RUN_TIME"] || "00:35"), roles: [:db] do
-  rake "cleanup:transient_registrations"
-end
-
 # This is the cleanup job for expired registrations which will delete all records, paper trails
 # and associated records that are more than 7 years old
 every :day, at: (ENV["CLEANUP_REMOVE_EXPIRED_REGISTRATIONS_RUN_TIME"] || "00:45"), roles: [:db] do
@@ -71,7 +65,7 @@ end
 
 # This is the first renewal email reminder job. For each registration expiring
 # in 30 days time, it will generate and send the first email reminder
-every :day, at: (ENV["FIRST_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "02:05"), roles: [:db] do
+every :day, at: (ENV["FIRST_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "02:30"), roles: [:db] do
   rake "email:renew_reminder:first:send"
 end
 
@@ -88,6 +82,12 @@ end
 # in 14 days time, it will generate and send the second email reminder
 every :day, at: (ENV["SECOND_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "04:05"), roles: [:db] do
   rake "email:renew_reminder:second:send"
+end
+
+# This is the transient registration cleanup job which will delete all records
+# that are more than 30 days old, as well as associated records
+every :day, at: (ENV["CLEANUP_TRANSIENT_REGISTRATIONS_RUN_TIME"] || "04:30"), roles: [:db] do
+  rake "cleanup:transient_registrations"
 end
 
 # This is the final renewal text reminder job. For each registration expiring
