@@ -7,21 +7,20 @@ RSpec.describe "Cleanup task", type: :rake do
 
   describe "cleanup:transient_registrations" do
     let(:old_registration) { create(:new_registration, created_at: 31.days.ago) }
-    let(:env_limit) { "TRANSIENT_REGISTRATION_CLEANUP_LIMIT" }
+    let(:env_limit) { "1" }
 
     before do
       old_registration
       create(:new_registration, created_at: 31.days.ago)
       create(:new_registration)
+      stub_const("ENV", ENV.to_hash.merge("TRANSIENT_REGISTRATION_CLEANUP_LIMIT" => env_limit))
     end
 
     after do
       Rake::Task["cleanup:transient_registrations"].reenable
-      ENV.delete(env_limit)
     end
 
     it "deletes only up to the environment variable limit number of old transient registrations" do
-      ENV[env_limit] = "1"
       expect do
         Rake::Task["cleanup:transient_registrations"].invoke
       end.to change {
@@ -32,7 +31,6 @@ RSpec.describe "Cleanup task", type: :rake do
     end
 
     it "runs without error" do
-      ENV[env_limit] = "100000" # or any other default or test value
       expect do
         Rake::Task["cleanup:transient_registrations"].invoke
       end.not_to raise_error
