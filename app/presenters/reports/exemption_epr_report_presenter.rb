@@ -58,6 +58,8 @@ module Reports
     end
 
     def site_ngr
+      return nil if registration.site_address.present?
+
       registration.site_address&.grid_reference
     end
 

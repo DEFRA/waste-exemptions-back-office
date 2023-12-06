@@ -212,18 +212,20 @@ module Reports
     end
 
     describe "#site_ngr" do
-      let(:site_address) { create(:address, :site, grid_reference: "SB1234") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      context "when the registration has a site address" do
+        let(:site_address) { create(:address, :site, grid_reference: "SB1234") }
+        let(:registration) { create(:registration, addresses: [site_address]) }
 
-      it "returns the operator address grid reference" do
-        expect(presenter.site_ngr).to eq("SB1234")
+        it "returns nil" do
+          expect(presenter.site_ngr).to be_nil
+        end
       end
 
       context "when the registration has no site address" do
         let(:registration) { create(:registration, addresses: []) }
 
-        it "returns nil" do
-          expect(presenter.site_ngr).to be_nil
+        it "returns the operator address grid reference" do
+          expect(presenter.site_ngr).to eq("SB1234")
         end
       end
     end
