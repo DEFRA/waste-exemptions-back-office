@@ -2,10 +2,36 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.8.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.9.0...HEAD)
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `86ca75c` to `dafb546` [\#1215](https://github.com/DEFRA/waste-exemptions-back-office/pull/1215) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump net-imap from 0.4.6 to 0.4.7 [\#1214](https://github.com/DEFRA/waste-exemptions-back-office/pull/1214) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `2bf2e85` to `86ca75c` [\#1213](https://github.com/DEFRA/waste-exemptions-back-office/pull/1213) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `8d83d6f` to `2bf2e85` [\#1212](https://github.com/DEFRA/waste-exemptions-back-office/pull/1212) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `81856b1` to `3ae21e7` [\#1211](https://github.com/DEFRA/waste-exemptions-back-office/pull/1211) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump factory\_bot\_rails from 6.2.0 to 6.4.2 [\#1210](https://github.com/DEFRA/waste-exemptions-back-office/pull/1210) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump net-imap from 0.4.5 to 0.4.6 [\#1209](https://github.com/DEFRA/waste-exemptions-back-office/pull/1209) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump spring from 4.1.2 to 4.1.3 [\#1208](https://github.com/DEFRA/waste-exemptions-back-office/pull/1208) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rspec-rails from 6.0.3 to 6.1.0 [\#1207](https://github.com/DEFRA/waste-exemptions-back-office/pull/1207) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `3115fc5` to `81856b1` [\#1206](https://github.com/DEFRA/waste-exemptions-back-office/pull/1206) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rails from 2.22.1 to 2.22.2 [\#1204](https://github.com/DEFRA/waste-exemptions-back-office/pull/1204) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump bullet from 7.1.3 to 7.1.4 [\#1203](https://github.com/DEFRA/waste-exemptions-back-office/pull/1203) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `285d470` to `3115fc5` [\#1202](https://github.com/DEFRA/waste-exemptions-back-office/pull/1202) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump spring from 4.1.1 to 4.1.2 [\#1199](https://github.com/DEFRA/waste-exemptions-back-office/pull/1199) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump net-imap from 0.4.2 to 0.4.5 [\#1197](https://github.com/DEFRA/waste-exemptions-back-office/pull/1197) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rails from 2.21.2 to 2.22.1 [\#1184](https://github.com/DEFRA/waste-exemptions-back-office/pull/1184) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump devise\_invitable from 2.0.8 to 2.0.9 [\#1183](https://github.com/DEFRA/waste-exemptions-back-office/pull/1183) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rspec from 2.24.1 to 2.25.0 [\#1182](https://github.com/DEFRA/waste-exemptions-back-office/pull/1182) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.9.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.9.0) (2023-11-13)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.8.0...v2.9.0)
 
 **Implemented enhancements:**
 
+- RUBY 2789 wex transient registrations clean up task performance issue [\#1194](https://github.com/DEFRA/waste-exemptions-back-office/pull/1194) ([jjromeo](https://github.com/jjromeo))
 - RUBY 2742 wex bo add reset transient registration action to registrations [\#1180](https://github.com/DEFRA/waste-exemptions-back-office/pull/1180) ([jjromeo](https://github.com/jjromeo))
 - Rake task to rename site\_address areas [\#1168](https://github.com/DEFRA/waste-exemptions-back-office/pull/1168) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 
@@ -16,8 +42,10 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1196](https://github.com/DEFRA/waste-exemptions-back-office/pull/1196) ([jjromeo](https://github.com/jjromeo))
 - Transient registration cleanup schedule update [\#1195](https://github.com/DEFRA/waste-exemptions-back-office/pull/1195) ([timstone](https://github.com/timstone))
-- RUBY 2789 wex transient registrations clean up task performance issue [\#1194](https://github.com/DEFRA/waste-exemptions-back-office/pull/1194) ([jjromeo](https://github.com/jjromeo))
+- Bump bullet from 7.1.2 to 7.1.3 [\#1191](https://github.com/DEFRA/waste-exemptions-back-office/pull/1191) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump faker from 3.2.1 to 3.2.2 [\#1189](https://github.com/DEFRA/waste-exemptions-back-office/pull/1189) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump paper\_trail from 15.0.0 to 15.1.0 [\#1179](https://github.com/DEFRA/waste-exemptions-back-office/pull/1179) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `b56589a` to `13bed43` [\#1178](https://github.com/DEFRA/waste-exemptions-back-office/pull/1178) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump net-imap from 0.4.1 to 0.4.2 [\#1177](https://github.com/DEFRA/waste-exemptions-back-office/pull/1177) ([dependabot[bot]](https://github.com/apps/dependabot))
