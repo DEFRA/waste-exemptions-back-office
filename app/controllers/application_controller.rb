@@ -59,4 +59,12 @@ class ApplicationController < ActionController::Base
 
     authorize! :create, WasteExemptionsEngine::Registration.new
   end
+
+  def default_url_options(*_args)
+    super.merge(
+      term: params[:term],
+      filter: params[:filter],
+      page: params[:page]
+    )
+  end
 end

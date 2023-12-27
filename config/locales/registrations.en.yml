@@ -3,3 +3,7 @@ en:
     show:
       title: "Registration details"
       heading: "Registration details for %{reference}"
+  waste_exemptions_engine:
+    shared:
+      back:
+        back_link: Back to search results
