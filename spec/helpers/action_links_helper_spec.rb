@@ -12,6 +12,11 @@ RSpec.describe ActionLinksHelper do
       it "returns the correct path" do
         expect(helper.view_link_for(resource)).to eq(registration_path(resource.reference))
       end
+
+      it "returns the correct path with search terms included" do
+        search_terms = { term: "foo", filter: "bar" }
+        expect(helper.view_link_for(resource, search_terms)).to eq(registration_path(reference: resource.reference, term: search_terms[:term], filter: search_terms[:filter]))
+      end
     end
 
     context "when the resource is a new_registration" do
@@ -19,6 +24,11 @@ RSpec.describe ActionLinksHelper do
 
       it "returns the correct path" do
         expect(helper.view_link_for(resource)).to eq(new_registration_path(resource.id))
+      end
+
+      it "returns the correct path with search terms included" do
+        search_terms = { term: "foo", filter: "bar" }
+        expect(helper.view_link_for(resource, search_terms)).to eq(new_registration_path(id: resource.id, term: search_terms[:term], filter: search_terms[:filter]))
       end
     end
 
@@ -98,6 +108,21 @@ RSpec.describe ActionLinksHelper do
 
       it "returns the correct path" do
         expect(helper.edit_expiry_date_link_for(resource)).to eq("#")
+      end
+    end
+  end
+
+  describe "root_link_with_search_terms" do
+    context "when search terms are present" do
+      it "returns the correct path" do
+        search_terms = { term: "foo", filter: "bar" }
+        expect(helper.root_link_with_search_terms(search_terms)).to eq(root_path(term: search_terms[:term], filter: search_terms[:filter]))
+      end
+    end
+
+    context "when search terms are not present" do
+      it "returns the correct path" do
+        expect(helper.root_link_with_search_terms).to eq(root_path)
       end
     end
   end

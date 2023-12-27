@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module ActionLinksHelper
-  def view_link_for(resource)
+  def view_link_for(resource, search_terms = {})
     case resource
     when WasteExemptionsEngine::Registration
-      registration_path(resource.reference)
+      registration_path(reference: resource.reference, term: search_terms&.dig(:term),
+                        filter: search_terms&.dig(:filter))
     when WasteExemptionsEngine::NewRegistration
-      new_registration_path(resource.id)
+      new_registration_path(id: resource.id, term: search_terms&.dig(:term), filter: search_terms&.dig(:filter))
     else
       "#"
     end
@@ -39,6 +40,10 @@ module ActionLinksHelper
     return "#" unless resource.is_a?(WasteExemptionsEngine::Registration)
 
     Rails.application.routes.url_helpers.reset_transient_registrations_path(resource.reference)
+  end
+
+  def root_link_with_search_terms(search_terms = {})
+    root_path(term: search_terms&.dig(:term), filter: search_terms&.dig(:filter))
   end
 
   def display_resume_link_for?(resource)

@@ -329,7 +329,7 @@
             <%= t(".labels.renewed_from") %>
           </p>
           <p class="govuk-body">
-            <%= link_to resource.referring_registration.reference, view_link_for(resource.referring_registration), id: "view_#{resource.referring_registration.reference}" %>
+            <%= link_to resource.referring_registration.reference, view_link_for(resource.referring_registration, params), id: "view_#{resource.referring_registration.reference}" %>
           </p>
         <% end %>
       </div>

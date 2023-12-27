@@ -74,7 +74,7 @@
     </h2>
 
     <p class="govuk-body">
-      <%= link_to view_link_for(result), id: "view_#{result.reference}" do %>
+      <%= link_to view_link_for(result, params), id: "view_#{result.reference}" do %>
         <%= t(".actions.view.link_text") %>
         <span class="govuk-visually-hidden">
           <%= t(".actions.view.visually_hidden_text",
