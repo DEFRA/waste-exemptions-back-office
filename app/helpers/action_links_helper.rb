@@ -4,10 +4,19 @@ module ActionLinksHelper
   def view_link_for(resource, search_terms = {})
     case resource
     when WasteExemptionsEngine::Registration
-      registration_path(reference: resource.reference, term: search_terms&.dig(:term),
-                        filter: search_terms&.dig(:filter))
+      registration_path(
+        reference: resource.reference,
+        term: search_terms&.dig(:term),
+        filter: search_terms&.dig(:filter),
+        page: search_terms&.dig(:page)
+      )
     when WasteExemptionsEngine::NewRegistration
-      new_registration_path(id: resource.id, term: search_terms&.dig(:term), filter: search_terms&.dig(:filter))
+      new_registration_path(
+        id: resource.id,
+        term: search_terms&.dig(:term),
+        filter: search_terms&.dig(:filter),
+        page: search_terms&.dig(:page)
+      )
     else
       "#"
     end
@@ -43,7 +52,11 @@ module ActionLinksHelper
   end
 
   def root_link_with_search_terms(search_terms = {})
-    root_path(term: search_terms&.dig(:term), filter: search_terms&.dig(:filter))
+    root_path(
+      term: search_terms&.dig(:term),
+      filter: search_terms&.dig(:filter),
+      page: search_terms&.dig(:page)
+    )
   end
 
   def display_resume_link_for?(resource)

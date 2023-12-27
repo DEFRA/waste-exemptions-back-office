@@ -3,3 +3,4 @@ en:
     show:
       title: "Registration details"
       heading: "Registration details for %{reference}"
+      back_link: "Back to search results"

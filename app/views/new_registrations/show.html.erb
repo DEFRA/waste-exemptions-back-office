@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render("waste_exemptions_engine/shared/back", back_path: root_link_with_search_terms(params)) %>
+    <%= link_to(t(".back_link"), root_link_with_search_terms(params), class: "govuk-back-link") %>
 
     <h1 class="govuk-heading-l">
       <%= t(".heading") %>
