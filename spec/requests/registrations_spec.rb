@@ -17,6 +17,16 @@ RSpec.describe "Registrations" do
         expect(response).to render_template(:show)
         expect(response.body).to include(registration.reference)
       end
+
+      it "includes the correct back link" do
+        search_terms = { term: "foo", filter: "registrations" }
+        get "/registrations/#{registration.reference}", params: search_terms
+
+        expect(response.body).to include("Back")
+
+        root_path_with_search_terms = root_path(term: search_terms[:term], filter: search_terms[:filter]).gsub("&", "&amp;")
+        expect(response.body).to include(root_path_with_search_terms)
+      end
     end
 
     context "when a valid user is not signed in" do
