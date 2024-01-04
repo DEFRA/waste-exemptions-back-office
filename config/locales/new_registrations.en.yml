@@ -3,3 +3,4 @@ en:
     show:
       title: "In-progress registration details"
       heading: "In-progress registration details"
+      back_link_label: "Back to search results"

@@ -44,14 +44,22 @@ RSpec.describe "Dashboards" do
         let(:registration) { create(:registration) }
         let(:new_registration) { create(:new_registration) }
         let(:results) { Kaminari.paginate_array([registration, new_registration]).page(1) }
+        let(:search_terms) { { term: "foo" } }
 
         it "lists the results" do
-          get "/", params: { term: "foo" }
+          get "/", params: search_terms
 
           expect(response.body).to include(registration.reference)
 
           # a new_registration does not have a reference
           expect(response.body).to include("not yet submitted")
+        end
+
+        it "persists search terms in the registration link" do
+          get "/", params: search_terms
+
+          reg_path = registration_path(reference: registration.reference, term: search_terms[:term])
+          expect(response.body).to include(reg_path)
         end
       end
     end
