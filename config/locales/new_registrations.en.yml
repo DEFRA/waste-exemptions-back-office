@@ -3,7 +3,4 @@ en:
     show:
       title: "In-progress registration details"
       heading: "In-progress registration details"
-  waste_exemptions_engine:
-    shared:
-      back:
-        back_link: Back to search results
+      back_link_label: "Back to search results"
