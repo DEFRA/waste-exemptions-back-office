@@ -6,9 +6,7 @@ namespace :cleanup do
     limit = ENV.fetch("TRANSIENT_REGISTRATION_CLEANUP_LIMIT", 100_000).to_i
     TransientRegistrationCleanupService.run(limit: limit)
   end
-end
 
-namespace :cleanup do
   desc "Remove expired registrations older than 7 years from the database"
   task remove_expired_registrations: :environment do
     ExpiredRegistrationCleanupService.run

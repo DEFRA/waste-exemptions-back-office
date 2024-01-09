@@ -12,14 +12,14 @@ namespace :test do
 
     puts magic_link_url
   end
+end
 
-  def magic_link_url
-    Rails.configuration.front_office_url +
-      WasteExemptionsEngine::Engine.routes.url_helpers.renew_path(token: magic_link_token)
-  end
+def magic_link_url
+  Rails.configuration.front_office_url +
+    WasteExemptionsEngine::Engine.routes.url_helpers.renew_path(token: magic_link_token)
+end
 
-  def magic_link_token
-    @registration.regenerate_renew_token if @registration.renew_token.nil?
-    @registration.renew_token
-  end
+def magic_link_token
+  @registration.regenerate_renew_token if @registration.renew_token.nil?
+  @registration.renew_token
 end
