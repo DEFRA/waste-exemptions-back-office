@@ -19,7 +19,7 @@ module ActionLinksHelper
     resource.update(assistance_mode: "partial") if resource.assistance_mode.blank?
 
     token = resource.token
-    path = "new_#{resource.workflow_state}_path".to_sym
+    path = :"new_#{resource.workflow_state}_path"
     WasteExemptionsEngine::Engine.routes.url_helpers.public_send(path, token)
   end
 
