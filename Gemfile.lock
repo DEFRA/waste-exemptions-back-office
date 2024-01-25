@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 3645aabefa6d28ba740ab4f44ccc1e521a2c9237
+  revision: 04dc6f64d1de9773584a659d687a8a74af5fb89b
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -337,7 +337,7 @@ GEM
       rake (>= 0.8.1)
     pg (1.5.4)
     pgreset (0.4)
-    phonelib (0.8.6)
+    phonelib (0.8.7)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
