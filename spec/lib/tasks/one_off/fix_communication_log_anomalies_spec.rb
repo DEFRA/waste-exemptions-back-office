@@ -25,22 +25,38 @@ RSpec.describe "one_off:fix_communication_log_anomalies", type: :rake do
   it { expect { run_rake_task }.not_to raise_error }
 
   it {
-    expect { run_rake_task }
-      .to change {
-            WasteExemptionsEngine::CommunicationLog.where(
-              template_id: notify_confirmation_letter_id,
-              message_type: "email"
-            ).count
-          }.to 0
+    expect { run_rake_task }.to change {
+                                  WasteExemptionsEngine::CommunicationLog.where(
+                                    template_id: notify_confirmation_letter_id,
+                                    message_type: "email"
+                                  ).count
+                                }.to 0
   }
 
   it {
-    expect { run_rake_task }
-      .to change {
-            WasteExemptionsEngine::CommunicationLog.where(
-              template_id: registration_edit_link_email_id,
-              template_label: "Update your contact details and deregister your waste exemptions"
-            ).count
-          }.to 0
+    expect { run_rake_task }.to change {
+                                  WasteExemptionsEngine::CommunicationLog.where(
+                                    template_id: notify_confirmation_letter_id,
+                                    message_type: "letter"
+                                  ).count
+                                }.to 2
+  }
+
+  it {
+    expect { run_rake_task }.to change {
+                                  WasteExemptionsEngine::CommunicationLog.where(
+                                    template_id: registration_edit_link_email_id,
+                                    template_label: "Update your contact details and deregister your waste exemptions"
+                                  ).count
+                                }.to 0
+  }
+
+  it {
+    expect { run_rake_task }.to change {
+                                  WasteExemptionsEngine::CommunicationLog.where(
+                                    template_id: registration_edit_link_email_id,
+                                    template_label: "Registration edit link email"
+                                  ).count
+                                }.to 2
   }
 end
