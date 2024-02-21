@@ -138,6 +138,7 @@ GEM
     aws-sigv4 (1.8.0)
       aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.20)
+    bigdecimal (3.1.6)
     bindex (0.8.1)
     builder (3.2.4)
     bullet (7.1.6)
@@ -161,7 +162,8 @@ GEM
     console (1.23.3)
       fiber-annotation
       fiber-local
-    crack (0.4.5)
+    crack (1.0.0)
+      bigdecimal
       rexml
     crass (1.0.6)
     database_cleaner (2.0.2)
@@ -510,7 +512,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webmock (3.19.1)
+    webmock (3.22.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
