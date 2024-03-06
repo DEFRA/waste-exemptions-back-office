@@ -69,7 +69,7 @@ gem "sucker_punch", "~> 3.1"
 # Use the waste exemptions engine for the user journey
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "main"
+    branch: "RUBY-2885-wex-implement-analytics-metrics"
 
 # Use the Defra Ruby Features gem to allow users with the correct permissions to
 # manage feature toggle (create / update / delete) from the back-office.

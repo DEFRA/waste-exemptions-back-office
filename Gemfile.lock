@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 4a07d710fb0776547fa2bbe00e6c03188b1b3d21
-  branch: main
+  revision: e82043e04e8d304fbecd216226422184b55df8f0
+  branch: RUBY-2885-wex-implement-analytics-metrics
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -297,7 +297,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.5.2)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2023.1205)
+    mime-types-data (3.2024.0305)
     mini_mime (1.1.5)
     mini_portile2 (2.8.5)
     minitest (5.21.2)
