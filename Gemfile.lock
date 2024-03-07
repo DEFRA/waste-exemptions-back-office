@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: e82043e04e8d304fbecd216226422184b55df8f0
+  revision: 86881e7e2a4a23dfd99dcfdf3a2ef2b0050e39af
   branch: RUBY-2885-wex-implement-analytics-metrics
   specs:
     waste_exemptions_engine (0.1.0)
