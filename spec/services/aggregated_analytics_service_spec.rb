@@ -4,13 +4,6 @@ require "rails_helper"
 
 module Analytics
   RSpec.describe AggregatedAnalyticsService do
-
-    # rubocop:disable RSpec/BeforeAfterAll
-    before(:all) do
-      puts FactoryBot.factories.map(&:name)
-    end
-    # rubocop:enable RSpec/BeforeAfterAll
-
     describe ".run" do
       subject(:result) { described_class.run(start_date: start_date, end_date: end_date) }
 
