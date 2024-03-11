@@ -69,9 +69,9 @@ RSpec.describe RefreshCompaniesHouseNameService do
       end
     end
   end
+
+  def registration_data(registration)
+    WasteExemptionsEngine::Registration.find_by(reference: registration.reference)
+  end
 end
 # rubocop:enable RSpec/AnyInstance
-
-def registration_data(registration)
-  WasteExemptionsEngine::Registration.find_by(reference: registration.reference)
-end

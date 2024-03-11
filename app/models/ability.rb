@@ -34,6 +34,7 @@ class Ability
     can :update_expiry_date, WasteExemptionsEngine::Registration
     can :deregister, WasteExemptionsEngine::Registration, &:active?
     can :deregister, WasteExemptionsEngine::RegistrationExemption, &:active?
+    can :view_analytics, :all
 
     permissions_for_admin_agent
   end
@@ -65,5 +66,6 @@ class Ability
     can :manage, WasteExemptionsEngine::FeatureToggle
     can :read, Reports::DefraQuarterlyStatsService
     can :reset_transient_registrations, WasteExemptionsEngine::Registration
+    can :view_analytics, :all
   end
 end
