@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 5976f8c67dab59a6f9911ea5288421735667317b
+  revision: b59b6f02127f32c60af545e6abd2284cb6f3899b
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -262,7 +262,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    i18n (1.14.1)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     io-event (1.4.0)
     jmespath (1.6.2)
