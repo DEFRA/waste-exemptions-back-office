@@ -66,10 +66,10 @@ gem "paper_trail"
 # Used for handling background processes
 gem "sucker_punch", "~> 3.1"
 
-# Use the waste exemptions engine for the user journey
+# Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "main"
+    branch: "RUBY-2976-wex-add-unsubscribe-functionality-to-the-renewal-reminder-emails-in-wex"
 
 # Use the Defra Ruby Features gem to allow users with the correct permissions to
 # manage feature toggle (create / update / delete) from the back-office.
