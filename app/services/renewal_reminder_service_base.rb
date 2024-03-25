@@ -14,7 +14,7 @@ class RenewalReminderServiceBase < WasteExemptionsEngine::BaseService
       registration.communication_logs.create(
         message_type: "email",
         template_id: "N/A",
-        template_label: "USER OPTED OUT - NO EMAIL SENT",
+        template_label: "USER OPTED OUT - NO RENEWAL REMINDER EMAIL SENT",
         sent_to: registration.contact_email
       )
     end

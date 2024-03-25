@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 3f56b7127405fedbdbff930ca0be55e8f906de7f
-  branch: RUBY-2976-wex-add-unsubscribe-functionality-to-the-renewal-reminder-emails-in-wex
+  revision: 223bdccc5e4b631007505fc414b1530ff3dac517
+  branch: main
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
