@@ -94,5 +94,28 @@ RSpec.describe FirstRenewalReminderService do
 
       expect(FirstRenewalReminderEmailService).not_to have_received(:run)
     end
+
+    it "does not send emails to registrations with reminder_opt_in set to false" do
+      registration_with_opt_out = create(
+        :registration,
+        reminder_opt_in: false,
+        registration_exemptions: [
+          build(:registration_exemption, :active, expires_on: 4.weeks.from_now.to_date)
+        ]
+      )
+
+      registration_with_opt_in = create(
+        :registration,
+        reminder_opt_in: true,
+        registration_exemptions: [
+          build(:registration_exemption, :active, expires_on: 4.weeks.from_now.to_date)
+        ]
+      )
+
+      described_class.run
+
+      expect(FirstRenewalReminderEmailService).not_to have_received(:run).with(registration: registration_with_opt_out)
+      expect(FirstRenewalReminderEmailService).to have_received(:run).with(registration: registration_with_opt_in)
+    end
   end
 end
