@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 223bdccc5e4b631007505fc414b1530ff3dac517
+  revision: 7b5b74723848091edc546e12f6531df81912238b
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -316,7 +316,7 @@ GEM
     net-smtp (0.4.0.1)
       net-protocol
     netrc (0.11.0)
-    nio4r (2.7.0)
+    nio4r (2.7.1)
     nokogiri (1.16.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
