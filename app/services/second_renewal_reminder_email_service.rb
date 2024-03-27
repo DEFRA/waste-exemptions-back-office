@@ -17,6 +17,6 @@ class SecondRenewalReminderEmailService < RenewalReminderEmailService
   private
 
   def template
-    "80585fc6-9c65-4909-8cb4-6888fa4427c8"
+    "f308a8a9-0358-41e1-b633-ea4044ad9580"
   end
 end
