@@ -15,4 +15,13 @@ namespace :one_off do
       template_label: "Update your contact details and deregister your waste exemptions"
     ).update(template_label: "Registration edit link email")
   end
+
+  # https://eaflood.atlassian.net/browse/RUBY-2954
+  desc "Fix incorrect template_label for first renewal reminder email"
+  task fix_communication_log_first_renewal_template_label: :environment do
+    WasteExemptionsEngine::CommunicationLog.where(
+      template_id: "1ef273a9-b5e5-4a48-a343-cf6c774b8211",
+      template_label: "Final renewal reminder email"
+    ).update(template_label: "First renewal reminder email")
+  end
 end
