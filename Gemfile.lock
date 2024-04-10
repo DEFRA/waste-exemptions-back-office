@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 7b5b74723848091edc546e12f6531df81912238b
+  revision: 944365023db65c51a54f1b1b5d9c5a5f3f195ab6
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -395,7 +395,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
-    rake (13.1.0)
+    rake (13.2.1)
     rbtree3 (0.7.1)
     regexp_parser (2.9.0)
     request_store (1.6.0)
