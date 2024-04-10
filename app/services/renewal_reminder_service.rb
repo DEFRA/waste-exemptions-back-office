@@ -19,7 +19,8 @@ class RenewalReminderService < WasteExemptionsEngine::BaseService
       expiry_date: expiry_date,
       magic_link_url: magic_link_url,
       reference: @registration.reference,
-      site_location: site_location
+      site_location: site_location,
+      unsubscribe_link: unsubscribe_link
     }
   end
 
@@ -57,5 +58,9 @@ class RenewalReminderService < WasteExemptionsEngine::BaseService
     else
       displayable_address(address).join(", ")
     end
+  end
+
+  def unsubscribe_link
+    WasteExemptionsEngine::UnsubscribeLinkService.run(registration: @registration)
   end
 end
