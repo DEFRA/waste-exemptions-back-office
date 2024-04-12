@@ -143,6 +143,4 @@ group :test do
 
   # Use Bullet to find unoptimised queries
   gem "bullet"
-
-  gem "wicked_pdf"
 end
