@@ -10,10 +10,12 @@ RSpec.describe "one_off:fix_incomplete_user_journeys", type: :rake do
 
   let(:rake_task) { Rake::Task["one_off:fix_incomplete_user_journeys"] }
 
-  let(:incomplete_journey) { create(:user_journey, completed_route: nil) }
-  let(:visited_pages) { %w[start_form front_office_edit_form front_office_edit_complete_no_changes_form] }
-  let(:journey_completed_and_marked_as_complete) { create(:user_journey, :started_digital, :completed_assisted_digital, visited_pages:, created_at: 2.days.ago, completed_at: 1.day.ago) }
-  let(:journey_completed_and_marked_as_incomplete) { create(:user_journey, :started_digital, completed_route: nil, visited_pages:, created_at: 2.days.ago) }
+  let(:pages_incomplete_journey) { %w[start_form location_form registration_number_form] }
+  let(:pages_complete_journey) { %w[start_form location_form registration_number_form registration_complete_form] }
+
+  let(:incomplete_journey) { create(:user_journey, :started_digital, completed_route: nil, visited_pages: pages_incomplete_journey) }
+  let(:journey_completed_and_marked_as_complete) { create(:user_journey, :started_digital, :completed_assisted_digital, visited_pages: pages_complete_journey) }
+  let(:journey_completed_and_marked_as_incomplete) { create(:user_journey, :started_digital, completed_route: nil, visited_pages: pages_complete_journey) }
 
   # By default Rails prevents multiple invocations of the same Rake task in succession
   after { rake_task.reenable }
