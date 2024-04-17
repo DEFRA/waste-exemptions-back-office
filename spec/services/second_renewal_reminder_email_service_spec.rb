@@ -7,6 +7,10 @@ RSpec.describe SecondRenewalReminderEmailService do
     let(:registration) { create(:registration, :site_uses_address) }
     let(:run_service) { described_class.run(registration: registration) }
 
+    # rubocop:disable Rails/SkipsModelValidations
+    before { registration.update_column(:unsubscribe_token, nil) }
+    # rubocop:enable Rails/SkipsModelValidations
+
     it "sends an email" do
       VCR.use_cassette("second_renewal_reminder_email") do
 
@@ -17,6 +21,8 @@ RSpec.describe SecondRenewalReminderEmailService do
         expect(response.content["subject"]).to eq("Renew your waste exemptions online now")
       end
     end
+
+    it_behaves_like "opted out of renewal reminder"
 
     it_behaves_like "CanHaveCommunicationLog" do
       let(:service_class) { described_class }
