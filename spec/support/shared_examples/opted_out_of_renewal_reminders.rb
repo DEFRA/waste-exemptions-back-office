@@ -14,8 +14,8 @@ RSpec.shared_examples "opted out of renewal reminder" do
     log_instance = WasteExemptionsEngine::CommunicationLog.first
 
     expect(log_instance.message_type).to eq "email"
-    expect(log_instance.template_id).to eq "N/A"
-    expect(log_instance.template_label).to eq "USER OPTED OUT - NO RENEWAL REMINDER EMAIL SENT"
+    expect(log_instance.template_id).to be_nil
+    expect(log_instance.template_label).to eq "User is opted out - No renewal reminder email sent"
     expect(log_instance.sent_to).to eq registration.contact_email
   end
 end

@@ -27,8 +27,8 @@ class RenewalReminderEmailService < RenewalReminderService
   def create_opted_out_log(registration:)
     registration.communication_logs.create(
       message_type: "email",
-      template_id: "N/A",
-      template_label: "USER OPTED OUT - NO RENEWAL REMINDER EMAIL SENT",
+      template_id: nil,
+      template_label: "User is opted out - No renewal reminder email sent",
       sent_to: registration.contact_email
     )
   end
