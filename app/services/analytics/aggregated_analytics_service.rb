@@ -66,8 +66,11 @@ module Analytics
     end
 
     def journey_base_scope
-      WasteExemptionsEngine::Analytics::UserJourney.only_types(%w[NewRegistration RenewingRegistration])
-                                                   .date_range(start_date, end_date)
+      WasteExemptionsEngine::Analytics::UserJourney.only_types(%w[
+                                                                 NewRegistration
+                                                                 RenewingRegistration
+                                                                 FrontOfficeEditRegistration
+                                                               ]).date_range(start_date, end_date)
     end
 
     def total_journeys_abandoned
