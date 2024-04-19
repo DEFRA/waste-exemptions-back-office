@@ -252,7 +252,7 @@ GEM
       rake (>= 10.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk_design_system_formbuilder (5.3.1)
+    govuk_design_system_formbuilder (5.3.2)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -336,7 +336,7 @@ GEM
     parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
-    passenger (5.3.7)
+    passenger (6.0.20)
       rack
       rake (>= 0.8.1)
     pg (1.5.6)
@@ -549,8 +549,8 @@ DEPENDENCIES
   cancancan (~> 3.5)
   capybara
   database_cleaner
-  defra_ruby_aws (~> 0.4)
-  defra_ruby_features (~> 0.1)
+  defra_ruby_aws (~> 0.5)
+  defra_ruby_features (~> 0.2)
   defra_ruby_style
   defra_ruby_template
   devise
@@ -568,12 +568,11 @@ DEPENDENCIES
   net-smtp
   notifications-ruby-client
   paper_trail
-  passenger (~> 5.0, >= 5.0.30)
+  passenger (~> 6.0, >= 5.0.30)
   pg
   pgreset
   poltergeist
   pry-byebug
-  rails (~> 7.0)
   rails-controller-testing
   rspec-rails
   rubocop-rails
@@ -581,17 +580,17 @@ DEPENDENCIES
   rubyzip
   sassc-rails
   secure_headers (~> 6.5)
-  simplecov (~> 0.17.1)
+  simplecov
   spring
   spring-commands-rspec
-  sucker_punch (~> 3.1)
+  sucker_punch (~> 3.2)
   timecop
   turbolinks
   uglifier (>= 4.2)
   vcr
   waste_exemptions_engine!
   web-console
-  webmock (~> 3.18)
+  webmock
   webrick
   whenever (~> 1.0)
   whenever-test
