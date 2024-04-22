@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  WasteExemptionsEngine::Address.address_types
+
   factory :address, class: "WasteExemptionsEngine::Address" do
     sequence :postcode do |n|
       "BS#{n}#{n}AA"
@@ -29,11 +31,11 @@ FactoryBot.define do
     address_type { 0 }
 
     trait :operator do
-      address_type { :operator }
+      address_type { 1 }
     end
 
     trait :contact do
-      address_type { :contact }
+      address_type { 2 }
     end
 
     trait :with_grid_reference do
@@ -43,7 +45,7 @@ FactoryBot.define do
     end
 
     trait :site do
-      address_type { :site }
+      address_type { 3 }
       mode { :auto }
       description { "The waste is stored in an out-building next to the barn." }
       grid_reference { "ST 58337 72855" }
@@ -66,17 +68,17 @@ FactoryBot.define do
     end
 
     trait :site_uses_address do
-      address_type { :site }
+      address_type { 3 }
       mode { :lookup }
     end
 
     trait :operator_uses_address do
-      address_type { :operator }
+      address_type { 1 }
       mode { :lookup }
     end
 
     trait :contact_uses_address do
-      address_type { :contact }
+      address_type { 2 }
       mode { :lookup }
     end
 

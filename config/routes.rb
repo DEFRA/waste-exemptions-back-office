@@ -100,6 +100,9 @@ Rails.application.routes.draw do
       to: "quarterly_stats#show",
       as: "quarterly_stats"
 
+  resources :analytics,
+            only: %i[index]
+
   get "/testing/create_registration/:expiry_date",
       to: "testing#create_registration"
 

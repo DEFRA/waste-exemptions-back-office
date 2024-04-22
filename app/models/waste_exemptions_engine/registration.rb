@@ -33,6 +33,8 @@ module WasteExemptionsEngine
       joins(:addresses).merge(Address.site.not_nccc)
     }
 
+    scope :opted_in_to_renewal_emails, -> { where(reminder_opt_in: true) }
+
     def active?
       state == "active"
     end

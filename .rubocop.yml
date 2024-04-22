@@ -8,6 +8,7 @@ require:
   - rubocop-factory_bot
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 RSpec/DescribeClass:
   Exclude:
