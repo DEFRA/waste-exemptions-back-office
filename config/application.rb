@@ -118,10 +118,10 @@ module WasteExemptionsBackOffice
     end
 
     def parse_secrets(paths)
-      paths.each_with_object(Hash.new) do |path, all_secrets|
+      paths.each_with_object({}) do |path, all_secrets|
         require "erb"
 
-        secrets = YAML.load(ERB.new(IO.read(path)).result, aliases: true) || {}
+        secrets = YAML.load(ERB.new(File.read(path)).result, aliases: true) || {}
         all_secrets.merge!(secrets["shared"].deep_symbolize_keys) if secrets["shared"]
         all_secrets.merge!(secrets[Rails.env].deep_symbolize_keys) if secrets[Rails.env]
       end

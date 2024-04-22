@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  address_types = WasteExemptionsEngine::Address.address_types
+  WasteExemptionsEngine::Address.address_types
 
   factory :address, class: "WasteExemptionsEngine::Address" do
     sequence :postcode do |n|
