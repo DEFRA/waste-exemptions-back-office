@@ -18,10 +18,8 @@ class NotifyRenewalLetterPresenter < BasePresenter
   end
 
   def exemptions_text
-    items = []
-
-    listable_exemptions.each do |exemption|
-      items << exemption_description(exemption)
+    items = listable_exemptions.map do |exemption|
+      exemption_description(exemption)
     end
 
     items << unlisted_exemptions_text if unlisted_exemption_count.positive?
@@ -94,10 +92,8 @@ class NotifyRenewalLetterPresenter < BasePresenter
   end
 
   def partners_text
-    partners_list = []
-
-    people.each do |partner|
-      partners_list << "#{partner.first_name} #{partner.last_name}"
+    partners_list = people.map do |partner|
+      "#{partner.first_name} #{partner.last_name}"
     end
 
     label_and_value("partners_label", partners_list.join(", "))
