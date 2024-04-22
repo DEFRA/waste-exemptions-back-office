@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe RenewalReminderTextService do
   let(:notifications_client_instance) { instance_double(Notifications::Client) }
-  let(:registration) { build(:registration, :with_valid_mobile_phone_number) }
+  let(:registration) { create(:registration, :with_valid_mobile_phone_number) }
   let(:renewal_reminder_text_service) { described_class.new }
 
   before do
