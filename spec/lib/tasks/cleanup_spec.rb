@@ -13,7 +13,7 @@ RSpec.describe "Cleanup task", type: :rake do
       old_registration
       create(:new_registration, created_at: 31.days.ago)
       create(:new_registration)
-      stub_const("ENV", ENV.to_hash.merge("TRANSIENT_REGISTRATION_CLEANUP_LIMIT" => env_limit))
+      allow(ENV).to receive(:fetch).with("TRANSIENT_REGISTRATION_CLEANUP_LIMIT", any_args).and_return(env_limit)
     end
 
     after do

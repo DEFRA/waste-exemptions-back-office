@@ -25,7 +25,7 @@ Bundler.require(*Rails.groups)
 
 module WasteExemptionsBackOffice
   class Application < Rails::Application
-    config.load_defaults 6.1
+    config.load_defaults 7.1
     config.autoloader = :classic
     config.active_job.queue_adapter = :sucker_punch
 
@@ -107,7 +107,24 @@ module WasteExemptionsBackOffice
     # Add custom delivery method for emails
     ActionMailer::Base.add_delivery_method(:notify_mail, NotifyMail)
 
-    # For Rails 7: https://guides.rubyonrails.org/active_record_multiple_databases.html#migrate-to-the-new-connection-handling
-    config.active_record.legacy_connection_handling = false
+    # Rails secrets is deprecated in favour of Rails credentials, but that
+    # doesn't work for us so we want to mimic Rails secrets functionality:
+    def self.secrets
+      @secrets ||= begin
+        secrets = ActiveSupport::OrderedOptions.new
+        files = config.paths["config/secrets"].existent
+        secrets.merge! parse_secrets(files)
+      end
+    end
+
+    def parse_secrets(paths)
+      paths.each_with_object({}) do |path, all_secrets|
+        require "erb"
+
+        secrets = YAML.load(ERB.new(File.read(path)).result, aliases: true) || {}
+        all_secrets.merge!(secrets["shared"].deep_symbolize_keys) if secrets["shared"]
+        all_secrets.merge!(secrets[Rails.env].deep_symbolize_keys) if secrets[Rails.env]
+      end
+    end
   end
 end
