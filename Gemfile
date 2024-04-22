@@ -37,8 +37,6 @@ gem "pg"
 gem "pgreset"
 # See: https://github.com/sass/sassc-rails/issues/114
 gem "sassc-rails"
-# Bundle edge Rails instead: gem "rails', github: 'rails/rails'
-gem "rails", "~> 7.0"
 
 # Automatically apply http headers that are related to security
 gem "secure_headers", "~> 6.5"
@@ -64,7 +62,7 @@ gem "whenever", "~> 1.0"
 gem "paper_trail"
 
 # Used for handling background processes
-gem "sucker_punch", "~> 3.1"
+gem "sucker_punch", "~> 3.2"
 
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
@@ -73,10 +71,10 @@ gem "waste_exemptions_engine",
 
 # Use the Defra Ruby Features gem to allow users with the correct permissions to
 # manage feature toggle (create / update / delete) from the back-office.
-gem "defra_ruby_features", "~> 0.1"
+gem "defra_ruby_features", "~> 0.2"
 
 # Use the Defra Ruby Aws gem for loading files to AWS buckets
-gem "defra_ruby_aws", "~> 0.4"
+gem "defra_ruby_aws", "~> 0.5"
 
 # Manage, create and open zip files https://github.com/rubyzip/rubyzip
 gem "rubyzip"
@@ -90,7 +88,7 @@ group :production do
   # and problem diagnosis. It is used in production because it gives us an ability
   # to scale by creating additional processes, and will automatically restart any
   # that fail. We don't use it when running tests for speed's sake.
-  gem "passenger", "~> 5.0", ">= 5.0.30", require: "phusion_passenger/rack_handler"
+  gem "passenger", "~> 6.0", ">= 5.0.30", require: "phusion_passenger/rack_handler"
 end
 
 group :development, :test do
@@ -126,7 +124,7 @@ group :test do
   gem "faker"
   # Generates a test coverage report on every `bundle exec rspec` call. We use
   # the output to feed CodeClimate's stats and analysis
-  gem "simplecov", "~> 0.17.1", require: false
+  gem "simplecov", require: false
   # Integration testing tool
   gem "capybara"
   # Needed for headless testing with Javascript or pages that ref external sites
@@ -136,13 +134,11 @@ group :test do
   gem "timecop"
   # Mock HTTP requests
   gem "vcr"
-  gem "webmock", "~> 3.18"
+  gem "webmock"
 
   # Allow automated testing of the whenever schedule
   gem "whenever-test"
 
   # Use Bullet to find unoptimised queries
   gem "bullet"
-
-  gem "wicked_pdf"
 end
