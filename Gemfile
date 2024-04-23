@@ -38,12 +38,13 @@ gem "pgreset"
 # See: https://github.com/sass/sassc-rails/issues/114
 gem "sassc-rails"
 
+# Pin rack version to avoid this issue: https://github.com/phusion/passenger/issues/2508
+gem "rack", "~> 2"
+
 # Automatically apply http headers that are related to security
 gem "secure_headers", "~> 6.5"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 4.2"
 
 # Use CanCanCan for user roles and permissions
 gem "cancancan", "~> 3.5"
