@@ -60,6 +60,22 @@ RSpec.describe "sendEditInviteEmails" do
           expect(flash[:error]).to eq("Error sending edit invite email")
         end
       end
+<<<<<<< Updated upstream
+=======
+
+      context "when the registration has no contact email" do
+        let(:registration) { create(:registration, contact_email: nil) }
+
+        it "redirects back to the refering page with a flash error message" do
+          get request_path, params: {}, headers: { "HTTP_REFERER" => referer }
+
+          expect(response).to redirect_to(referer)
+
+          expect(flash[:error]).to eq("Sorry, there has been a problem re-sending the confirmation email.")
+          expect(flash[:error_details]).to eq("You have requested to resend a confirmation email to the contact email address, but this address is missing from the registration.")
+        end
+      end
+>>>>>>> Stashed changes
     end
 
     context "when a data agent user is signed in" do
