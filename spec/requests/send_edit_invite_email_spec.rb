@@ -69,8 +69,8 @@ RSpec.describe "sendEditInviteEmails" do
 
           expect(response).to redirect_to(referer)
 
-          expect(flash[:error]).to eq("Sorry, there has been a problem re-sending the renewal email.")
-          expect(flash[:error_details]).to eq("You have requested to resend a renewal email to the contact email address, but this address is missing from the registration.")
+          expect(flash[:error]).to eq("Sorry, there has been a problem re-sending the edit invite email.")
+          expect(flash[:error_details]).to eq("You have requested to resend a edit invite email to the contact email address, but this address is missing from the registration.")
         end
       end
     end
