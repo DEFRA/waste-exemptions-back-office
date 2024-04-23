@@ -235,7 +235,6 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     erubi (1.12.0)
-    execjs (2.9.1)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -533,8 +532,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     uk_postcode (2.1.8)
     unf (0.1.4)
       unf_ext
@@ -617,7 +614,6 @@ DEPENDENCIES
   sucker_punch (~> 3.2)
   timecop
   turbolinks
-  uglifier (>= 4.2)
   vcr
   waste_exemptions_engine!
   web-console

@@ -45,8 +45,6 @@ gem "rack", "~> 2"
 gem "secure_headers", "~> 6.5"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 4.2"
 
 # Use CanCanCan for user roles and permissions
 gem "cancancan", "~> 3.5"
