@@ -12,7 +12,7 @@ RSpec.describe "Testing" do
     let(:expiry_date) { 2.days.from_now.strftime("%Y-%m-%d") }
 
     context "when in a non-production environment" do
-      before { stub_const("ENV", ENV.to_hash.merge("AIRBRAKE_ENV_NAME" => "devwcr")) }
+      before { allow(ENV).to receive(:fetch).with("AIRBRAKE_ENV_NAME", any_args).and_return("devwcr") }
 
       it "creates a registration" do
         expect { get "/testing/create_registration/#{expiry_date}" }.to change(WasteExemptionsEngine::Registration, :count).by(1)
@@ -22,7 +22,7 @@ RSpec.describe "Testing" do
     context "when in a production environment" do
       before do
         allow(Rails.env).to receive(:test?).and_return(false)
-        stub_const("ENV", ENV.to_hash.merge("AIRBRAKE_ENV_NAME" => "production"))
+        allow(ENV).to receive(:fetch).with("AIRBRAKE_ENV_NAME", any_args).and_return("production")
       end
 
       it "raises a routing error" do

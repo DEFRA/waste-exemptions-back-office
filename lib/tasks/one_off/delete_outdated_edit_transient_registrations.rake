@@ -9,7 +9,7 @@ namespace :one_off do
     sql = "SELECT id FROM transient_registrations WHERE type = 'WasteExemptionsEngine::EditRegistration';"
     outdated_registration_ids = connection.execute(sql).pluck("id")
 
-    puts "Found #{outdated_registration_ids.count} outdated transient registrations"
+    puts "Found #{outdated_registration_ids.count} outdated transient registrations" unless Rails.env.test?
 
     # First, delete all associated transient_addresses, transient_people, and transient_registration_exemptions
 
@@ -32,6 +32,8 @@ namespace :one_off do
     SQL
 
     ActiveRecord::Base.connection.execute(sql)
+
+    exit if Rails.env.test?
 
     puts "Deleted all transient registrations with a type of " \
          "WasteExemptionsEngine::EditRegistration and their associated " \

@@ -7,6 +7,12 @@ class SendEditInviteEmailsController < ApplicationController
 
     authorize! :send_edit_invite_email, @resource
 
+    if @resource.contact_email.blank?
+      flash[:error] = I18n.t(".send_edit_invite_emails.flash.no_contact_email.error")
+      flash[:error_details] = I18n.t(".send_edit_invite_emails.flash.no_contact_email.details")
+      redirect_back(fallback_location: root_path) and return
+    end
+
     if WasteExemptionsEngine::RegistrationEditLinkEmailService.run(
       registration: @resource,
       recipient: @resource.contact_email,
