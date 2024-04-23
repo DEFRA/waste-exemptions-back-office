@@ -18,4 +18,10 @@ RSpec.shared_examples "opted out of renewal reminder" do
     expect(log_instance.template_label).to eq "User is opted out - No renewal reminder email sent"
     expect(log_instance.sent_to).to eq registration.contact_email
   end
+
+  it "still sends an email if skip_opted_out_check is true" do
+    VCR.use_cassette("first_renewal_reminder_email") do
+      expect(described_class.run(registration: registration, skip_opted_out_check: true)).to be_a(Notifications::Client::ResponseNotification)
+    end
+  end
 end

@@ -3,3 +3,6 @@ en:
     flash:
       success: Edit invite email sent successfully
       failure: Error sending edit invite email
+      no_contact_email:
+        error: Sorry, there has been a problem re-sending the renewal email.
+        details: You have requested to resend a renewal email to the contact email address, but this address is missing from the registration.
