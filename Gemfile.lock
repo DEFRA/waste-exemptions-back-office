@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 6b56de745341a9f5cb4e722e93d13e6a38c99c15
+  revision: de65e8c379aa04aab83de480176e4a8932fd3bfa
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -379,14 +379,14 @@ GEM
       stringio
     public_suffix (5.0.5)
     racc (1.7.3)
-    rack (3.0.10)
-    rack-session (2.0.0)
-      rack (>= 3.0.0)
+    rack (2.2.9)
+    rack-session (1.0.2)
+      rack (< 3)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (2.1.0)
-      rack (>= 3)
-      webrick (~> 1.8)
+    rackup (1.0.0)
+      rack (< 3)
+      webrick
     rails (7.1.3.2)
       actioncable (= 7.1.3.2)
       actionmailbox (= 7.1.3.2)
@@ -603,6 +603,7 @@ DEPENDENCIES
   pgreset
   poltergeist
   pry-byebug
+  rack (~> 2)
   rails-controller-testing
   rspec-rails
   rubocop-rails
