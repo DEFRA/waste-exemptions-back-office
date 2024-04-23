@@ -3,9 +3,7 @@ en:
     flash:
       success: Edit invite email sent successfully
       failure: Error sending edit invite email
-<<<<<<< Updated upstream
-=======
       no_contact_email:
-        error: Sorry, there has been a problem re-sending the confirmation email.
-        details: You have requested to resend a confirmation email to the contact email address, but this address is missing from the registration.
+        error: Sorry, there has been a problem re-sending the edit invite email.
+        details: You have requested to resend a edit invite email to the contact email address, but this address is missing from the registration.
 >>>>>>> Stashed changes
