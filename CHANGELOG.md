@@ -2,10 +2,45 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.10.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.11.0...HEAD)
+
+**Fixed bugs:**
+
+- \[RUBY-2916\] Add error handling for missing contact email when resending edit invite [\#1305](https://github.com/DEFRA/waste-exemptions-back-office/pull/1305) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2916\] Add error handling for missing contact email in SendEditInviteEmailsController [\#1303](https://github.com/DEFRA/waste-exemptions-back-office/pull/1303) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2976\] Add skip\_opted\_out\_check option to renewal email service to bypass opt-in check [\#1301](https://github.com/DEFRA/waste-exemptions-back-office/pull/1301) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-3041\] rake task to fix user journeys incorrectly marked as incomplete [\#1299](https://github.com/DEFRA/waste-exemptions-back-office/pull/1299) ([brujeo](https://github.com/brujeo))
+- Ruby 2976 wex add unsubscribe functionality to the renewal reminder emails in wex [\#1298](https://github.com/DEFRA/waste-exemptions-back-office/pull/1298) ([jjromeo](https://github.com/jjromeo))
+- RUBY-2954 fix incorrect template name for first renewal email reminder in comms history [\#1292](https://github.com/DEFRA/waste-exemptions-back-office/pull/1292) ([brujeo](https://github.com/brujeo))
 
 **Merged pull requests:**
 
+- Chore/rails 7 1 [\#1309](https://github.com/DEFRA/waste-exemptions-back-office/pull/1309) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Chore/rails 7 1 [\#1308](https://github.com/DEFRA/waste-exemptions-back-office/pull/1308) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Chore/rails 7 1 [\#1307](https://github.com/DEFRA/waste-exemptions-back-office/pull/1307) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump waste\_exemptions\_engine from `6b56de7` to `de65e8c` [\#1306](https://github.com/DEFRA/waste-exemptions-back-office/pull/1306) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Chore/rails 7 1 [\#1302](https://github.com/DEFRA/waste-exemptions-back-office/pull/1302) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
+- Bump devise from 4.9.3 to 4.9.4 [\#1295](https://github.com/DEFRA/waste-exemptions-back-office/pull/1295) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `7b5b747` to `9443650` [\#1294](https://github.com/DEFRA/waste-exemptions-back-office/pull/1294) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rspec from 2.26.1 to 2.29.1 [\#1293](https://github.com/DEFRA/waste-exemptions-back-office/pull/1293) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `223bdcc` to `7b5b747` [\#1288](https://github.com/DEFRA/waste-exemptions-back-office/pull/1288) ([dependabot[bot]](https://github.com/apps/dependabot))
+- RUBY 2976 wex add unsubscribe functionality to the renewal reminder emails in wex [\#1285](https://github.com/DEFRA/waste-exemptions-back-office/pull/1285) ([jjromeo](https://github.com/jjromeo))
+- Bump rubocop-rails from 2.24.0 to 2.24.1 [\#1283](https://github.com/DEFRA/waste-exemptions-back-office/pull/1283) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[RUBY-2976\] Add unsubscribe functionality for renewal emails [\#1282](https://github.com/DEFRA/waste-exemptions-back-office/pull/1282) ([jjromeo](https://github.com/jjromeo))
+- Bump rspec-rails from 6.1.1 to 6.1.2 [\#1281](https://github.com/DEFRA/waste-exemptions-back-office/pull/1281) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pg from 1.5.4 to 1.5.6 [\#1270](https://github.com/DEFRA/waste-exemptions-back-office/pull/1270) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump wicked\_pdf from 2.7.0 to 2.8.0 [\#1265](https://github.com/DEFRA/waste-exemptions-back-office/pull/1265) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump webmock from 3.19.1 to 3.23.0 [\#1263](https://github.com/DEFRA/waste-exemptions-back-office/pull/1263) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump net-imap from 0.4.9.1 to 0.4.10 [\#1248](https://github.com/DEFRA/waste-exemptions-back-office/pull/1248) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump capybara from 3.39.2 to 3.40.0 [\#1245](https://github.com/DEFRA/waste-exemptions-back-office/pull/1245) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.11.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.11.0) (2024-03-18)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.10.0...v2.11.0)
+
+**Merged pull requests:**
+
+- Update CHANGELOG [\#1279](https://github.com/DEFRA/waste-exemptions-back-office/pull/1279) ([jjromeo](https://github.com/jjromeo))
 - Bump waste\_exemptions\_engine from `5976f8c` to `b59b6f0` [\#1277](https://github.com/DEFRA/waste-exemptions-back-office/pull/1277) ([dependabot[bot]](https://github.com/apps/dependabot))
 - \[RUBY-2885\] Add analytics feature for user journey data [\#1275](https://github.com/DEFRA/waste-exemptions-back-office/pull/1275) ([jjromeo](https://github.com/jjromeo))
 - Release v2.10.1 [\#1274](https://github.com/DEFRA/waste-exemptions-back-office/pull/1274) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
