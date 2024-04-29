@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     get "communication_logs", to: "communication_logs#index", as: :communication_logs
   end
 
+  resources :deregistrations, only: :show, param: :reference
+
   get "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#new", as: :modify_expiry_date_form
   post "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#update", as: :modify_expiry_date
 

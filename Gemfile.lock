@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: de65e8c379aa04aab83de480176e4a8932fd3bfa
-  branch: main
+  revision: 7ccc6b1f2c39899c30f7070e9079e5065079e0be
+  branch: RUBY-2749-wex-bo-add-deregistration-details-to-a-registration
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
