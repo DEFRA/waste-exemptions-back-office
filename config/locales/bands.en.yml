@@ -1,0 +1,55 @@
+en:
+  bands:
+    index:
+      title: "Band and charges management"
+      heading: "Band and charges management"
+      new_band_link_text: "Add a band"
+
+      band_list:
+        th:
+          sequence: "Bands"
+          initial_compliance_charge: "Initial Compliance Charge (£)"
+          additional_compliance_charge: "Additional Compliance Charge (£)"
+          actions: "Actions"
+        actions:
+          delete:
+            link_text: "Remove"
+          edit:
+            link_text: "Edit"
+      other_charges:
+        th:
+          name: "Other Charges"
+          initial_compliance_charge: "Initial Compliance Charge (£)"
+          other_charges: "Other Charges (£)"
+          actions: "Actions"
+        list:
+          registration_charge: "Registration charge"
+        actions:
+          edit:
+            link_text: "Edit"
+    edit:
+      title: "Edit a band"
+      heading: "Edit a band"
+      submit_button: "Continue"
+      fields:
+        name: "Band name"
+        sequence: "Band number"
+        initial_compliance_charge: "Initial compliance charge (pence)"
+        additional_compliance_charge: "Additional compliance charge (pence)"
+        no_band: "no band"
+    new:
+      title: "Add a band"
+      heading: "Add a band"
+      submit_button: "Continue"
+      fields:
+        name: "Band name"
+        sequence: "Band number"
+        initial_compliance_charge: "Initial compliance charge (pence)"
+        additional_compliance_charge: "Additional compliance charge (pence)"
+        no_band: "no band"
+  activerecord:
+    errors:
+      models:
+        band:
+          attributes:
+            

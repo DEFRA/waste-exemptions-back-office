@@ -1,0 +1,96 @@
+<%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
+
+<h1 class="govuk-heading-l">
+  <%= t(".heading") %>
+</h1>
+
+<% if @bands.present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table class="govuk-table" aria-label="<%= t(".heading") %>">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col"><%= t(".band_list.th.sequence") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".band_list.th.initial_compliance_charge") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".band_list.th.additional_compliance_charge") %></th>
+            <th class="govuk-table__header" colspan="2" scope="col"><%= t(".band_list.th.actions") %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <% @bands.each do |band| %>
+             <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= band.sequence %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= display_pence_as_pounds_and_cents(band.initial_compliance_charge, hide_pence_if_zero: false) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= display_pence_as_pounds_and_cents(band.additional_compliance_charge, hide_pence_if_zero: false) %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= link_to t('.band_list.actions.delete.link_text'), '#' %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= link_to t('.band_list.actions.edit.link_text'), edit_band_path(band) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <table class="govuk-table" aria-label="<%= t(".heading") %>">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col"><%= t(".other_charges.th.name") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".other_charges.th.initial_compliance_charge") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".other_charges.th.other_charges") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".other_charges.th.actions") %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <%= t('.other_charges.list.registration_charge') %>
+            </td>
+            <td class="govuk-table__cell">
+            </td>
+            <td class="govuk-table__cell">
+              <%= display_pence_as_pounds_and_cents(@bands.first&.registration_fee, hide_pence_if_zero: false) %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= link_to t('.other_charges.actions.edit.link_text'), '#' %>
+            </td>
+          </tr>
+          <% @buckets.each do |bucket| %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= bucket.name %>
+              </td>
+              <td class="govuk-table__cell">
+                <%= display_pence_as_pounds_and_cents(bucket.charge_amount, hide_pence_if_zero: false) %>
+              </td>
+              <td class="govuk-table__cell">
+              </td>
+              <td class="govuk-table__cell">
+                <%= link_to t('.other_charges.actions.edit.link_text'), '#' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+<p class="govuk-body">
+  <%= link_to t(".new_band_link_text"), new_band_path %>
+</p>
