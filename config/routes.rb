@@ -65,6 +65,7 @@ Rails.application.routes.draw do
 
   # Charges management: bands, exemptions, buckets and charges
   resources :bands, only: %i[index new create edit update]
+  resources :buckets, only: %i[edit update]
 
   # Override renew path
   get "/renew/:reference",
