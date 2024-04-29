@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: de65e8c379aa04aab83de480176e4a8932fd3bfa
+  revision: 6677e9aa193e64aff8114b64c2c8d1d4eb1cce2a
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -425,7 +425,7 @@ GEM
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.0)
-    reline (0.5.2)
+    reline (0.5.4)
       io-console (~> 0.5)
     request_store (1.6.0)
       rack (>= 1.4)
@@ -506,7 +506,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    simpleidn (0.2.1)
+    simpleidn (0.2.2)
       unf (~> 0.1.4)
     spring (4.2.0)
     spring-commands-rspec (1.0.4)
