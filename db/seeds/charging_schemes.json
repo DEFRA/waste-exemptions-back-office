@@ -1,0 +1,38 @@
+{
+  "bands" : [
+    { 
+      "name": "1st band", 
+      "sequence": 1, 
+      "registration_fee": 4100, 
+      "initial_compliance_charge": 40900,
+      "additional_compliance_charge": 7400 
+    },
+    { 
+      "name": "2nd band",
+      "sequence": 2, 
+      "registration_fee": 4100, 
+      "initial_compliance_charge": 20700, 
+      "additional_compliance_charge": 7400 
+    },
+    { 
+      "name": "3rd band", 
+      "sequence": 3, 
+      "registration_fee": 4100, 
+      "initial_compliance_charge": 3000, 
+      "additional_compliance_charge": 3000 
+    },
+    { 
+      "name": "4th band", 
+      "sequence": 4, 
+      "registration_fee": 4100, 
+      "initial_compliance_charge": 118000, 
+      "additional_compliance_charge": 22100 
+    }
+  ],
+  "buckets" : [
+    { 
+      "name": "Farmer exemptions", 
+      "charge_amount": 9000
+    }
+  ]
+}
