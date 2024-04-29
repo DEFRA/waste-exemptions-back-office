@@ -47,6 +47,16 @@ en:
         initial_compliance_charge: "Initial compliance charge (pence)"
         additional_compliance_charge: "Additional compliance charge (pence)"
         no_band: "no band"
+    edit_registration_fee:
+      title: "Edit registration charge"
+      heading: "Edit registration charge"
+      submit_button: "Continue"
+      fields:
+        registration_fee: "Charge (pence)"
+      errors:
+        create_bands_first: "Please create bands before setting the registration fee"
+    update_registration_fee:
+      invalid_registration_fee: "Invalid registration fee"
   activerecord:
     errors:
       models:

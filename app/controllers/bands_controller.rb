@@ -18,6 +18,10 @@ class BandsController < ApplicationController
 
   def create
     @band = WasteExemptionsEngine::Band.new(band_params)
+    # copy registration_fee from the first band
+    if WasteExemptionsEngine::Band.count.positive?
+      @band.registration_fee = WasteExemptionsEngine::Band.first.registration_fee
+    end
 
     if @band.save
       redirect_to bands_url
@@ -36,6 +40,31 @@ class BandsController < ApplicationController
     end
   end
 
+  def edit_registration_fee
+    if WasteExemptionsEngine::Band.count.zero?
+      flash[:error] = t(".errors.create_bands_first")
+      redirect_to bands_url
+    else
+      @band = WasteExemptionsEngine::Band.first
+    end
+  end
+
+  def update_registration_fee
+    begin
+      WasteExemptionsEngine::Band.transaction do
+        WasteExemptionsEngine::Band.all.each do |band|
+          band.update!(registration_fee_params)
+        end
+      end
+
+      redirect_to bands_url
+    rescue ActiveRecord::RecordInvalid
+      @band = WasteExemptionsEngine::Band.first
+      @band.errors.add(:registration_fee, t(".invalid_registration_fee"))
+      render :edit_registration_fee
+    end
+  end
+
   private
 
   def authorize
@@ -49,5 +78,10 @@ class BandsController < ApplicationController
   def band_params
     params.require(:band)
           .permit(:name, :sequence, :registration_fee, :initial_compliance_charge, :additional_compliance_charge)
+  end
+
+  def registration_fee_params
+    params.require(:band)
+          .permit(:registration_fee)
   end
 end

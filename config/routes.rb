@@ -64,7 +64,10 @@ Rails.application.routes.draw do
   get "/ad-privacy-policy", to: "ad_privacy_policy#show", as: :ad_privacy_policy
 
   # Charges management: bands, exemptions, buckets and charges
-  resources :bands, only: %i[index new create edit update]
+  resources :bands, only: %i[index new create edit update] do
+    get "edit_registration_fee", on: :collection, to: "bands#edit_registration_fee", as: :edit_registration_fee
+    patch "update_registration_fee", on: :collection, to: "bands#update_registration_fee", as: :update_registration_fee
+  end
   resources :buckets, only: %i[edit update]
 
   # Override renew path
