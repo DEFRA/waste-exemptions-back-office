@@ -20,7 +20,7 @@ class BucketsController < ApplicationController
   private
 
   def authorize
-    authorize! :read, current_user
+    authorize! :manage_charges, :all
   end
 
   def find_bucket(id)
