@@ -3,7 +3,7 @@
     <%= render("waste_exemptions_engine/shared/back", back_path: bands_path) %>
 
     <%= form_for @band,
-                 url: update_registration_fee_bands_path,
+                 url: update_registration_charge_bands_path,
                  html: { method: :patch },
                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
 
@@ -13,9 +13,9 @@
         <%= t(".heading") %>
       </h1>
 
-      <%= f.govuk_text_field :registration_fee,
+      <%= f.govuk_text_field :registration_charge,
           width: "one-quarter",
-          label: { text: t(".fields.registration_fee"),
+          label: { text: t(".fields.registration_charge"),
           pattern: "[0-9]*",
           inputmode: "numeric" } %>
 

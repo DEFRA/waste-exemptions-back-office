@@ -26,7 +26,7 @@ def seed_charging_schemes
   bands.each do |band|
     WasteExemptionsEngine::Band.find_or_create_by(name: band["name"]) do |rec|
       rec.sequence = band["sequence"]
-      rec.registration_fee = band["registration_fee"]
+      rec.registration_charge = band["registration_charge"]
       rec.initial_compliance_charge = band["initial_compliance_charge"]
       rec.additional_compliance_charge = band["additional_compliance_charge"]
     end

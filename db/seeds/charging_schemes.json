@@ -1,30 +1,30 @@
 {
   "bands" : [
     { 
-      "name": "1st band", 
+      "name": "High-risk activity exemptions", 
       "sequence": 1, 
-      "registration_fee": 4100, 
+      "registration_charge": 4100, 
       "initial_compliance_charge": 40900,
       "additional_compliance_charge": 7400 
     },
     { 
-      "name": "2nd band",
+      "name": "Medium-risk activity exemptions",
       "sequence": 2, 
-      "registration_fee": 4100, 
+      "registration_charge": 4100, 
       "initial_compliance_charge": 20700, 
       "additional_compliance_charge": 7400 
     },
     { 
-      "name": "3rd band", 
+      "name": "Lower-risk activity exemptions", 
       "sequence": 3, 
-      "registration_fee": 4100, 
+      "registration_charge": 4100, 
       "initial_compliance_charge": 3000, 
       "additional_compliance_charge": 3000 
     },
     { 
-      "name": "4th band", 
+      "name": "Low-risk activity exemptions", 
       "sequence": 4, 
-      "registration_fee": 4100, 
+      "registration_charge": 4100, 
       "initial_compliance_charge": 118000, 
       "additional_compliance_charge": 22100 
     }

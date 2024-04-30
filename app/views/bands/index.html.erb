@@ -65,10 +65,10 @@
             <td class="govuk-table__cell">
             </td>
             <td class="govuk-table__cell">
-              <%= display_pence_as_pounds_and_cents(@bands&.first&.registration_fee, hide_pence_if_zero: false) %>
+              <%= display_pence_as_pounds_and_cents(@bands&.first&.registration_charge, hide_pence_if_zero: false) %>
             </td>
             <td class="govuk-table__cell">
-              <%= link_to t('.other_charges.actions.edit.link_text'), edit_registration_fee_bands_path %>
+              <%= link_to t('.other_charges.actions.edit.link_text'), edit_registration_charge_bands_path %>
             </td>
           </tr>
           <% @buckets.each do |bucket| %>

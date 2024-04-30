@@ -184,7 +184,7 @@ RSpec.describe "Bands" do
     end
   end
 
-  describe "GET /bands/edit_registration_fee" do
+  describe "GET /bands/edit_registration_charge" do
     context "when a system user is signed in" do
       before do
         sign_in(user)
@@ -194,16 +194,16 @@ RSpec.describe "Bands" do
         let!(:band) { create(:band) }
 
         it "renders the edit template" do
-          expect(band.registration_fee).to be_present
-          get edit_registration_fee_bands_path
+          expect(band.registration_charge).to be_present
+          get edit_registration_charge_bands_path
 
-          expect(response).to render_template(:edit_registration_fee)
+          expect(response).to render_template(:edit_registration_charge)
         end
       end
 
       context "when no bands present" do
         it "redirects to the index page with error message" do
-          get edit_registration_fee_bands_path
+          get edit_registration_charge_bands_path
 
           expect(response).to redirect_to("/bands")
           expect(flash[:error]).to eq("Please create bands before setting the registration fee")
@@ -219,29 +219,29 @@ RSpec.describe "Bands" do
       end
 
       it "redirects to the permissions error page" do
-        get edit_registration_fee_bands_path
+        get edit_registration_charge_bands_path
 
         expect(response).to redirect_to("/pages/permission")
       end
     end
   end
 
-  describe "PATCH /bands/update_registration_fee" do
-    let!(:first_band) { create(:band, registration_fee: 100) }
-    let!(:second_band) { create(:band, registration_fee: 100) }
+  describe "PATCH /bands/update_registration_charge" do
+    let!(:first_band) { create(:band, registration_charge: 100) }
+    let!(:second_band) { create(:band, registration_charge: 100) }
 
-    let(:params) { { registration_fee: 199 } }
+    let(:params) { { registration_charge: 199 } }
 
     context "when a system user is signed in" do
       before do
         sign_in(user)
       end
 
-      it "updates the registration_fee, redirects to the band list and assigns the correct whodunnit to the version", :versioning do
-        patch "/bands/update_registration_fee", params: { band: params }
+      it "updates the registration_charge, redirects to the band list and assigns the correct whodunnit to the version", :versioning do
+        patch "/bands/update_registration_charge", params: { band: params }
 
-        expect(first_band.reload.registration_fee).to eq(params[:registration_fee])
-        expect(second_band.reload.registration_fee).to eq(params[:registration_fee])
+        expect(first_band.reload.registration_charge).to eq(params[:registration_charge])
+        expect(second_band.reload.registration_charge).to eq(params[:registration_charge])
 
         expect(response).to redirect_to(bands_path)
         expect(first_band.reload.versions.last.whodunnit).to eq(user.id.to_s)
@@ -249,14 +249,14 @@ RSpec.describe "Bands" do
       end
 
       context "when the params are invalid" do
-        let(:params) { { registration_fee: "aaa" } }
+        let(:params) { { registration_charge: "aaa" } }
 
-        it "does not update the registration_fee and renders the edit_registration_fee template" do
-          patch "/bands/update_registration_fee", params: { band: params }
+        it "does not update the registration_charge and renders the edit_registration_charge template" do
+          patch "/bands/update_registration_charge", params: { band: params }
 
-          expect(first_band.reload.registration_fee).to eq(100)
-          expect(second_band.reload.registration_fee).to eq(100)
-          expect(response).to render_template(:edit_registration_fee)
+          expect(first_band.reload.registration_charge).to eq(100)
+          expect(second_band.reload.registration_charge).to eq(100)
+          expect(response).to render_template(:edit_registration_charge)
         end
       end
     end
@@ -269,7 +269,7 @@ RSpec.describe "Bands" do
       end
 
       it "redirects to the permissions error page" do
-        patch "/bands/update_registration_fee", params: { band: params }
+        patch "/bands/update_registration_charge", params: { band: params }
 
         expect(response).to redirect_to("/pages/permission")
       end

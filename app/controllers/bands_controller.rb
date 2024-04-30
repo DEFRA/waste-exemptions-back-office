@@ -18,9 +18,11 @@ class BandsController < ApplicationController
 
   def create
     @band = WasteExemptionsEngine::Band.new(band_params)
-    # copy registration_fee from the first band
+    # copy registration_charge from the first band
     if WasteExemptionsEngine::Band.count.positive?
-      @band.registration_fee = WasteExemptionsEngine::Band.first.registration_fee
+      @band.registration_charge = WasteExemptionsEngine::Band.first.registration_charge
+    else
+      @band.registration_charge = 0
     end
 
     if @band.save
@@ -40,7 +42,7 @@ class BandsController < ApplicationController
     end
   end
 
-  def edit_registration_fee
+  def edit_registration_charge
     if WasteExemptionsEngine::Band.count.zero?
       flash[:error] = t(".errors.create_bands_first")
       redirect_to bands_url
@@ -49,19 +51,19 @@ class BandsController < ApplicationController
     end
   end
 
-  def update_registration_fee
+  def update_registration_charge
     begin
       WasteExemptionsEngine::Band.transaction do
         WasteExemptionsEngine::Band.all.each do |band|
-          band.update!(registration_fee_params)
+          band.update!(registration_charge_params)
         end
       end
 
       redirect_to bands_url
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid => e
       @band = WasteExemptionsEngine::Band.first
-      @band.errors.add(:registration_fee, t(".invalid_registration_fee"))
-      render :edit_registration_fee
+      @band.errors.add(:registration_charge, e.message.gsub('Validation failed: Registration fee ', ''))
+      render :edit_registration_charge
     end
   end
 
@@ -77,11 +79,11 @@ class BandsController < ApplicationController
 
   def band_params
     params.require(:band)
-          .permit(:name, :sequence, :registration_fee, :initial_compliance_charge, :additional_compliance_charge)
+          .permit(:name, :sequence, :registration_charge, :initial_compliance_charge, :additional_compliance_charge)
   end
 
-  def registration_fee_params
+  def registration_charge_params
     params.require(:band)
-          .permit(:registration_fee)
+          .permit(:registration_charge)
   end
 end

@@ -47,19 +47,34 @@ en:
         initial_compliance_charge: "Initial compliance charge (pence)"
         additional_compliance_charge: "Additional compliance charge (pence)"
         no_band: "no band"
-    edit_registration_fee:
+    edit_registration_charge:
       title: "Edit registration charge"
       heading: "Edit registration charge"
       submit_button: "Continue"
       fields:
-        registration_fee: "Charge (pence)"
+        registration_charge: "Charge (pence)"
       errors:
         create_bands_first: "Please create bands before setting the registration fee"
-    update_registration_fee:
-      invalid_registration_fee: "Invalid registration fee"
+    update_registration_charge:
+      invalid_registration_charge: "Invalid registration fee"
   activerecord:
     errors:
       models:
-        band:
+        waste_exemptions_engine/band:
           attributes:
-            
+            name:
+              taken: "There is currently a band with that name"
+            sequence:
+              taken: "There is currently a band with that number"
+            initial_compliance_charge:
+              not_a_number: "You can only enter numerical values"
+            additional_compliance_charge:
+              not_a_number: "You can only enter numerical values"
+            registration_charge:
+              not_a_number: "You can only enter numerical values"
+        waste_exemptions_engine/bucket:
+          attributes:
+            name:
+              taken: "There is currently a bucket with that name"
+            charge_amount:
+              not_a_number: "You can only enter numerical values"
