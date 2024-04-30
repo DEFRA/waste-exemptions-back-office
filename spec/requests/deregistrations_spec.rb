@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Deregistrations" do
   let(:registration) { create(:registration) }
 
-  describe "GET /deregistrations/:reference" do
+  describe "GET #show" do
     context "when a user is signed in" do
       before do
         sign_in(create(:user))
