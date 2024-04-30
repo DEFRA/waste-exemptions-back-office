@@ -19,11 +19,11 @@ class BandsController < ApplicationController
   def create
     @band = WasteExemptionsEngine::Band.new(band_params)
     # copy registration_charge from the first band
-    if WasteExemptionsEngine::Band.count.positive?
-      @band.registration_charge = WasteExemptionsEngine::Band.first.registration_charge
-    else
-      @band.registration_charge = 0
-    end
+    @band.registration_charge = if WasteExemptionsEngine::Band.count.positive?
+                                  WasteExemptionsEngine::Band.first.registration_charge
+                                else
+                                  0
+                                end
 
     if @band.save
       redirect_to bands_url
@@ -52,19 +52,17 @@ class BandsController < ApplicationController
   end
 
   def update_registration_charge
-    begin
-      WasteExemptionsEngine::Band.transaction do
-        WasteExemptionsEngine::Band.all.each do |band|
-          band.update!(registration_charge_params)
-        end
+    WasteExemptionsEngine::Band.transaction do
+      WasteExemptionsEngine::Band.find_each do |band|
+        band.update!(registration_charge_params)
       end
-
-      redirect_to bands_url
-    rescue ActiveRecord::RecordInvalid => e
-      @band = WasteExemptionsEngine::Band.first
-      @band.errors.add(:registration_charge, e.message.gsub('Validation failed: Registration fee ', ''))
-      render :edit_registration_charge
     end
+
+    redirect_to bands_url
+  rescue ActiveRecord::RecordInvalid => e
+    @band = WasteExemptionsEngine::Band.first
+    @band.errors.add(:registration_charge, e.message.gsub("Validation failed: Registration fee ", ""))
+    render :edit_registration_charge
   end
 
   private

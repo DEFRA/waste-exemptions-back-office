@@ -6,7 +6,7 @@ RSpec.describe "Buckets" do
   let(:user) { create(:user, :system) }
 
   describe "GET /buckets/:id/edit" do
-    let(:bucket) { create(:bucket, name: 'test bucket', charge_amount: 10000) }
+    let(:bucket) { create(:bucket, name: "test bucket", charge_amount: 10_000) }
 
     context "when a system user is signed in" do
       before do
@@ -36,9 +36,9 @@ RSpec.describe "Buckets" do
   end
 
   describe "PATCH /buckets/:id" do
-    let(:bucket) { create(:bucket, name: 'test bucket', charge_amount: 10000) }
+    let(:bucket) { create(:bucket, name: "test bucket", charge_amount: 10_000) }
 
-    let(:params) { { name: "new bucket", charge_amount: 20001 } }
+    let(:params) { { name: "new bucket", charge_amount: 20_001 } }
 
     context "when a system user is signed in" do
       before do
@@ -61,7 +61,7 @@ RSpec.describe "Buckets" do
         it "does not update the bucket and renders the edit template" do
           patch "/buckets/#{bucket.id}", params: { bucket: params }
 
-          expect(bucket.reload.charge_amount).to eq(10000)
+          expect(bucket.reload.charge_amount).to eq(10_000)
           expect(response).to render_template(:edit)
         end
       end
