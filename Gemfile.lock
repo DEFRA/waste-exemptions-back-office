@@ -608,7 +608,7 @@ DEPENDENCIES
   rubyzip
   sassc-rails
   secure_headers (~> 6.5)
-  simplecov
+  simplecov (~> 0.22.0)
   spring
   spring-commands-rspec
   sucker_punch (~> 3.2)
