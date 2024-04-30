@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe "Bands" do
-  let(:user) { create(:user, :system) }
+  let(:user) { create(:user, :developer) }
 
   describe "GET /bands" do
     let!(:band) { create(:band, sequence: 99, initial_compliance_charge: 19_901, additional_compliance_charge: 5101) }
 
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -30,7 +30,7 @@ RSpec.describe "Bands" do
   end
 
   describe "GET /bands/new" do
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -43,7 +43,7 @@ RSpec.describe "Bands" do
     end
 
     context "when user without permission is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)
@@ -60,7 +60,7 @@ RSpec.describe "Bands" do
   describe "POST /bands" do
     let(:params) { { name: "test band", sequence: 99, initial_compliance_charge: 15_000, additional_compliance_charge: 5000 } }
 
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -91,7 +91,7 @@ RSpec.describe "Bands" do
     end
 
     context "when a non-permitted user is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)
@@ -108,7 +108,7 @@ RSpec.describe "Bands" do
   describe "GET /bands/:id/edit" do
     let(:band) { create(:band, sequence: 1) }
 
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -121,7 +121,7 @@ RSpec.describe "Bands" do
     end
 
     context "when user without permission is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)
@@ -140,7 +140,7 @@ RSpec.describe "Bands" do
 
     let(:params) { { name: "test band", sequence: 99, initial_compliance_charge: 15_000, additional_compliance_charge: 5000 } }
 
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -170,7 +170,7 @@ RSpec.describe "Bands" do
     end
 
     context "when a non-permitted user is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)
@@ -185,7 +185,7 @@ RSpec.describe "Bands" do
   end
 
   describe "GET /bands/edit_registration_charge" do
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -212,7 +212,7 @@ RSpec.describe "Bands" do
     end
 
     context "when user without permission is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)
@@ -232,7 +232,7 @@ RSpec.describe "Bands" do
 
     let(:params) { { registration_charge: 199 } }
 
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -262,7 +262,7 @@ RSpec.describe "Bands" do
     end
 
     context "when a non-permitted user is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)

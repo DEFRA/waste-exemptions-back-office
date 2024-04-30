@@ -3,12 +3,12 @@
 require "rails_helper"
 
 RSpec.describe "Buckets" do
-  let(:user) { create(:user, :system) }
+  let(:user) { create(:user, :developer) }
 
   describe "GET /buckets/:id/edit" do
     let(:bucket) { create(:bucket, name: "test bucket", charge_amount: 10_000) }
 
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -21,7 +21,7 @@ RSpec.describe "Buckets" do
     end
 
     context "when user without permission is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)
@@ -40,7 +40,7 @@ RSpec.describe "Buckets" do
 
     let(:params) { { name: "new bucket", charge_amount: 20_001 } }
 
-    context "when a system user is signed in" do
+    context "when a permitted user is signed in" do
       before do
         sign_in(user)
       end
@@ -68,7 +68,7 @@ RSpec.describe "Buckets" do
     end
 
     context "when a non-permitted user is signed in" do
-      let(:non_permitted_user) { create(:user, :developer) }
+      let(:non_permitted_user) { create(:user, :data_agent) }
 
       before do
         sign_in(non_permitted_user)
