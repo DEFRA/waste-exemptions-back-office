@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= render("waste_exemptions_engine/shared/back", back_path: bands_path) %>
-    <h1 class="govuk-heading-l"><%= "You cannot delete this band as it has exemptions allocated to it" %></h1>
-    <p class="govuk-body"> <%= "You must remove any exemptions allocated to this band first before deleting it" %> </p>
+    <h1 class="govuk-heading-l"><%= t('.heading')%></h1>
+    <p class="govuk-body"> <%= t('.message') %> </p>
   </div>
 </div>
