@@ -66,7 +66,7 @@ Rails.application.routes.draw do
   get "/ad-privacy-policy", to: "ad_privacy_policy#show", as: :ad_privacy_policy
 
   # Charges management: bands, exemptions, buckets and charges
-  resources :bands, only: %i[index new create edit update] do
+  resources :bands do
     get "destroy_confirmation", on: :member, to: "bands#destroy_confirmation", as: :destroy_confirmation
     get "cannot_destroy", on: :member, to: "bands#cannot_destroy", as: :cannot_destroy
   end
