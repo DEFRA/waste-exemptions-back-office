@@ -31,7 +31,7 @@
                 <%= display_pence_as_pounds_and_cents(band.additional_compliance_charge.charge_amount, hide_pence_if_zero: false) %>
               </td>
               <td class="govuk-table__cell">
-                <%= link_to t('.band_list.actions.delete.link_text'), '#' %>
+                <%= link_to t('.band_list.actions.delete.link_text'), destroy_confirmation_band_path(band) %>
               </td>
               <td class="govuk-table__cell">
                 <%= link_to t('.band_list.actions.edit.link_text'), edit_band_path(band) %>
