@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 7ccc6b1f2c39899c30f7070e9079e5065079e0be
-  branch: RUBY-2749-wex-bo-add-deregistration-details-to-a-registration
+  revision: e4eaa94e4316cf62f7612206c64b750b8cbb1ad7
+  branch: main
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -506,7 +506,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    simpleidn (0.2.1)
+    simpleidn (0.2.2)
       unf (~> 0.1.4)
     spring (4.2.0)
     spring-commands-rspec (1.0.4)
