@@ -39,6 +39,24 @@ class BandsController < ApplicationController
     end
   end
 
+  def destroy_confirmation
+    find_band(params[:id])
+  end
+
+  def cannot_destroy; end
+
+  def destroy
+    find_band(params[:id])
+
+    if @band.exemptions.any?
+      redirect_to cannot_destroy_band_url
+    elsif @band.destroy
+      redirect_to bands_url
+    else
+      render :edit
+    end
+  end
+
   private
 
   def authorize
