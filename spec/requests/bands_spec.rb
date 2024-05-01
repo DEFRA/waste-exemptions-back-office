@@ -184,6 +184,21 @@ RSpec.describe "Bands" do
     end
   end
 
+  describe "GET /bands/:id/destroy_confirmation" do
+    let(:band) { create(:band) }
+
+    context "when a permitted user is signed in" do
+      before do
+        sign_in(user)
+        get destroy_confirmation_band_path(band)
+      end
+
+      it "renders the destroy confirmation template" do
+        expect(response).to render_template(:destroy_confirmation)
+      end
+    end
+  end
+
   describe "GET /bands/edit_registration_charge" do
     context "when a permitted user is signed in" do
       before do
