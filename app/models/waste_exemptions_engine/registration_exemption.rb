@@ -44,5 +44,15 @@ module WasteExemptionsEngine
       # timestamp is first updated.
       saved_change_to_deregistered_at?
     end
+
+    def deregistered_by
+      # As versions are only saved when deregistere_at is changed, so we know the
+      # version that exists will have the email of the user who deregistered it
+      deregistration_version = versions.where(event: "update").last
+
+      return if deregistration_version.blank?
+
+      deregistration_version.whodunnit
+    end
   end
 end

@@ -36,6 +36,13 @@
               exemption <%= re.exemption.code %> &mdash; <%= re.exemption.summary %>
             </span>
           </a>
+        <% elsif %w[ceased revoked].include? re.state %>
+          <a class="govuk-link" href="<%= deregistration_path(re.registration.reference) %>">
+            Details
+            <span class="govuk-visually-hidden">
+              exemption <%= re.exemption.code %> &mdash; <%= re.exemption.summary %>
+            </span>
+          </a>
         <% end %>
       </td>
     </tr>
