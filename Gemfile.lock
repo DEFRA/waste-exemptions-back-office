@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 506c179743f59a43fecc5891d43ac81d42070b17
-  branch: main
+  revision: d56eb6421f61e2583e21df3bb947b35ffc8acec4
+  branch: RUBY-3066-wex-charging-bo-charging-catalogue-management
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
