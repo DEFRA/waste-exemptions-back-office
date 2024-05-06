@@ -1,0 +1,45 @@
+<%= form_with(url: exemptions_path, method: :put, local: true, builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">Exemptions</th>
+        <th class="govuk-table__header">Band</th>
+        <% @buckets.each do |bucket| %>
+          <th class="govuk-table__header bucket_name"><%= bucket.name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @exemptions.each do |exemption| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= "#{exemption.code} #{exemption.description}" %></td>
+          <td class="govuk-table__cell">
+            <%= f.govuk_collection_select "exemptions[#{exemption.id}][band_id]",
+              @bands,
+              :id,
+              :name,
+              options: {
+                selected: exemption.band_id.to_s,
+              },
+              label: { text: 'Band', hidden: true },
+              id: "exemptions_#{exemption.id}_band_id"
+            %>
+          </td>
+          <% @buckets.each do |bucket| %>
+            <td class="govuk-table__cell">
+              <span class="govuk-checkboxes__item">
+                <%= f.govuk_check_box "exemptions[#{exemption.id}][bucket_ids][]",
+                  bucket.id,
+                  checked: exemption.buckets.include?(bucket),
+                  link_errors: true,
+                  multiple: false,
+                  label: { text: bucket.name, hidden: true } %>
+              </span>
+            <% end %>
+            </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= f.govuk_submit 'Save changes' %>
+<% end %>

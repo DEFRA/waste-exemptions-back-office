@@ -59,6 +59,14 @@
                         class: "govuk-header__link" %>
           </li>
         <% end %>
+
+        <% if can?(:manage_charge_catalogue, current_user) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.charge_catalogue"),
+                        main_app.exemptions_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
       </ul>
     </nav>
   <% end %>
