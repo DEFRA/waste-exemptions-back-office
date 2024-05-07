@@ -6,7 +6,7 @@ RSpec.describe "Buckets" do
   let(:user) { create(:user, :developer) }
 
   describe "GET /buckets/:id/edit" do
-    let(:bucket) { create(:bucket, name: "test bucket", charge_amount: 10_000) }
+    let(:bucket) { create(:bucket, name: "test bucket") }
 
     context "when a permitted user is signed in" do
       before do
@@ -36,9 +36,9 @@ RSpec.describe "Buckets" do
   end
 
   describe "PATCH /buckets/:id" do
-    let(:bucket) { create(:bucket, name: "test bucket", charge_amount: 10_000) }
+    let(:bucket) { create(:bucket, name: "test bucket") }
 
-    let(:params) { { name: "new bucket", charge_amount: 20_001 } }
+    let(:params) { { name: "new bucket", initial_compliance_charge_attributes: { charge_amount_in_pounds: 50.01 } } }
 
     context "when a permitted user is signed in" do
       before do
@@ -49,19 +49,20 @@ RSpec.describe "Buckets" do
         patch "/buckets/#{bucket.id}", params: { bucket: params }
 
         expect(bucket.reload.name).to eq(params[:name])
-        expect(bucket.reload.charge_amount).to eq(params[:charge_amount])
+        expect(bucket.reload.initial_compliance_charge.charge_amount_in_pounds.to_f).to eq(params[:initial_compliance_charge_attributes][:charge_amount_in_pounds])
 
         expect(response).to redirect_to(bands_path)
         expect(bucket.reload.versions.last.whodunnit).to eq(user.id.to_s)
       end
 
       context "when the params are invalid" do
-        let(:params) { { charge_amount: "aaa" } }
+        let(:params) { { initial_compliance_charge_attributes: { charge_amount_in_pounds: "aaa" } } }
 
         it "does not update the bucket and renders the edit template" do
+          bucket_charge_amount = bucket.initial_compliance_charge.charge_amount
           patch "/buckets/#{bucket.id}", params: { bucket: params }
 
-          expect(bucket.reload.charge_amount).to eq(10_000)
+          expect(bucket.reload.initial_compliance_charge.charge_amount).to eq(bucket_charge_amount)
           expect(response).to render_template(:edit)
         end
       end

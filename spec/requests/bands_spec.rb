@@ -6,7 +6,14 @@ RSpec.describe "Bands" do
   let(:user) { create(:user, :developer) }
 
   describe "GET /bands" do
-    let!(:band) { create(:band, sequence: 99, initial_compliance_charge: 19_901, additional_compliance_charge: 5101) }
+    let(:band) { create(:band, :no_charges, sequence: 99) }
+    let(:initial_compliance_charge) { create(:charge, :initial_compliance_charge, charge_amount: 19_901, chargeable: band) }
+    let(:additional_compliance_charge) { create(:charge, :additional_compliance_charge, charge_amount: 51_01, chargeable: band) }
+
+    before do
+      initial_compliance_charge
+      additional_compliance_charge
+    end
 
     context "when a permitted user is signed in" do
       before do
@@ -58,7 +65,7 @@ RSpec.describe "Bands" do
   end
 
   describe "POST /bands" do
-    let(:params) { { name: "test band", sequence: 99, initial_compliance_charge: 15_000, additional_compliance_charge: 5000 } }
+    let(:params) { { name: "test band", sequence: 99, initial_compliance_charge_attributes: { charge_amount_in_pounds: 150.00 }, additional_compliance_charge_attributes: { charge_amount_in_pounds: 50.00 } } }
 
     context "when a permitted user is signed in" do
       before do
@@ -71,8 +78,8 @@ RSpec.describe "Bands" do
         band = WasteExemptionsEngine::Band.last
         expect(band.reload.name).to eq(params[:name])
         expect(band.reload.sequence).to eq(params[:sequence])
-        expect(band.reload.initial_compliance_charge).to eq(params[:initial_compliance_charge])
-        expect(band.reload.additional_compliance_charge).to eq(params[:additional_compliance_charge])
+        expect(band.reload.initial_compliance_charge.charge_amount_in_pounds.to_f).to eq(params[:initial_compliance_charge_attributes][:charge_amount_in_pounds])
+        expect(band.reload.additional_compliance_charge.charge_amount_in_pounds.to_f).to eq(params[:additional_compliance_charge_attributes][:charge_amount_in_pounds])
 
         expect(response).to redirect_to(bands_path)
         expect(band.reload.versions.last.whodunnit).to eq(user.id.to_s)
@@ -138,7 +145,7 @@ RSpec.describe "Bands" do
   describe "PATCH /bands/:id" do
     let(:band) { create(:band, sequence: 1) }
 
-    let(:params) { { name: "test band", sequence: 99, initial_compliance_charge: 15_000, additional_compliance_charge: 5000 } }
+    let(:params) { { name: "test band", sequence: 99, initial_compliance_charge_attributes: { charge_amount_in_pounds: 150.00 }, additional_compliance_charge_attributes: { charge_amount_in_pounds: 50.00 } } }
 
     context "when a permitted user is signed in" do
       before do
@@ -150,8 +157,8 @@ RSpec.describe "Bands" do
 
         expect(band.reload.name).to eq(params[:name])
         expect(band.reload.sequence).to eq(params[:sequence])
-        expect(band.reload.initial_compliance_charge).to eq(params[:initial_compliance_charge])
-        expect(band.reload.additional_compliance_charge).to eq(params[:additional_compliance_charge])
+        expect(band.reload.initial_compliance_charge.charge_amount_in_pounds.to_f).to eq(params[:initial_compliance_charge_attributes][:charge_amount_in_pounds])
+        expect(band.reload.additional_compliance_charge.charge_amount_in_pounds.to_f).to eq(params[:additional_compliance_charge_attributes][:charge_amount_in_pounds])
 
         expect(response).to redirect_to(bands_path)
         expect(band.reload.versions.last.whodunnit).to eq(user.id.to_s)
@@ -178,98 +185,6 @@ RSpec.describe "Bands" do
 
       it "redirects to the permissions error page" do
         patch "/bands/#{band.id}", params: { band: params }
-
-        expect(response).to redirect_to("/pages/permission")
-      end
-    end
-  end
-
-  describe "GET /bands/edit_registration_charge" do
-    context "when a permitted user is signed in" do
-      before do
-        sign_in(user)
-      end
-
-      context "when bands already present" do
-        let!(:band) { create(:band) }
-
-        it "renders the edit template" do
-          expect(band.registration_charge).to be_present
-          get edit_registration_charge_bands_path
-
-          expect(response).to render_template(:edit_registration_charge)
-        end
-      end
-
-      context "when no bands present" do
-        it "redirects to the index page with error message" do
-          get edit_registration_charge_bands_path
-
-          expect(response).to redirect_to("/bands")
-          expect(flash[:error]).to eq("Please create bands before setting the registration fee")
-        end
-      end
-    end
-
-    context "when user without permission is signed in" do
-      let(:non_permitted_user) { create(:user, :data_agent) }
-
-      before do
-        sign_in(non_permitted_user)
-      end
-
-      it "redirects to the permissions error page" do
-        get edit_registration_charge_bands_path
-
-        expect(response).to redirect_to("/pages/permission")
-      end
-    end
-  end
-
-  describe "PATCH /bands/update_registration_charge" do
-    let!(:first_band) { create(:band, registration_charge: 100) }
-    let!(:second_band) { create(:band, registration_charge: 100) }
-
-    let(:params) { { registration_charge: 199 } }
-
-    context "when a permitted user is signed in" do
-      before do
-        sign_in(user)
-      end
-
-      it "updates the registration_charge, redirects to the band list and assigns the correct whodunnit to the version", :versioning do
-        patch "/bands/update_registration_charge", params: { band: params }
-
-        expect(first_band.reload.registration_charge).to eq(params[:registration_charge])
-        expect(second_band.reload.registration_charge).to eq(params[:registration_charge])
-
-        expect(response).to redirect_to(bands_path)
-        expect(first_band.reload.versions.last.whodunnit).to eq(user.id.to_s)
-        expect(second_band.reload.versions.last.whodunnit).to eq(user.id.to_s)
-      end
-
-      context "when the params are invalid" do
-        let(:params) { { registration_charge: "aaa" } }
-
-        it "does not update the registration_charge and renders the edit_registration_charge template" do
-          patch "/bands/update_registration_charge", params: { band: params }
-
-          expect(first_band.reload.registration_charge).to eq(100)
-          expect(second_band.reload.registration_charge).to eq(100)
-          expect(response).to render_template(:edit_registration_charge)
-        end
-      end
-    end
-
-    context "when a non-permitted user is signed in" do
-      let(:non_permitted_user) { create(:user, :data_agent) }
-
-      before do
-        sign_in(non_permitted_user)
-      end
-
-      it "redirects to the permissions error page" do
-        patch "/bands/update_registration_charge", params: { band: params }
 
         expect(response).to redirect_to("/pages/permission")
       end

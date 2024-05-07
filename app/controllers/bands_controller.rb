@@ -6,10 +6,13 @@ class BandsController < ApplicationController
   def index
     @bands = WasteExemptionsEngine::Band.order(sequence: :asc)
     @buckets = WasteExemptionsEngine::Bucket.order(name: :asc)
+    @registration_charge = WasteExemptionsEngine::Charge.find_by(charge_type: "registration_charge")
   end
 
   def new
     @band = WasteExemptionsEngine::Band.new
+    @band.initial_compliance_charge = WasteExemptionsEngine::Charge.new(charge_type: "initial_compliance_charge")
+    @band.additional_compliance_charge = WasteExemptionsEngine::Charge.new(charge_type: "additional_compliance_charge")
   end
 
   def edit
@@ -18,12 +21,6 @@ class BandsController < ApplicationController
 
   def create
     @band = WasteExemptionsEngine::Band.new(band_params)
-    # copy registration_charge from the first band
-    @band.registration_charge = if WasteExemptionsEngine::Band.count.positive?
-                                  WasteExemptionsEngine::Band.first.registration_charge
-                                else
-                                  0
-                                end
 
     if @band.save
       redirect_to bands_url
@@ -42,29 +39,6 @@ class BandsController < ApplicationController
     end
   end
 
-  def edit_registration_charge
-    if WasteExemptionsEngine::Band.count.zero?
-      flash[:error] = t(".errors.create_bands_first")
-      redirect_to bands_url
-    else
-      @band = WasteExemptionsEngine::Band.first
-    end
-  end
-
-  def update_registration_charge
-    WasteExemptionsEngine::Band.transaction do
-      WasteExemptionsEngine::Band.find_each do |band|
-        band.update!(registration_charge_params)
-      end
-    end
-
-    redirect_to bands_url
-  rescue ActiveRecord::RecordInvalid => e
-    @band = WasteExemptionsEngine::Band.first
-    @band.errors.add(:registration_charge, e.message.gsub("Validation failed: Registration fee ", ""))
-    render :edit_registration_charge
-  end
-
   private
 
   def authorize
@@ -77,11 +51,21 @@ class BandsController < ApplicationController
 
   def band_params
     params.require(:band)
-          .permit(:name, :sequence, :registration_charge, :initial_compliance_charge, :additional_compliance_charge)
-  end
-
-  def registration_charge_params
-    params.require(:band)
-          .permit(:registration_charge)
+          .permit(
+            :name,
+            :sequence,
+            :registration_charge,
+            initial_compliance_charge_attributes: %i[id charge_amount_in_pounds],
+            additional_compliance_charge_attributes: %i[id charge_amount_in_pounds]
+          ).tap do |params|
+      if params[:initial_compliance_charge_attributes]
+        params[:initial_compliance_charge_attributes][:name] = "initial compliance charge"
+        params[:initial_compliance_charge_attributes][:charge_type] = "initial_compliance_charge"
+      end
+      if params[:additional_compliance_charge_attributes]
+        params[:additional_compliance_charge_attributes][:name] = "additional compliance charge"
+        params[:additional_compliance_charge_attributes][:charge_type] = "additional_compliance_charge"
+      end
+    end
   end
 end

@@ -20,17 +20,13 @@
           width: "one-half",
           label: { text: t(".fields.name") } %>
 
-      <%= f.govuk_text_field :initial_compliance_charge,
-          width: "one-quarter",
-          label: { text: t(".fields.initial_compliance_charge"),
-          pattern: "[0-9]*",
-          inputmode: "numeric" } %>
+      <%= f.fields_for :initial_compliance_charge do |f| %>
+        <%= render("shared/charge", form: @band.initial_compliance_charge, field: "initial_compliance_charge", f: f, prefix: "band-initial-compliance-charge") %>
+      <% end %>
 
-      <%= f.govuk_text_field :additional_compliance_charge,
-          width: "one-quarter",
-          label: { text: t(".fields.additional_compliance_charge"),
-          pattern: "[0-9]*",
-          inputmode: "numeric" } %>
+      <%= f.fields_for :additional_compliance_charge do |f| %>
+        <%= render("shared/charge", form: @band.additional_compliance_charge, field: "additional_compliance_charge", f: f, prefix: "band-additional-compliance-charge") %>
+      <% end %>
 
       <%= f.govuk_submit t(".submit_button") %>
     <% end %>

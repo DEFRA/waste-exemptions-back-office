@@ -34,8 +34,8 @@ en:
       fields:
         name: "Band name"
         sequence: "Band number"
-        initial_compliance_charge: "Initial compliance charge (pence)"
-        additional_compliance_charge: "Additional compliance charge (pence)"
+        initial_compliance_charge: "Initial compliance charge (£)"
+        additional_compliance_charge: "Additional compliance charge (£)"
         no_band: "no band"
     new:
       title: "Add a band"
@@ -44,8 +44,8 @@ en:
       fields:
         name: "Band name"
         sequence: "Band number"
-        initial_compliance_charge: "Initial compliance charge (pence)"
-        additional_compliance_charge: "Additional compliance charge (pence)"
+        initial_compliance_charge: "Initial compliance charge (£)"
+        additional_compliance_charge: "Additional compliance charge (£)"
         no_band: "no band"
     edit_registration_charge:
       title: "Edit registration charge"

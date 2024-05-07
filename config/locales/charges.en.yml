@@ -1,0 +1,15 @@
+en:
+  charges:
+    edit:
+      title: "Edit %{charge_name}"
+      heading: "Edit %{charge_name}"
+      submit_button: "Continue"
+      fields:
+        name: "Charge name"
+        charge_amount: "Charge amount (£)"
+  activerecord:
+    errors:
+      models:
+        bucket:
+          attributes:
+            

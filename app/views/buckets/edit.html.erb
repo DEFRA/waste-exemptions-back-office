@@ -13,11 +13,9 @@
         <%= t(".heading", bucket_name: @bucket.name.downcase) %>
       </h1>
 
-      <%= f.govuk_text_field :charge_amount,
-          width: "one-quarter",
-          label: { text: t(".fields.charge_amount"),
-          pattern: "[0-9]*",
-          inputmode: "numeric" } %>
+      <%= f.fields_for :initial_compliance_charge do |f| %>
+        <%= render("shared/charge", form: @bucket.initial_compliance_charge, field: "initial_compliance_charge", f: f, prefix: "bucket-initial-compliance-charge") %>
+      <% end %>
 
       <%= f.govuk_submit t(".submit_button") %>
     <% end %>

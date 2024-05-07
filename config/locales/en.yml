@@ -24,3 +24,7 @@ en:
           admin_agent: "Admin agent"
           data_agent: "Data agent"
           developer: "Developer"
+
+    charge:
+      initial_compliance_charge: "Initial compliance charge (£)"
+      additional_compliance_charge: "Additional compliance charge (£)"

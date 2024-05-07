@@ -29,6 +29,13 @@ class BucketsController < ApplicationController
 
   def bucket_params
     params.require(:bucket)
-          .permit(:name, :charge_amount)
+          .permit(
+            :name,
+            :charge_amount,
+            initial_compliance_charge_attributes: %i[id charge_amount_in_pounds]
+          ).tap do |params|
+            params[:initial_compliance_charge_attributes][:name] = "initial compliance charge"
+            params[:initial_compliance_charge_attributes][:charge_type] = "initial_compliance_charge"
+          end
   end
 end
