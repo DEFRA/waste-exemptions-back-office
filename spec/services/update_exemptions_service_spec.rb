@@ -1,75 +1,77 @@
 # frozen_string_literal: true
-require 'rails_helper'
+
+require "rails_helper"
 
 RSpec.describe UpdateExemptionsService do
-  describe '#run' do
-    let(:exemption1) { create(:exemption) }
-    let(:exemption2) { create(:exemption) }
-    let(:bucket1) { create(:bucket) }
-    let(:bucket2) { create(:bucket) }
-    let(:band1) { create(:band) }
-    let(:band2) { create(:band) }
+  describe "#run" do
+    subject(:update_exemptions) { described_class.run(params) }
+
+    let(:first_exemption) { create(:exemption) }
+    let(:second_exemption) { create(:exemption) }
+    let(:first_bucket) { create(:bucket) }
+    let(:second_bucket) { create(:bucket) }
+    let(:first_band) { create(:band) }
+    let(:second_band) { create(:band) }
 
     let(:params) do
       {
-        exemption1.id => { 'band_id' => band1.id, 'bucket_ids' => [bucket1.id.to_s] },
-        exemption2.id => { 'band_id' => band2.id, 'bucket_ids' => [bucket2.id.to_s] }
+        first_exemption.id.to_s => { "band_id" => first_band.id, "bucket_ids" => [first_bucket.id.to_s] },
+        second_exemption.id.to_s => { "band_id" => second_band.id, "bucket_ids" => [second_bucket.id.to_s] }
       }
     end
 
-    subject { described_class.run(params) }
+    context "when the update is successful" do
+      it "updates the exemptions and their bucket exemptions" do
+        expect { update_exemptions }.to change(WasteExemptionsEngine::BucketExemption, :count).by(2)
 
-    context 'when the update is successful' do
-      it 'updates the exemptions and their bucket exemptions' do
-        expect { subject }.to change { WasteExemptionsEngine::BucketExemption.count }.by(2)
+        first_exemption.reload
+        expect(first_exemption.band_id).to eq(first_band.id)
+        expect(first_exemption.buckets).to contain_exactly(first_bucket)
 
-        exemption1.reload
-        expect(exemption1.band_id).to eq(band1.id)
-        expect(exemption1.buckets).to contain_exactly(bucket1)
-
-        exemption2.reload
-        expect(exemption2.band_id).to eq(band2.id)
-        expect(exemption2.buckets).to contain_exactly(bucket2)
+        second_exemption.reload
+        expect(second_exemption.band_id).to eq(second_band.id)
+        expect(second_exemption.buckets).to contain_exactly(second_bucket)
       end
 
-      it 'returns true' do
-        expect(subject).to be true
+      it "returns true" do
+        expect(update_exemptions).to be true
       end
     end
 
-    context 'when the update fails' do
+    context "when the update fails" do
       before do
         allow(WasteExemptionsEngine::Exemption).to receive(:find).and_raise(ActiveRecord::RecordNotFound)
+        allow(Rails.logger).to receive(:error) # Setup Rails.logger as a spy
       end
 
-      it 'does not update any exemptions or bucket exemptions' do
-        expect { subject }.not_to change { WasteExemptionsEngine::BucketExemption.count }
+      it "does not update any exemptions or bucket exemptions" do
+        expect { update_exemptions }.not_to change(WasteExemptionsEngine::BucketExemption, :count)
       end
 
-      it 'logs the error' do
-        expect(Rails.logger).to receive(:error).with(/Error updating exemptions:/)
-        subject
+      it "logs the error" do
+        update_exemptions
+        expect(Rails.logger).to have_received(:error).with(/Error updating exemptions:/)
       end
 
-      it 'returns false' do
-        expect(subject).to be false
+      it "returns false" do
+        expect(update_exemptions).to be false
       end
     end
 
-    context 'when removing bucket exemptions' do
+    context "when removing bucket exemptions" do
       let(:params) do
         {
-          exemption1.id => { 'band_id' => band1.id, 'bucket_ids' => [] }
+          first_exemption.id.to_s => { "band_id" => first_band.id, "bucket_ids" => [] }
         }
       end
 
       before do
-        exemption1.bucket_exemptions.create(bucket: bucket1)
-        exemption1.bucket_exemptions.create(bucket: bucket2)
+        first_exemption.bucket_exemptions.create(bucket: first_bucket)
+        first_exemption.bucket_exemptions.create(bucket: second_bucket)
       end
 
-      it 'destroys all associated bucket exemptions' do
-        expect { subject }.to change { exemption1.bucket_exemptions.count }.from(2).to(0)
+      it "destroys all associated bucket exemptions" do
+        expect { update_exemptions }.to change { first_exemption.bucket_exemptions.count }.from(2).to(0)
       end
     end
   end
