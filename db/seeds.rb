@@ -40,7 +40,7 @@ def seed_charging_schemes
 end
 
 def create_band_if_not_exists(band_details)
-  WasteExemptionsEngine::Band.find_or_create_by(name: band["name"]) do |rec|
+  WasteExemptionsEngine::Band.find_or_create_by(name: band_details["name"]) do |rec|
     rec.sequence = band_details["sequence"]
 
     rec.initial_compliance_charge = WasteExemptionsEngine::Charge.find_or_create_by!(
