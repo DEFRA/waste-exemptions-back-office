@@ -115,4 +115,67 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
       end
     end
   end
+
+  describe "#deregistered_by", :versioning do
+    let(:user) { create(:user, email: "user@example.com") }
+    let(:registration_exemption) { create(:registration_exemption, state: "active") }
+
+    context "when state is changed to ceased" do
+      before do
+        PaperTrail.request(whodunnit: user.email) do
+          registration_exemption.cease!
+        end
+      end
+
+      it "returns the email of the user who changed the state to ceased" do
+        expect(registration_exemption.deregistered_by).to eq(user.email)
+      end
+    end
+
+    context "when state is changed to revoked" do
+      before do
+        PaperTrail.request(whodunnit: user.email) do
+          registration_exemption.revoke!
+        end
+      end
+
+      it "returns the email of the user who changed the state to revoked" do
+        expect(registration_exemption.deregistered_by).to eq(user.email)
+      end
+    end
+
+    context "when state is changed to a state other than ceased or revoked" do
+      before do
+        PaperTrail.request(whodunnit: user.email) do
+          registration_exemption.update!(state: "expired")
+        end
+      end
+
+      it "does not return any email" do
+        expect(registration_exemption.deregistered_by).to be_nil
+      end
+    end
+
+    context "when multiple state changes occur" do
+      let(:another_user) { create(:user, email: "nother_user@example.com") }
+
+      before do
+        PaperTrail.request(whodunnit: user.email) do
+          registration_exemption.update!(state: "expired")
+        end
+
+        PaperTrail.request(whodunnit: user.email) do
+          registration_exemption.update!(state: "active")
+        end
+
+        PaperTrail.request(whodunnit: another_user.email) do
+          registration_exemption.revoke!
+        end
+      end
+
+      it "returns the email of the user who last changed the state to ceased or revoked" do
+        expect(registration_exemption.deregistered_by).to eq(another_user.email)
+      end
+    end
+  end
 end
