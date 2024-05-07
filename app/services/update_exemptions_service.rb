@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateExemptionsService < WasteExemptionsEngine::BaseService
   def run(params)
     ActiveRecord::Base.transaction do
@@ -15,8 +17,8 @@ class UpdateExemptionsService < WasteExemptionsEngine::BaseService
   private
 
   def update_exemption(exemption, exemption_data)
-    exemption.update!(band_id: exemption_data['band_id'])
-    update_bucket_exemptions(exemption, exemption_data['bucket_ids'])
+    exemption.update!(band_id: exemption_data["band_id"])
+    update_bucket_exemptions(exemption, exemption_data["bucket_ids"])
   end
 
   def update_bucket_exemptions(exemption, bucket_ids)
