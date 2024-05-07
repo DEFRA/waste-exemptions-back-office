@@ -2,7 +2,11 @@
 
 FactoryBot.define do
   factory :bucket, class: "WasteExemptionsEngine::Bucket" do
-    sequence(:name) { |n| "Bucket #{n}" }
-    charge_amount { 75 }
+    name { "Bucket #{Faker::Lorem.unique.word}" }
+    charge_amount { Faker::Number.between(from: 10_000, to: 99_900) }
+
+    trait :farmer_exemptions do
+      name { "Farmer exemptions" }
+    end
   end
 end

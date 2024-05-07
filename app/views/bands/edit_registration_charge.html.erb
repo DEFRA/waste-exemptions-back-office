@@ -1,0 +1,25 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render("waste_exemptions_engine/shared/back", back_path: bands_path) %>
+
+    <%= form_for @band,
+                 url: update_registration_charge_bands_path,
+                 html: { method: :patch },
+                 builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
+
+      <h1 class="govuk-heading-l">
+        <%= t(".heading") %>
+      </h1>
+
+      <%= f.govuk_text_field :registration_charge,
+          width: "one-quarter",
+          label: { text: t(".fields.registration_charge"),
+          pattern: "[0-9]*",
+          inputmode: "numeric" } %>
+
+      <%= f.govuk_submit t(".submit_button") %>
+    <% end %>
+  </div>
+</div>
