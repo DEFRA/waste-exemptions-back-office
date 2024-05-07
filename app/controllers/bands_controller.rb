@@ -6,13 +6,13 @@ class BandsController < ApplicationController
   def index
     @bands = WasteExemptionsEngine::Band.order(sequence: :asc)
     @buckets = WasteExemptionsEngine::Bucket.order(name: :asc)
-    @registration_charge = WasteExemptionsEngine::Charge.find_by(charge_type: "registration_charge")
+    @registration_charge = WasteExemptionsEngine::Charge.find_by(charge_type: :registration_charge)
   end
 
   def new
     @band = WasteExemptionsEngine::Band.new
-    @band.initial_compliance_charge = WasteExemptionsEngine::Charge.new(charge_type: "initial_compliance_charge")
-    @band.additional_compliance_charge = WasteExemptionsEngine::Charge.new(charge_type: "additional_compliance_charge")
+    @band.initial_compliance_charge = WasteExemptionsEngine::Charge.new(charge_type: :initial_compliance_charge)
+    @band.additional_compliance_charge = WasteExemptionsEngine::Charge.new(charge_type: :additional_compliance_charge)
   end
 
   def edit
