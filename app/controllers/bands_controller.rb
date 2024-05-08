@@ -58,6 +58,7 @@ class BandsController < ApplicationController
             initial_compliance_charge_attributes: %i[id charge_amount_in_pounds],
             additional_compliance_charge_attributes: %i[id charge_amount_in_pounds]
           ).tap do |params|
+      # @TODO: this logic needs to be moved to a form object once requirements are clear
       if params[:initial_compliance_charge_attributes]
         params[:initial_compliance_charge_attributes][:name] = "initial compliance charge"
         params[:initial_compliance_charge_attributes][:charge_type] = "initial_compliance_charge"
