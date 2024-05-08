@@ -1,0 +1,80 @@
+en:
+  bands:
+    index:
+      title: "Band and charges management"
+      heading: "Band and charges management"
+      new_band_link_text: "Add a band"
+
+      band_list:
+        th:
+          sequence: "Bands"
+          initial_compliance_charge: "Initial Compliance Charge (£)"
+          additional_compliance_charge: "Additional Compliance Charge (£)"
+          actions: "Actions"
+        actions:
+          delete:
+            link_text: "Remove"
+          edit:
+            link_text: "Edit"
+      other_charges:
+        th:
+          name: "Other Charges"
+          initial_compliance_charge: "Initial Compliance Charge (£)"
+          other_charges: "Other Charges (£)"
+          actions: "Actions"
+        list:
+          registration_charge: "Registration charge"
+        actions:
+          edit:
+            link_text: "Edit"
+    edit:
+      title: "Edit a band"
+      heading: "Edit a band"
+      submit_button: "Continue"
+      fields:
+        name: "Band name"
+        sequence: "Band number"
+        initial_compliance_charge: "Initial compliance charge (£)"
+        additional_compliance_charge: "Additional compliance charge (£)"
+        no_band: "no band"
+    new:
+      title: "Add a band"
+      heading: "Add a band"
+      submit_button: "Continue"
+      fields:
+        name: "Band name"
+        sequence: "Band number"
+        initial_compliance_charge: "Initial compliance charge (£)"
+        additional_compliance_charge: "Additional compliance charge (£)"
+        no_band: "no band"
+    edit_registration_charge:
+      title: "Edit registration charge"
+      heading: "Edit registration charge"
+      submit_button: "Continue"
+      fields:
+        registration_charge: "Charge (pence)"
+      errors:
+        create_bands_first: "Please create bands before setting the registration fee"
+    update_registration_charge:
+      invalid_registration_charge: "Invalid registration fee"
+  activerecord:
+    errors:
+      models:
+        waste_exemptions_engine/band:
+          attributes:
+            name:
+              taken: "There is currently a band with that name"
+            sequence:
+              taken: "There is currently a band with that number"
+            initial_compliance_charge:
+              not_a_number: "You can only enter numerical values"
+            additional_compliance_charge:
+              not_a_number: "You can only enter numerical values"
+            registration_charge:
+              not_a_number: "You can only enter numerical values"
+        waste_exemptions_engine/bucket:
+          attributes:
+            name:
+              taken: "There is currently a bucket with that name"
+            charge_amount:
+              not_a_number: "You can only enter numerical values"

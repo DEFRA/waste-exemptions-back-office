@@ -67,5 +67,6 @@ class Ability
     can :read, Reports::DefraQuarterlyStatsService
     can :reset_transient_registrations, WasteExemptionsEngine::Registration
     can :view_analytics, :all
+    can :manage_charges, :all
   end
 end

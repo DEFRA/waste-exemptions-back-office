@@ -1,0 +1,41 @@
+{
+  "bands" : [
+    { 
+      "name": "High-risk activity exemptions", 
+      "sequence": 1, 
+      "initial_compliance_charge": 40900,
+      "additional_compliance_charge": 7400 
+    },
+    { 
+      "name": "Medium-risk activity exemptions",
+      "sequence": 2, 
+      "initial_compliance_charge": 20700, 
+      "additional_compliance_charge": 7400 
+    },
+    { 
+      "name": "Lower-risk activity exemptions", 
+      "sequence": 3, 
+      "initial_compliance_charge": 3000, 
+      "additional_compliance_charge": 3000 
+    },
+    { 
+      "name": "Low-risk activity exemptions", 
+      "sequence": 4, 
+      "initial_compliance_charge": 118000, 
+      "additional_compliance_charge": 22100 
+    }
+  ],
+  "charges" : [
+    { 
+      "name": "Registration charge",
+      "charge_type": "registration_charge", 
+      "charge_amount": 4100
+    }
+  ],
+  "buckets" : [
+    { 
+      "name": "Farmer exemptions", 
+      "initial_compliance_charge": 9000
+    }
+  ]
+}

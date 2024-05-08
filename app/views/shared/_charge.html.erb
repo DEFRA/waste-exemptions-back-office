@@ -1,0 +1,9 @@
+<div class="govuk-form-group <%= "govuk-form-group--error" if form.errors[:premises].any? %>">
+  <% if form.errors[:charge_amount_in_pounds].any? %>
+    <span class="govuk-error-message" id="<%= prefix %>-field-error"><%= form.errors[:charge_amount_in_pounds].join(", ") %></span>
+  <% end %>
+  <%= f.govuk_text_field :charge_amount_in_pounds,
+      width: "one-quarter",
+      label: { text: t(".#{field}") },
+      value: form.charge_amount_in_pounds %>
+</div>

@@ -1,0 +1,15 @@
+en:
+  buckets:
+    edit:
+      title: "Edit %{bucket_name} info"
+      heading: "Edit %{bucket_name} info"
+      submit_button: "Continue"
+      fields:
+        name: "Bucket name"
+        charge_amount: "Initial compliance charge (pence)"
+  activerecord:
+    errors:
+      models:
+        bucket:
+          attributes:
+            

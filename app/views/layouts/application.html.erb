@@ -59,6 +59,13 @@
                         class: "govuk-header__link" %>
           </li>
         <% end %>
+        <% if can?(:manage_charges, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.band_management"),
+                        main_app.bands_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
       </ul>
     </nav>
   <% end %>
