@@ -205,4 +205,50 @@ RSpec.describe "Bands" do
       end
     end
   end
+
+  describe "DELETE /bands/:id" do
+    let(:band) { create(:band) }
+
+    context "when a permitted user is signed in" do
+      before do
+        sign_in(user)
+      end
+
+      context "when the band has exemptions" do
+        before do
+          create(:exemption, band: band)
+        end
+
+        it "redirects to the cannot destroy page" do
+          delete "/bands/#{band.id}"
+
+          expect(response).to redirect_to(cannot_destroy_band_path(band))
+        end
+      end
+
+      context "when the band has no exemptions" do
+        it "deletes the band and redirects to the band list" do
+          delete "/bands/#{band.id}"
+
+          expect(WasteExemptionsEngine::Band.count).to eq(0)
+          expect(response).to redirect_to(bands_path)
+        end
+      end
+    end
+
+    context "when a non-permitted user is signed in" do
+      let(:non_permitted_user) { create(:user, :data_agent) }
+
+      before do
+        sign_in(non_permitted_user)
+      end
+
+      it "redirects to the permissions error page" do
+        delete "/bands/#{band.id}"
+
+        expect(response).to redirect_to("/pages/permission")
+      end
+    end
+  end
+
 end
