@@ -43,7 +43,9 @@ class BandsController < ApplicationController
     find_band(params[:id])
   end
 
-  def cannot_destroy; end
+  def cannot_destroy
+    # This is a placeholder method to render the cannot_destroy template
+  end
 
   def destroy
     find_band(params[:id])
