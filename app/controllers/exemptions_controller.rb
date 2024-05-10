@@ -31,7 +31,7 @@ class ExemptionsController < ApplicationController
   end
 
   def load_records
-    @exemptions = WasteExemptionsEngine::Exemption.visible.includes(:bucket_exemptions)
+    @exemptions = WasteExemptionsEngine::Exemption.visible.includes(:bucket_exemptions).order(:id)
     @bands = WasteExemptionsEngine::Band.all
     @buckets = WasteExemptionsEngine::Bucket.all
   end
