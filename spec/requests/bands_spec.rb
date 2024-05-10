@@ -222,6 +222,7 @@ RSpec.describe "Bands" do
         it "redirects to the cannot destroy page" do
           delete "/bands/#{band.id}"
 
+          expect(WasteExemptionsEngine::Band.count).to eq(1)
           expect(response).to redirect_to(cannot_destroy_band_path(band))
         end
       end
