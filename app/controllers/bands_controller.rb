@@ -74,7 +74,6 @@ class BandsController < ApplicationController
           .permit(
             :name,
             :sequence,
-            :registration_charge,
             initial_compliance_charge_attributes: %i[id charge_amount_in_pounds],
             additional_compliance_charge_attributes: %i[id charge_amount_in_pounds]
           ).tap do |params|
