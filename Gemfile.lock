@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 44427e5c9cd79a35b5bc37ceff681fa0b3dfe311
-  branch: RUBY-3065-wex-charging-bo-band-charges-deletion
+  revision: e5037f464496e4b07d3485b88f593aacc80081ae
+  branch: main
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
