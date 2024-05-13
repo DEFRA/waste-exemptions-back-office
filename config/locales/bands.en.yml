@@ -57,6 +57,9 @@ en:
         create_bands_first: "Please create bands before setting the registration fee"
     update_registration_charge:
       invalid_registration_charge: "Invalid registration fee"
+    destroy:
+      success: "Band was successfully removed"
+      failure: "There was an error removing the band"
     destroy_confirmation:
       title: "Are you sure you want to remove this band?"
       heading: "Are you sure you want to remove this band?"

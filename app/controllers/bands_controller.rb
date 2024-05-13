@@ -48,14 +48,16 @@ class BandsController < ApplicationController
   end
 
   def destroy
-    find_band(params[:id])
+    @band = find_band(params[:id])
 
-    if @band.exemptions.any?
-      redirect_to cannot_destroy_band_url
-    elsif @band.destroy
+    redirect_to cannot_destroy_band_url and return unless @band.can_be_destroyed?
+
+    if @band.destroy
+      flash[:message] = I18n.t("bands.destroy.success")
       redirect_to bands_url
     else
-      render :edit
+      flash[:error] = I18n.t("bands.destroy.error")
+      render :index
     end
   end
 
