@@ -1,0 +1,9 @@
+en:
+  exemptions:
+    messages:
+      successfully_updated: "Exemptions updated successfully."
+      failed_to_update: "Failed to update exemptions."
+    index:
+      title: "Charging catalogue"
+      heading: "Charging catalogue"
+      submit: "Save changes"

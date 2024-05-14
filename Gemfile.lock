@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 2c21243ab3a7ecf9ac874b858d3d394577fe48ce
+  revision: e5037f464496e4b07d3485b88f593aacc80081ae
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)

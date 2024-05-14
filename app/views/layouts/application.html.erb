@@ -59,10 +59,19 @@
                         class: "govuk-header__link" %>
           </li>
         <% end %>
+
         <% if can?(:manage_charges, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
           <li class="govuk-header__navigation-item">
             <%= link_to t("layouts.application.menu.band_management"),
-                        main_app.bands_path,
+              main_app.bands_path,
+              class: "govuk-header__link" %>
+          </li>
+        <%end%>
+
+        <% if can?(:manage_charge_catalogue, current_user) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.charge_catalogue"),
+                        main_app.exemptions_path,
                         class: "govuk-header__link" %>
           </li>
         <% end %>

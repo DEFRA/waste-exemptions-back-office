@@ -1,0 +1,55 @@
+<%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
+<h1 class="govuk-heading-l"><%= t('.heading') %></h1>
+<%= form_with(url: exemptions_path, method: :put, local: true, builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
+<% if flash[:message].present? || flash[:error].present? %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <%= render("shared/message", message: flash[:message]) if flash[:message].present? %>
+      <%= render("shared/error", error: flash[:error], details: flash[:error_details]) if flash[:error].present? %>
+    </div>
+  </div>
+<% end %>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header">Exemptions</th>
+        <th class="govuk-table__header">Band</th>
+        <% @buckets.each do |bucket| %>
+          <th class="govuk-table__header bucket_name"><%= bucket.name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <% @exemptions.each do |exemption| %>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell"><%= "#{exemption.code} #{exemption.description}" %></td>
+          <td class="govuk-table__cell">
+            <%= f.govuk_collection_select "exemptions[#{exemption.id}][band_id]",
+              @bands,
+              :id,
+              :name,
+              options: {
+                selected: exemption.band_id.to_s,
+              },
+              label: { text: 'Band', hidden: true },
+              id: "exemptions_#{exemption.id}_band_id"
+            %>
+          </td>
+          <% @buckets.each do |bucket| %>
+            <td class="govuk-table__cell">
+              <span class="govuk-checkboxes__item">
+                <%= f.govuk_check_box "exemptions[#{exemption.id}][bucket_ids][]",
+                  bucket.id,
+                  checked: exemption.bucket_exemptions.any? { |be| be.bucket_id == bucket.id },
+                  link_errors: true,
+                  multiple: false,
+                  label: { text: bucket.name, hidden: true } %>
+              </span>
+            <% end %>
+            </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= f.govuk_submit t('.submit') %>
+<% end %>
