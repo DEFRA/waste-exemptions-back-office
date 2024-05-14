@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :band, class: "WasteExemptionsEngine::Band" do
     name { "Band #{Faker::Lorem.unique.word}" }
-    sequence(:sequence) { Faker::Number.unique.between(from: 1, to: 10) } # reserved word
+    sequence(:sequence) { Faker::Number.unique.between(from: 1, to: 100) } # reserved word
 
     initial_compliance_charge { association :charge, :initial_compliance_charge }
     additional_compliance_charge { association :charge, :additional_compliance_charge }
