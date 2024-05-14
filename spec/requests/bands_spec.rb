@@ -190,4 +190,76 @@ RSpec.describe "Bands" do
       end
     end
   end
+
+  describe "GET /bands/:id/destroy_confirmation" do
+    let(:band) { create(:band) }
+
+    context "when a permitted user is signed in" do
+      before do
+        sign_in(user)
+        get destroy_confirmation_band_path(band)
+      end
+
+      it "renders the destroy confirmation template" do
+        expect(response).to render_template(:destroy_confirmation)
+      end
+    end
+  end
+
+  describe "DELETE /bands/:id" do
+    let(:band) { create(:band) }
+
+    context "when a permitted user is signed in" do
+      before do
+        sign_in(user)
+      end
+
+      context "when the band has exemptions" do
+        before do
+          create(:exemption, band: band)
+        end
+
+        it "redirects to the cannot destroy page" do
+          delete "/bands/#{band.id}"
+
+          expect(WasteExemptionsEngine::Band.count).to eq(1)
+          expect(response).to redirect_to(cannot_destroy_band_path(band))
+        end
+      end
+
+      context "when the band has no exemptions" do
+        it "deletes the band and redirects to the band list" do
+          delete "/bands/#{band.id}"
+
+          expect(WasteExemptionsEngine::Band.count).to eq(0)
+          expect(response).to redirect_to(bands_path)
+        end
+
+        it "fails to delete the band and renders the index template" do
+          allow(WasteExemptionsEngine::Band).to receive(:find).and_return(band)
+          allow(band).to receive_messages(can_be_destroyed?: true, destroy: false)
+
+          delete "/bands/#{band.id}"
+
+          expect(WasteExemptionsEngine::Band.count).to eq(1)
+          expect(flash[:error]).to eq "There was an error removing the band"
+          expect(response).to redirect_to(bands_path)
+        end
+      end
+    end
+
+    context "when a non-permitted user is signed in" do
+      let(:non_permitted_user) { create(:user, :data_agent) }
+
+      before do
+        sign_in(non_permitted_user)
+      end
+
+      it "redirects to the permissions error page" do
+        delete "/bands/#{band.id}"
+
+        expect(response).to redirect_to("/pages/permission")
+      end
+    end
+  end
 end
