@@ -234,6 +234,16 @@ RSpec.describe "Bands" do
           expect(WasteExemptionsEngine::Band.count).to eq(0)
           expect(response).to redirect_to(bands_path)
         end
+
+        it "fails to delete the band and renders the index template" do
+          allow_any_instance_of(WasteExemptionsEngine::Band).to receive(:destroy).and_return(false)
+
+          delete "/bands/#{band.id}"
+
+          expect(WasteExemptionsEngine::Band.count).to eq(1)
+          expect(flash[:error]).to eq "There was an error removing the band"
+          expect(response).to render_template(:index)
+        end
       end
     end
 
@@ -251,5 +261,4 @@ RSpec.describe "Bands" do
       end
     end
   end
-
 end
