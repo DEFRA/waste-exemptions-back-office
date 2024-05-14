@@ -54,11 +54,10 @@ class BandsController < ApplicationController
 
     if @band.destroy
       flash[:message] = I18n.t("bands.destroy.success")
-      redirect_to bands_url
     else
       flash[:error] = I18n.t("bands.destroy.failure")
-      render :index
     end
+    redirect_to bands_url
   end
 
   private
