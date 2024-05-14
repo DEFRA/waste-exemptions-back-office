@@ -35,7 +35,7 @@ RSpec.describe "Exemptions Controller" do
         {
           exemptions: {
             exemptions[0].id => { band_id: bands[0].id, bucket_ids: [buckets[0].id] },
-            exemptions[1].id => { band_id: bands[1].id, bucket_ids: [buckets[1].id] },
+            exemptions[1].id => { band_id: bands[1].id, bucket_ids: [buckets[0].id, buckets[1].id] },
             exemptions[2].id => { band_id: bands[0].id, bucket_ids: [] }
           }
         }
@@ -45,13 +45,13 @@ RSpec.describe "Exemptions Controller" do
         put exemptions_path, params: request_params
 
         expect(response).to redirect_to(exemptions_path)
-        expect(flash[:notice]).to eq("Exemptions updated successfully.")
+        expect(flash[:message]).to eq("Exemptions updated successfully.")
 
         exemptions.each(&:reload)
         expect(exemptions[0].band_id).to eq(bands[0].id)
         expect(exemptions[0].buckets).to contain_exactly(buckets[0])
         expect(exemptions[1].band_id).to eq(bands[1].id)
-        expect(exemptions[1].buckets).to contain_exactly(buckets[1])
+        expect(exemptions[1].buckets).to contain_exactly(buckets[0], buckets[1])
         expect(exemptions[2].band_id).to eq(bands[0].id)
         expect(exemptions[2].buckets).to be_empty
       end

@@ -18,7 +18,12 @@ class UpdateExemptionsService < WasteExemptionsEngine::BaseService
 
   def update_exemption(exemption, exemption_data)
     exemption.update!(band_id: exemption_data["band_id"])
-    update_bucket_exemptions(exemption, exemption_data["bucket_ids"])
+    bucket_ids = normalize_bucket_ids(exemption_data["bucket_ids"])
+    update_bucket_exemptions(exemption, bucket_ids)
+  end
+
+  def normalize_bucket_ids(bucket_ids)
+    bucket_ids.compact_blank if bucket_ids.is_a?(Array)
   end
 
   def update_bucket_exemptions(exemption, bucket_ids)
