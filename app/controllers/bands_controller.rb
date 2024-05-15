@@ -39,6 +39,27 @@ class BandsController < ApplicationController
     end
   end
 
+  def destroy_confirmation
+    find_band(params[:id])
+  end
+
+  def cannot_destroy
+    # This is a placeholder method to render the cannot_destroy template
+  end
+
+  def destroy
+    @band = find_band(params[:id])
+
+    redirect_to cannot_destroy_band_url and return unless @band.can_be_destroyed?
+
+    if @band.destroy
+      flash[:message] = I18n.t("bands.destroy.success")
+    else
+      flash[:error] = I18n.t("bands.destroy.failure")
+    end
+    redirect_to bands_url
+  end
+
   private
 
   def authorize
