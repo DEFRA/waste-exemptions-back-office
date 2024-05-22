@@ -16,6 +16,7 @@
       <%= f.govuk_text_field :charge_amount_in_pounds,
           width: "one-quarter",
           label: { text: t(".fields.charge_amount") },
+          prefix_text: "£",
           value: @charge.charge_amount_in_pounds %>
 
       <%= f.govuk_submit t(".submit_button") %>
