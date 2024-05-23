@@ -1,7 +1,7 @@
 en:
   charges:
     edit:
-      title: "Edit charge"
+      title: "Edit registration charge"
       heading: "Edit %{charge_name}"
       submit_button: "Continue"
       fields:
