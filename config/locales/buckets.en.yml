@@ -1,8 +1,8 @@
 en:
   buckets:
     edit:
-      title: "Edit %{bucket_name} info"
-      heading: "Edit %{bucket_name} info"
+      title: "Edit bucket exemptions charge"
+      heading: "Edit %{bucket_name} charge"
       submit_button: "Continue"
       fields:
         name: "Bucket name"
