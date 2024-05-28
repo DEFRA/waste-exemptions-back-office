@@ -2,7 +2,38 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.11.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.12.0...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-3153\] Use monetary text input for charge management + update page headers and titles [\#1348](https://github.com/DEFRA/waste-exemptions-back-office/pull/1348) ([brujeo](https://github.com/brujeo))
+- Feature/3050 hide add band link when limit reached [\#1331](https://github.com/DEFRA/waste-exemptions-back-office/pull/1331) ([brujeo](https://github.com/brujeo))
+- RUBY 3066 wex charging bo charging catalogue management rebased [\#1329](https://github.com/DEFRA/waste-exemptions-back-office/pull/1329) ([jjromeo](https://github.com/jjromeo))
+- RUBY 3065 wex charging bo band charges deletion [\#1328](https://github.com/DEFRA/waste-exemptions-back-office/pull/1328) ([jjromeo](https://github.com/jjromeo))
+- RUBY-3050: WEX Charging: Band and charge management [\#1314](https://github.com/DEFRA/waste-exemptions-back-office/pull/1314) ([brujeo](https://github.com/brujeo))
+- \[RUBY-2749\] Add deregistration details page, and enhance styles [\#1313](https://github.com/DEFRA/waste-exemptions-back-office/pull/1313) ([jjromeo](https://github.com/jjromeo))
+
+**Fixed bugs:**
+
+- \[RUBY-3153\] adjusting page title for charge edit page [\#1350](https://github.com/DEFRA/waste-exemptions-back-office/pull/1350) ([brujeo](https://github.com/brujeo))
+- RUBY 3066 wex charging bo charging catalogue management rebased [\#1339](https://github.com/DEFRA/waste-exemptions-back-office/pull/1339) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-3066\] Refactor html to allow fixing accessibility issues and slightly improve layout [\#1338](https://github.com/DEFRA/waste-exemptions-back-office/pull/1338) ([jjromeo](https://github.com/jjromeo))
+- Ruby 2749 wex bo add deregistration details to a registration [\#1322](https://github.com/DEFRA/waste-exemptions-back-office/pull/1322) ([jjromeo](https://github.com/jjromeo))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `82be2f5` to `1543be3` [\#1355](https://github.com/DEFRA/waste-exemptions-back-office/pull/1355) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `95551b4` to `82be2f5` [\#1354](https://github.com/DEFRA/waste-exemptions-back-office/pull/1354) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `82ad929` to `95551b4` [\#1352](https://github.com/DEFRA/waste-exemptions-back-office/pull/1352) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `f8df377` to `82ad929` [\#1349](https://github.com/DEFRA/waste-exemptions-back-office/pull/1349) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `e5037f4` to `f8df377` [\#1340](https://github.com/DEFRA/waste-exemptions-back-office/pull/1340) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `6376c9f` to `2c21243` [\#1334](https://github.com/DEFRA/waste-exemptions-back-office/pull/1334) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Removing unused param [\#1332](https://github.com/DEFRA/waste-exemptions-back-office/pull/1332) ([brujeo](https://github.com/brujeo))
+- rake task to load custom seed file [\#1326](https://github.com/DEFRA/waste-exemptions-back-office/pull/1326) ([brujeo](https://github.com/brujeo))
+
+## [v2.12.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.12.0) (2024-04-29)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.11.0...v2.12.0)
 
 **Fixed bugs:**
 
@@ -15,6 +46,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1311](https://github.com/DEFRA/waste-exemptions-back-office/pull/1311) ([jjromeo](https://github.com/jjromeo))
 - Chore/rails 7 1 [\#1309](https://github.com/DEFRA/waste-exemptions-back-office/pull/1309) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Chore/rails 7 1 [\#1308](https://github.com/DEFRA/waste-exemptions-back-office/pull/1308) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
 - Chore/rails 7 1 [\#1307](https://github.com/DEFRA/waste-exemptions-back-office/pull/1307) ([PaulDoyle-DEFRA](https://github.com/PaulDoyle-DEFRA))
