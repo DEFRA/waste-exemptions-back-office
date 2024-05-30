@@ -48,7 +48,18 @@ RSpec.describe "one_off:undefined_area_fix", type: :rake do
     expect { run_rake_task }.to change { reg_with_postcode_that_cannot_be_found.site_address.reload.area }.to "Lincolnshire and Northamptonshire"
   end
 
+  it "doesn't change record of site address if EA area was not found" do
+    allow(WasteExemptionsEngine::DetermineEastingAndNorthingService).to receive(:run).with(grid_reference: nil, postcode: "WA16 0AW").and_return(nil)
+    allow(WasteExemptionsEngine::DetermineEastingAndNorthingService).to receive(:run).with(grid_reference: nil, postcode: "WA16 0A").and_return(nil)
+    expect { run_rake_task }.not_to change { reg_with_postcode_that_can_be_found.reload.site_address }
+  end
+
   it "doesn't change the area when area already defined" do
     expect { run_rake_task }.not_to change { reg_with_area_defined.site_address.reload.area }
+  end
+
+  it "prints the stats" do
+    allow(Rails.env).to receive(:test?).and_return(false)
+    expect { run_rake_task }.to output(/Number of regs with undefined EA area: 2*/).to_stdout
   end
 end
