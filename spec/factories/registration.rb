@@ -150,5 +150,13 @@ FactoryBot.define do
     trait :with_valid_mobile_phone_number do
       contact_phone { "07851456789" }
     end
+
+    trait :with_manual_site_address do
+      addresses do
+        [build(:address, :operator_address, :postal),
+         build(:address, :contact_address, :postal),
+         build(:address, :site_address, :manual, :postal)]
+      end
+    end
   end
 end
