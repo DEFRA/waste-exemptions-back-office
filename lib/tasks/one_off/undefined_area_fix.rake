@@ -3,15 +3,14 @@
 namespace :one_off do
   desc "Fix areas for manually added site addresses (see RUBY-3013)"
   task undefined_area_fix: :environment do
-    # 1. Find registrations with undefined EA area
     regs = find_registrations_with_undefined_area
 
     stats = { regs_count: regs.count, addr_fixed_count: 0, addr_partcode_fixed_count: 0, addr_not_fixed_count: 0 }
 
-    # 2. Find out the number of site addresses that can be fixed by matching cobtact and operator addresses
     regs.select do |reg|
       next if reg.site_address.area.present?
 
+      # try to find area by postcode
       area = find_area_by_postcode(reg.site_address.postcode)
       if area.present?
         reg.site_address.update(area: area)
@@ -19,6 +18,7 @@ namespace :one_off do
         next
       end
 
+      # try to find area by postcode without last letter
       partcode = reg.site_address.postcode[0..-2]
       area = find_area_by_postcode(partcode)
       if area.present?
@@ -42,7 +42,7 @@ end
 
 def find_area_by_postcode(postcode)
   coords = WasteExemptionsEngine::DetermineEastingAndNorthingService.run(grid_reference: nil, postcode: postcode)
-  if coords.present? && coords[:easting] > 0.0 && coords[:northing] > 0.0
+  if coords.present? && coords[:easting] != 0.0 && coords[:northing] != 0.0
     area = WasteExemptionsEngine::DetermineAreaService.run(easting: coords[:easting], northing: coords[:northing])
     return area
   end
