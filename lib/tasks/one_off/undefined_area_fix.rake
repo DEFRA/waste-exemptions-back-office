@@ -5,7 +5,7 @@ namespace :one_off do
   task undefined_area_fix: :environment do
     regs = find_registrations_with_undefined_area
 
-    stats = { regs_count: regs.count, addr_fixed_count: 0, addr_partcode_fixed_count: 0, addr_not_fixed_count: 0 }
+    stats = { regs: regs, regs_fixed: [], regs_partcode_fixed: [], regs_not_fixed: [] }
 
     regs.select do |reg|
       next if reg.site_address.area.present?
@@ -14,7 +14,7 @@ namespace :one_off do
       area = find_area_by_postcode(reg.site_address.postcode)
       if area.present?
         reg.site_address.update(area: area)
-        stats[:addr_fixed_count] += 1
+        stats[:regs_fixed].push reg
         next
       end
 
@@ -23,11 +23,11 @@ namespace :one_off do
       area = find_area_by_postcode(partcode)
       if area.present?
         reg.site_address.update(area: area)
-        stats[:addr_partcode_fixed_count] += 1
+        stats[:regs_partcode_fixed].push reg
         next
       end
 
-      stats[:addr_not_fixed_count] += 1
+      stats[:regs_not_fixed].push reg
     end
 
     print_stats(stats)
@@ -52,8 +52,11 @@ end
 def print_stats(stats)
   return if Rails.env.test?
 
-  puts "Number of regs with undefined EA area: #{stats[:regs_count]}"
-  puts "Number of regs that can be fixed without data manipulations: #{stats[:addr_fixed_count]}"
-  puts "Number of regs that can be fixed by matching postcode (excl. last letter): #{stats[:addr_partcode_fixed_count]}"
-  puts "Number of regs that can't be fixed: #{stats[:addr_not_fixed_count]}"
+  puts "Number of regs with undefined EA area: #{stats[:regs].count}"
+  puts "Number of regs that can be fixed without data manipulations: #{stats[:regs_fixed].count}"
+  puts stats[:regs_fixed].map(&:reference).join(", ")
+  puts "Number of regs that can be fixed by matching postcode (excl. last letter): #{stats[:regs_partcode_fixed].count}"
+  puts stats[:regs_partcode_fixed].map(&:reference).join(", ")
+  puts "Number of regs that can't be fixed: #{stats[:regs_not_fixed].count}"
+  puts stats[:regs_not_fixed].map(&:reference).join(", ")
 end
