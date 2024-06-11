@@ -2,7 +2,23 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.12.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.13.0...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-3013\] improving output of one\_off:undefined\_area\_fix task [\#1361](https://github.com/DEFRA/waste-exemptions-back-office/pull/1361) ([brujeo](https://github.com/brujeo))
+- \[RUBY-3013\] feat: Add rake task to fix undefined areas for manually added site addresses [\#1360](https://github.com/DEFRA/waste-exemptions-back-office/pull/1360) ([brujeo](https://github.com/brujeo))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `1543be3` to `0d5a77e` [\#1365](https://github.com/DEFRA/waste-exemptions-back-office/pull/1365) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actionpack from 7.1.3.3 to 7.1.3.4 [\#1364](https://github.com/DEFRA/waste-exemptions-back-office/pull/1364) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump actiontext from 7.1.3.3 to 7.1.3.4 [\#1363](https://github.com/DEFRA/waste-exemptions-back-office/pull/1363) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump webmock from 3.23.0 to 3.23.1 [\#1353](https://github.com/DEFRA/waste-exemptions-back-office/pull/1353) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.13.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.13.0) (2024-05-29)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.12.0...v2.13.0)
 
 **Implemented enhancements:**
 
@@ -22,6 +38,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1357](https://github.com/DEFRA/waste-exemptions-back-office/pull/1357) ([jjromeo](https://github.com/jjromeo))
 - Bump waste\_exemptions\_engine from `82be2f5` to `1543be3` [\#1355](https://github.com/DEFRA/waste-exemptions-back-office/pull/1355) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `95551b4` to `82be2f5` [\#1354](https://github.com/DEFRA/waste-exemptions-back-office/pull/1354) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `82ad929` to `95551b4` [\#1352](https://github.com/DEFRA/waste-exemptions-back-office/pull/1352) ([dependabot[bot]](https://github.com/apps/dependabot))
