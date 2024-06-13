@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 33a2677877af3c78a7b84dadcd7661b3590058bb
+  revision: 8f7d69454fafa9cbf3f5e0205487cac8d89ba39c
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -518,7 +518,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    stringio (3.1.0)
+    stringio (3.1.1)
     strscan (3.1.0)
     sucker_punch (3.2.0)
       concurrent-ruby (~> 1.0)
