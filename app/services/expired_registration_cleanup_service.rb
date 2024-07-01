@@ -24,11 +24,9 @@ class ExpiredRegistrationCleanupService < WasteExemptionsEngine::BaseService
     @registration_exemptions ||=
       WasteExemptionsEngine::RegistrationExemption
       .includes(:registration)
-      .where("deregistered_at <= ?", date)
+      .where(deregistered_at: ..date)
       .or(
-        WasteExemptionsEngine::RegistrationExemption.expired.where(
-          "expires_on <= ?", date
-        )
+        WasteExemptionsEngine::RegistrationExemption.expired.where(expires_on: ..date)
       )
   end
 
