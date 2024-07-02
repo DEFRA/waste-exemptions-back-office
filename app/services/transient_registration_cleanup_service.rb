@@ -9,7 +9,7 @@ class TransientRegistrationCleanupService < WasteExemptionsEngine::BaseService
   private
 
   def transient_registrations_to_remove(limit)
-    WasteExemptionsEngine::TransientRegistration.where("created_at < ?", oldest_possible_date).limit(limit)
+    WasteExemptionsEngine::TransientRegistration.where(created_at: ...oldest_possible_date).limit(limit)
   end
 
   def oldest_possible_date
