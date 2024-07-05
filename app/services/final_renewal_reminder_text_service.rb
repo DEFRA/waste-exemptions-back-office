@@ -6,7 +6,7 @@ class FinalRenewalReminderTextService < RenewalReminderTextService
   include WasteExemptionsEngine::CanHaveCommunicationLog
 
   def run(registration:)
-    super(registration:)
+    super
 
     create_log(registration:)
   end

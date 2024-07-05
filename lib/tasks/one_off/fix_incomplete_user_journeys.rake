@@ -16,7 +16,7 @@ namespace :one_off do
           completed_at: Time.zone.now,
           completed_route: page_view.route
         )
-        puts "completed journey #{journey.id}"
+        puts "completed journey #{journey.id}" unless Rails.env.test?
         break 1 # exit the first loop
       end
     end
