@@ -46,7 +46,7 @@ RSpec.describe TransientRegistrationCleanupService do
         end
 
         it "deletes only up to the limit" do
-          expect { described_class.run(limit: 1) }.to change { WasteExemptionsEngine::TransientRegistration.where("created_at < ?", 30.days.ago).count }.by(-1)
+          expect { described_class.run(limit: 1) }.to change { WasteExemptionsEngine::TransientRegistration.where(created_at: ...30.days.ago).count }.by(-1)
         end
       end
     end

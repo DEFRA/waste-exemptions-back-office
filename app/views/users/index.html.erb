@@ -5,6 +5,7 @@
 </h1>
 
 <p class="govuk-body"><%= link_to t(".invite_user_link_text"), new_user_invitation_path %></p>
+<p class="govuk-body"><%= link_to t(".export_users_link_text"), all_users_path(format: :csv) %></p>
 
 <p class="govuk-body">
   <% if @show_all_users %>
