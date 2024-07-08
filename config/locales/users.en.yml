@@ -1,37 +1,38 @@
 en:
   users:
     index:
-      title: "Manage back office users"
-      heading: "Manage back office users"
-      invite_user_link_text: "Invite a new user"
-      show_all_users: "Show all users"
-      show_enabled_users_only: "Show enabled users only"
+      title: Manage back office users
+      heading: Manage back office users
+      invite_user_link_text: Invite a new user
+      export_users_link_text: Export user list to CSV
+      show_all_users: Show all users
+      show_enabled_users_only: Show enabled users only
 
       user_list:
         th:
-          email: "User email"
-          role: "Role"
-          status: "Status"
-          actions: "Actions"
+          email: User email
+          role: Role
+          status: Status
+          actions: Actions
         roles:
-          system: "system user"
-          super_agent: "super agent"
-          admin_agent: "admin agent"
-          data_agent: "data agent"
-          developer: "developer"
+          system: system user
+          super_agent: super agent
+          admin_agent: admin agent
+          data_agent: data agent
+          developer: developer
         statuses:
-          active: "active"
-          deactivated: "deactivated"
-          invited: "invitation sent"
+          active: active
+          deactivated: deactivated
+          invited: invitation sent
         actions:
           change_role:
-            link_text: "Change role"
+            link_text: Change role
             visually_hidden_text: " of %{email}"
           deactivate:
-            link_text: "Deactivate"
+            link_text: Deactivate
             visually_hidden_text: " %{email}"
           activate:
-            link_text: "Activate"
+            link_text: Activate
             visually_hidden_text: " %{email}"
   activerecord:
     errors:
@@ -39,12 +40,12 @@ en:
         user:
           attributes:
             email:
-              blank: "Enter an email address"
-              invalid: "Enter a valid email address - there’s a mistake in that one"
-              taken: "There is already a user with this email"
+              blank: Enter an email address
+              invalid: Enter a valid email address - there’s a mistake in that one
+              taken: There is already a user with this email
             password:
-              blank: "You must enter a password"
-              too_short: "The password must be at least 8 characters long"
-              invalid_format: "The password must contain uppercase letters, lowercase letters and numbers"
+              blank: You must enter a password
+              too_short: The password must be at least 8 characters long
+              invalid_format: The password must contain uppercase letters, lowercase letters and numbers
             role:
-              inclusion: "You must select a role"
+              inclusion: You must select a role
