@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: adce297f2272e761024c7466e63ebef3d4d871f2
+  revision: a758324828cc80972369233fe8bc5750ba505905
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -278,7 +278,7 @@ GEM
       concurrent-ruby (~> 1.0)
     io-console (0.7.2)
     io-event (1.5.1)
-    irb (1.13.2)
+    irb (1.14.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
