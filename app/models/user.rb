@@ -19,6 +19,10 @@ class User < WasteExemptionsEngine::ApplicationRecord
     active == true
   end
 
+  def deactivated?
+    !active?
+  end
+
   def activate!
     update!(active: true)
   end
@@ -41,6 +45,7 @@ class User < WasteExemptionsEngine::ApplicationRecord
          :invitable,
          :lockable,
          :recoverable,
+         :trackable,
          :validatable
 
   # Devise security improvements, used to invalidate old sessions on logout
