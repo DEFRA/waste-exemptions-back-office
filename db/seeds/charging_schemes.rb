@@ -49,7 +49,8 @@ def create_charge_if_not_exists(charge_details)
 end
 
 def create_bucket_if_not_exists(bucket_details)
-  WasteExemptionsEngine::Bucket.find_or_create_by(name: bucket_details["name"]) do |rec|
+  WasteExemptionsEngine::Bucket.find_or_create_by(name: bucket_details["name"],
+                                                  bucket_type: bucket_details["bucket_type"]) do |rec|
     rec.initial_compliance_charge = WasteExemptionsEngine::Charge.find_or_create_by!(
       charge_type: "initial_compliance_charge", name: "initial compliance charge for #{bucket_details['name']}"
     ) do |charge|
