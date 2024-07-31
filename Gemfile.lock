@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 5073d8eee2d83c094ad36d7eeae9f27e42b5e0cd
+  revision: a76023cf6d3c80e05e98de261c6248ad62cc403a
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -377,7 +377,7 @@ GEM
     psych (5.1.2)
       stringio
     public_suffix (5.0.5)
-    racc (1.8.0)
+    racc (1.8.1)
     rack (2.2.9)
     rack-session (1.0.2)
       rack (< 3)
@@ -562,7 +562,7 @@ GEM
       activesupport
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.16)
+    zeitwerk (2.6.17)
 
 PLATFORMS
   ruby
