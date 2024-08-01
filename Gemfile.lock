@@ -351,9 +351,10 @@ GEM
     parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
-    passenger (6.0.22)
-      rack
-      rake (>= 0.8.1)
+    passenger (6.0.23)
+      rack (>= 1.6.13)
+      rackup
+      rake (>= 12.3.3)
     pg (1.5.7)
     pgreset (0.4)
     phonelib (0.9.1)
