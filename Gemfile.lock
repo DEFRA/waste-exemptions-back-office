@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: a76023cf6d3c80e05e98de261c6248ad62cc403a
+  revision: 0555654e410151191c001231cc2d241ec08f72d0
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -512,7 +512,7 @@ GEM
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.1)
+    sprockets-rails (3.5.2)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
