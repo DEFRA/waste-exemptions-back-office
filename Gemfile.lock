@@ -248,6 +248,8 @@ GEM
       faraday (>= 0.8)
     faraday-net_http (3.1.0)
       net-http
+    faraday-retry (2.2.1)
+      faraday (~> 2.0)
     ffi (1.16.3)
     fiber-annotation (0.2.0)
     fiber-local (1.0.0)
@@ -351,10 +353,9 @@ GEM
     parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
-    passenger (6.0.23)
-      rack (>= 1.6.13)
-      rackup
-      rake (>= 12.3.3)
+    passenger (6.0.22)
+      rack
+      rake (>= 0.8.1)
     pg (1.5.7)
     pgreset (0.4)
     phonelib (0.9.1)
@@ -438,7 +439,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    rexml (3.3.2)
+    rexml (3.3.4)
       strscan
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -582,6 +583,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  faraday-retry
   github_changelog_generator
   govuk_design_system_formbuilder
   jquery-rails
@@ -592,7 +594,7 @@ DEPENDENCIES
   net-smtp
   notifications-ruby-client
   paper_trail
-  passenger (~> 6.0, >= 5.0.30)
+  passenger (~> 6.0, != 6.0.23)
   pg
   pgreset
   poltergeist
