@@ -1,2 +1,53 @@
-Created registration: <%= registration.reference %>
-Edit token: <%= registration.edit_token %>
+<% content_for :page_title, "Registration Details" %>
+
+<h1 class="govuk-heading-xl">Test registration created!</h1>
+
+<h2 class="govuk-heading-l">Details</h2>
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Created registration</dt>
+    <dd class="govuk-summary-list__value"><%= registration.reference %></dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Edit token</dt>
+    <dd class="govuk-summary-list__value"><%= registration.edit_token %></dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Renew token</dt>
+    <dd class="govuk-summary-list__value"><%= registration.renew_token %></dd>
+  </div>
+</dl>
+
+<h2 class="govuk-heading-l">Exemptions</h2>
+<p class="govuk-body">This registration includes the following exemptions:</p>
+<dl class="govuk-summary-list">
+  <% registration_exemptions.each do |registration_exemption| %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+        <span class="govuk-!-font-weight-bold"><%= registration_exemption.exemption.code %></span>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        <%= registration_exemption.exemption.summary %>
+      </dd>
+      <% if registration_exemption.exemption.band.present? %>
+        <dd class="govuk-summary-list__actions">
+          <span class="govuk-tag govuk-tag--blue">
+            <%= registration_exemption.exemption.band.name %>
+          </span>
+        </dd>
+      <% else %>
+        <dd class="govuk-summary-list__actions"></dd>
+      <% end %>
+    </div>
+  <% end %>
+</dl>
+
+<h2 class="govuk-heading-l">Attributes</h2>
+<dl class="govuk-summary-list">
+  <% registration.attributes.each do |key, value| %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key"><%= key.humanize %></dt>
+      <dd class="govuk-summary-list__value"><%= value %></dd>
+    </div>
+  <% end %>
+</dl>
