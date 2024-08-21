@@ -11,11 +11,11 @@ class TestingController < ApplicationController
     # exemptions from params[:exemptions] which is a list of exemption codes
     # e.g. "create_registration/2022-01-01?exemptions=U1&exemptions=U2&exemptions=U3"
     # "testing/create_registration/2022-01-01?exemptions[]=U4&exemptions[]=U5&exemptions[]=U1"
-    if params[:exemptions].present?
-      @registration_exemptions = registration_exemptions_by_codes(params[:exemptions])
-    else
-      @registration_exemptions = registration_exemptions_by_count(3)
-    end
+    @registration_exemptions = if params[:exemptions].present?
+                                 registration_exemptions_by_codes(params[:exemptions])
+                               else
+                                 registration_exemptions_by_count(3)
+                               end
     # https://github.com/thoughtbot/factory_bot/blob/ca810767e70ccd85c7cb63f775bc16f653a97dc8/GETTING_STARTED.md#rails-preloaders-and-rspec
     FactoryBot.reload
 
@@ -25,7 +25,7 @@ class TestingController < ApplicationController
     # Ensure edit_token_created_at is populated
     registration.regenerate_and_timestamp_edit_token
 
-    render :show, locals: { registration: registration, registration_exemptions: @registration_exemptions}
+    render :show, locals: { registration: registration, registration_exemptions: @registration_exemptions }
   end
 
   private
@@ -44,7 +44,9 @@ class TestingController < ApplicationController
     codes.map do |code|
       FactoryBot.build(:registration_exemption,
                        expires_on: @expiry_date,
-                       exemption: selected_exemptions.find { |exemption| exemption.code == code } || FactoryBot.create(:exemption, code: code))
+                       exemption: selected_exemptions.find do |exemption|
+                                    exemption.code == code
+                                  end || FactoryBot.create(:exemption, code: code))
     end
   end
 
