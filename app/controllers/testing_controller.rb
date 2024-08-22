@@ -11,7 +11,7 @@ class TestingController < ApplicationController
     # exemptions from params[:exemptions] which is a list of exemption codes
     # e.g. "create_registration/2022-01-01?exemptions=U1&exemptions=U2&exemptions=U3"
     # "testing/create_registration/2022-01-01?exemptions[]=U4&exemptions[]=U5&exemptions[]=U1"
-    @registration_exemptions = if params[:exemptions].present?
+    registration_exemptions = if params[:exemptions].present?
                                  registration_exemptions_by_codes(params[:exemptions])
                                else
                                  registration_exemptions_by_count(3)
@@ -25,7 +25,7 @@ class TestingController < ApplicationController
     # Ensure edit_token_created_at is populated
     registration.regenerate_and_timestamp_edit_token
 
-    render :show, locals: { registration: registration, registration_exemptions: @registration_exemptions }
+    render :show, locals: { registration: registration, registration_exemptions: registration_exemptions }
   end
 
   private
