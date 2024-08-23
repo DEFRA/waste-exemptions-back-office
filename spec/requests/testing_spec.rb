@@ -7,6 +7,11 @@ RSpec.describe "Testing" do
 
   before { sign_in(user) }
 
+  after do
+    allow(ENV).to receive(:fetch).with("AIRBRAKE_ENV_NAME", any_args).and_call_original
+    allow(Rails.env).to receive(:test?).and_call_original
+  end
+
   describe "/create_registration" do
     let(:expiry_date) { 2.days.from_now.strftime("%Y-%m-%d") }
 
