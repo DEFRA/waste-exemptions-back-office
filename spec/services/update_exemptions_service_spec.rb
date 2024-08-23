@@ -9,7 +9,7 @@ RSpec.describe UpdateExemptionsService do
     let(:first_exemption) { create(:exemption) }
     let(:second_exemption) { create(:exemption) }
     let(:first_bucket) { create(:bucket) }
-    let(:second_bucket) { create(:bucket) }
+    let(:second_bucket) { create(:bucket, bucket_type: "charity") }
     let(:first_band) { create(:band) }
     let(:second_band) { create(:band) }
 
