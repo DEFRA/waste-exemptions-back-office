@@ -42,12 +42,13 @@ class TestingController < ApplicationController
   def registration_exemptions_by_codes(codes)
     selected_exemptions = WasteExemptionsEngine::Exemption.where(code: codes)
     codes.map do |code|
+      exemption = selected_exemptions.find { |e| e.code == code }
+      next unless exemption
+
       FactoryBot.build(:registration_exemption,
                        expires_on: @expiry_date,
-                       exemption: selected_exemptions.find do |exemption|
-                                    exemption.code == code
-                                  end || FactoryBot.create(:exemption, code: code))
-    end
+                       exemption: exemption)
+    end.compact
   end
 
   def non_production_only
