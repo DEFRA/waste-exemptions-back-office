@@ -11,16 +11,16 @@ class TestingController < ApplicationController
     # exemptions from params[:exemptions] which is a list of exemption codes
     # e.g. "create_registration/2022-01-01?exemptions=U1&exemptions=U2&exemptions=U3"
     # "testing/create_registration/2022-01-01?exemptions[]=U4&exemptions[]=U5&exemptions[]=U1"
-    if params[:exemptions].present?
-      registration_exemptions_by_codes(params[:exemptions])
-    else
-      registration_exemptions_by_count(3)
-    end
+    registration_exemptions = if params[:exemptions].present?
+                                create_registration_exemptions_by_codes(params[:exemptions])
+                              else
+                                create_registration_exemptions_by_count(3)
+                              end
     # https://github.com/thoughtbot/factory_bot/blob/ca810767e70ccd85c7cb63f775bc16f653a97dc8/GETTING_STARTED.md#rails-preloaders-and-rspec
     FactoryBot.reload
 
     registration = FactoryBot.create(:registration,
-                                     registration_exemptions: registration_exemptions_by_count(3))
+                                     registration_exemptions: registration_exemptions)
 
     # Ensure edit_token_created_at is populated
     registration.regenerate_and_timestamp_edit_token
@@ -30,7 +30,7 @@ class TestingController < ApplicationController
 
   private
 
-  def registration_exemptions_by_count(count)
+  def create_registration_exemptions_by_count(count)
     selected_exemptions = WasteExemptionsEngine::Exemption.first(count)
     (0..count - 1).map do |n|
       FactoryBot.build(:registration_exemption,
@@ -39,16 +39,12 @@ class TestingController < ApplicationController
     end
   end
 
-  def registration_exemptions_by_codes(codes)
-    selected_exemptions = WasteExemptionsEngine::Exemption.where(code: codes)
-    codes.map do |code|
-      exemption = selected_exemptions.find { |e| e.code == code }
-      next unless exemption
-
+  def create_registration_exemptions_by_codes(codes)
+    WasteExemptionsEngine::Exemption.where(code: codes).map do |exemption|
       FactoryBot.build(:registration_exemption,
                        expires_on: @expiry_date,
                        exemption: exemption)
-    end.compact
+    end
   end
 
   def non_production_only

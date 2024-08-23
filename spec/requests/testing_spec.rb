@@ -47,7 +47,7 @@ RSpec.describe "Testing" do
       end
 
       it "creates a registration with specified exemptions" do
-        exemption_codes = %w[U1 U2 U3]
+        exemption_codes = [create(:exemption, code: "U1"), create(:exemption, code: "U2"), create(:exemption, code: "U3")].map(&:code)
         get "/testing/create_registration/#{expiry_date}", params: { exemptions: exemption_codes }
         expect(response).to have_http_status(:success)
         registration = WasteExemptionsEngine::Registration.last
