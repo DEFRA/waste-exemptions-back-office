@@ -87,6 +87,11 @@ module WasteExemptionsBackOffice
     config.registration_email_batch_minimum_age_days = ENV.fetch("REGISTRATION_EMAIL_BATCH_MINIMUM_AGE",
                                                                  6.months.in_days).to_i
 
+    # Govpay
+    config.govpay_url = ENV["WEX_GOVPAY_URL"] || "https://publicapi.payments.service.gov.uk/v1"
+    config.govpay_front_office_api_token = ENV.fetch("WEX_GOVPAY_FRONT_OFFICE_API_TOKEN", nil)
+    config.govpay_back_office_api_token = ENV.fetch("WEX_GOVPAY_BACK_OFFICE_API_TOKEN", nil)
+
     # Database cleanup
     config.max_transient_registration_age_days = ENV["MAX_TRANSIENT_REGISTRATION_AGE_DAYS"] || 30
 
