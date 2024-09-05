@@ -21,7 +21,7 @@ class UserJourney < WasteExemptionsEngine::Analytics::UserJourney
   # rubocop:disable Metrics/BlockLength
   scope :passed_start_cutoff_page, lambda {
     # Subquery to check for the existence of the START_CUTOFF_PAGES in any PageView for the UserJourney
-    start_cutoff_page_subquery = <<-SQL
+    start_cutoff_page_subquery = <<-SQL.squish
           EXISTS (
             SELECT 1
             FROM analytics_page_views
@@ -32,7 +32,7 @@ class UserJourney < WasteExemptionsEngine::Analytics::UserJourney
     SQL
 
     # Subquery to find the last PageView for each UserJourney
-    last_page_not_cutoff_subquery = <<-SQL
+    last_page_not_cutoff_subquery = <<-SQL.squish
           NOT EXISTS (
             SELECT 1
             FROM analytics_page_views as last_pages
@@ -54,8 +54,7 @@ class UserJourney < WasteExemptionsEngine::Analytics::UserJourney
   # rubocop:enable Metrics/BlockLength
 
   scope :date_range, lambda { |start_date, end_date|
-    where("created_at >= :start AND created_at <= :end",
-          start: start_date.beginning_of_day, end: end_date.end_of_day)
+    where(created_at: start_date.beginning_of_day..end_date.end_of_day)
       .or(
         where(
           "completed_at IS NOT NULL AND completed_at >= :start AND completed_at <= :end AND created_at >= :start",

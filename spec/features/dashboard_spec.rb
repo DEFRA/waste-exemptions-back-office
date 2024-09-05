@@ -36,7 +36,7 @@ RSpec.describe "Dashboard" do
         expect(page).to have_text("WEX000001")
       end
 
-      it "strips ampersant character within the search terms and returns search results" do
+      it "strips ampersand character within the search terms and returns search results" do
         reference_with_tabs = "WEX&000001"
 
         expect(page).to have_field("term")
