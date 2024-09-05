@@ -24,7 +24,7 @@ module Analytics
     private
 
     def default_start_date
-      WasteExemptionsEngine::Analytics::UserJourney.minimum_created_at&.to_date.presence || Time.zone.today
+      UserJourney.minimum_created_at&.to_date.presence || Time.zone.today
     end
 
     def front_office_started
@@ -66,11 +66,11 @@ module Analytics
     end
 
     def journey_base_scope
-      WasteExemptionsEngine::Analytics::UserJourney.only_types(%w[
-                                                                 NewRegistration
-                                                                 RenewingRegistration
-                                                                 FrontOfficeEditRegistration
-                                                               ]).date_range(start_date, end_date)
+      UserJourney.only_types(%w[
+                               NewRegistration
+                               RenewingRegistration
+                               FrontOfficeEditRegistration
+                             ]).date_range(start_date, end_date)
     end
 
     def total_journeys_abandoned
