@@ -14,7 +14,7 @@ class ExemptionsController < ApplicationController
       redirect_to exemptions_path
     else
       load_records
-      flash[:error] = I18n.t("exemptions.messages.failed_to_update")
+      flash.now[:error] = I18n.t("exemptions.messages.failed_to_update")
       render :index
     end
   end
