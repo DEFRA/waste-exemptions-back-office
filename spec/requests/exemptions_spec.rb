@@ -5,15 +5,18 @@ require "rails_helper"
 RSpec.describe "Exemptions Controller" do
   let(:user) { create(:user, :super_agent) }
 
-  before do
-    sign_in(user)
+  let!(:exemptions) { create_list(:exemption, 3) }
+  let!(:bands) { create_list(:band, 2) }
+  let!(:buckets) do
+    [
+      create(:bucket, bucket_type: "farmer"),
+      create(:bucket, bucket_type: "charity")
+    ]
   end
 
-  describe "GET /exemptions" do
-    let!(:exemptions) { create_list(:exemption, 3) }
-    let!(:bands) { create_list(:band, 2) }
-    let!(:buckets) { create_list(:bucket, 2) }
+  before { sign_in(user) }
 
+  describe "GET /exemptions" do
     it "responds to the GET request with a 200 status code and renders the appropriate template" do
       get exemptions_path
 
@@ -26,10 +29,6 @@ RSpec.describe "Exemptions Controller" do
   end
 
   describe "PUT /exemptions" do
-    let!(:exemptions) { create_list(:exemption, 3) }
-    let!(:bands) { create_list(:band, 2) }
-    let!(:buckets) { create_list(:bucket, 2) }
-
     context "when the update is successful" do
       let(:request_params) do
         {
