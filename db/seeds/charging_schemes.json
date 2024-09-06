@@ -1,25 +1,25 @@
 {
   "bands" : [
     {
-      "name": "High-risk activity exemptions",
+      "name": "Band 1",
       "sequence": 1,
       "initial_compliance_charge": 40900,
       "additional_compliance_charge": 7400
     },
     {
-      "name": "Medium-risk activity exemptions",
+      "name": "Band 2",
       "sequence": 2,
       "initial_compliance_charge": 20700,
       "additional_compliance_charge": 7400
     },
     {
-      "name": "Lower-risk activity exemptions",
+      "name": "Band 3",
       "sequence": 3,
       "initial_compliance_charge": 3000,
       "additional_compliance_charge": 3000
     },
     {
-      "name": "Low-risk activity exemptions",
+      "name": "Upper Band",
       "sequence": 4,
       "initial_compliance_charge": 118000,
       "additional_compliance_charge": 22100
@@ -37,6 +37,30 @@
       "name": "Farmer exemptions",
       "bucket_type": "farmer",
       "initial_compliance_charge": 9000
+    }
+  ],
+  "band_exemptions" : [
+    {
+      "band_sequence": 1,
+      "exemption_codes": ["S1", "S2", "U1", "T4", "T5", "T6", "T10", "T12", "T21", "T24", "T25", "U9"]
+    },
+    {
+      "band_sequence": 2,
+      "exemption_codes": ["S3", "U2", "U4", "U8", "U10", "U11", "T1", "T2", "T13", "T14", "T15", "T16", "T17", "T19", "T23", "T30", "T31", "T33", "D1", "D6"]
+    },
+    {
+      "band_sequence": 3,
+      "exemption_codes": ["U3", "U5", "U6", "U7", "U12", "U13", "U14", "U15", "T18", "T20", "T26", "T27", "T28", "T29", "T32", "D2", "D3", "D4", "D5", "D6", "D7", "D8"]
+    },
+    {
+      "band_sequence": 4,
+      "exemption_codes": ["T8", "T9", "U16"]
+    }
+  ],
+  "bucket_exemptions" : [
+    {
+      "bucket_type": "farmer",
+      "exemption_codes": ["U1", "U4", "U8", "U10", "D1", "D3", "D4", "D6", "D7", "T1", "T23", "U12", "U13", "U14", "U15"]
     }
   ]
 }
