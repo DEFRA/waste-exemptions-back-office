@@ -25,8 +25,8 @@ def seed_charging_schemes
   band_exemptions.each { |details| update_band_exemptions(details) }
 
   # Bucket Exemptions
-  bucker_exemptions = seeds["bucket_exemptions"]
-  bucker_exemptions.each { |details| update_bucket_exemptions(details) }
+  bucket_exemptions = seeds["bucket_exemptions"]
+  bucket_exemptions.each { |details| update_bucket_exemptions(details) }
 end
 
 def create_or_update_band(band_details)
