@@ -25,10 +25,14 @@ RSpec.describe "Dashboard" do
       end
 
       it "strips tab character within the search terms and returns search results" do
-        reference_with_tabs = "WEX00	0001"
+        wex_reference = "WEX00	0001"
 
         expect(page).to have_field("term")
-        fill_in "term", with: reference_with_tabs
+
+        # Unlike the other examples, we can't use Capybara 'fill_in' here because it emulates keyboard
+        # input so the tab character embedded in the string would cause it to tab to the next field.
+        page.execute_script "$(\"#term\").val(\"#{wex_reference}\")"
+
         expect(page).to have_button("Search")
         click_on "Search"
 
@@ -37,10 +41,10 @@ RSpec.describe "Dashboard" do
       end
 
       it "strips ampersand character within the search terms and returns search results" do
-        reference_with_tabs = "WEX&000001"
+        wex_reference = "WEX&000001"
 
         expect(page).to have_field("term")
-        fill_in "term", with: reference_with_tabs
+        fill_in "term", with: wex_reference
         expect(page).to have_button("Search")
         click_on "Search"
 
@@ -49,10 +53,10 @@ RSpec.describe "Dashboard" do
       end
 
       it "strips double quote character within the search terms and returns search results" do
-        reference_with_tabs = "WEX\"000001"
+        wex_reference = "WEX\"000001"
 
         expect(page).to have_field("term")
-        fill_in "term", with: reference_with_tabs
+        fill_in "term", with: wex_reference
         expect(page).to have_button("Search")
         click_on "Search"
 
@@ -61,10 +65,10 @@ RSpec.describe "Dashboard" do
       end
 
       it "strips single quote character within the search terms and returns search results" do
-        reference_with_tabs = "WEX'000001"
+        wex_reference = "WEX'000001"
 
         expect(page).to have_field("term")
-        fill_in "term", with: reference_with_tabs
+        fill_in "term", with: wex_reference
         expect(page).to have_button("Search")
         click_on "Search"
 
@@ -73,10 +77,10 @@ RSpec.describe "Dashboard" do
       end
 
       it "strips less-than character within the search terms and returns search results" do
-        reference_with_tabs = "WEX<000001"
+        wex_reference = "WEX<000001"
 
         expect(page).to have_field("term")
-        fill_in "term", with: reference_with_tabs
+        fill_in "term", with: wex_reference
         expect(page).to have_button("Search")
         click_on "Search"
 
@@ -85,10 +89,10 @@ RSpec.describe "Dashboard" do
       end
 
       it "strips greater-than character within the search terms and returns search results" do
-        reference_with_tabs = "WEX>000001"
+        wex_reference = "WEX>000001"
 
         expect(page).to have_field("term")
-        fill_in "term", with: reference_with_tabs
+        fill_in "term", with: wex_reference
         expect(page).to have_button("Search")
         click_on "Search"
 
@@ -97,10 +101,10 @@ RSpec.describe "Dashboard" do
       end
 
       it "strips forward slash character within the search terms and returns search results" do
-        reference_with_tabs = "WEX/000001"
+        wex_reference = "WEX/000001"
 
         expect(page).to have_field("term")
-        fill_in "term", with: reference_with_tabs
+        fill_in "term", with: wex_reference
         expect(page).to have_button("Search")
         click_on "Search"
 

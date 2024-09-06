@@ -9,8 +9,13 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require "capybara/poltergeist"
-Capybara.javascript_driver = :poltergeist
+
+# Use Selenium Chrome driver in headless mode. Poltergeist has issues loading JS.
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome,
+                                      options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu]))
+end
+Capybara.javascript_driver = :chrome
 Capybara.server = :webrick
 
 # Checks for pending migrations and applies them before tests are run.
