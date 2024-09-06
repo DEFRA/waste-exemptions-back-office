@@ -3,10 +3,16 @@
 # module WasteExemptionsEngine
 #   module Analytics
 class UserJourney < WasteExemptionsEngine::Analytics::UserJourney
-  # include ActiveModel
-  # self.table_name = "analytics_user_journeys"
 
   # These scopes and helpers are used only for presentation of aggregate stats in the back-office.
+
+  START_CUTOFF_PAGES = %w[
+    location_form
+    edit_exemptions_form
+    front_office_edit_form
+    confirm_renewal_form
+    renew_without_changes_form
+  ].freeze
 
   scope :registrations, -> { where(journey_type: "NewRegistration") }
   scope :renewals, -> { where(journey_type: "RenewingRegistration") }
@@ -73,6 +79,4 @@ class UserJourney < WasteExemptionsEngine::Analytics::UserJourney
 
     durations.sum / durations.size
   end
-  # end
-  # end
 end

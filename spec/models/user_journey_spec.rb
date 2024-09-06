@@ -77,6 +77,17 @@ RSpec.describe UserJourney do
       it { expect(described_class.passed_start_cutoff_page).not_to include(journey_to_confirm_renewal_page) }
       it { expect(described_class.passed_start_cutoff_page).to include(journey_past_confirm_renewal_page) }
     end
+
+    # This spec is to ensure that legacy journeys before the renaming of renew_without_changes_form re also counted
+    describe "with renew_without_changes_form being a cutoff page" do
+      let!(:journey_initial_page_only) { create(:user_journey, visited_pages: %w[renewal_start_form]) }
+      let!(:journey_to_renew_without_changes) { create(:user_journey, visited_pages: %w[renewal_start_form renew_without_changes_form]) }
+      let!(:journey_past_renew_without_changes) { create(:user_journey, visited_pages: %w[renewal_start_form renew_without_changes_form declaration_form]) }
+
+      it { expect(described_class.passed_start_cutoff_page).not_to include(journey_initial_page_only) }
+      it { expect(described_class.passed_start_cutoff_page).not_to include(journey_to_renew_without_changes) }
+      it { expect(described_class.passed_start_cutoff_page).to include(journey_past_renew_without_changes) }
+    end
   end
 
   describe "completion scopes" do
