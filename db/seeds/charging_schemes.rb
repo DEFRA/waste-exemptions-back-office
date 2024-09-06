@@ -94,11 +94,12 @@ end
 def update_entity_exemptions(entity, exemption_codes)
   return if entity.blank? || exemption_codes.blank?
 
+  entity.exemptions = []
   exemption_codes.each do |exemption_code|
     exemption = WasteExemptionsEngine::Exemption.find_by(code: exemption_code)
     next if exemption.blank?
 
-    entity.exemptions << exemption unless entity.exemptions.include?(exemption)
+    entity.exemptions << exemption
   end
 end
 
