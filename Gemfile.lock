@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 64bff64b08491284344a7328cfa7bce0854ff8f3
+  revision: 38d1398ff8847ce308cfc765a28ba35317411e50
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -363,10 +363,6 @@ GEM
     pg (1.5.7)
     pgreset (0.4)
     phonelib (0.9.2)
-    poltergeist (1.18.1)
-      capybara (>= 2.1, < 4)
-      cliver (~> 0.3.1)
-      websocket-driver (>= 0.2.0)
     protocol-hpack (1.4.3)
     protocol-http (0.26.4)
     protocol-http1 (0.19.1)
