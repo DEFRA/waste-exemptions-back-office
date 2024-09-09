@@ -360,7 +360,7 @@ GEM
     passenger (6.0.22)
       rack
       rake (>= 0.8.1)
-    pg (1.5.7)
+    pg (1.5.8)
     pgreset (0.4)
     phonelib (0.9.2)
     protocol-hpack (1.4.3)
