@@ -100,3 +100,8 @@ end
 every :day, at: ENV["FINAL_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "10:00", roles: [:db] do
   rake_and_format "text:renew_reminder:final:send"
 end
+
+# test job
+every 5.minutes, roles: [:db] do
+  rake_and_format "test:task"
+end
