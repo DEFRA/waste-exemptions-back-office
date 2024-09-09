@@ -134,8 +134,8 @@ group :test do
   gem "simplecov", "~> 0.22.0", require: false
   # Integration testing tool
   gem "capybara"
-  # Needed for headless testing with Javascript or pages that ref external sites
-  gem "poltergeist"
+  # Needed for headless testing with Javascript
+  gem "selenium-webdriver"
   # A gem providing "time travel" and "time freezing" capabilities, making it
   # dead simple to test time-dependent code.
   gem "timecop"

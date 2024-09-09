@@ -13,11 +13,11 @@ class ResetTransientRegistrationsController < ApplicationController
     if reset_transient_registrations_form.submit
       successful_redirection = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE
       redirect_to registration_path(reference: registration.reference), status: successful_redirection
-      flash[:message] = t("reset_transient_registrations.flash.successful_reset")
+      flash.now[:message] = t("reset_transient_registrations.flash.successful_reset")
     else
       unsuccessful_redirection = WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE
       redirect_to registration_path(reference: registration.reference), status: unsuccessful_redirection
-      flash[:error] = t("reset_transient_registrations.flash.no_transient_registrations")
+      flash.now[:error] = t("reset_transient_registrations.flash.no_transient_registrations")
     end
   end
 

@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_24_150832) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_23_131328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
+
+  create_table "accounts", force: :cascade do |t|
+    t.bigint "registration_id", null: false
+    t.integer "balance", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["registration_id"], name: "index_accounts_on_registration_id"
+  end
 
   create_table "addresses", id: :serial, force: :cascade do |t|
     t.integer "address_type", default: 0
@@ -70,6 +78,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_150832) do
     t.integer "additional_compliance_charge_amount", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "charge_detail_id"
+    t.index ["charge_detail_id"], name: "index_band_charge_details_on_charge_detail_id"
   end
 
   create_table "bands", force: :cascade do |t|
@@ -102,6 +112,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_150832) do
     t.integer "bucket_charge_amount", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "order_id"
+    t.integer "total_charge_amount"
+    t.index ["order_id"], name: "index_charge_details_on_order_id"
   end
 
   create_table "charges", force: :cascade do |t|
@@ -167,7 +180,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_150832) do
     t.datetime "updated_at", null: false
     t.string "order_owner_type"
     t.bigint "order_owner_id"
+    t.string "order_uuid"
     t.index ["order_owner_type", "order_owner_id"], name: "index_orders_on_order_owner"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.string "payment_type"
+    t.integer "payment_amount"
+    t.string "payment_status"
+    t.bigint "order_id"
+    t.datetime "date_time"
+    t.string "govpay_id"
+    t.string "refunded_payment_govpay_id"
+    t.boolean "moto_payment", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "payment_uuid"
+    t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
   create_table "people", id: :serial, force: :cascade do |t|
@@ -233,6 +262,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_150832) do
     t.datetime "edit_token_created_at"
     t.boolean "reminder_opt_in", default: true
     t.string "unsubscribe_token"
+    t.boolean "charged", default: false
     t.index ["deregistration_email_sent_at"], name: "index_registrations_on_deregistration_email_sent_at"
     t.index ["edit_token"], name: "index_registrations_on_edit_token", unique: true
     t.index ["reference"], name: "index_registrations_on_reference", unique: true
@@ -342,6 +372,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_150832) do
     t.boolean "temp_confirm_no_exemption_changes"
     t.boolean "temp_check_your_answers_flow"
     t.string "temp_company_no"
+    t.string "temp_payment_method"
     t.index ["created_at"], name: "index_transient_registrations_on_created_at"
     t.index ["token"], name: "index_transient_registrations_on_token", unique: true
   end
@@ -398,15 +429,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_150832) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "accounts", "registrations"
   add_foreign_key "addresses", "registrations"
   add_foreign_key "analytics_page_views", "analytics_user_journeys", column: "user_journey_id"
+  add_foreign_key "band_charge_details", "charge_details"
   add_foreign_key "bucket_exemptions", "buckets"
   add_foreign_key "bucket_exemptions", "exemptions"
+  add_foreign_key "charge_details", "orders"
   add_foreign_key "exemptions", "bands"
   add_foreign_key "order_buckets", "buckets"
   add_foreign_key "order_buckets", "orders"
   add_foreign_key "order_exemptions", "exemptions"
   add_foreign_key "order_exemptions", "orders"
+  add_foreign_key "payments", "orders"
   add_foreign_key "people", "registrations"
   add_foreign_key "transient_addresses", "transient_registrations"
   add_foreign_key "transient_people", "transient_registrations"

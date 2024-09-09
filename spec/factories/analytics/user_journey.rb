@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user_journey, class: "WasteExemptionsEngine::Analytics::UserJourney" do
+  factory :user_journey, class: "UserJourney" do
     journey_type { "NewRegistration" }
     token { SecureRandom.hex(20) }
     started_route { "DIGITAL" }
