@@ -52,7 +52,10 @@ RSpec.describe "Whenever::Test::Schedule" do
   end
 
   it "can determine the configured cron log output path" do
-    expected_output_file = File.join("/srv/ruby/waste-exemptions-back-office/shared/log/", "whenever_cron.log")
+    expected_output_file = {
+      standard: File.join("/srv/ruby/waste-exemptions-back-office/shared/log/", "whenever_cron.log"),
+      error: File.join("/srv/ruby/waste-exemptions-back-office/shared/log/", "whenever_cron_error.log")
+    }
     expect(schedule.sets[:output]).to eq(expected_output_file)
   end
 
