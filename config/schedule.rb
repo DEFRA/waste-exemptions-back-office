@@ -8,8 +8,13 @@
 # Learn more: http://github.com/javan/whenever
 
 log_output_path = ENV["EXPORT_SERVICE_CRON_LOG_OUTPUT_PATH"] || "/srv/ruby/waste-exemptions-back-office/shared/log/"
-set :output, File.join(log_output_path, "whenever_cron.log")
+set :output, {
+  standard: File.join(log_output_path, "whenever_cron.log"),
+  error: File.join(log_output_path, "whenever_cron_error.log")
+}
 set :job_template, "/bin/bash -l -c 'eval \"$(rbenv init -)\" && :job'"
+# this job type is used to run a rake task and format standard stdout output into the log format
+job_type :rake_and_format, "cd :path && :environment_variable=:environment bin/rake_and_format :task --silent :output"
 
 # Only one of the AWS app servers has a role of "db"
 # see https://gitlab-dev.aws-int.defra.cloud/open/rails-deployment/blob/master/config/deploy.rb#L69
@@ -19,40 +24,40 @@ set :job_template, "/bin/bash -l -c 'eval \"$(rbenv init -)\" && :job'"
 # active exemptions and put this into an AWS S3 bucket from which the company
 # that provides and maintains the Electronis Public Register will grab it
 every :day, at: ENV["EXPORT_SERVICE_EPR_EXPORT_TIME"] || "22:05", roles: [:db] do
-  rake "reports:export:epr"
+  rake_and_format "reports:export:epr"
 end
 
 # This is the missing easting and northing job. When run it will update the
 # easting and northing fields for all site addresses where they are currently
 # nil, using os places to work out what they should be
 every :day, at: ENV["EASTING_AND_NORTHING_LOOKUP"] || "23:05", roles: [:db] do
-  rake "lookups:update:missing_easting_and_northing"
+  rake_and_format "lookups:update:missing_easting_and_northing"
 end
 
 # This is the registration exemptions expiry job which will collect all active
 # registration exemptions that have an expiry date in the past and will set
 # their state to `expired`
 every :day, at: ENV["EXPIRE_REGISTRATION_EXEMPTION_RUN_TIME"] || "00:05", roles: [:db] do
-  rake "expire_registration:run"
+  rake_and_format "expire_registration:run"
 end
 
 # This is the cleanup job for expired registrations which will delete all records, paper trails
 # and associated records that are more than 7 years old
 every :day, at: ENV["CLEANUP_REMOVE_EXPIRED_REGISTRATIONS_RUN_TIME"] || "00:45", roles: [:db] do
-  rake "cleanup:remove_expired_registrations"
+  rake_and_format "cleanup:remove_expired_registrations"
 end
 
 # This is the Notify AD renewal letters job. When run it will send out Notify
 # renewal letters for all AD registrations expiring in 35 days' time
 every :day, at: ENV["NOTIFY_AD_RENEWAL_LETTERS_TIME"] || "02:35", roles: [:db] do
-  rake "notify:letters:ad_renewals"
+  rake_and_format "notify:letters:ad_renewals"
 end
 
 # This is the area update job. When run it will update the area field for all
 # site addresses where it is nil, as long as they have a populated x & y
 # (easting and northing)
 every :day, at: ENV["AREA_LOOKUP"] || "01:05", roles: [:db] do
-  rake "lookups:update:missing_area"
+  rake_and_format "lookups:update:missing_area"
 end
 
 # This is the bulk export job. When run this will create a series of CSV files
@@ -60,13 +65,13 @@ end
 # files are batched by month, so there will be one for each month the service
 # has been live
 every :day, at: ENV["EXPORT_SERVICE_BULK_EXPORT_TIME"] || "02:05", roles: [:db] do
-  rake "reports:export:bulk"
+  rake_and_format "reports:export:bulk"
 end
 
 # This is the first renewal email reminder job. For each registration expiring
 # in 30 days time, it will generate and send the first email reminder
 every :day, at: ENV["FIRST_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "02:30", roles: [:db] do
-  rake "email:renew_reminder:first:send"
+  rake_and_format "email:renew_reminder:first:send"
 end
 
 # This is the BOXI export job. When run this will generate a zip file of CSV's,
@@ -75,23 +80,23 @@ end
 # S3 from where it is grabbed by a process that imports it into the WEX BOXI
 # universe
 every :day, at: ENV["EXPORT_SERVICE_BOXI_EXPORT_TIME"] || "03:05", roles: [:db] do
-  rake "reports:export:boxi"
+  rake_and_format "reports:export:boxi"
 end
 
 # This is the second renewal email reminder job. For each registration expiring
 # in 14 days time, it will generate and send the second email reminder
 every :day, at: ENV["SECOND_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "04:05", roles: [:db] do
-  rake "email:renew_reminder:second:send"
+  rake_and_format "email:renew_reminder:second:send"
 end
 
 # This is the transient registration cleanup job which will delete all records
 # that are more than 30 days old, as well as associated records
 every :day, at: ENV["CLEANUP_TRANSIENT_REGISTRATIONS_RUN_TIME"] || "04:30", roles: [:db] do
-  rake "cleanup:transient_registrations"
+  rake_and_format "cleanup:transient_registrations"
 end
 
 # This is the final renewal text reminder job. For each registration expiring
 # in 7 days time, it will generate and send the final text reminder
 every :day, at: ENV["FINAL_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "10:00", roles: [:db] do
-  rake "text:renew_reminder:final:send"
+  rake_and_format "text:renew_reminder:final:send"
 end
