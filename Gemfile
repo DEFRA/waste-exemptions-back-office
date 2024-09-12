@@ -83,6 +83,9 @@ gem "rubyzip"
 # Load this in all environments, not just test, to support the /testing helper:
 gem "factory_bot_rails"
 
+# The Retry middleware automatically retries requests that fail
+gem "faraday-retry"
+
 group :production do
   # Web application server that replaces webrick. It handles HTTP requests,
   # manages processes and resources, and enables administration, monitoring
@@ -103,8 +106,6 @@ group :development, :test do
   # Shim to load environment variables from a .env file into ENV in development
   # and test
   gem "dotenv-rails"
-
-  gem "faraday-retry"
 
   # Project uses RSpec as its test framework
   gem "rspec-rails"
