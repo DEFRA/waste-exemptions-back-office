@@ -17,7 +17,7 @@
       <ul class="govuk-list">
         <% @bulk_exports.links.each do |link_data| %>
         <li>
-          <%= link_to link_data[:text], link_data[:url] %>
+          <%= link_to link_data[:text], bulk_export_download_path(link_data[:id]) %>
         </li>
         <% end %>
       </ul>

@@ -6,4 +6,24 @@ class BulkExportsController < ApplicationController
 
     @bulk_exports = BulkExportsPresenter.new
   end
+
+  def download
+    authorize! :read, Reports::GeneratedReport
+
+    generated_report = Reports::GeneratedReport.find(params[:id])
+
+    bucket = DefraRuby::Aws.get_bucket(bucket_name)
+    url = bucket.presigned_url(generated_report.file_name)
+
+    # track the download
+    Reports::TrackDownloadService.run(report: generated_report, user: current_user)
+
+    redirect_to url, allow_other_host: true
+  end
+
+  private
+
+  def bucket_name
+    WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
+  end
 end

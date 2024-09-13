@@ -19,6 +19,7 @@ class BulkExportsPresenter
 
   def build_link_data(generated_report)
     {
+      id: generated_report.id,
       url: bucket.presigned_url(generated_report.file_name),
       text: generated_report.data_from_date.to_fs(:month_year)
     }
