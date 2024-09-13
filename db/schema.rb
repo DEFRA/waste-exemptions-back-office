@@ -272,10 +272,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_12_151037) do
 
   create_table "reports_downloads", force: :cascade do |t|
     t.string "report_type"
-    t.bigint "report_id"
+    t.string "report_file_name"
     t.string "user_id"
     t.datetime "downloaded_at"
-    t.index ["report_type", "report_id"], name: "index_reports_downloads_on_report"
   end
 
   create_table "reports_generated_reports", id: :serial, force: :cascade do |t|

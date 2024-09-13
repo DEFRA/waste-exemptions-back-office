@@ -16,16 +16,14 @@ RSpec.describe Reports::Download do
       expect(download.errors[:downloaded_at]).to include("can't be blank")
     end
 
-    it "validates presence of report" do
+    it "validates presence of report_type" do
       expect(download).not_to be_valid
-      expect(download.errors[:report]).to include("must exist")
+      expect(download.errors[:report_type]).to include("can't be blank")
     end
-  end
 
-  describe "associations" do
-    it "belongs to report" do
-      association = described_class.reflect_on_association(:report)
-      expect(association.macro).to eq(:belongs_to)
+    it "validates presence of report_file_name" do
+      expect(download).not_to be_valid
+      expect(download.errors[:report_file_name]).to include("can't be blank")
     end
   end
 end
