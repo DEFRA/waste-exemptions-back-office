@@ -15,7 +15,8 @@ module Reports
         end.to change(Reports::Download, :count).by(1)
 
         download = Reports::Download.last
-        expect(download.report).to eq(report)
+        expect(download.report_type).to eq(report.class.name)
+        expect(download.report_file_name).to eq(report.file_name)
         expect(download.user_id.to_i).to eq(user.id)
         expect(download.downloaded_at).to be_within(1.second).of(Time.zone.now)
       end
