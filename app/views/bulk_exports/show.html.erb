@@ -5,6 +5,13 @@
     <h1 class="govuk-heading-l">
       <%= t(".heading") %>
     </h1>
+
+    <% if can?(:read, Reports::Download) %>
+    <p class="govuk-body">
+      <%= link_to t(".download_history"), bulk_export_download_history_path(format: :csv) %>
+    </p>
+    <% end %>
+
     <p class="govuk-body">
       <%= @bulk_exports.exported_at_message %>
     </p>

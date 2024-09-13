@@ -21,6 +21,17 @@ class BulkExportsController < ApplicationController
     redirect_to url, allow_other_host: true
   end
 
+  def download_history
+    authorize! :read, Reports::Download
+
+    respond_to do |format|
+      format.csv do
+        timestamp = Time.zone.now.strftime("%Y-%m-%d_%H:%M")
+        send_data Reports::DownloadHistoryExportService.run, filename: "download_history_#{timestamp}.csv"
+      end
+    end
+  end
+
   private
 
   def bucket_name
