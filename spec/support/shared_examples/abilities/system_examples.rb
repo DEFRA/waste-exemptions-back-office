@@ -20,4 +20,8 @@ RSpec.shared_examples "system examples" do
   it "is able to view DEFRA quarterly reports" do
     expect(subject).to be_able_to(:read, Reports::DefraQuarterlyStatsService)
   end
+
+  it "is able to view reports download history" do
+    expect(subject).to be_able_to(:read, Reports::Download)
+  end
 end
