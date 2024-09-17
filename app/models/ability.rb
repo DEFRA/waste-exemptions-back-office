@@ -25,6 +25,7 @@ class Ability
     can :change_role, User
     can :activate_or_deactivate, User
     can :read, Reports::DefraQuarterlyStatsService
+    can :read, Reports::Download
 
     permissions_for_super_agent
   end

@@ -25,4 +25,46 @@ RSpec.describe "Bulk Exports" do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe "GET /data-exports/:id" do
+    let(:generated_report) { create(:generated_report) }
+    let(:bucket_name) { WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name }
+    let(:download_link) do
+      bucket = DefraRuby::Aws.get_bucket(bucket_name)
+      bucket.presigned_url(generated_report.file_name)
+    end
+
+    it "redirects to the correct URL and responds with a 302 status code" do
+      get bulk_export_download_path(generated_report)
+
+      expect(response).to redirect_to(download_link)
+      expect(response).to have_http_status(:found)
+    end
+  end
+
+  describe "GET /data-exports/download_history.csv" do
+    let(:csv_content) { "Report,Name,Email,Downloaded at\nmonthly,report.csv,test@example.com,01/01/2023 12:00" }
+    let(:service) { instance_double(Reports::DownloadHistoryExportService, run: csv_content) }
+
+    before do
+      allow(Reports::DownloadHistoryExportService).to receive(:new).and_return(service)
+    end
+
+    it "responds with success" do
+      get bulk_export_download_history_path, params: { format: :csv }
+      expect(response).to have_http_status(:success)
+    end
+
+    it "calls the DownloadHistoryExportService" do
+      get bulk_export_download_history_path, params: { format: :csv }
+      expect(Reports::DownloadHistoryExportService).to have_received(:new)
+      expect(service).to have_received(:run)
+    end
+
+    it "returns the correct CSV content" do
+      get bulk_export_download_history_path, params: { format: :csv }
+      expect(response.body).to eq(csv_content)
+      expect(response.header["Content-Type"]).to include("text/csv")
+    end
+  end
 end

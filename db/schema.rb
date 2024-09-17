@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_23_131328) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_12_151037) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -268,6 +268,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_23_131328) do
     t.index ["reference"], name: "index_registrations_on_reference", unique: true
     t.index ["renew_token"], name: "index_registrations_on_renew_token", unique: true
     t.index ["unsubscribe_token"], name: "index_registrations_on_unsubscribe_token", unique: true
+  end
+
+  create_table "reports_downloads", force: :cascade do |t|
+    t.string "report_type"
+    t.string "report_file_name"
+    t.string "user_id"
+    t.datetime "downloaded_at"
   end
 
   create_table "reports_generated_reports", id: :serial, force: :cascade do |t|

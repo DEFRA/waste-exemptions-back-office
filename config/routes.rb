@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
   # Bulk Exports
   get "/data-exports", to: "bulk_exports#show", as: :bulk_exports
+  get "/data-exports/history", to: "bulk_exports#download_history", as: :bulk_export_download_history
+  get "/data-exports/:id", to: "bulk_exports#download", as: :bulk_export_download
 
   # Registration management
   resources :registrations, only: :show, param: :reference do
