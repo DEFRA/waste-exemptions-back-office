@@ -41,6 +41,21 @@ RSpec.describe SearchService do
         it_behaves_like "registration matches and non-matches"
       end
 
+      context "with multiple matches" do
+        let!(:registration_a) { Timecop.freeze(2.days.ago) { create(:registration) } }
+        let!(:registration_b) { Timecop.freeze(1.day.ago) { create(:registration) } }
+        let(:term) { registration.contact_phone }
+
+        before do
+          registration_a.update(contact_phone: registration.contact_phone)
+          registration_b.update(contact_phone: registration.contact_phone)
+        end
+
+        it "reverse-sorts results by created_at" do
+          expect(results.pluck(:id)).to eq [registration.id, registration_b.id, registration_a.id]
+        end
+      end
+
       context "with no matches on any attribute" do
         let(:term) { "this search term does not match any model attribute" }
 
