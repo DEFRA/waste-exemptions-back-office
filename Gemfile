@@ -109,6 +109,10 @@ group :development, :test do
 
   # Project uses RSpec as its test framework
   gem "rspec-rails"
+
+  # A gem providing "time travel" and "time freezing" capabilities, making it
+  # dead simple to test time-dependent code.
+  gem "timecop"
 end
 
 group :development do
@@ -137,9 +141,6 @@ group :test do
   gem "capybara"
   # Needed for headless testing with Javascript
   gem "selenium-webdriver"
-  # A gem providing "time travel" and "time freezing" capabilities, making it
-  # dead simple to test time-dependent code.
-  gem "timecop"
   # Mock HTTP requests
   gem "vcr"
   gem "webmock"
