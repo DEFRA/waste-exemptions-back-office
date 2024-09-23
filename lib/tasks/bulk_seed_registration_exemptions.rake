@@ -7,7 +7,7 @@ require "timecop"
 desc "Bulk seed registration exemptions for performance test / benchmarking purposes"
 task :bulk_seed_registration_exemptions, %i[reg_count reg_ex_count] => :environment do |_t, args|
   registration_count = args[:reg_count].to_i
-  puts "Creating #{registration_count} registrations..."
+  puts "Creating #{registration_count} registrations..." unless Rails.env.test?
 
   (1..registration_count).each do |r|
     reg_type = %i[registration renewing_registration].sample
@@ -30,7 +30,7 @@ task :benchmark_search, %i[term filter page] => :environment do |_t, args|
   term = args[:term] || ""
   model = args[:filter]
   page = args[:page]
-  puts "Searching with term: \"#{term}\", model: \"#{model}\", page: #{page}\n"
+  puts "Searching with term: \"#{term}\", model: \"#{model}\", page: #{page}\n" unless Rails.env.test?
 
   res = nil
   Benchmark.bmbm do |x|
@@ -38,6 +38,4 @@ task :benchmark_search, %i[term filter page] => :environment do |_t, args|
       res = SearchService.new.search(term, model, page)
     end
   end
-
-  puts "Found #{res.length} matches (NB Kaminari pagination => max 20 at a time)"
 end
