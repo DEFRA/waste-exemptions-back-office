@@ -17,6 +17,7 @@ RSpec.describe "Bulk seed registrations", type: :rake do
     end
   end
 
+  # rubocop:disable RSpec/ExpectOutput
   describe "benchmark_search" do
 
     original_stdout = $stdout
@@ -37,4 +38,5 @@ RSpec.describe "Bulk seed registrations", type: :rake do
       end.not_to raise_error
     end
   end
+  # rubocop:enable RSpec/ExpectOutput
 end
