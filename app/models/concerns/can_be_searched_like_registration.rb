@@ -11,6 +11,7 @@ module CanBeSearchedLikeRegistration
                 search_for_operator_address_postcode(term).ids +
                 search_for_person_name(term).ids +
                 search_for_telephone(term).ids)
+        .order(created_at: :desc)
     }
 
     scope :search_registration, lambda { |term|
