@@ -2,7 +2,8 @@
 
 require "factory_bot_rails"
 require "benchmark"
-require "timecop"
+# Production envs need to be able to parse this file but they won't execute the tasks and won't have timecop installed
+require "timecop" unless Rails.env.production?
 
 desc "Bulk seed registration exemptions for performance test / benchmarking purposes"
 task :bulk_seed_registration_exemptions, %i[reg_count reg_ex_count] => :environment do |_t, args|
