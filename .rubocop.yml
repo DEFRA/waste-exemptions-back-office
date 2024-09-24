@@ -24,3 +24,8 @@ RSpec/ContextWording:
 RSpec/NamedSubject:
   Exclude:
     - spec/lib/tasks/*
+
+RSpec/SpecFilePathSuffix:
+  Exclude:
+    # This isn't really a spec, it uses some rspec-related gems
+    - 'spec/services/bulk_seed_registrations.rb'
