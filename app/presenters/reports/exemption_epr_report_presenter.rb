@@ -71,12 +71,24 @@ module Reports
       registration.site_address&.y
     end
 
+    def ea_area_location
+      registration.site_address&.area
+    end
+
     def exemption_registration_date
       registered_on.to_fs(:year_month_day)
     end
 
     def exemption_expiry_date
       expires_on.to_fs(:year_month_day)
+    end
+
+    def site_is_on_a_farm
+      registration.on_a_farm ? "yes" : "no"
+    end
+
+    def user_is_a_farmer
+      registration.is_a_farmer ? "yes" : "no"
     end
   end
 end

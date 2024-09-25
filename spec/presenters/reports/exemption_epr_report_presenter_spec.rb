@@ -265,6 +265,23 @@ module Reports
       end
     end
 
+    describe "#ea_area_location" do
+      let(:site_address) { create(:address, :site, area: "Foo") }
+      let(:registration) { create(:registration, addresses: [site_address]) }
+
+      it "returns the area name" do
+        expect(presenter.ea_area_location).to eq("Foo")
+      end
+
+      context "when the registration has no site address" do
+        let(:registration) { create(:registration, addresses: []) }
+
+        it "returns nil" do
+          expect(presenter.ea_area_location).to be_nil
+        end
+      end
+    end
+
     describe "#exemption_code" do
       let(:exemption) { create(:exemption, code: "G12") }
 
@@ -286,6 +303,34 @@ module Reports
 
       it "returns the registered on date formatted" do
         expect(presenter.exemption_expiry_date).to eq("2019-06-01")
+      end
+    end
+
+    describe "#site_is_on_a_farm" do
+      context "when the site is on a farm" do
+        let(:registration) { create(:registration, on_a_farm: true) }
+
+        it { expect(presenter.site_is_on_a_farm).to eq "yes" }
+      end
+
+      context "when the site is not on a farm" do
+        let(:registration) { create(:registration, on_a_farm: false) }
+
+        it { expect(presenter.site_is_on_a_farm).to eq "no" }
+      end
+    end
+
+    describe "#user_is_a_farmer" do
+      context "when the user is a farmer" do
+        let(:registration) { create(:registration, is_a_farmer: true) }
+
+        it { expect(presenter.user_is_a_farmer).to eq "yes" }
+      end
+
+      context "when the user is not a farmer" do
+        let(:registration) { create(:registration, is_a_farmer: false) }
+
+        it { expect(presenter.user_is_a_farmer).to eq "no" }
       end
     end
   end
