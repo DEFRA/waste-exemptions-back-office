@@ -19,6 +19,9 @@ module Reports
       site_ngr
       site_easting
       site_northing
+      ea_area_location
+      site_is_on_a_farm
+      user_is_a_farmer
       exemption_code
       exemption_registration_date
       exemption_expiry_date
