@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: e4b6b584867ba18d6ef7a9755a3858ec1b37880a
-  branch: main
+  revision: ac0743eb0bc22d0482580e95024e4655a67b6b5c
+  branch: feature/RUBY-3343-wex-accessibility-replace-pdf-certificate-with-html-version
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
