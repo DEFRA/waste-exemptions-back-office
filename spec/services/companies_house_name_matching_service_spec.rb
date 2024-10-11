@@ -95,7 +95,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
 
       it "does not propose any changes" do
         result = service.run
-        expect(result).to be_empty
+        expect(result.compact).to be_empty
       end
     end
 

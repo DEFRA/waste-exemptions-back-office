@@ -59,7 +59,9 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
       changes = registrations.map do |registration|
         normalized_reg_name = normalize_company_name(registration.operator_name)
         similarity = name_similarity(normalized_ch_name, normalized_reg_name)
-        if similarity >= SIMILARITY_THRESHOLD && companies_house_name != registration.operator_name
+        if companies_house_name == registration.operator_name
+          nil
+        elsif similarity >= SIMILARITY_THRESHOLD
           [registration.id, registration.operator_name, companies_house_name]
         else
           @unproposed_changes[company_no] ||= []
@@ -75,6 +77,8 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
 
       proposed_changes[company_no] = changes if changes.any?
     end
+
+    puts "Total number of registrations where operator name is too different from company name: #{@unproposed_changes.size}"
 
     proposed_changes
   end
@@ -157,7 +161,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   end
 
   def print_unproposed_changes
-    puts "\nCompany numbers for which changes were not proposed:"
+    puts "\nCompany numbers for which changes were not proposed as companies name is too different from operator name:"
     if @unproposed_changes.empty?
       puts "  No unproposed changes."
     else
