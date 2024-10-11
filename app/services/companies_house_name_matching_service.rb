@@ -48,7 +48,9 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
 
     puts "Total number of company numbers to process: #{grouped_registrations.size}"
 
-    grouped_registrations.first(@max_requests).each do |company_no, registrations|
+    sorted_grouped_registrations = grouped_registrations.sort_by { |_, group| -group.size }.first(@max_requests)
+
+    sorted_grouped_registrations.each do |company_no, registrations|
       companies_house_name = fetch_companies_house_name(company_no)
       next unless companies_house_name
 
