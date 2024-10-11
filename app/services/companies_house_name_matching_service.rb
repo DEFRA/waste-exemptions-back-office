@@ -59,7 +59,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
       changes = registrations.map do |registration|
         normalized_reg_name = normalize_company_name(registration.operator_name)
         similarity = name_similarity(normalized_ch_name, normalized_reg_name)
-        if similarity >= SIMILARITY_THRESHOLD
+        if similarity >= SIMILARITY_THRESHOLD && companies_house_name != registration.operator_name
           [registration.id, registration.operator_name, companies_house_name]
         else
           @unproposed_changes[company_no] ||= []

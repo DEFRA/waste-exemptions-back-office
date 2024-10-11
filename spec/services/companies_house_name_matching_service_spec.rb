@@ -85,6 +85,20 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
       end
     end
 
+    context "when the company name is already correct" do
+      before do
+        create(:registration, operator_name: "ACME GROUP LIMITED", company_no: "11111111")
+        allow(DefraRubyCompaniesHouse).to receive(:new).with("11111111").and_return(
+          instance_double(DefraRubyCompaniesHouse, company_name: "ACME GROUP LIMITED")
+        )
+      end
+
+      it "does not propose any changes" do
+        result = service.run
+        expect(result).to be_empty
+      end
+    end
+
     context "when dry_run is false" do
       let(:dry_run) { false }
 
