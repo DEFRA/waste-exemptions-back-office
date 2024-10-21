@@ -36,6 +36,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     WasteExemptionsEngine::Registration.joins(:registration_exemptions)
                                        .where(registration_exemptions: { state: :active })
                                        .where.not(operator_name: nil, company_no: [nil, ''])
+                                       .where.not(company_no: WasteExemptionsEngine::Company.recently_updated.pluck(:company_no))
                                        .distinct
   end
 
@@ -53,6 +54,10 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     sorted_grouped_registrations.each do |company_no, registrations|
       companies_house_name = fetch_companies_house_name(company_no)
       next unless companies_house_name
+      unless @dry_run
+        company = WasteExemptionsEngine::Company.find_or_create_by_company_no(company_no, companies_house_name)
+        company.touch # update the updated_at timestamp
+      end
 
       normalized_ch_name = normalize_company_name(companies_house_name)
 
@@ -138,7 +143,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     @request_count += 1
     client = DefraRubyCompaniesHouse.new(company_no)
     client.company_name
-  rescue StandardError => e
+  rescue Standarderror => e
     Rails.logger.error("Failed to fetch company name for #{company_no}: #{e.message}")
     nil
   end
