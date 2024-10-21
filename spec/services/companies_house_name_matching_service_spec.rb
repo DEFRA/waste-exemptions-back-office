@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.describe CompaniesHouseNameMatchingService, type: :service do
@@ -7,10 +9,11 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
   describe "#run" do
     context "when dry_run is true" do
       let(:dry_run) { true }
+
       context "when there are more companies than the rate limit allows" do
         before do
           (max_requests + 10).times do |i|
-            create(:registration, operator_name: "Company #{i}", company_no: i.to_s.rjust(8, '0'))
+            create(:registration, operator_name: "Company #{i}", company_no: i.to_s.rjust(8, "0"))
           end
           allow(DefraRubyCompaniesHouse).to receive(:new).and_return(
             instance_double(DefraRubyCompaniesHouse, company_name: "COMPANY NAME")
@@ -80,8 +83,8 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
 
         it "proposes changes for all variations of the company name" do
           result = service.run
-          expect(result["11111111"].map { |r| r[1] }).to include("Acme Group Ltd", "ACME LIMITED GROUP")
-          expect(result["22222222"].map { |r| r[1] }).to include("Acme Holdings Services PLC", "Acme Services Holdings Group")
+          expect(result["11111111"].pluck(1)).to include("Acme Group Ltd", "ACME LIMITED GROUP")
+          expect(result["22222222"].pluck(1)).to include("Acme Holdings Services PLC", "Acme Services Holdings Group")
         end
       end
 

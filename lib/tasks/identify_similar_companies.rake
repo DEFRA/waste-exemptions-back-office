@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :company do
   desc "Identify similar company entries"
   task identify_similars: :environment do
