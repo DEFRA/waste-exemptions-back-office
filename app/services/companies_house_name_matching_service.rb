@@ -4,19 +4,18 @@ require "defra_ruby_companies_house"
 
 class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   SIMILARITY_THRESHOLD = 0.7
-  COMMON_WORDS = %w[LIMITED LTD PLC HOLDINGS SERVICES GROUP INCORPORATED INC].freeze
   RATE_LIMIT = 600
   TIME_WINDOW = 300 # 5 minutes in seconds
   RATE_LIMIT_BUFFER = 0.75 # Use only 75% of the rate limit
 
-  def initialize(dry_run: true)
+  def initialize
     @request_count = 0
     @max_requests = (RATE_LIMIT * RATE_LIMIT_BUFFER).to_i
     @unproposed_changes = {}
-    @dry_run = dry_run
   end
 
-  def run
+  def run(dry_run: true)
+    @dry_run = dry_run
     active_registrations = fetch_active_registrations
     grouped_registrations = group_registrations(active_registrations)
     proposed_changes = identify_name_changes(grouped_registrations)
@@ -62,11 +61,10 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
         company.touch #  update the updated_at timestamp
       end
 
-      normalized_ch_name = normalize_company_name(companies_house_name)
+      compare_name_service = CompareCompanyNameService.new(companies_house_name)
 
       changes = registrations.map do |registration|
-        normalized_reg_name = normalize_company_name(registration.operator_name)
-        similarity = name_similarity(normalized_ch_name, normalized_reg_name)
+        similarity = compare_name_service.compare(registration.operator_name)
         if companies_house_name == registration.operator_name
           nil
         elsif similarity >= SIMILARITY_THRESHOLD
@@ -102,45 +100,6 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
         end
       end
     end
-  end
-
-  def normalize_company_name(name)
-    words = name.upcase.gsub(/[^A-Z0-9\s]/, "").split
-    words.reject { |word| COMMON_WORDS.include?(word) }.join(" ")
-  end
-
-  def name_similarity(name1, name2)
-    longer, shorter = [name1, name2].sort_by(&:length)
-    distance = levenshtein_distance(longer, shorter)
-    1 - (distance.to_f / longer.length)
-  end
-
-  # method to calculate the Levenshtein distance between two strings
-  # Levenshtein distance is a string metric for measuring the difference between two sequences
-  # https://en.wikipedia.org/wiki/Levenshtein_distance
-  def levenshtein_distance(s, t)
-    m = s.length
-    n = t.length
-    return m if n.zero?
-    return n if m.zero?
-
-    d = Array.new(m + 1) { Array.new(n + 1) }
-
-    (0..m).each { |i| d[i][0] = i }
-    (0..n).each { |j| d[0][j] = j }
-    (1..n).each do |j|
-      (1..m).each do |i|
-        d[i][j] = if s[i - 1] == t[j - 1]
-                    d[i - 1][j - 1]
-                  else
-                    [d[i - 1][j] + 1,    # deletion
-                     d[i][j - 1] + 1,    # insertion
-                     d[i - 1][j - 1] + 1 # substitution
-                    ].min
-                  end
-      end
-    end
-    d[m][n]
   end
 
   def fetch_companies_house_name(company_no)

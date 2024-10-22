@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe CompaniesHouseNameMatchingService, type: :service do
-  let(:service) { described_class.new(dry_run: dry_run) }
+  let(:run_service) { described_class.run(dry_run: dry_run) }
   let(:max_requests) { (CompaniesHouseNameMatchingService::RATE_LIMIT * CompaniesHouseNameMatchingService::RATE_LIMIT_BUFFER).to_i }
 
   describe "#run" do
@@ -21,12 +21,13 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "processes only up to the maximum number of requests" do
-          result = service.run
+          result = run_service
           expect(result.size).to be <= max_requests
         end
 
         it "does not exceed the maximum number of requests" do
-          service.run
+          service = described_class.new
+          service.run(dry_run: dry_run)
           expect(service.instance_variable_get(:@request_count)).to eq(max_requests)
         end
       end
@@ -43,18 +44,18 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "only processes companies without recent updates to their company record" do
-          result = service.run
+          result = run_service
           expect(result.keys).to contain_exactly("12345678")
         end
 
         it "does not update the Company record" do
-          service.run
+          run_service
           expect(WasteExemptionsEngine::Company.find_by(company_no: "12345678").name).to eq("OLD COMPANY")
         end
 
         it "does not update the updated_at timestamp of the Company record" do
           company = WasteExemptionsEngine::Company.find_by(company_no: "12345678")
-          service.run
+          run_service
           expect(company.reload.updated_at).to be_within(1.second).of(4.months.ago)
         end
 
@@ -75,14 +76,14 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "proposes changes for similar companies" do
-          result = service.run
+          result = run_service
           expect(result.keys).to contain_exactly("11111111", "22222222")
           expect(result["11111111"].size).to eq(2)
           expect(result["22222222"].size).to eq(2)
         end
 
         it "proposes changes for all variations of the company name" do
-          result = service.run
+          result = run_service
           expect(result["11111111"].pluck(1)).to include("Acme Group Ltd", "ACME LIMITED GROUP")
           expect(result["22222222"].pluck(1)).to include("Acme Holdings Services PLC", "Acme Services Holdings Group")
         end
@@ -97,7 +98,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "proposes changes for companies with typos" do
-          result = service.run
+          result = run_service
           expect(result.keys).to include("33333333")
           expect(result["33333333"].first[1]).to eq("Pratt Developements Group Ltd")
           expect(result["33333333"].first[2]).to eq("PRATT DEVELOPMENTS GROUP LIMITED")
@@ -113,7 +114,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "does not propose any changes" do
-          result = service.run
+          result = run_service
           expect(result).to be_empty
         end
       end
@@ -130,22 +131,22 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
       end
 
       it "updates the operator names in the database" do
-        service.run
+        run_service
         expect(WasteExemptionsEngine::Registration.find_by(company_no: "11111111").operator_name).to eq("ACME GROUP LIMITED")
       end
 
       it "creates a Company record for the processed company" do
-        expect { service.run }.to change(WasteExemptionsEngine::Company, :count).by(1)
+        expect { run_service }.to change(WasteExemptionsEngine::Company, :count).by(1)
       end
 
       it "updates the Company record with the correct name" do
-        service.run
+        run_service
         expect(WasteExemptionsEngine::Company.find_by(company_no: "11111111").name).to eq("ACME GROUP LIMITED")
       end
 
       it "updates the updated_at timestamp of the Company record" do
         company = create(:company, company_no: "11111111", updated_at: 4.months.ago)
-        service.run
+        run_service
         expect(company.reload.updated_at).to be_within(1.second).of(Time.current)
       end
 
@@ -161,7 +162,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "only processes companies without recent updates to their company record" do
-          result = service.run
+          result = run_service
           expect(result.keys).to contain_exactly("12345678")
         end
       end
