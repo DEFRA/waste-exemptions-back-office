@@ -126,7 +126,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     @request_count += 1
     client = DefraRubyCompaniesHouse.new(company_no)
     client.company_name
-  rescue Standarderror => e
+  rescue StandardError => e
     Rails.logger.error("Failed to fetch company name for #{company_no}: #{e.message}")
     nil
   end
