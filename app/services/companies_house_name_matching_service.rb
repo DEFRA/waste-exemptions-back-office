@@ -45,7 +45,6 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
         .recently_updated
         .select(:company_no))
       .distinct
-      .limit(@max_requests)
   end
 
   def group_registrations(registrations)
