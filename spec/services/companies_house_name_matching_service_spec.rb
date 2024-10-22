@@ -33,8 +33,9 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
       end
 
       context "when there are recently updated Company records" do
+        let!(:old_registration) { create(:registration, operator_name: "OLD COMPANY", company_no: "12345678") }
+
         before do
-          create(:registration, operator_name: "OLD COMPANY", company_no: "12345678")
           create(:registration, operator_name: "NEW COMPANY", company_no: "87654321")
           create(:company, name: "OLD COMPANY", company_no: "12345678", updated_at: 4.months.ago)
           create(:company, name: "NEW COMPANY", company_no: "87654321", updated_at: Time.current)
@@ -46,6 +47,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         it "only processes companies without recent updates to their company record" do
           result = run_service
           expect(result.keys).to contain_exactly("12345678")
+          expect(result["12345678"].first[0]).to eq(old_registration.reference)
         end
 
         it "does not update the Company record" do
@@ -58,15 +60,15 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
           run_service
           expect(company.reload.updated_at).to be_within(1.second).of(4.months.ago)
         end
-
       end
 
       context "when there are similar companies with various word placements" do
+        let!(:group_ltd_registration) { create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111") }
+        let!(:limited_group_registration) { create(:registration, operator_name: "ACME LIMITED GROUP", company_no: "11111111") }
+        let!(:holdings_plc_registration) { create(:registration, operator_name: "Acme Holdings Services PLC", company_no: "22222222") }
+        let!(:services_group_registration) { create(:registration, operator_name: "Acme Services Holdings Group", company_no: "22222222") }
+
         before do
-          create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111")
-          create(:registration, operator_name: "ACME LIMITED GROUP", company_no: "11111111")
-          create(:registration, operator_name: "Acme Holdings Services PLC", company_no: "22222222")
-          create(:registration, operator_name: "Acme Services Holdings Group", company_no: "22222222")
           allow(DefraRubyCompaniesHouse).to receive(:new).with("11111111").and_return(
             instance_double(DefraRubyCompaniesHouse, company_name: "ACME GROUP LIMITED")
           )
@@ -78,8 +80,14 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         it "proposes changes for similar companies" do
           result = run_service
           expect(result.keys).to contain_exactly("11111111", "22222222")
-          expect(result["11111111"].size).to eq(2)
-          expect(result["22222222"].size).to eq(2)
+          expect(result["11111111"].map(&:first)).to contain_exactly(
+            group_ltd_registration.reference,
+            limited_group_registration.reference
+          )
+          expect(result["22222222"].map(&:first)).to contain_exactly(
+            holdings_plc_registration.reference,
+            services_group_registration.reference
+          )
         end
 
         it "proposes changes for all variations of the company name" do
@@ -90,8 +98,9 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
       end
 
       context "when there are companies with typos" do
+        let!(:registration) { create(:registration, operator_name: "Pratt Developements Group Ltd", company_no: "33333333") }
+
         before do
-          create(:registration, operator_name: "Pratt Developements Group Ltd", company_no: "33333333")
           allow(DefraRubyCompaniesHouse).to receive(:new).with("33333333").and_return(
             instance_double(DefraRubyCompaniesHouse, company_name: "PRATT DEVELOPMENTS GROUP LIMITED")
           )
@@ -100,6 +109,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         it "proposes changes for companies with typos" do
           result = run_service
           expect(result.keys).to include("33333333")
+          expect(result["33333333"].first[0]).to eq(registration.reference)
           expect(result["33333333"].first[1]).to eq("Pratt Developements Group Ltd")
           expect(result["33333333"].first[2]).to eq("PRATT DEVELOPMENTS GROUP LIMITED")
         end
@@ -122,9 +132,9 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
 
     context "when dry_run is false" do
       let(:dry_run) { false }
+      let!(:registration) { create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111") }
 
       before do
-        create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111")
         allow(DefraRubyCompaniesHouse).to receive(:new).with("11111111").and_return(
           instance_double(DefraRubyCompaniesHouse, company_name: "ACME GROUP LIMITED")
         )
@@ -132,7 +142,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
 
       it "updates the operator names in the database" do
         run_service
-        expect(WasteExemptionsEngine::Registration.find_by(company_no: "11111111").operator_name).to eq("ACME GROUP LIMITED")
+        expect(registration.reload.operator_name).to eq("ACME GROUP LIMITED")
       end
 
       it "creates a Company record for the processed company" do
@@ -151,8 +161,9 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
       end
 
       context "when there are recently updated Company records" do
+        let!(:old_registration) { create(:registration, operator_name: "Old Company", company_no: "12345678") }
+
         before do
-          create(:registration, operator_name: "Old Company", company_no: "12345678")
           create(:registration, operator_name: "New Company", company_no: "87654321")
           create(:company, name: "OLD COMPANY", company_no: "12345678", updated_at: 4.months.ago)
           create(:company, name: "NEW COMPANY", company_no: "87654321", updated_at: Time.current)
@@ -164,6 +175,7 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         it "only processes companies without recent updates to their company record" do
           result = run_service
           expect(result.keys).to contain_exactly("12345678")
+          expect(result["12345678"].first[0]).to eq(old_registration.reference)
         end
       end
 

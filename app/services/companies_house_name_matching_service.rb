@@ -94,11 +94,11 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
       if companies_house_name == registration.operator_name
         nil
       elsif similarity >= SIMILARITY_THRESHOLD
-        [registration.id, registration.operator_name, companies_house_name]
+        [registration.reference, registration.operator_name, companies_house_name]
       else
         @unproposed_changes[company_no] ||= []
         @unproposed_changes[company_no] << {
-          registration_id: registration.id,
+          registration_reference: registration.reference,
           current_name: registration.operator_name,
           companies_house_name: companies_house_name,
           similarity: similarity
@@ -111,8 +111,8 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   def apply_changes(proposed_changes)
     ActiveRecord::Base.transaction do
       proposed_changes.each_value do |changes|
-        changes.each do |id, _old_name, new_name|
-          registration = WasteExemptionsEngine::Registration.find(id)
+        changes.each do |reference, _old_name, new_name|
+          registration = WasteExemptionsEngine::Registration.find_by(reference: reference)
           registration.update!(operator_name: new_name)
         end
       end
@@ -140,8 +140,8 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     else
       proposed_changes.each do |company_no, changes|
         Rails.logger.debug { "  Company number: #{company_no}" }
-        changes.each do |id, old_name, new_name|
-          puts "    Registration ID: #{id}, Old name: '#{old_name}', New name: '#{new_name}'"
+        changes.each do |reference, old_name, new_name|
+          puts "    Registration reference: #{reference}, Old name: '#{old_name}', New name: '#{new_name}'"
         end
       end
     end
@@ -158,7 +158,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
       @unproposed_changes.each do |company_no, details|
         Rails.logger.debug { "  Company number: #{company_no}" }
         details.each do |detail|
-          Rails.logger.debug { "    Registration ID: #{detail[:registration_id]}" }
+          Rails.logger.debug { "    Registration reference: #{detail[:registration_reference]}" }
           Rails.logger.debug { "    Current name: '#{detail[:current_name]}'" }
           Rails.logger.debug { "    Companies House name: '#{detail[:companies_house_name]}'" }
           Rails.logger.debug { "    Name similarity: #{detail[:similarity].round(2)}" }
