@@ -166,6 +166,28 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
           expect(result.keys).to contain_exactly("12345678")
         end
       end
+
+      context "when no companies house name is found" do
+        before do
+          allow(DefraRubyCompaniesHouse).to receive(:new).and_return(
+            instance_double(DefraRubyCompaniesHouse, company_name: "")
+          )
+        end
+
+        it "does not propose any changes" do
+          result = run_service
+          expect(result).to be_empty
+        end
+
+        it "still creates a Company record" do
+          expect { run_service }.to change(WasteExemptionsEngine::Company, :count).by(1)
+        end
+
+        it "creates a Company record with the name 'Not found'" do
+          run_service
+          expect(WasteExemptionsEngine::Company.find_by(company_no: "11111111").name).to eq("Not found")
+        end
+      end
     end
   end
 end

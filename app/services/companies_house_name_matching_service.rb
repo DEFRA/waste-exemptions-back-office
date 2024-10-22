@@ -10,7 +10,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   RATE_LIMIT_BUFFER = 0.75 # Use only 75% of the rate limit
 
   def initialize
-    super()
+    super
     @request_count = 0
     @max_requests = (RATE_LIMIT * RATE_LIMIT_BUFFER).to_i
     @unproposed_changes = {}
@@ -39,7 +39,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     WasteExemptionsEngine::Registration
       .joins(:registration_exemptions)
       .where(registration_exemptions: { state: :active })
-      .where("operator_name IS NOT NULL")
+      .where.not(operator_name: nil)
       .where("company_no IS NOT NULL AND company_no != ''")
       .where.not(company_no: WasteExemptionsEngine::Company
         .recently_updated
@@ -60,12 +60,16 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
 
     sorted_grouped_registrations.each do |company_no, registrations|
       companies_house_name = fetch_companies_house_name(company_no)
-      next unless companies_house_name
 
       unless @dry_run
-        company = WasteExemptionsEngine::Company.find_or_create_by_company_no(company_no, companies_house_name)
+        company = WasteExemptionsEngine::Company.find_or_create_by_company_no(
+          company_no,
+          companies_house_name.presence || "Not found"
+        )
         company.update(updated_at: Time.current)
       end
+
+      next if companies_house_name.blank?
 
       compare_name_service = CompareCompanyNameService.new(companies_house_name)
 

@@ -31,6 +31,8 @@ class CompareCompanyNameService
   # method to calculate the Levenshtein distance between two strings
   # Levenshtein distance is a string metric for measuring the difference between two sequences
   # https://en.wikipedia.org/wiki/Levenshtein_distance
+
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Naming/MethodParameterName
   def levenshtein_distance(s, t)
     m = s.length
     n = t.length
@@ -48,11 +50,11 @@ class CompareCompanyNameService
                   else
                     [d[i - 1][j] + 1,    # deletion
                      d[i][j - 1] + 1,    # insertion
-                     d[i - 1][j - 1] + 1 # substitution
-                    ].min
+                     d[i - 1][j - 1] + 1].min # substitution
                   end
       end
     end
     d[m][n]
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Naming/MethodParameterName
 end
