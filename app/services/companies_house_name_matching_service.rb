@@ -10,6 +10,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   RATE_LIMIT_BUFFER = 0.75 # Use only 75% of the rate limit
 
   def initialize
+    super()
     @request_count = 0
     @max_requests = (RATE_LIMIT * RATE_LIMIT_BUFFER).to_i
     @unproposed_changes = {}
@@ -35,11 +36,15 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   private
 
   def fetch_active_registrations
-    WasteExemptionsEngine::Registration.joins(:registration_exemptions)
-                                       .where(registration_exemptions: { state: :active })
-                                       .where.not(operator_name: nil, company_no: [nil, ""])
-                                       .where.not(company_no: WasteExemptionsEngine::Company.recently_updated.select(:company_no))
-                                       .distinct
+    WasteExemptionsEngine::Registration
+      .joins(:registration_exemptions)
+      .where(registration_exemptions: { state: :active })
+      .where("operator_name IS NOT NULL")
+      .where("company_no IS NOT NULL AND company_no != ''")
+      .where.not(company_no: WasteExemptionsEngine::Company
+        .recently_updated
+        .select(:company_no))
+      .distinct
   end
 
   def group_registrations(registrations)
@@ -59,7 +64,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
 
       unless @dry_run
         company = WasteExemptionsEngine::Company.find_or_create_by_company_no(company_no, companies_house_name)
-        company.update(updated_at: Time.current) #  update the updated_at timestamp
+        company.update(updated_at: Time.current)
       end
 
       compare_name_service = CompareCompanyNameService.new(companies_house_name)
@@ -69,11 +74,14 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
       proposed_changes[company_no] = changes if changes.any?
     end
 
-    Rails.logger.debug do
-      "Total number of registrations where operator name is too different from company name: #{@unproposed_changes.size}"
-    end
-
+    log_unproposed_changes_count
     proposed_changes
+  end
+
+  def log_unproposed_changes_count
+    Rails.logger.debug do
+      "Total registrations with names too different from Companies House: #{@unproposed_changes.size}"
+    end
   end
 
   def propose_name_changes(company_no, registrations, companies_house_name, compare_name_service)
@@ -136,7 +144,10 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   end
 
   def print_unproposed_changes
-    Rails.logger.debug "\nCompany numbers for which changes were not proposed as companies name is too different from operator name:"
+    Rails.logger.debug do
+      "\nChanges not proposed - company names too different from Companies House records:"
+    end
+
     if @unproposed_changes.empty?
       Rails.logger.debug "  No unproposed changes."
     else
