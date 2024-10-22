@@ -2,6 +2,7 @@
 
 require "defra_ruby_companies_house"
 
+# rubocop:disable Metrics/ClassLength
 class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   SIMILARITY_THRESHOLD = 0.7
   RATE_LIMIT = 600
@@ -58,28 +59,12 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
 
       unless @dry_run
         company = WasteExemptionsEngine::Company.find_or_create_by_company_no(company_no, companies_house_name)
-        company.touch #  update the updated_at timestamp
+        company.update(updated_at: Time.current) #  update the updated_at timestamp
       end
 
       compare_name_service = CompareCompanyNameService.new(companies_house_name)
 
-      changes = registrations.map do |registration|
-        similarity = compare_name_service.compare(registration.operator_name)
-        if companies_house_name == registration.operator_name
-          nil
-        elsif similarity >= SIMILARITY_THRESHOLD
-          [registration.id, registration.operator_name, companies_house_name]
-        else
-          @unproposed_changes[company_no] ||= []
-          @unproposed_changes[company_no] << {
-            registration_id: registration.id,
-            current_name: registration.operator_name,
-            companies_house_name: companies_house_name,
-            similarity: similarity
-          }
-          nil
-        end
-      end.compact
+      changes = propose_name_changes(company_no, registrations, companies_house_name, compare_name_service)
 
       proposed_changes[company_no] = changes if changes.any?
     end
@@ -89,6 +74,26 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     end
 
     proposed_changes
+  end
+
+  def propose_name_changes(company_no, registrations, companies_house_name, compare_name_service)
+    registrations.map do |registration|
+      similarity = compare_name_service.compare(registration.operator_name)
+      if companies_house_name == registration.operator_name
+        nil
+      elsif similarity >= SIMILARITY_THRESHOLD
+        [registration.id, registration.operator_name, companies_house_name]
+      else
+        @unproposed_changes[company_no] ||= []
+        @unproposed_changes[company_no] << {
+          registration_id: registration.id,
+          current_name: registration.operator_name,
+          companies_house_name: companies_house_name,
+          similarity: similarity
+        }
+        nil
+      end
+    end.compact
   end
 
   def apply_changes(proposed_changes)
@@ -148,3 +153,4 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

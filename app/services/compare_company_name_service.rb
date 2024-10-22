@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CompareCompanyNameService
   COMMON_WORDS = %w[LIMITED LTD PLC HOLDINGS SERVICES GROUP INCORPORATED INC].freeze
 
