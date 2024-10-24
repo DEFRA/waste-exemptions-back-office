@@ -62,7 +62,8 @@ def create_or_updated_nested_charge(entity, charge_type, charge_amount)
     entity_charge = WasteExemptionsEngine::Charge.new(
       charge_type: charge_type,
       name: "#{charge_type.to_s.gsub('_', ' ')} for #{entity.name}",
-      charge_amount: charge_amount
+      charge_amount: charge_amount,
+      chargeable: entity
     )
   end
   entity_charge.save! if entity_charge.changed?
