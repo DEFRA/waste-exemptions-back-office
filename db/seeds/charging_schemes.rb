@@ -35,10 +35,10 @@ def create_or_update_band(band_details)
   band.save! if band.changed?
 
   # initial_compliance_charge
-  create_or_updated_nested_charge(band, :initial_compliance_charge, band_details["initial_compliance_charge"])
+  create_or_update_nested_charge(band, :initial_compliance_charge, band_details["initial_compliance_charge"])
 
   # additional_compliance_charge
-  create_or_updated_nested_charge(band, :additional_compliance_charge, band_details["additional_compliance_charge"])
+  create_or_update_nested_charge(band, :additional_compliance_charge, band_details["additional_compliance_charge"])
 end
 
 def create_or_update_charge(charge_details)
@@ -51,7 +51,7 @@ def create_or_update_charge(charge_details)
   charge.save! if charge.changed?
 end
 
-def create_or_updated_nested_charge(entity, charge_type, charge_amount)
+def create_or_update_nested_charge(entity, charge_type, charge_amount)
   entity_charge = entity.send(charge_type)
 
   # initial_compliance_charge
@@ -62,7 +62,8 @@ def create_or_updated_nested_charge(entity, charge_type, charge_amount)
     entity_charge = WasteExemptionsEngine::Charge.new(
       charge_type: charge_type,
       name: "#{charge_type.to_s.gsub('_', ' ')} for #{entity.name}",
-      charge_amount: charge_amount
+      charge_amount: charge_amount,
+      chargeable: entity
     )
   end
   entity_charge.save! if entity_charge.changed?
@@ -74,7 +75,7 @@ def create_or_update_bucket(bucket_details)
   bucket.save! if bucket.changed?
 
   # initial_compliance_charge
-  create_or_updated_nested_charge(bucket, :initial_compliance_charge, bucket_details["initial_compliance_charge"])
+  create_or_update_nested_charge(bucket, :initial_compliance_charge, bucket_details["initial_compliance_charge"])
 end
 
 def update_band_exemptions(band_exemption_details)
