@@ -109,7 +109,7 @@
           <%= t(".labels.amount") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= resource.account.balance %>
+          <%= resource.account&.balance %>
         </dd>
       </div>
     </dl>
