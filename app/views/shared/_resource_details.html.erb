@@ -102,16 +102,18 @@
     <%= t(".subheadings.current_balance") %>
   </h2>
 
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">
-        <%= t(".labels.amount") %>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= resource.account.balance %>
-      </dd>
-    </div>
-  </dl>
+  <% if resource.is_a?(WasteExemptionsEngine::Registration) %>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t(".labels.amount") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= resource.account.balance %>
+        </dd>
+      </div>
+    </dl>
+  <% end %>
 
   </div>
   <div class="govuk-column-one-third">
