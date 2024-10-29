@@ -7,7 +7,7 @@ FactoryBot.define do
     company_no { "10336040" }
     on_a_farm { true }
     is_a_farmer { true }
-    account { build(:account) }
+    account
 
     submitted_at { DateTime.now }
 
