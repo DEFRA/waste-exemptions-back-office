@@ -1,0 +1,38 @@
+en:
+  payment_details:
+    index:
+      title: &title "Payment details for %{reference}"
+      heading: *title
+
+      details_section:
+
+        charges:
+          heading: Summary of charges and charge adjustments
+          headers:
+            date: Date
+            type: Type
+            reason: Reason
+            amount: Amount
+
+        payments:
+          heading: Payments received
+          headers:
+            date: Date
+            reference: Reference
+            type: Type
+            amount: Amount
+
+        refunds:
+          heading: Refunds
+          headers:
+            date: Date
+            reference: Reference
+            reason: Reason
+            amount: Amount
+
+        balance:
+          heading: Current balance
+          amount: Amount
+
+      actions_section:
+        heading: Payment actions for %{reference}
