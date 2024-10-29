@@ -5,6 +5,8 @@ class PaymentDetailsController < ApplicationController
     find_resource(params[:registration_reference])
   end
 
+  private
+
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)
   end
