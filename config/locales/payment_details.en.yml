@@ -23,7 +23,7 @@ en:
             amount: Amount
 
         refunds:
-          heading: Refunds
+          heading: Refunds and reversals
           headers:
             date: Date
             reference: Reference
