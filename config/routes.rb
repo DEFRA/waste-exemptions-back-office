@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :registrations, only: :show, param: :reference do
     get "certificate", to: "certificates#show", as: :certificate
     get "communication_logs", to: "communication_logs#index", as: :communication_logs
+    get "payment_details", to: "payment_details#index", as: :payment_details
   end
 
   resources :deregistrations, only: :show, param: :reference
