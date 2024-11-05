@@ -97,8 +97,25 @@
         <%= t(".no_contact_data") %>
       </p>
     <% end %>
-  </div>
 
+  <h2 class="govuk-heading-m">
+    <%= t(".subheadings.current_balance") %>
+  </h2>
+
+  <% if resource.is_a?(WasteExemptionsEngine::Registration) %>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          <%= t(".labels.amount") %>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= resource.account&.balance %>
+        </dd>
+      </div>
+    </dl>
+  <% end %>
+
+  </div>
   <div class="govuk-column-one-third">
     <h2 class="govuk-heading-m">
       <%= t(".subheadings.actions") %>
@@ -208,6 +225,12 @@
       <% if display_communication_logs_link_for?(resource) %>
         <p class="govuk-body">
           <%= link_to t(".actions.show_communication_history"), registration_communication_logs_path(resource.reference) %>
+        </p>
+      <% end %>
+
+      <% if display_payment_details_link_for?(resource) %>
+        <p class="govuk-body">
+          <%= link_to t(".actions.payment_details"), registration_payment_details_path(resource.reference) %>
         </p>
       <% end %>
     </div>
