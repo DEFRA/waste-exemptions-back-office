@@ -7,7 +7,16 @@ en:
       details_section:
 
         charges:
-          heading: Summary of charges and charge adjustments
+          heading: Charges
+          headers:
+            date: Date
+            breakdown: Charge breakdown
+            amount: Amount
+          registration_charge_label: Registration charge
+          total_charge_label: Total charge
+
+        charge_adjustments:
+          heading: Charge adjustments
           headers:
             date: Date
             type: Type
@@ -21,6 +30,8 @@ en:
             reference: Reference
             type: Type
             amount: Amount
+          payment_types:
+            govpay_payment: Govpay
 
         refunds:
           heading: Refunds and reversals
