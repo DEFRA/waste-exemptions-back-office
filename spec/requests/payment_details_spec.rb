@@ -101,11 +101,11 @@ RSpec.describe "Payment details" do
         it { expect(response.body).to include (registration.account.balance / 100).round(2).to_s }
       end
 
-      it { expect(response.body).to include I18n.t("#{i18n_details_balance}.heading") }
-      it { expect(response.body).to include I18n.t("#{i18n_details_balance}.amount") }
-      it { expect(response.body).to include (registration.account.balance / 100).round(2).to_s }
+      context "for the actions section" do
+        let(:i18n_actions_section) { "#{i18n_page}.actions_section" }
 
-      it { expect(response.body).to include I18n.t("#{i18n_actions_section}.heading", reference: registration.reference) }
+        it { expect(response.body).to include I18n.t("#{i18n_actions_section}.heading", reference: registration.reference) }
+      end
     end
   end
 end
