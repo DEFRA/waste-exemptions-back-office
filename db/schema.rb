@@ -211,6 +211,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_18_143709) do
     t.string "comments", limit: 500
     t.index ["account_id"], name: "index_payments_on_account_id"
     t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["reference"], name: "index_payments_on_reference"
   end
 
   create_table "people", id: :serial, force: :cascade do |t|
