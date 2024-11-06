@@ -1,5 +1,49 @@
 en:
   payment_details:
     index:
-      title: "Payment details for %{reference}"
-      heading: "Payment details"
+      title: &title "Payment details for %{reference}"
+      heading: *title
+
+      details_section:
+
+        charges:
+          heading: Charges
+          headers:
+            date: Date
+            breakdown: Charge breakdown
+            amount: Amount
+          registration_charge_label: Registration charge
+          total_charge_label: Total charge
+
+        charge_adjustments:
+          heading: Charge adjustments
+          headers:
+            date: Date
+            type: Type
+            reason: Reason
+            amount: Amount
+
+        payments:
+          heading: Payments received
+          headers:
+            date: Date
+            reference: Reference
+            type: Type
+            amount: Amount
+          payment_types:
+            govpay_payment: Govpay
+
+        refunds:
+          heading: Refunds and reversals
+          headers:
+            date: Date
+            reference: Reference
+            reason: Reason
+            amount: Amount
+
+        balance:
+          heading: Current balance
+          amount: Amount
+
+      actions_section:
+        heading: Payment actions for %{reference}

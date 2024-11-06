@@ -1,9 +1,177 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <%= render("waste_exemptions_engine/shared/back", back_path: registration_path(@resource.reference)) %>
+<% content_for :title, t(".title", reference: @resource.reference) %>
 
-    <h1 class="govuk-heading-l">
-      <%= t(".heading", reference: @resource.reference) %>
-    </h1>
-  </div>
-</div>
+  <%= render("waste_exemptions_engine/shared/back", back_path: registration_path(@resource.reference)) %>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">
+          <%= t(".heading", reference: @resource.reference) %>
+        </h1>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+
+      <div class="govuk-grid-column-two-thirds">
+
+        <h2 class="govuk-heading-m">
+          <%= t(".details_section.charges.heading") %>
+        </h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header">
+                <%= t(".details_section.charges.headers.date") %>
+              </th>
+              <th class="govuk-table__header">
+                <%= t(".details_section.charges.headers.breakdown") %>
+              </th>
+              <th class="govuk-table__header govuk-!-text-align-right">
+                <%= t(".details_section.charges.headers.amount") %>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @resource.account&.orders&.sort_by { |o| o.created_at }.reverse.each do |order| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <%= order.created_at.strftime("%Y-%m-%d") %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= order.exemptions.map { |e| e.code }.sort.join(",") %> <br>
+                  <%= t(".details_section.charges.registration_charge_label") %> <br>
+                  <%= t(".details_section.charges.total_charge_label") %>
+                </td>
+                <td class="govuk-table__cell govuk-!-text-align-right">
+                  <%= order.charge_detail&.total_compliance_charge_amount %> <br>
+                  <%= order.charge_detail&.registration_charge_amount %> <br>
+                  <%= order.charge_detail&.total_charge_amount %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <h2 class="govuk-heading-m">
+          <%= t(".details_section.charge_adjustments.heading") %>
+        </h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header">
+                <%= t(".details_section.charge_adjustments.headers.date") %>
+              </th>
+              <th class="govuk-table__header">
+                <%= t(".details_section.charge_adjustments.headers.type") %>
+              </th>
+              <th class="govuk-table__header">
+                <%= t(".details_section.charge_adjustments.headers.reason") %>
+              </th>
+              <th class="govuk-table__header govuk-!-text-align-right">
+                <%= t(".details_section.charge_adjustments.headers.amount") %>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+
+        <h2 class="govuk-heading-m">
+          <%= t(".details_section.payments.heading") %>
+        </h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header">
+                <%= t(".details_section.payments.headers.date") %>
+              </th>
+              <th class="govuk-table__header">
+                <%= t(".details_section.payments.headers.reference") %>
+              </th>
+              <th class="govuk-table__header">
+                <%= t(".details_section.payments.headers.type") %>
+              </th>
+              <th class="govuk-table__header govuk-!-text-align-right">
+                <%= t(".details_section.payments.headers.amount") %>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @resource.account&.orders.each do |order| %>
+              <% order.payments.each do |payment| %>
+                <tr class="govuk-table__row">
+                  <td class="govuk-table__cell">
+                    <%= payment.date_time&.strftime("%Y-%m-%d") %>
+                  </td>
+                  <td class="govuk-table__cell">
+                    <%= payment.reference %>
+                  </td>
+                  <td class="govuk-table__cell">
+                    <%= t(".details_section.payments.payment_types.#{payment.payment_type}") %>
+                  </td>
+                  <td class="govuk-table__cell govuk-!-text-align-right">
+                    <%= display_pence_as_pounds_and_cents(payment.payment_amount) %>
+                  </td>
+                </tr>
+                <% end %>
+                  <% end %>
+          </tbody>
+        </table>
+
+        <h2 class="govuk-heading-m">
+          <%= t(".details_section.refunds.heading") %>
+        </h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header">
+                <%= t(".details_section.refunds.headers.date") %>
+              </th>
+              <th class="govuk-table__header">
+                <%= t(".details_section.refunds.headers.reference") %>
+              </th>
+              <th class="govuk-table__header">
+                <%= t(".details_section.refunds.headers.reason") %>
+              </th>
+              <th class="govuk-table__header govuk-!-text-align-right">
+                <%= t(".details_section.refunds.headers.amount") %>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+
+        <h2 class="govuk-heading-m">
+          <%= t(".details_section.balance.heading") %>
+        </h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head govuk-visually-hidden">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header">
+              </th>
+              <th class="govuk-table__header">
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-weight-bold">
+                <%= t(".details_section.balance.amount") %>
+              </td>
+              <td class="govuk-table__cell govuk-!-text-align-right">
+                <%= display_pence_as_pounds_and_cents(@resource.account.balance) if @resource.account&.balance.present?
+                  %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <h2 class="govuk-heading-m">
+          <%= t(".actions_section.heading", reference: @resource.reference) %>
+
+      </div>
+    </div>
