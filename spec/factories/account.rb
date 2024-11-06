@@ -2,7 +2,6 @@
 
 FactoryBot.define do
   factory :account, class: "WasteExemptionsEngine::Account" do
-    registration
     balance { Faker::Number.between(from: 50, to: 10_000) }
 
     trait :with_order do
