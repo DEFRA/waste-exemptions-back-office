@@ -37,6 +37,10 @@ Rails.application.routes.draw do
     get "certificate", to: "certificates#show", as: :certificate
     get "communication_logs", to: "communication_logs#index", as: :communication_logs
     get "payment_details", to: "payment_details#index", as: :payment_details
+    resources :record_refund_forms,
+              only: %i[index new create],
+              path: "record-refund",
+              path_names: { new: ":payment_id/new" }
   end
 
   resources :deregistrations, only: :show, param: :reference

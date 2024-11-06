@@ -1,0 +1,26 @@
+en:
+  record_refund_forms:
+    index:
+      title: Which payment do you want to record a refund for?
+      heading: Which payment do you want to record a refund for?
+      date: Date
+      reference: Reference
+      payment_type: Payment type
+      amount: Amount in £
+      action: Action
+      refund_payment: Record refund
+      submit: Continue
+    new:
+      heading: "Record a refund for %{reference}"
+      payment_type: "Payment type"
+      bank_transfer: "Bank transfer"
+      payment_types:
+        bank_transfer: "Via bank transfer"
+        govpay_payment: "Via govpay"
+      maximum_refund_amount: "Maximum refund amount"
+      enter_refund: "Enter refund"
+      reason: "Reason"
+      refund_button: "Refund"
+    payment_type:
+      govpay_payment: "Via govpay"
+      bank_transfer: "Via Bank transfer"

@@ -1,0 +1,52 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render("waste_exemptions_engine/shared/back", back_path: registration_record_refund_forms_path(registration_reference: @resource.reference)) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= t(".heading", reference: @resource.reference) %>
+    </h1>
+
+    <%= form_for @record_refund_form, url: registration_record_refund_forms_path(registration_reference: @resource.reference), method: :post do |f| %>
+      <%= render("waste_exemptions_engine/shared/errors", object: @record_refund_form) if @record_refund_form.errors.any? %>
+
+      <div class="govuk-form-group">
+        <h2 class="govuk-heading-m"><%= t(".payment_type") %></h2>
+        <p class="govuk-body">
+          <%= t(".bank_transfer") %>
+        </p>
+      </div>
+
+      <div class="govuk-form-group">
+        <h2 class="govuk-heading-m"><%= t(".maximum_refund_amount") %></h2>
+        <p class="govuk-body">
+          £<%= display_pence_as_pounds_and_cents(@payment.payment_amount, hide_pence_if_zero: false)%>
+
+        </p>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :amount, class: "govuk-label govuk-label--m" do %>
+          <%= t(".enter_refund") %>
+        <% end %>
+        <%= f.text_field :amount, class: "govuk-input govuk-input--width-10" %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :reason, class: "govuk-label govuk-label--m" do %>
+          <%= t(".reason") %>
+        <% end %>
+        <%= f.text_area :reason, class: "govuk-textarea", rows: 5 %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.submit t(".refund_button"), class: "govuk-button", "data-module": "govuk-button" %>
+      </div>
+
+      <%= f.hidden_field :payment_id, value: @payment.id %>
+    <% end %>
+  </div>
+</div>

@@ -7,6 +7,7 @@ FactoryBot.define do
     company_no { "10336040" }
     on_a_farm { true }
     is_a_farmer { true }
+    account { association :account, registration: instance }
 
     submitted_at { DateTime.now }
 
