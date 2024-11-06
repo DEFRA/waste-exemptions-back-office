@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Payment details" do
   describe "GET /registrations/:id/payment_details" do
-    let(:registration) { create(:registration, account: build(:account)) }
+    let(:registration) { create(:registration, account: build(:account, :with_order)) }
     let(:account) { registration.account }
     let(:order) { account.orders.first }
     let(:payment) { order.payments.first }
