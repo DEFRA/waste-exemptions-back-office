@@ -160,7 +160,7 @@ RSpec.describe "Add Payment Forms" do
       end
 
       it "redirects to registration page" do
-        expect(response.location).to include("registrations/#{registration.reference}")
+        expect(response.location).to include("registrations/#{registration.reference}/payment_details")
       end
     end
 

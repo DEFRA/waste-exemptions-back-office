@@ -10,7 +10,7 @@ class PaymentsController < ApplicationController
   def create
     if add_payment_form.submit(payment_params)
       successful_redirection = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE
-      redirect_to registration_path(reference: resource.reference), status: successful_redirection
+      redirect_to registration_payment_details_path(reference: resource.reference), status: successful_redirection
     else
       render :new
       false
