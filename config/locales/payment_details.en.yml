@@ -1,0 +1,5 @@
+en:
+  payment_details:
+    index:
+      title: "Payment details for %{reference}"
+      heading: "Payment details"

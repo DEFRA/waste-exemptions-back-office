@@ -109,4 +109,8 @@ module ActionLinksHelper
   def display_reset_transient_registrations_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:reset_transient_registrations, resource)
   end
+
+  def display_payment_details_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
+  end
 end

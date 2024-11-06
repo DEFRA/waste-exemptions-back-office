@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     get "communication_logs", to: "communication_logs#index", as: :communication_logs
     get "payments", to: "payments#new", as: :add_payment_form
     post "payments", to: "payments#create", as: :add_payment
+    get "payment_details", to: "payment_details#index", as: :payment_details
   end
 
   resources :deregistrations, only: :show, param: :reference

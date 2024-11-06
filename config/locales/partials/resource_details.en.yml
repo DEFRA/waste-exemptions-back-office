@@ -7,6 +7,7 @@ en:
         farm: Farm details
         exemptions: Exemptions
         actions: Actions
+        current_balance: Current balance
       labels:
         workflow_state: Workflow state
         reference: Reference
@@ -30,6 +31,7 @@ en:
         is_a_farmer: Is a farmer?
         assistance_mode: Assistance mode
         submitted_at: Submitted at
+        amount: Amount
       values:
         business_type:
           charity: Charity or trust
@@ -79,6 +81,7 @@ en:
         view_certificate:
           link_text: View certificate
           visually_hidden_text: "of %{name}"
+        payment_details: Payment details
       no_applicant_data: No applicant details
       no_contact_data: No contact details
       no_exemptions: No exemptions

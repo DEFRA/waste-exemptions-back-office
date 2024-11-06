@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-class RegistrationsController < ApplicationController
-  helper ActionLinksHelper
-
-  def show
-    find_resource(params[:reference])
+class PaymentDetailsController < ApplicationController
+  def index
+    find_resource(params[:registration_reference])
   end
-
-  private
 
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)
