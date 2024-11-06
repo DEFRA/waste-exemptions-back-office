@@ -19,6 +19,14 @@ RSpec/DescribeClass:
 
 # These cops are n/a for rake tasks
 RSpec/ContextWording:
+  # Allow a few more prefixes beyond the standard when, with and without
+  Prefixes:
+    - when
+    - with
+    - without
+    - if
+    - unless
+    - for
   Exclude:
     - spec/support/shared_examples/rake.rb
 RSpec/NamedSubject:
