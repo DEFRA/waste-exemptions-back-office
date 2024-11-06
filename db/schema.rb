@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_18_160330) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_31_171337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -196,6 +196,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_160330) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "payment_uuid"
+    t.bigint "account_id"
+    t.string "reference"
+    t.string "comments", limit: 500
+    t.index ["account_id"], name: "index_payments_on_account_id"
     t.index ["order_id"], name: "index_payments_on_order_id"
   end
 
@@ -263,6 +267,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_160330) do
     t.boolean "reminder_opt_in", default: true
     t.string "unsubscribe_token"
     t.boolean "charged", default: false
+    t.string "view_certificate_token"
+    t.datetime "view_certificate_token_created_at"
     t.index ["created_at"], name: "index_registrations_on_created_at"
     t.index ["deregistration_email_sent_at"], name: "index_registrations_on_deregistration_email_sent_at"
     t.index ["edit_token"], name: "index_registrations_on_edit_token", unique: true
