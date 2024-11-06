@@ -77,5 +77,10 @@ RSpec.configure do |config|
 
     Bullet.start_request
   end
-  config.after { Bullet.end_request }
+  config.after do
+    # Avoid Faker::UniqueGenerator::RetryLimitExceeded errors
+    Faker::UniqueGenerator.clear
+
+    Bullet.end_request
+  end
 end

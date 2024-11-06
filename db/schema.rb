@@ -199,7 +199,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_085818) do
     t.text "reason"
     t.bigint "account_id"
     t.index ["account_id"], name: "index_payments_on_account_id"
+    t.string "reference"
     t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["reference"], name: "index_payments_on_reference"
   end
 
   create_table "people", id: :serial, force: :cascade do |t|
@@ -266,6 +268,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_085818) do
     t.boolean "reminder_opt_in", default: true
     t.string "unsubscribe_token"
     t.boolean "charged", default: false
+    t.string "view_certificate_token"
+    t.datetime "view_certificate_token_created_at"
     t.index ["created_at"], name: "index_registrations_on_created_at"
     t.index ["deregistration_email_sent_at"], name: "index_registrations_on_deregistration_email_sent_at"
     t.index ["edit_token"], name: "index_registrations_on_edit_token", unique: true

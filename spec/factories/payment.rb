@@ -6,6 +6,9 @@ FactoryBot.define do
     payment_amount { 1000 }
     payment_status { "created" }
     payment_uuid { SecureRandom.uuid }
+    reference { Faker::Lorem.word }
+    date_time { Time.zone.now }
+    order
 
     trait :bank_transfer do
       payment_type { WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER }
@@ -14,4 +17,3 @@ FactoryBot.define do
     end
   end
 end
-
