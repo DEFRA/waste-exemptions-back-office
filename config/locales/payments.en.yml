@@ -19,3 +19,11 @@ en:
         payment_date_day: "Day"
         payment_date_month: "Month"
         payment_date_year: "Year"
+    
+    errors:
+      date_invalid: "You must enter a payment received date"
+      date_not_current_or_past: "You must enter a valid payment received date"
+      payment_type_invalid: "You must select a payment type"
+      payment_amount_blank: "You must enter an amount"
+      payment_amount_invalid: "You must enter a valid amount"
+      payment_reference_blank: "You must enter a payment reference"

@@ -8,9 +8,9 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    if @add_payment_form.submit(params[:add_payment_form])
+    if add_payment_form.submit(payment_params)
       successful_redirection = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE
-      redirect_to registration_path(reference: registration.reference), status: successful_redirection
+      redirect_to registration_path(reference: resource.reference), status: successful_redirection
     else
       render :new
       false
@@ -28,10 +28,12 @@ class PaymentsController < ApplicationController
   end
 
   def add_payment_form
-    @add_payment_form ||= AddPaymentForm.new(resource)
+    @account = WasteExemptionsEngine::Account.find_by(registration: resource)
+    @add_payment_form ||= AddPaymentForm.new(@account)
   end
 
   def payment_params
-    params.require(:payment).permit(:amount, :date, :reference)
+    params.require(:add_payment_form).permit(:payment_type, :payment_amount, :date_year, :date_month, :date_day,
+                                             :payment_reference, :comments, :payment_amount_in_pounds)
   end
 end

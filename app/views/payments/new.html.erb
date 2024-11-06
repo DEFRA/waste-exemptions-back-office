@@ -16,37 +16,44 @@
 
     <div class="govuk-grid-column-one-half">
     
-      <fieldset id="search-filters" class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <p class="govuk-label"><%= t('.fields.payment_type') %></p>
-        </legend>
+      <% payment_type_errors = @add_payment_form.errors[:payment_type] %>
+      <div class="govuk-form-group <%= "govuk-form-group--error" if payment_type_errors.any? %>">
+        <fieldset id="search-filters" class="govuk-fieldset">
+          <% if payment_type_errors.any? %>
+            <span class="govuk-error-message" id="add-payment-form-payment-type-field-error"><%= payment_type_errors.join(". ") %></span>
+          <% end %>
 
-        <div class="govuk-radios">
-          <div class="govuk-radios__item">
-            <%= radio_button_tag :payment_type, :govpay_payment,
-              false, class: "govuk-radios__input" %>
-            <%= label_tag :payment_type_govpay_payment,
-              t('.fields.payment_type_labels.govpay_payment'),
-              class: "govuk-label govuk-radios__label" %>
-          </div>
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <p class="govuk-label"><%= t('.fields.payment_type') %></p>
+          </legend>
 
-          <div class="govuk-radios__item">
-            <%= radio_button_tag :payment_type, :bank_transfer,
-              false, class: "govuk-radios__input" %>
-            <%= label_tag :payment_type_bank_transfer,
-              t('.fields.payment_type_labels.bank_transfer'),
-              class: "govuk-label govuk-radios__label" %>
-          </div>
+          <div class="govuk-radios">
+            <div class="govuk-radios__item">
+              <%= radio_button_tag 'add_payment_form[payment_type]', :missing_card_payment,
+                preselect_missing_card_payment_radio_button?, class: "govuk-radios__input" %>
+              <%= label_tag :payment_type_govpay_payment,
+                t('.fields.payment_type_labels.govpay_payment'),
+                class: "govuk-label govuk-radios__label" %>
+            </div>
 
-          <div class="govuk-radios__item">
-            <%= radio_button_tag :payment_type, :other,
-              false, class: "govuk-radios__input" %>
-            <%= label_tag :payment_type_other,
-              t('.fields.payment_type_labels.other'),
-              class: "govuk-label govuk-radios__label" %>
+            <div class="govuk-radios__item">
+              <%= radio_button_tag 'add_payment_form[payment_type]', :bank_transfer,
+                preselect_bank_transfer_radio_button?, class: "govuk-radios__input" %>
+              <%= label_tag :payment_type_bank_transfer,
+                t('.fields.payment_type_labels.bank_transfer'),
+                class: "govuk-label govuk-radios__label" %>
+            </div>
+
+            <div class="govuk-radios__item">
+              <%= radio_button_tag 'add_payment_form[payment_type]', :other_payment,
+                preselect_other_payment_radio_button?, class: "govuk-radios__input" %>
+              <%= label_tag :payment_type_other,
+                t('.fields.payment_type_labels.other'),
+                class: "govuk-label govuk-radios__label" %>
+            </div>
           </div>
-        </div>
-      </fieldset>
+        </fieldset>
+      </div>
 
       <p>
         <%= f.govuk_text_field :payment_amount,
@@ -57,11 +64,11 @@
       <p>
         <% payment_date_errors = @add_payment_form.errors[:payment_date] %>
         <div class="govuk-form-group <%= "govuk-form-group--error" if payment_date_errors.any? %>">
-          <% if payment_date_errors.any? %>
-            <span class="govuk-error-message" id="modify-expiry-date-form-expiry-date-field-error"><%= payment_date_errors.join(". ") %></span>
-          <% end %>
-
           <p class="govuk-label"> <%= t(".fields.payment_date") %> </p>
+
+          <% if payment_date_errors.any? %>
+            <span class="govuk-error-message" id="add-payment-form-payment-date-field-error"><%= payment_date_errors.join(". ") %></span>
+          <% end %>
 
           <div class="govuk-date-input__item">
             <%= f.govuk_number_field :date_day, width: 2, label: { text: t(".fields.payment_date_day") } %>
