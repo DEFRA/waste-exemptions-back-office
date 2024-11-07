@@ -22,7 +22,7 @@ RSpec.describe AddPaymentForm, type: :model do
     }
   end
 
-  shared_examples "form submition fails" do |attr|
+  shared_examples "form submission fails" do |attr|
     it "does not submit" do
       expect(form.submit(add_payment_form)).to be(false)
     end
@@ -43,37 +43,37 @@ RSpec.describe AddPaymentForm, type: :model do
       context "when the payment_type is invalid" do
         before { add_payment_form[:payment_type] = "foo" }
 
-        it_behaves_like "form submition fails", :payment_type
+        it_behaves_like "form submission fails", :payment_type
       end
 
       context "when the date day is invalid" do
         before { add_payment_form[:date_day] = 99 }
 
-        it_behaves_like "form submition fails", :payment_date
+        it_behaves_like "form submission fails", :payment_date
       end
 
       context "when the date month is invalid" do
         before { add_payment_form[:date_month] = 99 }
 
-        it_behaves_like "form submition fails", :payment_date
+        it_behaves_like "form submission fails", :payment_date
       end
 
       context "when the date year is invalid" do
         before { add_payment_form[:date_year] = 9999 }
 
-        it_behaves_like "form submition fails", :payment_date
+        it_behaves_like "form submission fails", :payment_date
       end
 
       context "when the payment_amount is invalid" do
         before { add_payment_form[:payment_amount] = "abc" }
 
-        it_behaves_like "form submition fails", :payment_amount
+        it_behaves_like "form submission fails", :payment_amount
       end
 
       context "when the payment_reference is nil" do
         before { add_payment_form[:payment_reference] = nil }
 
-        it_behaves_like "form submition fails", :payment_reference
+        it_behaves_like "form submission fails", :payment_reference
       end
     end
 
