@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   
-  <%= render("waste_exemptions_engine/shared/back", back_path: registration_path(reference: @resource.reference)) %>
+  <%= render("waste_exemptions_engine/shared/back", back_path: registration_payment_details_path(reference: @resource.reference)) %>
   
   <%= form_for @add_payment_form,
         url: registration_add_payment_path(registration_reference: @resource.reference),

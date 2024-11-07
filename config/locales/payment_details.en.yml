@@ -28,11 +28,11 @@ en:
           headers:
             date: Date
             reference: Reference
-            type: Type
+            type: Payment type
             amount: Amount
           payment_types:
             govpay_payment: Govpay
-            missing_card_payment: Card payment
+            missing_card_payment: Missing card
             bank_transfer: BACS
             other_payment: Other
 
