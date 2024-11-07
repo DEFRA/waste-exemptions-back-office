@@ -8,6 +8,10 @@ FactoryBot.define do
     payment_uuid { SecureRandom.uuid }
     reference { Faker::Lorem.word }
     date_time { Time.zone.now }
-    order
+    account_id { 1 }
+
+    trait :with_order do
+      order
+    end
   end
 end
