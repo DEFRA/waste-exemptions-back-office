@@ -28,12 +28,14 @@ en:
           headers:
             date: Date
             reference: Reference
-            type: Type
+            type: Payment type
             amount: Amount
           payment_types:
             govpay_payment: Govpay
-            bank_transfer: Bank transfer
+            missing_card_payment: Missing card
+            bank_transfer: BACS
             refund: Refund
+            other_payment: Other
 
         refunds:
           heading: Refunds and reversals
@@ -51,4 +53,4 @@ en:
         heading: Payment actions for %{reference}
         links:
           record_refund: Record a refund
-
+        add_payment: Record a payment
