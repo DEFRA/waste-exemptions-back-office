@@ -14,7 +14,6 @@ RSpec.describe "Record Refund Forms" do
 
   before do
     registration.account.payments << payment
-    # TODO remove this line when we have a proper way to set the balance
     account = registration.account
     account.balance = payment.payment_amount
     account.save!

@@ -17,9 +17,11 @@
       self.reason = params[:reason]
       self.payment_id = params[:payment_id]
 
-      payment = WasteExemptionsEngine::Payment.find_by(id: payment_id) if payment_id.present?
-      @max_amount = payment&.payment_amount.to_f / 100 if payment
+      @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
+      @balance = payment.account.balance
+
       return false unless valid?
+
 
       Rails.logger.info "running RecordRefundService with arguments: #{reason}, #{payment}, #{amount.to_f}"
       record_refund_service.run(reason: reason,
@@ -29,18 +31,17 @@
 
     private
 
-    attr_reader :payment, :max_amount
+    attr_reader :payment, :max_amount, :balance
 
     def amount_within_limits
       return if amount.blank? || !amount.to_f.positive?
 
-      if amount.to_f > max_amount
-        errors.add(:amount, "must not exceed maximum refund amount of £#{max_amount}")
+      if amount.to_f > payment.payment_amount.to_f / 100
+        errors.add(:amount, I8n.t(".record_refund_forms.new.errors.record_refund_form.amount_exceeds_payment")
       end
 
-      account = payment&.account
-      if account && (amount.to_f * 100) > account.balance
-        errors.add(:amount, "must not exceed available account balance of £#{account.balance / 100}")
+      unless balance.negative? || amount.to_f <= balance
+        errors.add(:amount, I18n.t(".record_refund_forms.new.errors.record_refund_form.amount_exceeds_balance")
       end
     end
   end

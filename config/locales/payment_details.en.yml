@@ -32,6 +32,8 @@ en:
             amount: Amount
           payment_types:
             govpay_payment: Govpay
+            bank_transfer: Bank transfer
+            refund: Refund
 
         refunds:
           heading: Refunds and reversals
@@ -47,3 +49,6 @@ en:
 
       actions_section:
         heading: Payment actions for %{reference}
+        links:
+          record_refund: Record a refund
+

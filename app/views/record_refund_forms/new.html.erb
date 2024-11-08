@@ -10,8 +10,8 @@
       <%= t(".heading", reference: @resource.reference) %>
     </h1>
 
-    <%= form_for @record_refund_form, url: registration_record_refund_forms_path(registration_reference: @resource.reference), method: :post do |f| %>
-      <%= render("waste_exemptions_engine/shared/errors", object: @record_refund_form) if @record_refund_form.errors.any? %>
+    <%= form_for @record_refund_form, url: registration_record_refund_forms_path(registration_reference: @resource.reference), builder: GOVUKDesignSystemFormBuilder::FormBuilder, method: :post do |f| %>
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
 
       <div class="govuk-form-group">
         <h2 class="govuk-heading-m"><%= t(".payment_type") %></h2>

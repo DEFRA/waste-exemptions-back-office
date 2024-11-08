@@ -198,10 +198,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_01_085818) do
     t.string "payment_uuid"
     t.text "reason"
     t.bigint "account_id"
-    t.index ["account_id"], name: "index_payments_on_account_id"
     t.string "reference"
+    t.string "comments", limit: 500
+    t.index ["account_id"], name: "index_payments_on_account_id"
     t.index ["order_id"], name: "index_payments_on_order_id"
-    t.index ["reference"], name: "index_payments_on_reference"
   end
 
   create_table "people", id: :serial, force: :cascade do |t|

@@ -10,17 +10,20 @@ en:
       action: Action
       refund_payment: Record refund
       submit: Continue
+      payment_types:
+        bank_transfer: "Via bank transfer"
+        govpay_payment: "Via govpay"
     new:
       heading: "Record a refund for %{reference}"
       payment_type: "Payment type"
       bank_transfer: "Bank transfer"
-      payment_types:
-        bank_transfer: "Via bank transfer"
-        govpay_payment: "Via govpay"
       maximum_refund_amount: "Maximum refund amount"
       enter_refund: "Enter refund"
       reason: "Reason"
       refund_button: "Refund"
+      errors:
+        exceeds_payment_amount: "Refund amount must not exceed the payment amount"
+        exceeds_balance: "Refund amount must not exceed the account balance"
     payment_type:
       govpay_payment: "Via govpay"
       bank_transfer: "Via Bank transfer"
