@@ -6,6 +6,7 @@ RSpec.describe "Payment Details" do
   let(:registration) { create(:registration) }
 
   describe "GET /registrations/:reference/payment_details" do
+    let(:i18n_page) { ".payment_details.index" }
     context "when a user is signed in" do
       before do
         sign_in(create(:user))
