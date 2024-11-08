@@ -20,14 +20,14 @@ class PaymentDetailsPresenter
     @payments ||= account
                   &.payments
                   &.where&.not(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
-                  &.order(:date_time, :desc)
+                  &.order(date_time: :desc)
   end
 
   def refunds
     @refunds ||= account
                  &.payments
                  &.where(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
-                 &.order(:date_time, :desc)
+                 &.order(date_time: :desc)
   end
 
   def balance

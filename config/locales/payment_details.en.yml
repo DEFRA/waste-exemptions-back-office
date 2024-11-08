@@ -20,7 +20,7 @@ en:
           headers:
             date: Date
             type: Type
-            reason: Reason
+            comments: Comments
             amount: Amount
 
         payments:
@@ -42,7 +42,7 @@ en:
           headers:
             date: Date
             reference: Reference
-            reason: Reason
+            comments: Comments
             amount: Amount
 
         balance:

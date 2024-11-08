@@ -47,6 +47,6 @@ class RecordRefundsController < ApplicationController
   end
 
   def record_refund_params
-    params.require(:record_refund_form).permit(:reason, :payment_id, :amount)
+    params.require(:record_refund_form).permit(:comments, :payment_id, :amount)
   end
 end

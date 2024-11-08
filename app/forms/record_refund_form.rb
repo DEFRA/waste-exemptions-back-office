@@ -3,9 +3,9 @@
 class RecordRefundForm
   include ActiveModel::Model
 
-  attr_accessor :reason, :payment_id, :amount
+  attr_accessor :comments, :payment_id, :amount
 
-  validates :reason, presence: true
+  validates :comments, presence: true
   validates :payment_id, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validate :amount_within_limits
@@ -16,7 +16,7 @@ class RecordRefundForm
 
   def submit(params, record_refund_service: RecordRefundService)
     self.amount = params[:amount]
-    self.reason = params[:reason]
+    self.comments = params[:comments]
     self.payment_id = params[:payment_id]
 
     @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
@@ -24,8 +24,8 @@ class RecordRefundForm
 
     return false unless valid?
 
-    Rails.logger.info "running RecordRefundService with arguments: #{reason}, #{payment}, #{amount.to_f}"
-    record_refund_service.run(reason: reason,
+    Rails.logger.info "running RecordRefundService with arguments: #{comments}, #{payment}, #{amount.to_f}"
+    record_refund_service.run(comments: comments,
                               payment: payment,
                               amount_in_pounds: amount.to_f)
   end
