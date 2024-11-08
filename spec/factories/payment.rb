@@ -15,8 +15,6 @@ FactoryBot.define do
       payment_uuid { SecureRandom.uuid }
     end
 
-    account_id { 1 }
-
     trait :with_order do
       order
     end

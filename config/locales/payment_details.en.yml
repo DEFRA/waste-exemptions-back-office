@@ -42,7 +42,7 @@ en:
           headers:
             date: Date
             reference: Reference
-            comments: Comments
+            comments: Reason
             amount: Amount
 
         balance:

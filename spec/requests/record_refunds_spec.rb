@@ -50,14 +50,14 @@ RSpec.describe "Record Refund Forms" do
   describe "GET /registrations/:reference/record-refund/:payment_id/new" do
     context "when the user is signed in" do
       it "renders the new template and returns a 200 status" do
-        get new_registration_record_refund_form_path(registration_reference: registration.reference, payment_id: payment.id)
+        get new_registration_record_refund_path(registration_reference: registration.reference, payment_id: payment.id)
 
         expect(response).to render_template(:new)
         expect(response).to have_http_status(:ok)
       end
 
       it "displays the maximum refund amount" do
-        get new_registration_record_refund_form_path(registration_reference: registration.reference, payment_id: payment.id)
+        get new_registration_record_refund_path(registration_reference: registration.reference, payment_id: payment.id)
 
         expect(response.body).to include("£30")
       end
@@ -67,7 +67,7 @@ RSpec.describe "Record Refund Forms" do
       before { sign_out(user) }
 
       it "redirects to the sign-in page" do
-        get new_registration_record_refund_form_path(registration_reference: registration.reference, payment_id: payment.id)
+        get new_registration_record_refund_path(registration_reference: registration.reference, payment_id: payment.id)
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -75,7 +75,7 @@ RSpec.describe "Record Refund Forms" do
 
     context "when the payment doesn't exist" do
       it "redirects to the payment details page" do
-        get new_registration_record_refund_form_path(registration_reference: registration.reference, payment_id: "foo")
+        get new_registration_record_refund_path(registration_reference: registration.reference, payment_id: "foo")
 
         expect(response).to redirect_to(registration_payment_details_path(registration_reference: registration.reference))
       end
@@ -88,7 +88,7 @@ RSpec.describe "Record Refund Forms" do
         record_refund_form: {
           payment_id: payment.id,
           amount: "30.00",
-          reason: "Customer overpaid"
+          comments: "Customer overpaid"
         }
       }
     end
@@ -123,7 +123,7 @@ RSpec.describe "Record Refund Forms" do
             record_refund_form: {
               payment_id: payment.id,
               amount: "40.00",
-              reason: "Customer overpaid"
+              comments: "Customer overpaid"
             }
           }
         end

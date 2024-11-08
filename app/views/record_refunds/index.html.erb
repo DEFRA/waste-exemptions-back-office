@@ -47,7 +47,7 @@
               £<%= display_pence_as_pounds_and_cents(payment.payment_amount, hide_pence_if_zero: false) %>
             </td>
             <td class="govuk-table__cell">
-              <%= link_to new_registration_record_refund_form_path(reference: @resource.reference, payment_id: payment.id) do %>
+              <%= link_to new_registration_record_refund_path(reference: @resource.reference, payment_id: payment.id) do %>
                 <%= t(".refund_payment") %>
                 <span class="govuk-visually-hidden">
                   <%= "ALT" %>
