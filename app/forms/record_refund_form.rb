@@ -38,11 +38,11 @@ class RecordRefundForm
     return if amount.blank? || !amount.to_f.positive?
 
     if amount.to_f > payment.payment_amount.to_f / 100
-      errors.add(:amount, I8n.t(".record_refund_forms.new.errors.record_refund_form.amount_exceeds_payment"))
+      errors.add(:amount, I8n.t(".record_refunds.new.errors.record_refund_form.amount_exceeds_payment"))
     end
 
     return if balance.negative? || amount.to_f <= balance
 
-    errors.add(:amount, I18n.t(".record_refund_forms.new.errors.record_refund_form.amount_exceeds_balance"))
+    errors.add(:amount, I18n.t(".record_refunds.new.errors.record_refund_form.amount_exceeds_balance"))
   end
 end

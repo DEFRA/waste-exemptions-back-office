@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render("waste_exemptions_engine/shared/back", back_path: registration_record_refund_forms_path(registration_reference: @resource.reference)) %>
+    <%= render("waste_exemptions_engine/shared/back", back_path: registration_record_refunds_path(registration_reference: @resource.reference)) %>
   </div>
 </div>
 
@@ -10,7 +10,7 @@
       <%= t(".heading", reference: @resource.reference) %>
     </h1>
 
-    <%= form_for @record_refund_form, url: registration_record_refund_forms_path(registration_reference: @resource.reference), builder: GOVUKDesignSystemFormBuilder::FormBuilder, method: :post do |f| %>
+    <%= form_for @record_refund_form, url: registration_record_refunds_path(registration_reference: @resource.reference), builder: GOVUKDesignSystemFormBuilder::FormBuilder, method: :post do |f| %>
       <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
 
       <div class="govuk-form-group">

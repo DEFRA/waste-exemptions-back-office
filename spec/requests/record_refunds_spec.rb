@@ -23,14 +23,14 @@ RSpec.describe "Record Refund Forms" do
   describe "GET /registrations/:reference/record-refund" do
     context "when the user is signed in" do
       it "renders the index template and returns a 200 status" do
-        get registration_record_refund_forms_path(registration_reference: registration.reference)
+        get registration_record_refunds_path(registration_reference: registration.reference)
 
         expect(response).to render_template(:index)
         expect(response).to have_http_status(:ok)
       end
 
       it "displays the payment details in the table" do
-        get registration_record_refund_forms_path(registration_reference: registration.reference)
+        get registration_record_refunds_path(registration_reference: registration.reference)
 
         expect(response.body).to include("£30")
       end
@@ -40,7 +40,7 @@ RSpec.describe "Record Refund Forms" do
       before { sign_out(user) }
 
       it "redirects to the sign-in page" do
-        get registration_record_refund_forms_path(registration_reference: registration.reference)
+        get registration_record_refunds_path(registration_reference: registration.reference)
 
         expect(response).to redirect_to(new_user_session_path)
       end
@@ -97,18 +97,18 @@ RSpec.describe "Record Refund Forms" do
       context "with valid params" do
         it "creates a new refund payment" do
           expect do
-            post registration_record_refund_forms_path(registration_reference: registration.reference), params: valid_params
+            post registration_record_refunds_path(registration_reference: registration.reference), params: valid_params
           end.to change(WasteExemptionsEngine::Payment, :count).by(1)
         end
 
         it "redirects to the payment details page" do
-          post registration_record_refund_forms_path(registration_reference: registration.reference), params: valid_params
+          post registration_record_refunds_path(registration_reference: registration.reference), params: valid_params
 
           expect(response).to redirect_to(registration_payment_details_path(registration_reference: registration.reference))
         end
 
         it "creates a refund with the correct attributes" do
-          post registration_record_refund_forms_path(registration_reference: registration.reference), params: valid_params
+          post registration_record_refunds_path(registration_reference: registration.reference), params: valid_params
 
           refund = WasteExemptionsEngine::Payment.last
           expect(refund.payment_type).to eq("refund")
@@ -129,14 +129,14 @@ RSpec.describe "Record Refund Forms" do
         end
 
         it "renders the new template" do
-          post registration_record_refund_forms_path(registration_reference: registration.reference), params: invalid_params
+          post registration_record_refunds_path(registration_reference: registration.reference), params: invalid_params
 
           expect(response).to render_template(:new)
         end
 
         it "does not create a new payment" do
           expect do
-            post registration_record_refund_forms_path(registration_reference: registration.reference), params: invalid_params
+            post registration_record_refunds_path(registration_reference: registration.reference), params: invalid_params
           end.not_to change(WasteExemptionsEngine::Payment, :count)
         end
       end
@@ -146,7 +146,7 @@ RSpec.describe "Record Refund Forms" do
       before { sign_out(user) }
 
       it "redirects to the sign-in page" do
-        post registration_record_refund_forms_path(registration_reference: registration.reference), params: valid_params
+        post registration_record_refunds_path(registration_reference: registration.reference), params: valid_params
 
         expect(response).to redirect_to(new_user_session_path)
       end
