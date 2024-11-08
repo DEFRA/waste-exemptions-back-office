@@ -20,7 +20,7 @@ en:
           headers:
             date: Date
             type: Type
-            comments: Comments
+            comments: Reason
             amount: Amount
 
         payments:

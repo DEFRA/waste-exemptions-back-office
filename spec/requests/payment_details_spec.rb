@@ -3,7 +3,10 @@
 require "rails_helper"
 
 RSpec.describe "Payment Details" do
-  let(:registration) { create(:registration) }
+  let(:registration) { create(:registration, account: build(:account, :with_order)) }
+  let(:account) { registration.account }
+  let(:order) { account.orders.first }
+  let(:payment) { order.payments.first }
 
   describe "GET /registrations/:reference/payment_details" do
     let(:i18n_page) { ".payment_details.index" }
@@ -71,7 +74,7 @@ RSpec.describe "Payment Details" do
           aggregate_failures do
             expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.date")
             expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.type")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.reason")
+            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.comments")
             expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.amount")
           end
         end
@@ -99,7 +102,7 @@ RSpec.describe "Payment Details" do
           aggregate_failures do
             expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.date")
             expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.reference")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.reason")
+            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.comments")
             expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.amount")
           end
         end
