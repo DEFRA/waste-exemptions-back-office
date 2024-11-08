@@ -5,7 +5,7 @@ module FinanceDetailsHelper
     pounds = pence.to_f / 100
 
     if (pounds % 1).zero?
-      hide_pence_if_zero ?  format("%<pounds>.0f", pounds: pounds) : format("%<pounds>.2f", pounds: pounds)
+      hide_pence_if_zero ? format("%<pounds>.0f", pounds: pounds) : format("%<pounds>.2f", pounds: pounds)
     else
       format("%<pounds>.2f", pounds: pounds)
     end

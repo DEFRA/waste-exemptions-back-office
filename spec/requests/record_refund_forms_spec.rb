@@ -96,9 +96,9 @@ RSpec.describe "Record Refund Forms" do
     context "when the user is signed in" do
       context "with valid params" do
         it "creates a new refund payment" do
-          expect {
+          expect do
             post registration_record_refund_forms_path(registration_reference: registration.reference), params: valid_params
-          }.to change(WasteExemptionsEngine::Payment, :count).by(1)
+          end.to change(WasteExemptionsEngine::Payment, :count).by(1)
         end
 
         it "redirects to the payment details page" do
@@ -135,9 +135,9 @@ RSpec.describe "Record Refund Forms" do
         end
 
         it "does not create a new payment" do
-          expect {
+          expect do
             post registration_record_refund_forms_path(registration_reference: registration.reference), params: invalid_params
-          }.not_to change(WasteExemptionsEngine::Payment, :count)
+          end.not_to change(WasteExemptionsEngine::Payment, :count)
         end
       end
     end

@@ -3,16 +3,16 @@
 class RecordRefundFormsController < ApplicationController
   def index
     find_resource(params[:registration_reference])
-    @payments = @resource&.account&.payments.refundable_offline
-    #authorize
+    @payments = @resource&.account&.payments&.refundable_offline
+    # authorize
   end
 
   def new
     setup_form
     @payment = @resource&.account&.payments&.find_by(id: params[:payment_id])
-    unless @payment
-      redirect_to registration_payment_details_path(registration_reference: @resource.reference)
-    end
+    return if @payment
+
+    redirect_to registration_payment_details_path(registration_reference: @resource.reference)
   end
 
   def create
@@ -20,14 +20,13 @@ class RecordRefundFormsController < ApplicationController
     begin
       @payment = WasteExemptionsEngine::Payment.find(record_refund_params[:payment_id])
       if @record_refund_form.submit(record_refund_params)
-        flash[:success] = "Refund was successfully recorded"
+        flash[:success] = I18n.t(".record_refund_forms.create.success")
         redirect_to registration_payment_details_path(registration_reference: @resource.reference)
       else
-        flash.now[:error] = "Could not record refund - please check the form for errors"
         render :new
       end
     rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Could not find the specified payment"
+      flash[:error] = I18n.t(".record_refund_forms.create.not_found")
       redirect_to registration_payment_details_path(registration_reference: @resource.reference)
     end
   end

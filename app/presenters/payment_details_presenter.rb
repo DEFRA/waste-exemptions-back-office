@@ -6,24 +6,31 @@ class PaymentDetailsPresenter
 
   attr_reader :registration
 
+  delegate :account, to: :registration
+
   def initialize(registration)
     @registration = registration
   end
 
   def orders
-    @orders ||= registration.account&.orders&.sort_by(&:created_at)&.reverse || []
+    @orders ||= account&.orders&.sort_by(&:created_at)&.reverse || []
   end
 
   def payments
-    @payments ||= registration.account&.payments&.where.not(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
+    @payments ||= account
+                  &.payments
+                  &.where&.not(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
   end
 
   def refunds
-    @refunds ||= registration.account&.payments&.where(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
+    @refunds ||= account
+                 &.payments
+                 &.where(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
   end
 
   def balance
     return nil unless registration.account&.balance
+
     display_pence_as_pounds_and_cents(registration.account.balance)
   end
 

@@ -24,6 +24,9 @@ en:
       errors:
         exceeds_payment_amount: "Refund amount must not exceed the payment amount"
         exceeds_balance: "Refund amount must not exceed the account balance"
+    create:
+      success: "Refund was successfully recorded"
+      not_found: "Could not find the specified payment"
     payment_type:
       govpay_payment: "Via govpay"
       bank_transfer: "Via Bank transfer"
