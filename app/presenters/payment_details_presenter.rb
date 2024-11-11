@@ -41,7 +41,7 @@ class PaymentDetailsPresenter
   end
 
   def format_date(datetime)
-    datetime&.strftime("%Y-%m-%d")
+    datetime.to_date.to_fs(:day_month_year_slashes)
   end
 
   def order_exemption_codes(order)

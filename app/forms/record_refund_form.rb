@@ -5,10 +5,10 @@ class RecordRefundForm
 
   attr_accessor :comments, :payment_id, :amount
 
-  validates :comments, presence: true
   validates :payment_id, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
   validate :amount_within_limits
+  validate :reason_present_in_comments
 
   def initialize(attributes = {})
     super
