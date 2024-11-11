@@ -196,7 +196,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_171337) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "payment_uuid"
-    t.text "reason"
     t.bigint "account_id"
     t.string "reference"
     t.string "comments", limit: 500
@@ -456,7 +455,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_171337) do
   add_foreign_key "order_buckets", "orders"
   add_foreign_key "order_exemptions", "exemptions"
   add_foreign_key "order_exemptions", "orders"
-  add_foreign_key "payments", "accounts"
   add_foreign_key "payments", "orders"
   add_foreign_key "people", "registrations"
   add_foreign_key "transient_addresses", "transient_registrations"
