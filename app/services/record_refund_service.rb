@@ -10,7 +10,7 @@ class RecordRefundService < WasteExemptionsEngine::BaseService
     refund.save!
 
     account = payment.account
-    account.update_balance!
+    account.update_balance
     account.save!
 
     true
