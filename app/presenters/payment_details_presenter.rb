@@ -36,6 +36,10 @@ class PaymentDetailsPresenter
     display_pence_as_pounds_and_cents(registration.account.balance)
   end
 
+  def can_display_refund_link?
+    registration.account&.overpaid?
+  end
+
   def format_date(datetime)
     datetime&.strftime("%Y-%m-%d")
   end

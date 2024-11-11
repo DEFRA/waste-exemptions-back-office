@@ -45,4 +45,10 @@ class RecordRefundForm
 
     errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_balance"))
   end
+
+  def reason_present_in_comments
+    return if comments.present?
+
+    errors.add(:comments, I18n.t(".record_refunds.form.errors.reason_missing"))
+  end
 end
