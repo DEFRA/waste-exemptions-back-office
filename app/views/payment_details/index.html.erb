@@ -43,9 +43,9 @@
                   <%= t(".details_section.charges.total_charge_label") %>
                 </td>
                 <td class="govuk-table__cell govuk-!-text-align-right">
-                  <%= order.charge_detail&.total_compliance_charge_amount %> <br>
-                  <%= order.charge_detail&.registration_charge_amount %> <br>
-                  <%= order.charge_detail&.total_charge_amount %>
+                  <%= number_to_currency(display_pence_as_pounds_and_cents(order.charge_detail&.total_compliance_charge_amount), unit: "£") %> <br>
+                  <%= number_to_currency(display_pence_as_pounds_and_cents(order.charge_detail&.registration_charge_amount), unit: "£") %> <br>
+                  <%= number_to_currency(display_pence_as_pounds_and_cents(order.charge_detail&.total_charge_amount), unit: "£") %>
                 </td>
               </tr>
             <% end %>
@@ -109,7 +109,7 @@
                   <%= t(".details_section.payments.payment_types.#{payment.payment_type}") %>
                 </td>
                 <td class="govuk-table__cell govuk-!-text-align-right">
-                  <%= display_pence_as_pounds_and_cents(payment.payment_amount) %>
+                  <%= number_to_currency(display_pence_as_pounds_and_cents(payment.payment_amount), unit: "£") %>
                 </td>
               </tr>
             <% end %>
@@ -158,7 +158,7 @@
                 <%= t(".details_section.balance.amount") %>
               </td>
               <td class="govuk-table__cell govuk-!-text-align-right">
-                <%= display_pence_as_pounds_and_cents(@resource.account.balance) if @resource.account&.balance.present?
+                <%= number_to_currency(display_pence_as_pounds_and_cents(@resource.account.balance), unit: "£") if @resource.account&.balance.present?
                   %>
               </td>
             </tr>
