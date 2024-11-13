@@ -19,15 +19,15 @@ class PaymentDetailsPresenter
   def payments
     @payments ||= account
                   &.payments
-                  &.where&.not(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
+                  &.excluding_refunds
                   &.order(date_time: :desc)
   end
 
-  def refunds
-    @refunds ||= account
-                 &.payments
-                 &.where(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
-                 &.order(date_time: :desc)
+  def refunds_and_reversals
+    @refunds_and_reversals ||= account
+                               &.payments
+                               &.refunds
+                               &.order(date_time: :desc)
   end
 
   def balance
@@ -37,7 +37,16 @@ class PaymentDetailsPresenter
   end
 
   def can_display_refund_link?
-    registration.account&.overpaid?
+    registration
+      .account
+      &.overpaid?
+  end
+
+  def can_display_reversal_link?
+    registration
+      .account
+      &.payments
+      &.refundable&.any?
   end
 
   def format_date(datetime)

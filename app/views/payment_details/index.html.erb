@@ -101,7 +101,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @presenter.refunds.each do |payment| %>
+        <% @presenter.refunds_and_reversals.each do |payment| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= @presenter.format_date(payment.created_at) %></td>
             <td class="govuk-table__cell"><%= payment.reference %></td>
@@ -146,6 +146,13 @@
         <li>
           <%= link_to t(".actions_section.links.record_refund"),
               registration_record_refunds_path(registration_reference: @resource.reference) %>
+        </li>
+      <% end %>
+
+      <% if @presenter.can_display_reversal_link? %>
+        <li>
+          <%= link_to t(".actions_section.links.reverse_payment"),
+              registration_record_reversals_path(registration_reference: @resource.reference) %>
         </li>
       <% end %>
     </ul>

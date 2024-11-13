@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_31_171337) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_13_151948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -138,6 +138,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_171337) do
     t.string "sent_to"
   end
 
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "company_no", null: false
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_no"], name: "index_companies_on_company_no", unique: true
+  end
+
   create_table "exemptions", id: :serial, force: :cascade do |t|
     t.integer "category"
     t.string "code"
@@ -199,8 +208,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_31_171337) do
     t.bigint "account_id"
     t.string "reference"
     t.string "comments", limit: 500
+    t.string "reversed_by"
+    t.datetime "reversed_at"
+    t.integer "reversal_id"
     t.index ["account_id"], name: "index_payments_on_account_id"
     t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["reversal_id"], name: "index_payments_on_reversal_id"
   end
 
   create_table "people", id: :serial, force: :cascade do |t|

@@ -67,8 +67,7 @@ gem "sucker_punch", "~> 3.2"
 
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
-    git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "RUBY-2704-wex-charging-bo-3-1-3-refund-a-payment-page"
+  path: "../waste-exemptions-engine"
 
 # Use the Defra Ruby Features gem to allow users with the correct permissions to
 # manage feature toggle (create / update / delete) from the back-office.
