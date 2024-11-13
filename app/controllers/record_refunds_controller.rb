@@ -3,7 +3,7 @@
 class RecordRefundsController < ApplicationController
   def index
     find_resource(params[:registration_reference])
-    @payments = @resource&.account&.payments&.refundable_offline
+    @payments = @resource&.account&.payments&.refundable
     # authorize
   end
 
