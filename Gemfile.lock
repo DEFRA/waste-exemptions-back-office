@@ -1,5 +1,7 @@
-PATH
-  remote: ../waste-exemptions-engine
+GIT
+  remote: https://github.com/DEFRA/waste-exemptions-engine
+  revision: ff8c848c41da5e52af1ebab6c3e4e307e8a30551
+  branch: RUBY-2713-wex-charging-bo-3-1-5-reverse-a-payment-page
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -209,7 +211,7 @@ GEM
       rubocop-rake
       rubocop-rspec
     defra_ruby_template (5.4.1)
-    defra_ruby_validators (2.7.0)
+    defra_ruby_validators (2.7.1)
       activemodel
       i18n
       matrix

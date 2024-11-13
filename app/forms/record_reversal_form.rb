@@ -8,6 +8,11 @@ class RecordReversalForm
   validates :payment_id, presence: true
   validate :reason_present_in_comments
 
+  def initialize(user:)
+    @user = user
+    super
+  end
+
   def submit(params)
     self.comments = params[:comments]
     self.payment_id = params[:payment_id]
@@ -20,11 +25,14 @@ class RecordReversalForm
 
     ReversePaymentService.new.run(
       comments: comments,
-      payment: payment
+      payment: payment,
+      user: user
     )
   end
 
   private
+
+  attr_reader :user
 
   def reason_present_in_comments
     return if comments.present?

@@ -39,7 +39,7 @@ class RecordReversalsController < ApplicationController
 
   def setup_form
     find_resource(params[:registration_reference])
-    @record_reversal_form = RecordReversalForm.new
+    @record_reversal_form = RecordReversalForm.new(user: current_user)
   end
 
   def record_reversal_params
