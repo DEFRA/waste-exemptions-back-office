@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: ea3c28bb610b2cc6093e465008bf868dfa5cd39f
+  revision: bebb8e10cc2ea7c22716cc7c501dfb9074b94cec
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -211,7 +211,7 @@ GEM
       rubocop-rake
       rubocop-rspec
     defra_ruby_template (5.4.1)
-    defra_ruby_validators (2.7.0)
+    defra_ruby_validators (2.7.2)
       activemodel
       i18n
       matrix
