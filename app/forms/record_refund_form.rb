@@ -3,16 +3,12 @@
 class RecordRefundForm
   include ActiveModel::Model
 
-  attr_accessor :comments, :payment_id, :amount
+  attr_accessor :payment_id, :amount, :comments
 
-  validates :payment_id, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
-  validate :amount_within_limits
+  validate :payment_exists
+  validate :amount_within_limits, if: -> { payment.present? }
   validate :reason_present_in_comments
-
-  def initialize(attributes = {})
-    super
-  end
 
   def submit(params, record_refund_service: RecordRefundService)
     self.amount = params[:amount]
@@ -20,19 +16,29 @@ class RecordRefundForm
     self.payment_id = params[:payment_id]
 
     @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
-    @balance = payment.account.balance
+    @balance = payment&.account&.balance
 
     return false unless valid?
 
     Rails.logger.info "running RecordRefundService with arguments: #{comments}, #{payment}, #{amount.to_f}"
-    record_refund_service.run(comments: comments,
-                              payment: payment,
-                              amount_in_pounds: amount.to_f)
+
+    record_refund_service.run(
+      comments: comments,
+      payment: payment,
+      amount_in_pounds: amount.to_f
+    )
   end
 
   private
 
-  attr_reader :payment, :max_amount, :balance
+  attr_reader :payment, :balance
+
+  def payment_exists
+    return if payment_id.blank?
+    return if WasteExemptionsEngine::Payment.exists?(id: payment_id)
+
+    errors.add(:payment, I18n.t(".record_refunds.form.errors.payment_missing"))
+  end
 
   def amount_within_limits
     return if amount.blank? || !amount.to_f.positive?
@@ -41,9 +47,9 @@ class RecordRefundForm
       errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_payment_amount"))
     end
 
-    if amount.to_f > balance
-      errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_balance"))
-    end
+    return unless amount.to_f > balance
+
+    errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_balance"))
   end
 
   def reason_present_in_comments
