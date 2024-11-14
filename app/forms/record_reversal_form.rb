@@ -3,15 +3,10 @@
 class RecordReversalForm
   include ActiveModel::Model
 
-  attr_accessor :comments, :payment_id
+  attr_accessor :comments, :payment_id, :user
 
   validates :payment_id, presence: true
   validate :reason_present_in_comments
-
-  def initialize(user:)
-    @user = user
-    super
-  end
 
   def submit(params)
     self.comments = params[:comments]
@@ -31,8 +26,6 @@ class RecordReversalForm
   end
 
   private
-
-  attr_reader :user
 
   def reason_present_in_comments
     return if comments.present?
