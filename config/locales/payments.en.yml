@@ -27,4 +27,4 @@ en:
       payment_amount_blank: "You must enter an amount"
       payment_amount_invalid: "You must enter a valid amount"
       payment_reference_blank: "You must enter a payment reference"
-      comments_too_long: "Comments must be 500 characters or fewer"
+      comments_too_long: "Your comment must be no more than 500 characters"
