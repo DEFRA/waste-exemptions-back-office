@@ -34,7 +34,7 @@
           <tbody>
             <% orders = @resource.account&.orders %>
             <% if orders.present? %>
-              <% orders.order(created_at: desc).each do |order| %>
+              <% orders.order(created_at: :desc).each do |order| %>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">
                     <%= order.created_at.strftime("%Y-%m-%d") %>
@@ -45,9 +45,9 @@
                     <%= t(".details_section.charges.total_charge_label") %>
                   </td>
                   <td class="govuk-table__cell govuk-!-text-align-right">
-                    <%= order.charge_detail&.total_compliance_charge_amount %> <br>
-                    <%= order.charge_detail&.registration_charge_amount %> <br>
-                    <%= order.charge_detail&.total_charge_amount %>
+                    <%= display_pence_as_pounds_sterling_and_pence(order.charge_detail&.total_compliance_charge_amount) %> <br>
+                    <%= display_pence_as_pounds_sterling_and_pence(order.charge_detail&.registration_charge_amount) %> <br>
+                    <%= display_pence_as_pounds_sterling_and_pence(order.charge_detail&.total_charge_amount) %>
                   </td>
                 </tr>
               <% end %>
@@ -100,9 +100,9 @@
             </tr>
           </thead>
           <tbody>
-            <% payments = @resource.account&.payments %>
+            <% payments = @resource.account&.payments&.select(&:success?) %>
             <% if payments.present? %>
-              <% payments&.order(date_time: :desc).each do |payment| %>
+              <% payments.sort_by { |p| p.date_time }.reverse.each do |payment| %>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">
                     <%= payment.date_time&.strftime("%Y-%m-%d") %>
@@ -114,7 +114,7 @@
                     <%= t(".details_section.payments.payment_types.#{payment.payment_type}") %>
                   </td>
                   <td class="govuk-table__cell govuk-!-text-align-right">
-                    <%= display_pence_as_pounds_and_cents(payment.payment_amount) %>
+                    <%= display_pence_as_pounds_sterling_and_pence(payment.payment_amount) %>
                   </td>
                 </tr>
               <% end %>
@@ -164,7 +164,7 @@
                 <%= t(".details_section.balance.amount") %>
               </td>
               <td class="govuk-table__cell govuk-!-text-align-right">
-                <%= number_to_currency(display_pence_as_pounds_and_cents(@resource.account.balance), unit: "£") if @resource.account&.balance.present?
+                <%= display_pence_as_pounds_sterling_and_pence(@resource.account.balance) if @resource.account&.balance.present?
                   %>
               </td>
             </tr>
