@@ -4,10 +4,10 @@ require "rails_helper"
 
 RSpec.describe "Payment details" do
   describe "GET /registrations/:id/payment_details" do
-    let(:registration) { create(:registration, account: build(:account, :with_order)) }
+    let(:registration) { create(:registration, account: build(:account, :with_order, :with_payment)) }
     let(:account) { registration.account }
     let(:order) { account.orders.first }
-    let(:payment) { order.payments.first }
+    let(:payment) { account.payments.first }
 
     let(:i18n_page) { ".payment_details.index" }
 
