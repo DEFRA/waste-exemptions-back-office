@@ -9,10 +9,6 @@ class RecordRefundService < WasteExemptionsEngine::BaseService
     refund = build_refund(@amount)
     refund.save!
 
-    account = payment.account
-    account.update_balance
-    account.save!
-
     true
   rescue StandardError => e
     Rails.logger.error "#{e.class} error processing refund for payment #{payment.id}"

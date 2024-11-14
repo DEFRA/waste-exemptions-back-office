@@ -211,7 +211,7 @@ GEM
       rubocop-rake
       rubocop-rspec
     defra_ruby_template (5.4.1)
-    defra_ruby_validators (2.7.1)
+    defra_ruby_validators (2.7.2)
       activemodel
       i18n
       matrix

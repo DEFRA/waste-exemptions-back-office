@@ -75,6 +75,21 @@ RSpec.describe AddPaymentForm, type: :model do
 
         it_behaves_like "form submission fails", :payment_reference
       end
+
+      context "when the comments too long" do
+        before do
+          add_payment_form[:comments] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nisi sem, efficitur et venenatis \
+          sit amet, dapibus quis erat. Vestibulum velit ligula, luctus at commodo porttitor, viverra et orci. Orci varius natoque penatibus \
+          et magnis dis parturient montes, nascetur ridiculus mus. Donec in lectus quis urna varius convallis a non metus. Duis leo ante, \
+          porttitor in est eget, sodales pellentesque metus. Pellentesque ut viverra nisl. Suspendisse pulvinar efficitur odio at malesuada. \
+          Aenean in sem vel leo placerat feugiat posuere in velit. Phasellus accumsan orci ipsum, non luctus tortor imperdiet in. Integer \
+          ultricies congue lectus sed tristique. Maecenas lectus lectus, aliquam id vehicula eu, dignissim non erat. Donec euismod placerat \
+          eros, nec finibus sem malesuada vitae. Praesent tristique sem auctor sapien pellentesque, vitae congue massa faucibus. Duis tincidunt \
+          mauris a risus efficitur auctor. Fusce non ullamcorper urna, vel rhoncus erat."
+        end
+
+        it_behaves_like "form submission fails", :comments
+      end
     end
 
     context "when the form is valid" do
