@@ -41,9 +41,9 @@ class RecordRefundForm
       errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_payment_amount"))
     end
 
-    return if balance.negative? || amount.to_f <= balance
-
-    errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_balance"))
+    if amount.to_f > balance
+      errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_balance"))
+    end
   end
 
   def reason_present_in_comments
