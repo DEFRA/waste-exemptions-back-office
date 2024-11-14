@@ -6,6 +6,7 @@ RSpec.describe "Cleanup task", type: :rake do
   include_context "rake"
 
   describe "cleanup:transient_registrations" do
+    let(:rake_task) { Rake::Task["cleanup:transient_registrations"] }
     let(:old_registration) { create(:new_registration, created_at: 31.days.ago) }
     let(:env_limit) { "1" }
 
@@ -16,25 +17,51 @@ RSpec.describe "Cleanup task", type: :rake do
       allow(ENV).to receive(:fetch).with("TRANSIENT_REGISTRATION_CLEANUP_LIMIT", any_args).and_return(env_limit)
     end
 
-    after do
-      Rake::Task["cleanup:transient_registrations"].reenable
-    end
+    after { rake_task.reenable }
+
+    it { expect { rake_task.invoke }.not_to raise_error }
 
     it "deletes only up to the environment variable limit number of old transient registrations" do
-      expect do
-        Rake::Task["cleanup:transient_registrations"].invoke
-      end.to change {
+      expect { rake_task.invoke }.to change {
         WasteExemptionsEngine::TransientRegistration
           .where(created_at: ...30.days.ago)
           .count
       }.from(2).to(1)
     end
+  end
 
-    it "runs without error" do
-      expect do
-        Rake::Task["cleanup:transient_registrations"].invoke
-      end.not_to raise_error
+  describe "cleanup:placeholder_registrations" do
+    let(:rake_task) { Rake::Task["cleanup:placeholder_registrations"] }
+    let!(:placeholder_registration) { create(:registration, lifecycle_status: "placeholder", created_at: 31.days.ago) }
+    let(:env_limit) { "1" }
+
+    before do
+      placeholder_registration
+      create(:registration, lifecycle_status: "completed", created_at: 31.days.ago)
+      create(:registration, lifecycle_status: "placeholder", created_at: 31.days.ago)
+      create(:registration, lifecycle_status: "placeholder")
+      # We use the same limit as the transient_registration cleanup task
+      allow(ENV).to receive(:fetch).with("TRANSIENT_REGISTRATION_CLEANUP_LIMIT", any_args).and_return(env_limit)
     end
 
+    after { rake_task.reenable }
+
+    it { expect { rake_task.invoke }.not_to raise_error }
+
+    it "does not delete non-placeholder registrations" do
+      expect { rake_task.invoke }.not_to change {
+        WasteExemptionsEngine::Registration
+          .where.not(lifecycle_status: "placeholder")
+          .count
+      }
+    end
+
+    it "deletes only up to the environment variable limit number of old placeholder registrations" do
+      expect { rake_task.invoke }.to change {
+        WasteExemptionsEngine::Registration
+          .where(lifecycle_status: "placeholder", created_at: ...30.days.ago)
+          .count
+      }.from(2).to(1)
+    end
   end
 end
