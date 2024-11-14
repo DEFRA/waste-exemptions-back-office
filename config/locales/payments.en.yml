@@ -1,7 +1,7 @@
 en:
   payments:
     new:
-      title: "Add a payment"
+      title: "Record a payment"
       heading: "Record a payment for %{registration_reference}"
       submit_button: "Continue"
       fields:
@@ -14,7 +14,7 @@ en:
         payment_reference: "Payment reference"
         payment_amount: "Enter an amount"
         comments: "Comments (optional)"
-        comments_hint: "Enter details of the payment received for this registation."
+        comments_hint: "Enter details of the payment received for this registration"
         payment_date: "Date received"
         payment_date_day: "Day"
         payment_date_month: "Month"
@@ -27,3 +27,4 @@ en:
       payment_amount_blank: "You must enter an amount"
       payment_amount_invalid: "You must enter a valid amount"
       payment_reference_blank: "You must enter a payment reference"
+      comments_too_long: "Your comment must be no more than 500 characters"

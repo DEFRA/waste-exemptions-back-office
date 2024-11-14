@@ -9,12 +9,16 @@ class AddPaymentForm
   validates :payment_type,
             inclusion: { in: %w[bank_transfer missing_card_payment other_payment],
                          message: I18n.t(".payments.errors.payment_type_invalid") }
-  validates :payment_amount, presence: { message: I18n.t(".payments.errors.payment_amount_blank") },
-                             numericality: {
-                               greater_than: 0,
-                               message: I18n.t(".payments.errors.payment_amount_invalid")
-                             }
+
+  validates :payment_amount,
+            "defra_ruby/validators/price": { messages: {
+              blank: I18n.t(".payments.errors.payment_amount_blank"),
+              invalid_format: I18n.t(".payments.errors.payment_amount_invalid")
+            } }
+
   validates :payment_reference, presence: { message: I18n.t(".payments.errors.payment_reference_blank") }
+
+  validates :comments, length: { maximum: 500, message: I18n.t(".payments.errors.comments_too_long") }
 
   validate :validate_payment_date_current_or_past
 
