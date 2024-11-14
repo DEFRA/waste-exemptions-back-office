@@ -31,7 +31,7 @@
             <div class="govuk-radios__item">
               <%= radio_button_tag 'add_payment_form[payment_type]', :missing_card_payment,
                 preselect_missing_card_payment_radio_button?, class: "govuk-radios__input" %>
-              <%= label_tag :payment_type_govpay_payment,
+              <%= label_tag :add_payment_form_payment_type_missing_card_payment,
                 t('.fields.payment_type_labels.govpay_payment'),
                 class: "govuk-label govuk-radios__label" %>
             </div>
@@ -39,7 +39,7 @@
             <div class="govuk-radios__item">
               <%= radio_button_tag 'add_payment_form[payment_type]', :bank_transfer,
                 preselect_bank_transfer_radio_button?, class: "govuk-radios__input" %>
-              <%= label_tag :payment_type_bank_transfer,
+              <%= label_tag :add_payment_form_payment_type_bank_transfer,
                 t('.fields.payment_type_labels.bank_transfer'),
                 class: "govuk-label govuk-radios__label" %>
             </div>
@@ -47,7 +47,7 @@
             <div class="govuk-radios__item">
               <%= radio_button_tag 'add_payment_form[payment_type]', :other_payment,
                 preselect_other_payment_radio_button?, class: "govuk-radios__input" %>
-              <%= label_tag :payment_type_other,
+              <%= label_tag :add_payment_form_payment_type_other_payment,
                 t('.fields.payment_type_labels.other'),
                 class: "govuk-label govuk-radios__label" %>
             </div>
