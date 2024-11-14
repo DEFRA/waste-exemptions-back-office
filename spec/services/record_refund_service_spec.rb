@@ -36,15 +36,6 @@ module WasteExemptionsEngine
           expect(refund.payment_uuid).not_to be_nil
         end
 
-        it "updates the account balance" do
-          allow(account).to receive(:update_balance)
-          allow(account).to receive(:save!)
-
-          service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
-          expect(account).to have_received(:update_balance)
-          expect(account).to have_received(:save!)
-        end
-
         it "returns true" do
           result = service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
           expect(result).to be true

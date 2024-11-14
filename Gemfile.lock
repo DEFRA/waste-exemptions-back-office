@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: fdcfe936d8e3f8c89cde49106e0a1371fbd68c88
+  revision: 815fa2dda5675edd1cfff5be7f77037054393aa2
   branch: RUBY-2704-wex-charging-bo-3-1-3-refund-a-payment-page
   specs:
     waste_exemptions_engine (0.1.0)
