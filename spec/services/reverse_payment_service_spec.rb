@@ -57,13 +57,14 @@ module WasteExemptionsEngine
         end
 
         it "updates the account balance" do
-          allow(account).to receive(:update_balance)
           allow(account).to receive(:save!)
+
+          original_balance = account.balance
 
           service.run(comments: comments, payment: payment, user: user)
 
-          expect(account).to have_received(:update_balance)
           expect(account).to have_received(:save!)
+          expect(account.reload.balance).to eq(original_balance - payment.payment_amount)
         end
 
         it "returns true" do

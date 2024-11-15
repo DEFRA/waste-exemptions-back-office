@@ -7,11 +7,9 @@ class ReversePaymentService < WasteExemptionsEngine::BaseService
     @user = user
 
     reversal = build_reversal
-    reversal.save!
-
-    # Link the original payment to its reversal
 
     ActiveRecord::Base.transaction do
+      reversal.save!
       payment.update!(
         reversal_id: reversal.id,
         reversed_by: user.email,
@@ -19,7 +17,6 @@ class ReversePaymentService < WasteExemptionsEngine::BaseService
       )
 
       account = payment.account
-      account.update_balance
       account.save!
     end
 
