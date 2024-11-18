@@ -3,7 +3,7 @@
            resource: @resource,
            translation_prefix: "record_reversals.index" do |payment| %>
   <%= link_to new_registration_record_reversal_path(reference: @resource.reference, payment_id: payment.id) do %>
-    <%= t(".reverse_payment") %>
+    <%= t("record_reversals.index.reverse_payment") %>
     <span class="govuk-visually-hidden">
       <%= "ALT" %>
     </span>
