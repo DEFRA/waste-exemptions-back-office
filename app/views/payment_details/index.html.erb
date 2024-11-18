@@ -102,7 +102,8 @@
           <tbody>
             <% payments = @resource.account&.payments&.select(&:success?) %>
             <% if payments.present? %>
-              <% payments.sort_by { |p| p.date_time }.reverse.each do |payment| %>
+              <% payments.sort_by { |p| p.date_time }.reverse.each do |pmnt| %>
+                <% payment = PaymentPresenter.new(pmnt) %>
                 <tr class="govuk-table__row">
                   <td class="govuk-table__cell">
                     <%= payment.date_time&.strftime("%Y-%m-%d") %>
@@ -111,7 +112,7 @@
                     <%= payment.reference %>
                   </td>
                   <td class="govuk-table__cell">
-                    <%= t(".details_section.payments.payment_types.#{payment.payment_type}") %>
+                    <%= payment.payment_type %>
                   </td>
                   <td class="govuk-table__cell govuk-!-text-align-right">
                     <%= display_pence_as_pounds_sterling_and_pence(pence: payment.payment_amount) %>
