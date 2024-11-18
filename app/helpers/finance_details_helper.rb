@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FinanceDetailsHelper
-  def display_pence_as_pounds_and_pence(pence, hide_pence_if_zero = false)
+  def display_pence_as_pounds_and_pence(pence:, hide_pence_if_zero: false)
     pounds = pence.to_f / 100
 
     if (pounds % 1).zero?
@@ -11,14 +11,14 @@ module FinanceDetailsHelper
     end
   end
 
-  def display_pence_as_pounds_sterling_and_pence(pence, hide_pence_if_zero = false)
-    pounds_and_pence = display_pence_as_pounds_and_pence(pence, hide_pence_if_zero)
-    pence_is_zero = ((pence.to_f/100) % 1).zero?
+  def display_pence_as_pounds_sterling_and_pence(pence:, hide_pence_if_zero: false)
+    pounds_and_pence = display_pence_as_pounds_and_pence(pence:, hide_pence_if_zero:)
+    pence_is_zero = ((pence.to_f / 100) % 1).zero?
 
     number_to_currency(
       pounds_and_pence,
       unit: "£",
-      precision: (hide_pence_if_zero && pence_is_zero) ? 0 : 2
-      )
+      precision: hide_pence_if_zero && pence_is_zero ? 0 : 2
+    )
   end
 end

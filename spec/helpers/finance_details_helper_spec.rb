@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe FinanceDetailsHelper do
 
   describe "display_pence_as_pounds_and_pence" do
-    subject(:formatted_amount) { helper.display_pence_as_pounds_and_pence(pence, hide_pence_if_zero) }
+    subject(:formatted_amount) { helper.display_pence_as_pounds_and_pence(pence:, hide_pence_if_zero:) }
 
     context "when the value is a whole number of pounds" do
       let(:pence) { 12_300 }
@@ -40,8 +40,8 @@ RSpec.describe FinanceDetailsHelper do
     end
   end
 
-  describe "display_pence_as_pounds_and_pence_with_symbol" do
-    subject(:formatted_amount) { helper.display_pence_as_pounds_sterling_and_pence(pence, hide_pence_if_zero) }
+  describe "display_pence_as_pounds_sterling_and_pence" do
+    subject(:formatted_amount) { helper.display_pence_as_pounds_sterling_and_pence(pence:, hide_pence_if_zero:) }
 
     context "when the value is a whole number of pounds" do
       let(:pence) { 12_300 }

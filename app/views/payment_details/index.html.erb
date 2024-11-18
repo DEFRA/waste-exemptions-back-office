@@ -45,9 +45,9 @@
                     <%= t(".details_section.charges.total_charge_label") %>
                   </td>
                   <td class="govuk-table__cell govuk-!-text-align-right">
-                    <%= display_pence_as_pounds_sterling_and_pence(order.charge_detail&.total_compliance_charge_amount) %> <br>
-                    <%= display_pence_as_pounds_sterling_and_pence(order.charge_detail&.registration_charge_amount) %> <br>
-                    <%= display_pence_as_pounds_sterling_and_pence(order.charge_detail&.total_charge_amount) %>
+                    <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.total_compliance_charge_amount) %> <br>
+                    <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.registration_charge_amount) %> <br>
+                    <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.total_charge_amount) %>
                   </td>
                 </tr>
               <% end %>
@@ -114,7 +114,7 @@
                     <%= t(".details_section.payments.payment_types.#{payment.payment_type}") %>
                   </td>
                   <td class="govuk-table__cell govuk-!-text-align-right">
-                    <%= display_pence_as_pounds_sterling_and_pence(payment.payment_amount) %>
+                    <%= display_pence_as_pounds_sterling_and_pence(pence: payment.payment_amount) %>
                   </td>
                 </tr>
               <% end %>
@@ -164,7 +164,7 @@
                 <%= t(".details_section.balance.amount") %>
               </td>
               <td class="govuk-table__cell govuk-!-text-align-right">
-                <%= display_pence_as_pounds_sterling_and_pence(@resource.account.balance) if @resource.account&.balance.present?
+                <%= display_pence_as_pounds_sterling_and_pence(pence: @resource.account.balance) if @resource.account&.balance.present?
                   %>
               </td>
             </tr>
