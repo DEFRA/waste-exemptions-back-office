@@ -33,3 +33,5 @@ en:
         exceeds_balance: "Refund amount must not exceed the account balance"
         reason_missing: "Enter a reason for the refund"
         payment_missing: "Payment to refund is missing"
+        blank_refund_amount: "Enter the amount to refund"
+        amount_zero_or_lower: "Refund amount must be greater than zero"
