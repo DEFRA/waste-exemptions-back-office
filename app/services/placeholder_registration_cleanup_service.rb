@@ -10,7 +10,7 @@ class PlaceholderRegistrationCleanupService < WasteExemptionsEngine::BaseService
 
   def placeholder_registrations_to_remove(limit)
     WasteExemptionsEngine::Registration
-      .where(lifecycle_status: "placeholder", created_at: ...oldest_possible_date)
+      .where(placeholder: true, created_at: ...oldest_possible_date)
       .limit(limit)
   end
 
