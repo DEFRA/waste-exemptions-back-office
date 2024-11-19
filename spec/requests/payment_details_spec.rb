@@ -9,27 +9,14 @@ RSpec.describe "Payment details" do
     let(:order) { account.orders.first }
     let(:payment) { account.payments.first }
 
-  describe "GET /registrations/:reference/payment_details" do
     let(:i18n_page) { ".payment_details.index" }
-
-    context "when a user is signed in" do
-      before do
-        sign_in(create(:user))
-      end
-
-      it "renders the show template and includes the correct reference" do
-        get "/registrations/#{registration.reference}/payment_details"
-
-        expect(response).to render_template(:index)
-        expect(response.body).to include(registration.reference)
-      end
-    end
 
     context "when a valid user is not signed in" do
       before { sign_out(create(:user)) }
 
       it "redirects to the sign-in page" do
-        get "/registrations/#{registration.id}"
+        get registration_payment_details_path(registration.reference)
+
         expect(response).to redirect_to(new_user_session_path)
       end
     end

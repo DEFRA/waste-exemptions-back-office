@@ -13,27 +13,25 @@ class PaymentDetailsPresenter
   end
 
   def orders
-    @orders ||= account&.orders&.sort_by(&:created_at)&.reverse || []
+    @orders ||= account.orders&.sort_by(&:created_at)&.reverse || []
   end
 
   def payments
-    @payments ||= account
-                  &.payments
-                  &.where&.not(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
-                  &.order(date_time: :desc)
+    @payments ||= account.payments
+                         .where.not(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
+                         &.order(date_time: :desc)
   end
 
   def refunds
-    @refunds ||= account
-                 &.payments
-                 &.where(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
-                 &.order(date_time: :desc)
+    @refunds ||= account.payments
+                        .where(payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND)
+                        &.order(date_time: :desc)
   end
 
   def balance
     return nil unless registration.account&.balance
 
-    display_pence_as_pounds_and_cents(registration.account.balance)
+    display_pence_as_pounds_and_pence(pence: registration.account.balance)
   end
 
   def can_display_refund_link?
