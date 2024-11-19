@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChargeAdjustmentForm
   include ActiveModel::Model
 
@@ -7,8 +9,8 @@ class ChargeAdjustmentForm
 
   validates :adjustment_type, presence: true, inclusion: { in: TYPES }
   validates :amount,
-    "defra_ruby/validators/price": true,
-    presence: true, numericality: { greater_than: 0 }
+            "defra_ruby/validators/price": true,
+            presence: true, numericality: { greater_than: 0 }
   validates :reason, presence: true
 
   def submit(params)

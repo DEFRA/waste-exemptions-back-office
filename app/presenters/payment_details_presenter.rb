@@ -32,8 +32,8 @@ class PaymentDetailsPresenter
 
   def charge_adjustments
     @charge_adjustments ||= account
-      &.charge_adjustments
-      &.order(created_at: :desc)
+                            &.charge_adjustments
+                            &.order(created_at: :desc)
   end
 
   def balance

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdjustChargeService < WasteExemptionsEngine::BaseService
   def run(account:, adjustment_type:, amount:, reason:)
     @account = account

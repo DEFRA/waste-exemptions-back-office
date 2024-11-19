@@ -51,8 +51,8 @@ Rails.application.routes.draw do
               path_names: { new: ":payment_id/new" }
 
     resources :charge_adjustments,
-      only: %i[index new create],
-      path: "charge-adjustment"
+              only: %i[index new create],
+              path: "charge-adjustment"
   end
 
   resources :deregistrations, only: :show, param: :reference

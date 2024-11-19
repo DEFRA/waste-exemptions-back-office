@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChargeAdjustmentsController < ApplicationController
   def index
     find_resource(params[:registration_reference])
