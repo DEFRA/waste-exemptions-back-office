@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: b158f35c2ddbb341738658f7e19cfb1c168c6a57
+  revision: a72cb8ff6e4096413820169073a11dbc3f723e64
   branch: RUBY-2703-wex-charging-bo-3-1-2-increase-or-decrease-a-charge-page
   specs:
     waste_exemptions_engine (0.1.0)
