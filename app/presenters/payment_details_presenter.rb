@@ -30,6 +30,12 @@ class PaymentDetailsPresenter
                                &.order(date_time: :desc)
   end
 
+  def charge_adjustments
+    @charge_adjustments ||= account
+      &.charge_adjustments
+      &.order(created_at: :desc)
+  end
+
   def balance
     return nil unless registration.account&.balance
 
@@ -47,6 +53,10 @@ class PaymentDetailsPresenter
       .account
       &.payments
       &.refundable&.any?
+  end
+
+  def can_display_charge_adjustments_link?
+    true
   end
 
   def format_date(datetime)

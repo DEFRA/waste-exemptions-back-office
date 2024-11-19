@@ -22,6 +22,9 @@ en:
             type: Type
             comments: Reason
             amount: Amount
+          types:
+            increase: Charge increase
+            decrease: Charge decrease
 
         payments:
           heading: Payments received
@@ -55,4 +58,5 @@ en:
         links:
           record_refund: Record a refund
           reverse_payment: Reverse a payment
+          charge_adjustment: Increase or decrease a charge
         add_payment: Record a payment
