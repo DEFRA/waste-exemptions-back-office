@@ -31,3 +31,16 @@ en:
           invalid_format: "Enter the amount in the correct format (for example, 120.50)"
         adjustment_type:
           blank: "Select whether you want to increase or decrease the charge"
+  activemodel:
+    errors:
+      models:
+        charge_adjustment_form:
+          attributes:
+            adjustment_type:
+              blank: "No adjustment type selected"
+              inclusion: "Select whether you want to increase or decrease the charge"
+            amount:
+              blank: "Enter an amount for the adjustment"
+              greater_than: "Amount must be greater than 0"
+            reason:
+              blank: "Enter a reason for the adjustment"
