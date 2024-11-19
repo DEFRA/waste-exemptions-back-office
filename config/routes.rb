@@ -39,6 +39,11 @@ Rails.application.routes.draw do
     get "payments", to: "payments#new", as: :add_payment_form
     post "payments", to: "payments#create", as: :add_payment
     get "payment_details", to: "payment_details#index", as: :payment_details
+
+    resources :record_refunds,
+              only: %i[index new create],
+              path: "record-refund",
+              path_names: { new: ":payment_id/new" }
   end
 
   resources :deregistrations, only: :show, param: :reference

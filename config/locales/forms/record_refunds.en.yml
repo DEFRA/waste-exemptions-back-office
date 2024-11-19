@@ -1,0 +1,37 @@
+en:
+  record_refunds:
+    index:
+      title: Which payment do you want to record a refund for?
+      heading: Which payment do you want to record a refund for?
+      date: Date
+      reference: Reference
+      payment_type: Payment type
+      amount: Amount in £
+      action: Action
+      refund_payment: Record refund
+      submit: Continue
+      payment_types:
+        bank_transfer: "Via bank transfer"
+        govpay_payment: "Via govpay"
+    new:
+      heading: "Record a refund for %{reference}"
+      payment_type: "Payment type"
+      bank_transfer: "Bank transfer"
+      maximum_refund_amount: "Maximum refund amount"
+      enter_refund: "Enter refund"
+      comments: "Reason"
+      refund_button: "Refund"
+    create:
+      success: "Refund was successfully recorded"
+      not_found: "Could not find the specified payment"
+    payment_type:
+      govpay_payment: "Via govpay"
+      bank_transfer: "Via Bank transfer"
+    form:
+      errors:
+        exceeds_payment_amount: "Refund amount must not exceed the payment amount"
+        exceeds_balance: "Refund amount must not exceed the account balance"
+        reason_missing: "Enter a reason for the refund"
+        payment_missing: "Payment to refund is missing"
+        blank_refund_amount: "Enter the amount to refund"
+        amount_zero_or_lower: "Refund amount must be greater than zero"

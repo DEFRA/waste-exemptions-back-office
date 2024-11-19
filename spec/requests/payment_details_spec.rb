@@ -2,21 +2,33 @@
 
 require "rails_helper"
 
-RSpec.describe "Payment details" do
-  describe "GET /registrations/:id/payment_details" do
-    let(:registration) { create(:registration, account: build(:account, :with_order)) }
-    let(:account) { registration.account }
-    let(:order) { account.orders.first }
-    let(:payment) { order.payments.first }
+RSpec.describe "Payment Details" do
+  let(:registration) { create(:registration, account: build(:account, :with_order)) }
+  let(:account) { registration.account }
+  let(:order) { account.orders.first }
+  let(:payment) { order.payments.first }
 
+  describe "GET /registrations/:reference/payment_details" do
     let(:i18n_page) { ".payment_details.index" }
+
+    context "when a user is signed in" do
+      before do
+        sign_in(create(:user))
+      end
+
+      it "renders the show template and includes the correct reference" do
+        get "/registrations/#{registration.reference}/payment_details"
+
+        expect(response).to render_template(:index)
+        expect(response.body).to include(registration.reference)
+      end
+    end
 
     context "when a valid user is not signed in" do
       before { sign_out(create(:user)) }
 
       it "redirects to the sign-in page" do
-        get registration_payment_details_path(registration.reference)
-
+        get "/registrations/#{registration.id}"
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -62,7 +74,7 @@ RSpec.describe "Payment details" do
           aggregate_failures do
             expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.date")
             expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.type")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.reason")
+            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.comments")
             expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.amount")
           end
         end
@@ -90,7 +102,7 @@ RSpec.describe "Payment details" do
           aggregate_failures do
             expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.date")
             expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.reference")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.reason")
+            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.comments")
             expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.amount")
           end
         end

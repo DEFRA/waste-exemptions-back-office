@@ -20,7 +20,7 @@ en:
           headers:
             date: Date
             type: Type
-            reason: Reason
+            comments: Reason
             amount: Amount
 
         payments:
@@ -34,6 +34,7 @@ en:
             govpay_payment: Govpay
             missing_card_payment: Missing card
             bank_transfer: BACS
+            refund: Refund
             other_payment: Other
 
         refunds:
@@ -41,7 +42,7 @@ en:
           headers:
             date: Date
             reference: Reference
-            reason: Reason
+            comments: Reason
             amount: Amount
 
         balance:
@@ -50,4 +51,6 @@ en:
 
       actions_section:
         heading: Payment actions for %{reference}
+        links:
+          record_refund: Record a refund
         add_payment: Record a payment
