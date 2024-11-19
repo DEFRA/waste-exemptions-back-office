@@ -8,7 +8,12 @@ FactoryBot.define do
     payment_uuid { SecureRandom.uuid }
     reference { Faker::Lorem.word }
     date_time { Time.zone.now }
-    account_id { 1 }
+
+    trait :bank_transfer do
+      payment_type { WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER }
+      payment_status { WasteExemptionsEngine::Payment::PAYMENT_STATUS_SUCCESS }
+      payment_uuid { SecureRandom.uuid }
+    end
 
     trait :with_order do
       order
