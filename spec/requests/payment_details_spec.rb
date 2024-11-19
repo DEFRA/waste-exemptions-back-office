@@ -6,7 +6,7 @@ RSpec.describe "Payment Details" do
   let(:registration) { create(:registration, account: build(:account, :with_order)) }
   let(:account) { registration.account }
   let(:order) { account.orders.first }
-  let(:payment) { order.payments.first }
+  let(:payment) { account.payments.first }
 
   describe "GET /registrations/:reference/payment_details" do
     let(:i18n_page) { ".payment_details.index" }

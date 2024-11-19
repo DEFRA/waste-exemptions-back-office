@@ -14,8 +14,8 @@ FactoryBot.define do
         ]
         acc.orders << build(:order,
                             :with_charge_detail,
-                            payments: [build(:payment, :with_order, account: acc)],
                             exemptions:)
+        acc.payments << build(:payment, :with_order, account: acc)
       end
     end
   end
