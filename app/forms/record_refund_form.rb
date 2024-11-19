@@ -7,11 +7,11 @@ class RecordRefundForm
 
   validates :amount,
             "defra_ruby/validators/price": true,
-            presence: { message: I18n.t(".record_refunds.form.errors.blank_refund_amount") },
-            numericality: { greater_than: 0, message: I18n.t(".record_refunds.form.errors.amount_zero_or_lower") }
+            presence: true,
+            numericality: { greater_than: 0 }
   validate :payment_exists
   validate :amount_within_limits, if: -> { payment.present? }
-  validate :reason_present_in_comments
+  validates :comments, presence: true
 
   def submit(params, record_refund_service: RecordRefundService)
     self.amount = params[:amount]
@@ -40,24 +40,16 @@ class RecordRefundForm
     return if payment_id.blank?
     return if WasteExemptionsEngine::Payment.exists?(id: payment_id)
 
-    errors.add(:payment, I18n.t(".record_refunds.form.errors.payment_missing"))
+    errors.add(:payment, :payment_missing)
   end
 
   def amount_within_limits
     return if amount.blank? || !amount.to_f.positive?
 
-    if amount.to_f > payment.payment_amount.to_f / 100
-      errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_payment_amount"))
-    end
+    errors.add(:amount, :exceeds_payment_amount) if amount.to_f > payment.payment_amount.to_f / 100
 
     return unless amount.to_f > balance
 
-    errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_balance"))
-  end
-
-  def reason_present_in_comments
-    return if comments.present?
-
-    errors.add(:comments, I18n.t(".record_refunds.form.errors.reason_missing"))
+    errors.add(:amount, :exceeds_balance)
   end
 end
