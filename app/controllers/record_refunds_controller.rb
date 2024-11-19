@@ -4,7 +4,6 @@ class RecordRefundsController < ApplicationController
   def index
     find_resource(params[:registration_reference])
     @payments = @resource&.account&.payments&.refundable
-    # authorize
   end
 
   def new
@@ -35,10 +34,6 @@ class RecordRefundsController < ApplicationController
 
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)
-  end
-
-  def authorize
-    authorize! :read, @resource
   end
 
   def setup_form

@@ -5,8 +5,10 @@ class RecordRefundForm
 
   attr_accessor :payment_id, :amount, :comments
 
-  validates :amount, presence: true, numericality: { greater_than: 0 }
-  validates :amount, "defra_ruby/validators/price": true
+  validates :amount,
+            "defra_ruby/validators/price": true,
+            presence: { message: I18n.t(".record_refunds.form.errors.blank_refund_amount") },
+            numericality: { greater_than: 0, message: I18n.t(".record_refunds.form.errors.amount_zero_or_lower") }
   validate :payment_exists
   validate :amount_within_limits, if: -> { payment.present? }
   validate :reason_present_in_comments

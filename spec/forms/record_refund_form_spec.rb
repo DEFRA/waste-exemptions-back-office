@@ -45,7 +45,7 @@ RSpec.describe RecordRefundForm do
       it "returns false when amount is zero" do
         params = { amount: "0.00", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
-        expect(form.errors[:amount]).to include("must be greater than 0")
+        expect(form.errors[:amount]).to include("Refund amount must be greater than zero")
       end
 
       it "returns false when amount is negative" do
@@ -58,6 +58,12 @@ RSpec.describe RecordRefundForm do
         params = { amount: "20.000", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
         expect(form.errors[:amount]).to include("Enter a valid price - there’s a mistake in that one")
+      end
+
+      it "returns false when amount is blank" do
+        params = { amount: "", comments: "Refund", payment_id: payment.id }
+        expect(form.submit(params)).to be false
+        expect(form.errors[:amount]).to include("Enter the amount to refund")
       end
     end
 
