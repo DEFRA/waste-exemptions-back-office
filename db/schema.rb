@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_13_151948) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_13_154617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
 
   create_table "accounts", force: :cascade do |t|
-    t.bigint "registration_id", null: false
+    t.bigint "registration_id"
     t.integer "balance", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -208,12 +208,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_151948) do
     t.bigint "account_id"
     t.string "reference"
     t.string "comments", limit: 500
-    t.string "reversed_by"
-    t.datetime "reversed_at"
-    t.integer "reversal_id"
+    t.string "created_by"
+    t.integer "associated_payment_id"
     t.index ["account_id"], name: "index_payments_on_account_id"
+    t.index ["associated_payment_id"], name: "index_payments_on_associated_payment_id"
     t.index ["order_id"], name: "index_payments_on_order_id"
-    t.index ["reversal_id"], name: "index_payments_on_reversal_id"
   end
 
   create_table "people", id: :serial, force: :cascade do |t|
@@ -282,9 +281,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_151948) do
     t.boolean "charged", default: false
     t.string "view_certificate_token"
     t.datetime "view_certificate_token_created_at"
+    t.boolean "placeholder", default: false
     t.index ["created_at"], name: "index_registrations_on_created_at"
     t.index ["deregistration_email_sent_at"], name: "index_registrations_on_deregistration_email_sent_at"
     t.index ["edit_token"], name: "index_registrations_on_edit_token", unique: true
+    t.index ["placeholder"], name: "index_registrations_on_placeholder"
     t.index ["reference"], name: "index_registrations_on_reference", unique: true
     t.index ["renew_token"], name: "index_registrations_on_renew_token", unique: true
     t.index ["unsubscribe_token"], name: "index_registrations_on_unsubscribe_token", unique: true
@@ -468,7 +469,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_151948) do
   add_foreign_key "order_buckets", "orders"
   add_foreign_key "order_exemptions", "exemptions"
   add_foreign_key "order_exemptions", "orders"
-  add_foreign_key "payments", "orders"
+  add_foreign_key "payments", "accounts"
   add_foreign_key "people", "registrations"
   add_foreign_key "transient_addresses", "transient_registrations"
   add_foreign_key "transient_people", "transient_registrations"
