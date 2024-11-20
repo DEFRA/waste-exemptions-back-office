@@ -19,7 +19,8 @@ class RecordRefundForm
     self.payment_id = params[:payment_id]
 
     @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
-    @balance = payment.account&.balance&./(100)
+    account = payment&.account
+    @balance = account&.balance&./(100)
 
     return false unless valid?
 
