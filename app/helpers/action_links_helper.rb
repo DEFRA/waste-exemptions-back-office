@@ -113,4 +113,8 @@ module ActionLinksHelper
   def display_payment_details_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
   end
+
+  def can_display_refund_link?(resource)
+    resource.account&.overpaid?
+  end
 end

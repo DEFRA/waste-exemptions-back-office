@@ -109,7 +109,7 @@
           <%= t(".labels.amount") %>
         </dt>
         <dd class="govuk-summary-list__value">
-          <%= number_to_currency(display_pence_as_pounds_and_cents(resource.account.balance), unit: "£") if resource.account&.balance.present? %>
+          <%= display_pence_as_pounds_sterling_and_pence(pence: resource.account.balance) if resource.account&.balance.present? %>
         </dd>
       </div>
     </dl>
