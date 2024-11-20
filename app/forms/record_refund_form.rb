@@ -9,7 +9,6 @@ class RecordRefundForm
             "defra_ruby/validators/price": true,
             presence: true,
             numericality: { greater_than: 0 }
-  validate :payment_exists
   validate :amount_within_limits, if: -> { payment.present? }
   validates :comments, presence: true
 
@@ -18,9 +17,11 @@ class RecordRefundForm
     self.comments = params[:comments]
     self.payment_id = params[:payment_id]
 
+    return false unless check_payment_exists?
+
     @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
-    account = payment&.account
-    @balance = account&.balance&./(100)
+
+    @balance = payment.account.balance / 100
 
     return false unless valid?
 
@@ -37,11 +38,11 @@ class RecordRefundForm
 
   attr_reader :payment, :balance
 
-  def payment_exists
-    return if payment_id.blank?
-    return if WasteExemptionsEngine::Payment.exists?(id: payment_id)
+  def check_payment_exists?
+    return true if WasteExemptionsEngine::Payment.exists?(id: payment_id)
 
     errors.add(:payment, :payment_missing)
+    false
   end
 
   def amount_within_limits
