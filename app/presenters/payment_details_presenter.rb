@@ -19,14 +19,14 @@ class PaymentDetailsPresenter
   def payments
     @payments ||= account
                   &.payments
-                  &.excluding_refunds
+                  &.excluding_refunds_and_reversals
                   &.order(date_time: :desc)
   end
 
   def refunds_and_reversals
     @refunds_and_reversals ||= account
                                &.payments
-                               &.refunds
+                               &.refunds_and_reversals
                                &.order(date_time: :desc)
   end
 
