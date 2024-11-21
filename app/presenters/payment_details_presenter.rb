@@ -40,7 +40,7 @@ class PaymentDetailsPresenter
   end
 
   def order_exemption_codes(order)
-    order.exemptions.map(&:code).sort.join(",")
+    order.exemptions.map(&:code).sort.join(", ")
   end
 
   def payment_type(payment)

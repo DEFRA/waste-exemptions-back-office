@@ -86,7 +86,7 @@ RSpec.describe PaymentDetailsPresenter do
     let(:exemption_c) { build(:exemption, code: "T3") }
     let(:order) { build(:order, :with_charge_detail, exemptions: [exemption_a, exemption_b, exemption_c]) }
 
-    it { expect(presenter.order_exemption_codes(order).split(",")).to eq [exemption_c.code, exemption_b.code, exemption_a.code] }
+    it { expect(presenter.order_exemption_codes(order).split(", ")).to eq [exemption_c.code, exemption_b.code, exemption_a.code] }
   end
 
   describe "#payment_type" do
