@@ -13,9 +13,16 @@ en:
       payment_types:
         bank_transfer: "Via bank transfer"
         govpay_payment: "Via govpay"
+        missing_card_payment: "Missing card payment"
+        other_payment: "Other payment"
     new:
       heading: "Record a refund for %{reference}"
       payment_type: "Payment type"
+      payment_types:
+        govpay_payment: Govpay
+        missing_card_payment: Missing card
+        bank_transfer: BACS
+        other: Other
       bank_transfer: "Bank transfer"
       maximum_refund_amount: "Maximum refund amount"
       enter_refund: "Enter refund"
