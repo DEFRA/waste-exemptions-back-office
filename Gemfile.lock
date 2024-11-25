@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 647c88ab71a9ccbfff37c2fc913f403b0922de39
+  revision: fc751a93ed6656fc99f3c05c2c4d5dea5e04c800
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -335,9 +335,9 @@ GEM
     mime-types-data (3.2024.1105)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
-    minitest (5.25.1)
+    minitest (5.25.2)
     multi_json (1.15.0)
-    mutex_m (0.2.0)
+    mutex_m (0.3.0)
     net-http (0.4.1)
       uri
     net-imap (0.5.1)
@@ -374,7 +374,7 @@ GEM
       rake (>= 0.8.1)
     pg (1.5.9)
     pgreset (0.4)
-    phonelib (0.9.3)
+    phonelib (0.10.1)
     protocol-hpack (1.5.0)
     protocol-http (0.34.0)
     protocol-http1 (0.22.0)
@@ -436,7 +436,7 @@ GEM
     rainbow (3.1.1)
     rake (13.2.1)
     rbtree3 (0.7.1)
-    rdoc (6.7.0)
+    rdoc (6.8.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
     reline (0.5.11)
