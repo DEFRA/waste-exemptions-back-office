@@ -3,7 +3,9 @@
 class ChargeAdjustmentsController < ApplicationController
   def new
     setup_form
-    redirect_to new_registration_adjustment_type_path(registration_reference: @resource.reference) unless params[:adjustment_type]
+    return if params[:adjustment_type]
+
+    redirect_to new_registration_adjustment_type_path(registration_reference: @resource.reference)
   end
 
   def create

@@ -51,12 +51,12 @@ Rails.application.routes.draw do
               path_names: { new: ":payment_id/new" }
 
     resources :adjustment_types,
-      only: %i[new create],
-      path: "adjustment-type"
+              only: %i[new create],
+              path: "adjustment-type"
 
     resources :charge_adjustments,
-      only: %i[new create],
-      path: "charge-adjustment"
+              only: %i[new create],
+              path: "charge-adjustment"
 
   end
 
