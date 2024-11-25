@@ -1,7 +1,8 @@
+<% content_for :title, t(".title.#{@charge_adjustment_form.adjustment_type}", reference: @resource.reference) %>
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= render("waste_exemptions_engine/shared/back",
-              back_path: registration_charge_adjustments_path(registration_reference: @resource.reference)) %>
+              back_path: new_registration_adjustment_type_path(registration_reference: @resource.reference)) %>
   </div>
 </div>
 

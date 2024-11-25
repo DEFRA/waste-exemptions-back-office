@@ -1,14 +1,9 @@
 # frozen_string_literal: true
 
 class ChargeAdjustmentsController < ApplicationController
-  def index
-    find_resource(params[:registration_reference])
-  end
-
   def new
     setup_form
-
-    redirect_to registration_charge_adjustments_path unless params[:adjustment_type]
+    redirect_to new_registration_adjustment_type_path(registration_reference: @resource.reference) unless params[:adjustment_type]
   end
 
   def create

@@ -11,8 +11,8 @@ en:
       continue: "Continue"
     new:
       title:
-        increase: "Increase the charge"
-        decrease: "Decrease the charge"
+        increase: "Increase the charge for %{reference}"
+        decrease: "Decrease the charge for %{reference}"
       heading:
         increase: "Increase the charge for %{reference}"
         decrease: "Decrease the charge for %{reference}"

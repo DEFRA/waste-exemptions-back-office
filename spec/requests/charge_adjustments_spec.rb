@@ -10,27 +10,6 @@ RSpec.describe "Charge Adjustments" do
     sign_in(user)
   end
 
-  describe "GET /registrations/:reference/charge-adjustment" do
-    context "when the user is signed in" do
-      it "renders the index template" do
-        get registration_charge_adjustments_path(registration_reference: registration.reference)
-
-        expect(response).to render_template(:index)
-        expect(response).to have_http_status(:ok)
-      end
-    end
-
-    context "when the user is not signed in" do
-      before { sign_out(user) }
-
-      it "redirects to the sign-in page" do
-        get registration_charge_adjustments_path(registration_reference: registration.reference)
-
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-  end
-
   describe "GET /registrations/:reference/charge-adjustment/new" do
     context "when the user is signed in" do
       it "renders the new template for increase" do
@@ -60,7 +39,7 @@ RSpec.describe "Charge Adjustments" do
           registration_reference: registration.reference
         )
 
-        expect(response).to redirect_to(registration_charge_adjustments_path)
+        expect(response).to redirect_to(new_registration_adjustment_type_path)
       end
     end
 

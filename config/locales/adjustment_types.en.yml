@@ -1,0 +1,23 @@
+en:
+  adjustment_types:
+    new:
+      title: Select adjustment type
+      heading: "Select adjustment type for registration %{reference}"
+      increase_label: Increase the charge
+      increase_hint: Select this option if you need to add a charge to the registration
+      decrease_label: Decrease the charge
+      decrease_hint: Select this option if you need to reduce the charge for the registration
+      continue: Continue
+      errors:
+        adjustment_type:
+          blank: Select whether you want to increase or decrease the charge
+          inclusion: Select whether you want to increase or decrease the charge
+
+  activemodel:
+    errors:
+      models:
+        adjustment_type_form:
+          attributes:
+            adjustment_type:
+              blank: Select whether you want to increase or decrease the charge
+              inclusion: Select whether you want to increase or decrease the charge
