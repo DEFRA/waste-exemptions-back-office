@@ -12,7 +12,7 @@ class RecordRefundForm
   validate :amount_within_limits, if: -> { payment.present? }
   validates :comments, presence: true
 
-  def submit(params, record_refund_service: RecordRefundService)
+  def submit(params)
     self.amount = params[:amount]
     self.comments = params[:comments]
     self.payment_id = params[:payment_id]
@@ -27,7 +27,7 @@ class RecordRefundForm
 
     Rails.logger.info "running RecordRefundService with arguments: #{comments}, #{payment}, #{amount.to_f}"
 
-    record_refund_service.run(
+    RecordRefundService.run(
       comments: comments,
       payment: payment,
       amount_in_pence: amount_in_pence
