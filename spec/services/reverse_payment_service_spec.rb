@@ -14,14 +14,13 @@ module WasteExemptionsEngine
       context "when the reversal is processed successfully" do
         let(:payment) do
           create(:payment, account: account,
-                 payment_amount: 10_000,
-                 payment_status: Payment::PAYMENT_STATUS_SUCCESS)
+                           payment_amount: 10_000,
+                           payment_status: Payment::PAYMENT_STATUS_SUCCESS)
         end
 
         before do
           payment
         end
-
 
         it "creates a new reversal payment record" do
           expect { service.run(comments: comments, payment: payment, user: user) }
