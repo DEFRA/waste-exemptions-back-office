@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class RecordRefundService < WasteExemptionsEngine::BaseService
-  def run(comments:, payment:, amount_in_pounds:)
-    @amount = amount_in_pounds * 100
+  def run(comments:, payment:, amount_in_pence:)
     @payment = payment
     @comments = comments
+    @amount = amount_in_pence
 
-    refund = build_refund(@amount)
+    refund = build_refund
     refund.save!
 
     true
@@ -18,9 +18,9 @@ class RecordRefundService < WasteExemptionsEngine::BaseService
 
   private
 
-  attr_reader :payment, :comments
+  attr_reader :payment, :comments, :amount
 
-  def build_refund(amount)
+  def build_refund
     WasteExemptionsEngine::Payment.new(
       payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND,
       payment_amount: -amount,

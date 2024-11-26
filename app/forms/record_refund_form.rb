@@ -13,7 +13,9 @@ class RecordRefundForm
   validates :comments, presence: true
 
   def submit(params, record_refund_service: RecordRefundService)
-    self.amount = params[:amount]
+    if params[:amount].present?
+      self.amount = WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(params[:amount])
+    end
     self.comments = params[:comments]
     self.payment_id = params[:payment_id]
 
@@ -30,7 +32,7 @@ class RecordRefundForm
     record_refund_service.run(
       comments: comments,
       payment: payment,
-      amount_in_pounds: amount.to_f
+      amount_in_pence: amount.to_f
     )
   end
 
