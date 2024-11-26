@@ -7,18 +7,7 @@ class ReversePaymentService < WasteExemptionsEngine::BaseService
     @user = user
 
     reversal = build_reversal
-
-    ActiveRecord::Base.transaction do
-      reversal.save!
-      payment.update!(
-        reversal_id: reversal.id,
-        reversed_by: user.email,
-        reversed_at: Time.current
-      )
-
-      account = payment.account
-      account.save!
-    end
+    reversal.save!
 
     true
   rescue StandardError => e
@@ -39,7 +28,9 @@ class ReversePaymentService < WasteExemptionsEngine::BaseService
       account_id: payment.account_id,
       reference: "#{payment.reference}/REVERSAL",
       payment_uuid: SecureRandom.uuid,
-      comments: comments
+      comments: comments,
+      associated_payment: payment,
+      created_by: user.email
     )
   end
 end

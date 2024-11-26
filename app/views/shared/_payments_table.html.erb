@@ -42,7 +42,7 @@
               <%= t("#{translation_prefix}.payment_types.#{payment.payment_type}") %>
             </td>
             <td class="govuk-table__cell govuk-table__cell--numeric">
-              £<%= display_pence_as_pounds_and_cents(payment.payment_amount) %>
+              £<%= display_pence_as_pounds_and_pence(pence: payment.payment_amount, hide_pence_if_zero: false) %>
             </td>
             <td class="govuk-table__cell">
               <%= yield payment %>

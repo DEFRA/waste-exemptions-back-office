@@ -2,13 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe "Payment Details" do
-  let(:registration) { create(:registration, account: build(:account, :with_order)) }
-  let(:account) { registration.account }
-  let(:order) { account.orders.first }
-  let(:payment) { account.payments.first }
-
+RSpec.describe "Payment details" do
   describe "GET /registrations/:reference/payment_details" do
+    let(:registration) { create(:registration, account: build(:account, :with_order, :with_payment)) }
+    let(:account) { registration.account }
+    let(:order) { account.orders.first }
+    let(:payment) { account.payments.first }
     let(:i18n_page) { ".payment_details.index" }
 
     context "when a user is signed in" do
