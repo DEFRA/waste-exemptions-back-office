@@ -13,9 +13,7 @@ class RecordRefundForm
   validates :comments, presence: true
 
   def submit(params, record_refund_service: RecordRefundService)
-    if params[:amount].present?
-      self.amount = WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(params[:amount])
-    end
+    self.amount = params[:amount]
     self.comments = params[:comments]
     self.payment_id = params[:payment_id]
 
@@ -32,7 +30,7 @@ class RecordRefundForm
     record_refund_service.run(
       comments: comments,
       payment: payment,
-      amount_in_pence: amount.to_f
+      amount_in_pence: amount_in_pence
     )
   end
 
@@ -48,12 +46,16 @@ class RecordRefundForm
   end
 
   def amount_within_limits
-    return if amount.blank? || !amount.to_f.positive?
+    return if amount.blank? || !amount.to_i.positive?
 
-    errors.add(:amount, :exceeds_payment_amount) if amount.to_f > payment.payment_amount.to_f
+    errors.add(:amount, :exceeds_payment_amount) if amount_in_pence > payment.payment_amount.to_f
 
-    return unless amount.to_f > balance
+    return unless amount_in_pence > balance
 
     errors.add(:amount, :exceeds_balance)
+  end
+
+  def amount_in_pence
+    WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(amount.to_i)
   end
 end
