@@ -56,16 +56,21 @@ RSpec.describe PaymentDetailsPresenter do
     end
   end
 
-  describe "#refunds" do
-    let(:refund_a) { build(:payment, payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND, created_at: 5.days.ago) }
-    let(:refund_b) { build(:payment, payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND, created_at: 3.days.ago) }
-    let(:refund_c) { build(:payment, payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND, created_at: 2.days.ago) }
-    let(:non_refund_payment) { build(:payment, payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_GOVPAY) }
-    let(:payments) { [refund_a, refund_b, refund_c, non_refund_payment] }
+  describe "#refunds_and_reversals" do
+    let(:reversal) { build(:payment, :reversal, created_at: 6.days.ago) }
+    let(:refund_a) { build(:payment, :refund, created_at: 5.days.ago) }
+    let(:refund_b) { build(:payment, :refund, created_at: 3.days.ago) }
+    let(:refund_c) { build(:payment, :refund, created_at: 2.days.ago) }
+    let(:non_refund_payment) do
+      build(:payment,
+            payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_GOVPAY,
+            payment_status: WasteExemptionsEngine::Payment::PAYMENT_STATUS_SUCCESS)
+    end
+    let(:payments) { [refund_a, refund_b, refund_c, non_refund_payment, reversal] }
 
-    it { expect(presenter.refunds).to eq [refund_c, refund_b, refund_a] }
+    it { expect(presenter.refunds_and_reversals).to eq [refund_c, refund_b, refund_a, reversal] }
 
-    it { expect(presenter.refunds).not_to include non_refund_payment }
+    it { expect(presenter.refunds_and_reversals).not_to include non_refund_payment }
   end
 
   describe "#balance" do

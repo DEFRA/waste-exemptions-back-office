@@ -29,7 +29,7 @@ class PaymentDetailsPresenter
                                .payments
                                .success
                                .refunds_and_reversals
-                               .order(date_time: :desc)
+                               .order(created_at: :desc)
   end
 
   def balance
