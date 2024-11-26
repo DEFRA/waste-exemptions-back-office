@@ -3,12 +3,12 @@
 class RecordReversalsController < ApplicationController
   def index
     find_resource(params[:registration_reference])
-    @payments = @resource&.account&.payments&.refundable
+    @payments = @resource.account.payments.refundable
   end
 
   def new
     setup_form
-    @payment = @resource&.account&.payments&.find_by(id: params[:payment_id])
+    @payment = @resource.account.payments.find_by(id: params[:payment_id])
     return if @payment
 
     redirect_to registration_payment_details_path(registration_reference: @resource.reference)

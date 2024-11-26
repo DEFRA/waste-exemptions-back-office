@@ -13,27 +13,27 @@ class PaymentDetailsPresenter
   end
 
   def orders
-    @orders ||= account.orders&.sort_by(&:created_at)&.reverse || []
+    @orders ||= account.orders.sort_by(&:created_at).reverse
   end
 
   def payments
     @payments ||= account
-      &.payments
-      &.success
-      &.excluding_refunds_and_reversals
-      &.order(date_time: :desc)
+                  .payments
+                  .success
+                  .excluding_refunds_and_reversals
+                  .order(date_time: :desc)
   end
 
   def refunds_and_reversals
     @refunds_and_reversals ||= account
-      &.payments
-      &.success
-      &.refunds_and_reversals
-      &.order(date_time: :desc)
+                               .payments
+                               .success
+                               .refunds_and_reversals
+                               .order(date_time: :desc)
   end
 
   def balance
-    return nil unless registration.account&.balance
+    return nil unless registration.account.balance
 
     display_pence_as_pounds_sterling_and_pence(pence: registration.account.balance)
   end
@@ -41,14 +41,14 @@ class PaymentDetailsPresenter
   def can_display_refund_link?
     registration
       .account
-      &.overpaid?
+      .overpaid?
   end
 
   def can_display_reversal_link?
     registration
       .account
-      &.payments
-      &.refundable&.any?
+      .payments
+      .refundable.any?
   end
 
   def format_date(datetime)
