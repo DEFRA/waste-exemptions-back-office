@@ -23,7 +23,7 @@ class RecordRefundForm
 
     @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
 
-    @balance = payment.account.balance / 100
+    @balance = payment.account.balance
 
     return false unless valid?
 
@@ -50,7 +50,7 @@ class RecordRefundForm
   def amount_within_limits
     return if amount.blank? || !amount.to_f.positive?
 
-    errors.add(:amount, :exceeds_payment_amount) if amount.to_f > payment.payment_amount.to_f / 100
+    errors.add(:amount, :exceeds_payment_amount) if amount.to_f > payment.payment_amount.to_f
 
     return unless amount.to_f > balance
 
