@@ -26,7 +26,7 @@
       <div class="govuk-form-group">
         <h2 class="govuk-heading-m"><%= t(".amount_to_reverse") %></h2>
         <p class="govuk-body">
-          £<%= display_pence_as_pounds_and_cents(@payment.payment_amount) %>
+          £<%= display_pence_as_pounds_and_pence(pence: @payment.payment_amount) %>
         </p>
       </div>
 
