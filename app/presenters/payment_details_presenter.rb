@@ -13,27 +13,29 @@ class PaymentDetailsPresenter
   end
 
   def orders
-    @orders ||= account&.orders&.sort_by(&:created_at)&.reverse || []
+    @orders ||= account.orders&.sort_by(&:created_at)&.reverse || []
   end
 
   def payments
     @payments ||= account
-                  &.payments
-                  &.excluding_refunds_and_reversals
-                  &.order(date_time: :desc)
+      &.payments
+      &.success
+      &.excluding_refunds_and_reversals
+      &.order(date_time: :desc)
   end
 
   def refunds_and_reversals
     @refunds_and_reversals ||= account
-                               &.payments
-                               &.refunds_and_reversals
-                               &.order(date_time: :desc)
+      &.payments
+      &.success
+      &.refunds_and_reversals
+      &.order(date_time: :desc)
   end
 
   def balance
     return nil unless registration.account&.balance
 
-    display_pence_as_pounds_and_cents(registration.account.balance)
+    display_pence_as_pounds_sterling_and_pence(pence: registration.account.balance)
   end
 
   def can_display_refund_link?
@@ -55,5 +57,13 @@ class PaymentDetailsPresenter
 
   def order_exemption_codes(order)
     order.exemptions.map(&:code).sort.join(",")
+  end
+
+  def payment_type(payment)
+    if payment.moto_payment
+      I18n.t("shared.payment.payment_type.govpay_payment_moto")
+    else
+      I18n.t("shared.payment.payment_type.#{payment.payment_type}")
+    end
   end
 end

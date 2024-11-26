@@ -95,6 +95,12 @@ every :day, at: ENV["CLEANUP_TRANSIENT_REGISTRATIONS_RUN_TIME"] || "04:30", role
   rake_and_format "cleanup:transient_registrations"
 end
 
+# This is the placeholder registration cleanup job which will delete all
+# registrations which still have status "placeholder" 30 days after last update.
+every :day, at: ENV["CLEANUP_PLACEHOLDER_REGISTRATIONS_RUN_TIME"] || "05:30", roles: [:db] do
+  rake_and_format "cleanup:placeholder_registrations"
+end
+
 # This is the final renewal text reminder job. For each registration expiring
 # in 7 days time, it will generate and send the final text reminder
 every :day, at: ENV["FINAL_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "10:00", roles: [:db] do
