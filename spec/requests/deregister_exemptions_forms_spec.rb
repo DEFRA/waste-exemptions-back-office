@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Deregister Exemptions Forms" do
   let(:form) { DeregisterExemptionsForm.new }
-  let(:user) { create(:user, :super_agent) }
+  let(:user) { create(:user, :admin_agent) }
 
   before do
     sign_in(user)

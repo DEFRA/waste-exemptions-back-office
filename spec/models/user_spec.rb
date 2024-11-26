@@ -20,8 +20,8 @@ RSpec.describe User do
 
     it "stores the correct values when it is updated" do
       user.update(role: "admin_agent")
-      user.update(role: "super_agent")
-      expect(user).to have_a_version_with(role: "admin_agent")
+      user.update(role: "data_agent")
+      expect(user).to have_a_version_with(role: "data_agent")
     end
   end
 

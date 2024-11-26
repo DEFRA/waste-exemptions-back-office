@@ -52,7 +52,7 @@ RSpec.describe "Waste Exemptions Engine" do
     let(:request_path) { "/#{registration.reference}/edit" }
 
     context "when a valid user is signed in" do
-      before { sign_in(create(:user, :super_agent)) }
+      before { sign_in(create(:user, :system)) }
 
       it "returns a 200 response" do
         get request_path
@@ -61,8 +61,8 @@ RSpec.describe "Waste Exemptions Engine" do
       end
     end
 
-    context "when an admin_agent is signed in" do
-      before { sign_in(create(:user, :admin_agent)) }
+    context "when a data_agent is signed in" do
+      before { sign_in(create(:user, :data_agent)) }
 
       it "redirects to the permissions error page" do
         get request_path
