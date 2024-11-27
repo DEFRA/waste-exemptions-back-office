@@ -29,7 +29,8 @@ class Ability
     view_analytics: %i[view_analytics all]
   }.freeze
 
-  ROLE_PERMISSIONS = {}.freeze # placeholder to be populated by the roles_and_permissions initializer
+  # placeholder to be populated by the roles_and_permissions initializer
+  ROLE_PERMISSIONS = {} # rubocop:disable Style/MutableConstant
 
   def initialize(user)
     return if user.blank?
