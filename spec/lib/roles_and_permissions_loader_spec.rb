@@ -8,12 +8,18 @@ require "roles_and_permissions_loader"
 RSpec.describe RolesAndPermissionsLoader do
   subject(:run_loader) { described_class.run }
 
+  # Save these (loaded by the loader during Rails initialization) for restoration in the after block
+  let!(:previous_roles_permissions) { Ability::ROLE_PERMISSIONS.dup }
+
   before do
-    # Undo the initialization
+    # The loader will have been run during Rails initialization; undo the loading before starting
     Ability::ROLE_PERMISSIONS.replace({})
 
     allow(Airbrake).to receive(:notify)
   end
+
+  # Reload after expected failure specs to prevent errors in subsequent specs
+  after { Ability::ROLE_PERMISSIONS = previous_roles_permissions }
 
   RSpec.shared_examples "handles errors" do
     it { expect { run_loader }.not_to raise_error }

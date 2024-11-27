@@ -9,7 +9,7 @@ class RolesAndPermissionsLoader
 
     role_permissions = roles_from_csv(csv)
 
-    raise StandardError, "Roles and permissions no loaded" if role_permissions.empty?
+    raise StandardError, "Roles and permissions not loaded" if role_permissions.empty?
 
     update_ability(role_permissions)
   rescue StandardError => e
