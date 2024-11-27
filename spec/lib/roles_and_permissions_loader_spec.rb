@@ -19,7 +19,7 @@ RSpec.describe RolesAndPermissionsLoader do
   end
 
   # Reload after expected failure specs to prevent errors in subsequent specs
-  after { Ability::ROLE_PERMISSIONS = previous_roles_permissions }
+  after { Ability::ROLE_PERMISSIONS.replace(previous_roles_permissions) }
 
   RSpec.shared_examples "handles errors" do
     it { expect { run_loader }.not_to raise_error }
