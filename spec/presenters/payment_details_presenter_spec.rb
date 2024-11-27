@@ -75,7 +75,7 @@ RSpec.describe PaymentDetailsPresenter do
 
     it do
       expect(presenter.balance)
-      .to eq "£#{WasteExemptionsEngine::CurrencyConversionService.convert_pence_to_pounds(account_balance)}"
+        .to eq "£#{WasteExemptionsEngine::CurrencyConversionService.convert_pence_to_pounds(account_balance)}"
     end
   end
 
