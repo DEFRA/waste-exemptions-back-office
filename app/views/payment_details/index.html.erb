@@ -89,7 +89,7 @@
       <tbody>
         <% @presenter.payments.each do |payment| %>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= @presenter.format_date(payment.created_at) %></td>
+            <td class="govuk-table__cell"><%= @presenter.format_date(payment.date_time) %></td>
             <td class="govuk-table__cell"><%= payment.reference %></td>
             <td class="govuk-table__cell">
               <%= t(".details_section.payments.payment_types.#{payment.payment_type}") %>
