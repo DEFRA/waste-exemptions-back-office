@@ -13,10 +13,6 @@ FactoryBot.define do
       role { "system" }
     end
 
-    trait :super_agent do
-      role { "super_agent" }
-    end
-
     trait :admin_agent do
       role { "admin_agent" }
     end

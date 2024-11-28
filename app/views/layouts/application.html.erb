@@ -68,7 +68,7 @@
           </li>
         <%end%>
 
-        <% if can?(:manage_charge_catalogue, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
+        <% if can?(:manage_charges, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
           <li class="govuk-header__navigation-item">
             <%= link_to t("layouts.application.menu.charge_catalogue"),
                         main_app.exemptions_path,

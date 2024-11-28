@@ -5,7 +5,6 @@ en:
       heading: "Change a user's role"
       paragraph_1:
         system: " is currently a system user."
-        super_agent: " is currently a super agent."
         admin_agent: " is currently an admin agent."
         data_agent: " is currently a data agent."
         developer: " is currently a developer."
