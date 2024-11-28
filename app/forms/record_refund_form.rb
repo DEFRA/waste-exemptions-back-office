@@ -25,8 +25,6 @@ class RecordRefundForm
 
     return false unless valid?
 
-    Rails.logger.info "running RecordRefundService with arguments: #{comments}, #{payment}, #{amount.to_f}"
-
     RecordRefundService.run(
       comments: comments,
       payment: payment,
