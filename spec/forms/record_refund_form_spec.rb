@@ -13,9 +13,7 @@ RSpec.describe RecordRefundForm do
 
   before do
     registration.account.payments << payment
-    account = registration.account
-    account.balance = payment.payment_amount
-    account.save!
+    registration.account
   end
 
   describe "#submit" do
@@ -64,6 +62,12 @@ RSpec.describe RecordRefundForm do
         params = { amount: "", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
         expect(form.errors[:amount]).to include("Enter the amount to refund")
+      end
+
+      it "returns false if amount is higher than the balance" do
+        params = { amount: "50.00", comments: "Refund", payment_id: payment.id }
+        expect(form.submit(params)).to be false
+        expect(form.errors[:amount]).to include("Refund amount must not exceed the account balance")
       end
     end
 
