@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_154617) do
   enable_extension "tsm_system_rows"
 
   create_table "accounts", force: :cascade do |t|
-    t.bigint "registration_id"
+    t.bigint "registration_id", null: false
     t.integer "balance", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -136,15 +136,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_154617) do
     t.string "template_id"
     t.string "template_label"
     t.string "sent_to"
-  end
-
-  create_table "companies", force: :cascade do |t|
-    t.string "name"
-    t.string "company_no", null: false
-    t.boolean "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_no"], name: "index_companies_on_company_no", unique: true
   end
 
   create_table "exemptions", id: :serial, force: :cascade do |t|
