@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: f15732b82ebd787694d7f5fba8ce5db4bdab2cba
-  branch: main
+  revision: 39d52e2e3bb1e954f2e62dadf7e158b26787569d
+  branch: RUBY-2704-payment-details-presenter-refactor
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -374,7 +374,7 @@ GEM
       rake (>= 0.8.1)
     pg (1.5.9)
     pgreset (0.4)
-    phonelib (0.9.3)
+    phonelib (0.10.1)
     protocol-hpack (1.5.0)
     protocol-http (0.34.0)
     protocol-http1 (0.22.0)
