@@ -4,7 +4,7 @@ def seed_waste_activities
   seeds = JSON.parse(Rails.root.join("db/seeds/waste_activities.json").read)
 
   # Clear existing waste_activity_id from exemptions
-  WasteExemptionsEngine::Exemption.all.each { |exemption| exemption.update(waste_activity_id: nil) }
+  WasteExemptionsEngine::Exemption.find_each { |exemption| exemption.update(waste_activity_id: nil) }
 
   waste_activities = seeds["waste_activities"]
   waste_activities.each do |waste_activity|
