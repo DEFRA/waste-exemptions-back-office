@@ -10,14 +10,14 @@ class AccountPresenter < BasePresenter
   end
 
   def successful_payments
-    payments.successful_payments.map { |payment| PaymentPresenter.new(payment) }
+    super.map { |payment| PaymentPresenter.new(payment) }
   end
 
   def refunds_and_reversals
-    payments.refunds_and_reversals.map { |payment| PaymentPresenter.new(payment) }
+    super.map { |payment| PaymentPresenter.new(payment) }
   end
 
-  def orders
-    super.recent_first.map { |order| OrderPresenter.new(order) }
+  def sorted_orders
+    super.map { |order| OrderPresenter.new(order) }
   end
 end
