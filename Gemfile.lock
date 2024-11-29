@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 39d52e2e3bb1e954f2e62dadf7e158b26787569d
+  revision: c87e5c7a7d547be5f289163c8f37e7a6aede3fbe
   branch: RUBY-2704-payment-details-presenter-refactor
   specs:
     waste_exemptions_engine (0.1.0)
