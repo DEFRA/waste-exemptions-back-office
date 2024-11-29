@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @presenter.orders.each do |order| %>
+        <% @presenter.sorted_orders.each do |order| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
               <%= order.created_at.strftime("%Y-%m-%d") %>
