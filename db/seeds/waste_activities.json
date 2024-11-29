@@ -1,0 +1,82 @@
+{
+  "waste_activities": [
+    {
+      "name_gerund": "Using waste in building and construction",
+      "name": "We use waste in building and construction",
+      "category": "0",
+      "exemptions": ["U1", "U2", "U3"]
+    },
+    {
+      "name_gerund": "Burning waste as fuel",
+      "name": "We burn waste as fuel",
+      "category": "0",
+      "exemptions": ["U4", "U5"]
+    },
+    {
+      "name_gerund": "Spreading or mixing waste",
+      "name": "We spread or mix waste",
+      "category": "0",
+      "exemptions": ["U10", "U11", "U12", "U13", "U14", "U15"]
+    },
+    {
+      "name_gerund": "Using waste in manufacturing or for a specified purpose",
+      "name": "We use waste in manufacturing or for a specified purpose",
+      "category": "0",
+      "exemptions": ["U8", "U9", "U16"]
+    },
+    {
+      "name_gerund": "Using effluent or sludge",
+      "name": "We use effluent or sludge",
+      "category": "0",
+      "exemptions": ["U6", "U7"]
+    },
+    {
+      "name_gerund": "Burning plant and wood waste",
+      "name": "We burn plant and wood waste",
+      "category": "2",
+      "exemptions": ["D6", "D7", "D8"]
+    },
+    {
+      "name_gerund": "Depositing spoil, sanitary and plant matter waste",
+      "name": "We deposit spoil, sanitary and plant matter waste",
+      "category": "2",
+      "exemptions": ["D1", "D2", "D3", "D4"]
+    },
+    {
+      "name_gerund": "Depositing or storing waste samples for testing",
+      "name": "We deposit or store waste samples for testing",
+      "category": "2",
+      "exemptions": ["D5"]
+    },
+    {
+      "name_gerund": "Chemically treating, washing waste or using anaerobic digestion",
+      "name": "We chemically treat, wash waste or use anaerobic digestion",
+      "category": "1",
+      "exemptions": ["T1", "T18", "T19", "T20", "T24", "T25", "T29", "T32"]
+    },
+    {
+      "name_gerund": "Crushing, baling, shredding or chipping waste",
+      "name": "We crush, bale, shred or chip waste",
+      "category": "1",
+      "exemptions": ["T4", "T6", "T8", "T9", "T14", "T15", "T17"]
+    },
+    {
+      "name_gerund": "Sorting, blending and recovering waste",
+      "name": "We sort, blend and recover waste",
+      "category": "1",
+      "exemptions": ["T2", "T5", "T10", "T12", "T13", "T16", "T21", "T28", "T30", "T31", "T33"]
+    },
+    {
+      "name_gerund": "Treating waste using a wormery or by composting",
+      "name": "We treat waste using a wormery or by composting",
+      "category": "1",
+      "exemptions": ["T23", "T26"]
+    },
+    {
+      "name_gerund": "Storing waste",
+      "name": "We store waste",
+      "category": "3",
+      "exemptions": ["S1", "S2", "S3"]
+    }
+  ]
+}
