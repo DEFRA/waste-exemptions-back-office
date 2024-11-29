@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Certificates" do
   let(:registration) { create(:registration) }
-  let(:user) { create(:user, role: :super_agent) }
+  let(:user) { create(:user, role: :admin_agent) }
 
   before do
     sign_in(user)

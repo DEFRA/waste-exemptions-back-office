@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Exemptions Controller" do
-  let(:user) { create(:user, :super_agent) }
+  let(:user) { create(:user, :admin_agent) }
 
   let!(:exemptions) { create_list(:exemption, 3) }
   let!(:bands) { create_list(:band, 2) }
