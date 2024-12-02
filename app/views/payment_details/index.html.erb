@@ -170,7 +170,7 @@
       </p>
     <% end %>
 
-    <% if @presenter.can_display_reversal_link? %>
+    <% if can_display_reversal_link?(@resource) %>
       <p class="govuk-body">
       <%= link_to t(".actions_section.links.reverse_payment"),
         registration_record_reversals_path(registration_reference: @resource.reference) %>
