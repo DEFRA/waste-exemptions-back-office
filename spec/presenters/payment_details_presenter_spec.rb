@@ -78,7 +78,10 @@ RSpec.describe PaymentDetailsPresenter do
 
     before { allow(registration.account).to receive(:balance).and_return(account_balance) }
 
-    it { expect(presenter.balance).to eq "£#{(account_balance / 100.0).round(2)}" }
+    it do
+      expect(presenter.balance)
+        .to eq "£#{WasteExemptionsEngine::CurrencyConversionService.convert_pence_to_pounds(account_balance)}"
+    end
   end
 
   describe "#format_date" do

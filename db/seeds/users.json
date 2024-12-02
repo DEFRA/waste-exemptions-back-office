@@ -5,10 +5,6 @@
       "role" : "system"
     },
     {
-      "email" : "super_agent@wex.gov.uk",
-      "role" : "super_agent"
-    },
-    {
       "email" : "admin_agent@wex.gov.uk",
       "role" : "admin_agent"
     },

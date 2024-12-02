@@ -9,7 +9,7 @@ module WasteExemptionsEngine
     let(:registration) { create(:registration) }
     let(:account) { create(:account, registration: registration) }
     let(:comments) { "Refund due to overpayment" }
-    let(:amount_in_pounds) { 100 }
+    let(:amount_in_pence) { 10_000 }
 
     describe "#run" do
       context "when the refund is processed successfully" do
@@ -17,12 +17,12 @@ module WasteExemptionsEngine
 
         it "creates a new refund payment record" do
           payment
-          expect { service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds) }
+          expect { service.run(comments: comments, payment: payment, amount_in_pence: amount_in_pence) }
             .to change(Payment, :count).by(1)
         end
 
         it "creates the refund with correct attributes" do
-          service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
+          service.run(comments: comments, payment: payment, amount_in_pence: amount_in_pence)
 
           refund = Payment.last
           expect(refund).to have_attributes(
@@ -37,7 +37,7 @@ module WasteExemptionsEngine
         end
 
         it "returns true" do
-          result = service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
+          result = service.run(comments: comments, payment: payment, amount_in_pence: amount_in_pence)
           expect(result).to be true
         end
       end
@@ -54,14 +54,14 @@ module WasteExemptionsEngine
           logger = instance_double(Logger)
           allow(logger).to receive(:error)
           allow(Rails).to receive(:logger).and_return(logger)
-          service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
+          service.run(comments: comments, payment: payment, amount_in_pence: amount_in_pence)
 
           expect(logger).to have_received(:error).with(/StandardError error processing refund for payment #{payment.id}/)
         end
 
         it "notifies Airbrake" do
           allow(Airbrake).to receive(:notify)
-          service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
+          service.run(comments: comments, payment: payment, amount_in_pence: amount_in_pence)
 
           expect(Airbrake).to have_received(:notify).with(
             instance_of(StandardError),
@@ -71,13 +71,13 @@ module WasteExemptionsEngine
         end
 
         it "returns false" do
-          result = service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
+          result = service.run(comments: comments, payment: payment, amount_in_pence: amount_in_pence)
           expect(result).to be false
         end
 
         it "does not create a new payment record" do
           expect do
-            service.run(comments: comments, payment: payment, amount_in_pounds: amount_in_pounds)
+            service.run(comments: comments, payment: payment, amount_in_pence: amount_in_pence)
           end.not_to change(Payment, :count)
         end
       end

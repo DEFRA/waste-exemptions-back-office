@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Record Refund Forms" do
-  let(:user) { create(:user, :super_agent) }
+  let(:user) { create(:user, :admin_agent) }
   let(:registration) { create(:registration) }
   let(:payment) do
     create(:payment,
@@ -14,9 +14,7 @@ RSpec.describe "Record Refund Forms" do
 
   before do
     registration.account.payments << payment
-    account = registration.account
-    account.balance = payment.payment_amount
-    account.save!
+    registration.account
     sign_in(user)
   end
 
