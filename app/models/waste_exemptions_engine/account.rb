@@ -7,4 +7,3 @@ module WasteExemptionsEngine
     delegate :successful_payments, :refunds_and_reversals, to: :payments
   end
 end
-
