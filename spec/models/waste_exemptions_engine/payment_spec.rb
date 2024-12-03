@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::Payment do
   let(:account) { create(:account, registration: create(:registration)) }
+
   describe "#successful_payments" do
     let(:successful_payments_scope) { instance_double(ActiveRecord::Relation) }
 
