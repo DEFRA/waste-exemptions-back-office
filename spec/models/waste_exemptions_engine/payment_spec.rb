@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::Payment do
   describe "#successful_payments" do
-    let(:account) { create(:account) }
+    let(:account) { create(:account, registration: create(:registration)) }
     let(:successful_payments_scope) { instance_double(ActiveRecord::Relation) }
 
     it "calls successful_payments on the payments association" do
