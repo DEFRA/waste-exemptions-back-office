@@ -30,13 +30,6 @@ en:
             reference: Reference
             type: Payment type
             amount: Amount
-          payment_types:
-            govpay_payment: Govpay
-            missing_card_payment: Missing card
-            bank_transfer: BACS
-            refund: Refund
-            reversal: Reversal
-            other_payment: Other
 
         refunds:
           heading: Refunds and reversals
