@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::Payment do
+  let(:account) { create(:account, registration: create(:registration)) }
   describe "#successful_payments" do
-    let(:account) { create(:account, registration: create(:registration)) }
     let(:successful_payments_scope) { instance_double(ActiveRecord::Relation) }
 
     it "calls successful_payments on the payments association" do
@@ -22,7 +22,6 @@ RSpec.describe WasteExemptionsEngine::Payment do
   end
 
   describe "#refunds_and_reversals" do
-    let(:account) { create(:account) }
     let(:refunds_scope) { instance_double(ActiveRecord::Relation) }
 
     it "calls refunds_and_reversals on the payments association" do
