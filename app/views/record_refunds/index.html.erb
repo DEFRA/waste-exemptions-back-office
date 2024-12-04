@@ -35,16 +35,16 @@
         <% @payments.each do |payment| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-              <%= payment.created_at.to_date.to_formatted_s(:day_month_year_slashes) %>
+              <%= payment.created_at %>
             </td>
             <td class="govuk-table__cell">
               <%= payment.reference %>
             </td>
             <td class="govuk-table__cell">
-              <%= t(".payment_types.#{payment.payment_type}") %>
+              <%= payment.payment_type %>
             </td>
             <td class="govuk-table__cell govuk-table__cell--numeric">
-              £<%= display_pence_as_pounds_and_pence(pence: payment.payment_amount, hide_pence_if_zero: false) %>
+              <%= payment.payment_amount %>
             </td>
             <td class="govuk-table__cell">
               <%= link_to new_registration_record_refund_path(reference: @resource.reference, payment_id: payment.id) do %>

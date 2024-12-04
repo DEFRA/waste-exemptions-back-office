@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PaymentPresenter < BasePresenter
+  include ApplicationHelper
   include FinanceDetailsHelper
 
   def payment_type
@@ -13,5 +14,13 @@ class PaymentPresenter < BasePresenter
 
   def payment_amount
     display_pence_as_pounds_sterling_and_pence(pence: super)
+  end
+
+  def maximum_refund_amount
+    display_pence_as_pounds_sterling_and_pence(pence: super)
+  end
+
+  def created_at
+    format_date(super)
   end
 end
