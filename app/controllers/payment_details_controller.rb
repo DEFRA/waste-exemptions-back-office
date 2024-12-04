@@ -3,7 +3,7 @@
 class PaymentDetailsController < ApplicationController
   def index
     find_resource(params[:registration_reference])
-    @presenter = PaymentDetailsPresenter.new(@resource)
+    @presenter = AccountPresenter.new(@resource.account)
   end
 
   private

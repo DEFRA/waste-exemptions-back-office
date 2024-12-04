@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module FinanceDetailsHelper
+  include ActionView::Helpers::NumberHelper
+
   def display_pence_as_pounds_and_pence(pence:, hide_pence_if_zero: false)
     pounds = pence.to_f / 100
 
