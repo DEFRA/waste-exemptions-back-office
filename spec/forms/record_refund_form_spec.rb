@@ -64,7 +64,7 @@ RSpec.describe RecordRefundForm do
       it "returns false when amount exceeds balance" do
         params = { amount: "50.00", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
-        expect(form.errors[:amount]).to include("Refund amount must not exceed the payment amount")
+        expect(form.errors[:amount]).to include("Refund amount must not exceed maximum refund amount (amount exceeds balance)")
       end
 
       it "returns false when amount is zero" do
@@ -91,10 +91,10 @@ RSpec.describe RecordRefundForm do
         expect(form.errors[:amount]).to include("Enter the amount to refund")
       end
 
-      it "returns false if amount is higher than the balance" do
-        params = { amount: "50.00", comments: "Refund", payment_id: payment.id }
+      it "returns false if amount is higher than the payment amount" do
+        params = { amount: "35.00", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
-        expect(form.errors[:amount]).to include("Refund amount must not exceed the account balance")
+        expect(form.errors[:amount]).to include("Refund amount must not exceed the payment amount (amount exceeds payment amount)")
       end
     end
 

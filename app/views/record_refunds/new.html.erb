@@ -23,7 +23,7 @@
       <div class="govuk-form-group">
         <h2 class="govuk-heading-m"><%= t(".maximum_refund_amount") %></h2>
         <p class="govuk-body">
-          £<%= display_pence_as_pounds_and_pence(pence: @payment.payment_amount, hide_pence_if_zero: false)%>
+          <%= display_pence_as_pounds_sterling_and_pence(pence: @payment.maximum_refund_amount, hide_pence_if_zero: false)%>
         </p>
       </div>
 
