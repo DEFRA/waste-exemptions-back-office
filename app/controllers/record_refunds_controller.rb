@@ -3,12 +3,12 @@
 class RecordRefundsController < ApplicationController
   def index
     find_resource(params[:registration_reference])
-    @payments = @resource.account&.payments&.refundable.map { |payment| PaymentPresenter.new(payment) }
+    @payments = @resource.account.payments.refundable.map { |payment| PaymentPresenter.new(payment) }
   end
 
   def new
     setup_form
-    @payment = @resource.account&.payments&.find_by(id: params[:payment_id])
+    @payment = @resource.account.payments.find_by(id: params[:payment_id])
     @presenter = PaymentPresenter.new(@payment) if @payment
     return if @payment
 
@@ -23,6 +23,7 @@ class RecordRefundsController < ApplicationController
         flash[:success] = I18n.t(".record_refunds.create.success")
         redirect_to registration_payment_details_path(registration_reference: @resource.reference)
       else
+        @presenter = PaymentPresenter.new(@payment)
         render :new
       end
     rescue ActiveRecord::RecordNotFound
