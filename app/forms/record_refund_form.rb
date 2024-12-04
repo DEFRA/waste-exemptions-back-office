@@ -44,7 +44,7 @@ class RecordRefundForm
   end
 
   def amount_within_limits
-    return if amount.blank? || !amount.to_i.positive?
+    return if amount.blank? || !amount.to_f.positive?
 
     errors.add(:amount, :exceeds_payment_amount) if amount_in_pence > payment.payment_amount.to_f
 
@@ -54,6 +54,6 @@ class RecordRefundForm
   end
 
   def amount_in_pence
-    WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(amount.to_i)
+    WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(amount.to_f)
   end
 end

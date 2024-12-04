@@ -31,6 +31,33 @@ RSpec.describe RecordRefundForm do
       it "returns true" do
         expect(form.submit(valid_params)).to be true
       end
+
+      it "calls RecordRefundService with the expected params" do
+        allow(RecordRefundService).to receive(:run)
+
+        form.submit(valid_params)
+
+        expect(RecordRefundService).to have_received(:run).with(
+          comments: "Refund approved",
+          payment: payment,
+          amount_in_pence: 2000
+        )
+      end
+
+      context "when the amount is a decimal" do
+        it "calls RecordRefundService with the expected params" do
+          allow(RecordRefundService).to receive(:run)
+
+          valid_params[:amount] = "20.12"
+          form.submit(valid_params)
+
+          expect(RecordRefundService).to have_received(:run).with(
+            comments: "Refund approved",
+            payment: payment,
+            amount_in_pence: 2012
+          )
+        end
+      end
     end
 
     context "with invalid amount" do
