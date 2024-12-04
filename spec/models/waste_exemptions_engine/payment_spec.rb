@@ -46,7 +46,7 @@ module WasteExemptionsEngine
         end
       end
     end
-  
+
     describe "#successful_payments" do
       let(:successful_payments_scope) { instance_double(ActiveRecord::Relation) }
 
