@@ -16,9 +16,7 @@ class RecordReversalForm
 
     payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
 
-    Rails.logger.info "running ReversePaymentService with arguments: #{comments}, #{payment}"
-
-    ReversePaymentService.new.run(
+    ReversePaymentService.run(
       comments: comments,
       payment: payment,
       user: user
