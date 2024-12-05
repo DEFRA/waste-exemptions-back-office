@@ -31,7 +31,8 @@ module WasteExemptionsEngine
             payment_status: Payment::PAYMENT_STATUS_SUCCESS,
             account_id: payment.account_id,
             reference: "#{payment.reference}/REFUND",
-            comments: comments
+            comments: comments,
+            associated_payment: payment
           )
           expect(refund.payment_uuid).not_to be_nil
         end
