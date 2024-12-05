@@ -18,5 +18,10 @@ module WasteExemptionsEngine
         .where.not(id: Payment.where.not(associated_payment_id: nil).select(:associated_payment_id))
     }
 
+    def maximum_refund_amount
+      return unless REFUNDABLE_PAYMENT_TYPES.include?(payment_type)
+
+      [payment_amount, account.balance].min
+    end
   end
 end
