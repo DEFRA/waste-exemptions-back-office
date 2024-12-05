@@ -16,14 +16,14 @@
       <div class="govuk-form-group">
         <h2 class="govuk-heading-m"><%= t(".payment_type") %></h2>
         <p class="govuk-body">
-          <%= t(".payment_types.#{@payment.payment_type}") %>
+          <%= @presenter.payment_type %>
         </p>
       </div>
 
       <div class="govuk-form-group">
         <h2 class="govuk-heading-m"><%= t(".maximum_refund_amount") %></h2>
         <p class="govuk-body">
-          £<%= display_pence_as_pounds_and_pence(pence: @payment.payment_amount, hide_pence_if_zero: false)%>
+          <%= @presenter.maximum_refund_amount %>
         </p>
       </div>
 

@@ -8,6 +8,8 @@
 # `@presenter.contact_name` without having to explicitly expose a method or
 # attribute on the `CertificatePresenter`.
 class BasePresenter < SimpleDelegator
+  include ApplicationHelper
+
   def initialize(model, view = nil)
     @view = view
     super(model)
