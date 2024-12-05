@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
 module WasteExemptionsEngine
@@ -110,23 +111,23 @@ module WasteExemptionsEngine
       end
 
       it "includes successful bank transfer payments that haven't been reversed" do
-        expect(Payment.reverseable).to include(successful_bank_transfer)
+        expect(described_class.reverseable).to include(successful_bank_transfer)
       end
 
       it "excludes govpay payments" do
-        expect(Payment.reverseable).not_to include(successful_govpay)
+        expect(described_class.reverseable).not_to include(successful_govpay)
       end
 
       it "excludes failed payments" do
-        expect(Payment.reverseable).not_to include(failed_payment)
+        expect(described_class.reverseable).not_to include(failed_payment)
       end
 
       it "excludes payments that have already been reversed" do
-        expect(Payment.reverseable).not_to include(reversed_payment)
+        expect(described_class.reverseable).not_to include(reversed_payment)
       end
 
       it "excludes reversal payments themselves" do
-        expect(Payment.reverseable).not_to include(reversal)
+        expect(described_class.reverseable).not_to include(reversal)
       end
     end
   end
