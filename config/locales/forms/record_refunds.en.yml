@@ -42,8 +42,8 @@ en:
             amount:
               blank: "Enter the amount to refund"
               greater_than: "Refund amount must be greater than zero"
-              exceeds_payment_amount: "Refund amount must not exceed the maximum refund amount (amount exceeds payment amount)"
-              exceeds_balance: "Refund amount must not exceed maximum refund amount (amount exceeds balance)"
+              exceeds_payment_amount: "Refund amount must not exceed the maximum refund amount"
+              exceeds_balance: "Refund amount must not exceed maximum refund amount"
             comments:
               blank: "Enter a reason for the refund"
             payment:
