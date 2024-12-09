@@ -7,7 +7,7 @@ module WasteExemptionsEngine
   RSpec.describe Payment do
     describe "#maximum_refund_amount" do
       let(:payment_amount) { 100 }
-      let(:payment) { create(:payment, payment_amount:) }
+      let(:payment) { create(:payment, :success, payment_amount:) }
 
       context "when payment type is not refundable" do
         before do
@@ -51,9 +51,9 @@ module WasteExemptionsEngine
     describe "scopes" do
       describe ".not_cancelled" do
         it "excludes cancelled payments" do
-          cancelled_payment = create(:payment, payment_status: Payment::PAYMENT_STATUS_CANCELLED)
-          success_payment = create(:payment, payment_status: Payment::PAYMENT_STATUS_SUCCESS)
-          started_payment = create(:payment, payment_status: Payment::PAYMENT_STATUS_STARTED)
+          cancelled_payment = create(:payment, :success, payment_status: Payment::PAYMENT_STATUS_CANCELLED)
+          success_payment = create(:payment, :success, payment_status: Payment::PAYMENT_STATUS_SUCCESS)
+          started_payment = create(:payment, :success, payment_status: Payment::PAYMENT_STATUS_STARTED)
 
           result = described_class.not_cancelled
 
@@ -63,14 +63,9 @@ module WasteExemptionsEngine
       end
 
       describe ".refunds_and_reversals" do
-        let!(:refund) { create(:payment, payment_type: Payment::PAYMENT_TYPE_REFUND) }
-        let!(:reversal) { create(:payment, payment_type: Payment::PAYMENT_TYPE_REVERSAL) }
-        let!(:regular_payment) { create(:payment, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
-
-        before do
-          allow(refund).to receive(:success?).and_return(true)
-          allow(reversal).to receive(:success?).and_return(true)
-        end
+        let!(:refund) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REFUND) }
+        let!(:reversal) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REVERSAL) }
+        let!(:regular_payment) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
 
         it "returns only refunds and reversals ordered by date" do
           result = described_class.refunds_and_reversals
@@ -81,9 +76,9 @@ module WasteExemptionsEngine
       end
 
       describe ".excluding_refunds_and_reversals" do
-        let!(:refund) { create(:payment, payment_type: Payment::PAYMENT_TYPE_REFUND) }
-        let!(:reversal) { create(:payment, payment_type: Payment::PAYMENT_TYPE_REVERSAL) }
-        let!(:regular_payment) { create(:payment, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+        let!(:refund) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REFUND) }
+        let!(:reversal) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REVERSAL) }
+        let!(:regular_payment) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
 
         it "excludes refunds and reversals" do
           result = described_class.excluding_refunds_and_reversals
@@ -94,15 +89,9 @@ module WasteExemptionsEngine
       end
 
       describe ".refundable" do
-        let!(:bank_transfer) { create(:payment, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
-        let!(:govpay) { create(:payment, payment_type: Payment::PAYMENT_TYPE_GOVPAY) }
-        let!(:refund) { create(:payment, payment_type: Payment::PAYMENT_TYPE_REFUND) }
-
-        before do
-          allow(bank_transfer).to receive(:success?).and_return(true)
-          allow(govpay).to receive(:success?).and_return(true)
-          allow(refund).to receive(:success?).and_return(true)
-        end
+        let!(:bank_transfer) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+        let!(:govpay) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_GOVPAY) }
+        let!(:refund) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REFUND) }
 
         it "returns only successful payments with refundable payment types" do
           result = described_class.refundable
@@ -113,12 +102,8 @@ module WasteExemptionsEngine
       end
 
       describe ".successful_payments" do
-        let!(:successful_payment) { create(:payment, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER, payment_status: Payment::PAYMENT_STATUS_SUCCESS) }
-        let!(:refund) { create(:payment, payment_type: Payment::PAYMENT_TYPE_REFUND, payment_status: Payment::PAYMENT_STATUS_SUCCESS) }
-
-        before do
-          allow(successful_payment).to receive(:success?).and_return(true)
-        end
+        let!(:successful_payment) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+        let!(:refund) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REFUND) }
 
         it "returns successful payments excluding refunds and reversals" do
           result = described_class.successful_payments
