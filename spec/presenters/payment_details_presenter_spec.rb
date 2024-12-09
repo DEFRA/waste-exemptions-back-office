@@ -73,7 +73,7 @@ RSpec.describe PaymentDetailsPresenter do
 
     before { allow(registration.account).to receive(:balance).and_return(account_balance) }
 
-    it { expect(presenter.balance).to eq "£#{(account_balance / 100.0).round(2)}" }
+    it { expect(presenter.balance).to eq format("£%0.2f", (account_balance / 100.0)) }
   end
 
   describe "#format_date" do
