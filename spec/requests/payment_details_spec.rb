@@ -28,6 +28,14 @@ RSpec.describe "Payment details" do
         get registration_payment_details_path(registration.reference)
       end
 
+      it "renders the show template" do
+        expect(response).to render_template(:index)
+      end
+
+      it "includes the correct reference" do
+        expect(response.body).to include(registration.reference)
+      end
+
       context "for the details section" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
 
