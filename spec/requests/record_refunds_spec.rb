@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Record Refund Forms" do
-  let(:user) { create(:user, :admin_agent) }
+  let(:user) { create(:user, :developer) }
   let(:registration) { create(:registration) }
   let(:payment) do
     create(:payment,
