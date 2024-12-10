@@ -10,24 +10,12 @@ RSpec.describe "Payment details" do
     let(:payment) { account.payments.first }
     let(:i18n_page) { ".payment_details.index" }
 
-    context "when a user is signed in" do
-      before do
-        sign_in(create(:user))
-      end
-
-      it "renders the show template and includes the correct reference" do
-        get "/registrations/#{registration.reference}/payment_details"
-
-        expect(response).to render_template(:index)
-        expect(response.body).to include(registration.reference)
-      end
-    end
-
     context "when a valid user is not signed in" do
       before { sign_out(create(:user)) }
 
       it "redirects to the sign-in page" do
-        get "/registrations/#{registration.id}"
+        get registration_payment_details_path(registration.reference)
+
         expect(response).to redirect_to(new_user_session_path)
       end
     end
@@ -38,6 +26,14 @@ RSpec.describe "Payment details" do
         sign_in(create(:user))
 
         get registration_payment_details_path(registration.reference)
+      end
+
+      it "renders the show template" do
+        expect(response).to render_template(:index)
+      end
+
+      it "includes the correct reference" do
+        expect(response.body).to include(registration.reference)
       end
 
       context "for the details section" do

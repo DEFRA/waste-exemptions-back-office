@@ -2,6 +2,6 @@
 
 class OrderPresenter < BasePresenter
   def exemption_codes
-    exemptions.map(&:code).sort.join(",")
+    exemptions.map(&:code).sort.join(", ")
   end
 end
