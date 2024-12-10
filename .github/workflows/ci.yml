@@ -88,7 +88,7 @@ jobs:
       - name: Run unit tests
         run: |
           bundle exec rspec
-          sed -i "s@${GITHUB_WORKSPACE}@/home/runner/work/${{ github.repository }}@g" coverage/coverage.json
+          sed -i "s@/home/runner/work/DEFRA/waste-exemptions-back-office@/github/workspace@g" coverage/coverage.json
 
       - name: Debug Coverage
         run: |
