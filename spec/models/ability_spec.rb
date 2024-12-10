@@ -10,52 +10,58 @@ RSpec.describe Ability do
   let(:registration_exemption) { build(:registration_exemption) }
   let(:new_registration) { build(:new_registration) }
 
+  RSpec.shared_examples "can use back office" do
+    it { expect(subject).to be_able_to(:use_back_office, :all) }
+  end
+
   context "when the user role is system" do
     let(:user) { build(:user, :system) }
 
-    include_examples "system examples"
-    include_examples "super_agent examples"
-    include_examples "admin_agent examples"
-  end
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage users"
+    it_behaves_like "can manage registrations"
 
-  context "when the user role is super_agent" do
-    let(:user) { build(:user, :super_agent) }
-
-    include_examples "below system examples"
-
-    include_examples "super_agent examples"
-    include_examples "admin_agent examples"
-    include_examples "data_agent examples"
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, Reports::Download) }
   end
 
   context "when the user role is admin_agent" do
     let(:user) { build(:user, :admin_agent) }
 
-    include_examples "below system examples"
-    include_examples "below super_agent examples"
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage registrations"
+    it { expect(ability).to be_able_to(:read, Reports::GeneratedReport) }
 
-    include_examples "admin_agent examples"
-    include_examples "data_agent examples"
+    it_behaves_like "cannot manage users"
+
+    it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
   end
 
   context "when the user role is data_agent" do
     let(:user) { build(:user, :data_agent) }
 
-    include_examples "below system examples"
-    include_examples "below super_agent examples"
-    include_examples "below admin_agent examples"
+    it_behaves_like "can use back office"
+    it_behaves_like "can view registrations"
 
-    include_examples "data_agent examples"
+    it { expect(ability).to be_able_to(:read, Reports::GeneratedReport) }
+
+    it_behaves_like "cannot manage users"
+    it_behaves_like "cannot manage registrations"
+
+    it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+
   end
 
   context "when the user role is developer" do
     let(:user) { build(:user, :developer) }
 
-    include_examples "below system examples"
-    include_examples "below super_agent examples"
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage registrations"
 
-    include_examples "admin_agent examples"
-    include_examples "developer examples"
+    it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+
+    it_behaves_like "cannot manage users"
   end
 
   context "when the user account is inactive" do

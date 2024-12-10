@@ -16,29 +16,27 @@
       <div class="govuk-form-group">
         <h2 class="govuk-heading-m"><%= t(".payment_type") %></h2>
         <p class="govuk-body">
-          <%= t(".bank_transfer") %>
+          <%= @presenter.payment_type %>
         </p>
       </div>
 
       <div class="govuk-form-group">
         <h2 class="govuk-heading-m"><%= t(".maximum_refund_amount") %></h2>
         <p class="govuk-body">
-          £<%= display_pence_as_pounds_and_pence(pence: @payment.payment_amount, hide_pence_if_zero: false)%>
+          <%= @presenter.maximum_refund_amount %>
         </p>
       </div>
 
       <div class="govuk-form-group">
-        <%= f.label :amount, class: "govuk-label govuk-label--m" do %>
-          <%= t(".enter_refund") %>
-        <% end %>
-        <%= f.text_field :amount, class: "govuk-input govuk-input--width-10" %>
+        <%= f.govuk_text_field :amount,
+          label: { text: t(".enter_refund"), size: "m" },
+          width: 10 %>
       </div>
 
       <div class="govuk-form-group">
-        <%= f.label :comments, class: "govuk-label govuk-label--m" do %>
-          <%= t(".comments") %>
-        <% end %>
-        <%= f.text_area :comments, class: "govuk-textarea", rows: 5 %>
+        <%= f.govuk_text_area :comments,
+          label: { text: t(".comments"), size: "m" },
+          rows: 5 %>
       </div>
 
       <div class="govuk-form-group">

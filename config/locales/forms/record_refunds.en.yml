@@ -18,6 +18,11 @@ en:
     new:
       heading: "Record a refund for %{reference}"
       payment_type: "Payment type"
+      payment_types:
+        govpay_payment: Govpay
+        missing_card_payment: Missing card
+        bank_transfer: BACS
+        other: Other
       bank_transfer: "Bank transfer"
       maximum_refund_amount: "Maximum refund amount"
       enter_refund: "Enter refund"
@@ -29,11 +34,17 @@ en:
     payment_type:
       govpay_payment: "Via govpay"
       bank_transfer: "Via Bank transfer"
-    form:
-      errors:
-        exceeds_payment_amount: "Refund amount must not exceed the payment amount"
-        exceeds_balance: "Refund amount must not exceed the account balance"
-        reason_missing: "Enter a reason for the refund"
-        payment_missing: "Payment to refund is missing"
-        blank_refund_amount: "Enter the amount to refund"
-        amount_zero_or_lower: "Refund amount must be greater than zero"
+  activemodel:
+    errors:
+      models:
+        record_refund_form:
+          attributes:
+            amount:
+              blank: "Enter the amount to refund"
+              greater_than: "Refund amount must be greater than zero"
+              exceeds_payment_amount: "Refund amount must not exceed the maximum refund amount"
+              exceeds_balance: "Refund amount must not exceed maximum refund amount"
+            comments:
+              blank: "Enter a reason for the refund"
+            payment:
+              payment_missing: "Payment to refund is missing"

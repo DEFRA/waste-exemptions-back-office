@@ -3,6 +3,35 @@
 class Ability
   include CanCan::Ability
 
+  ACTIONS = {
+    activate_or_deactivate_user: [:activate_or_deactivate, User],
+    change_role: [:change_role, User],
+    create_registration: [:create, WasteExemptionsEngine::Registration],
+    create_new_registration: [:create, WasteExemptionsEngine::NewRegistration],
+    deregister_exemption: [:deregister, WasteExemptionsEngine::Registration, { active?: true }],
+    deregister_registration_exemption: [:deregister, WasteExemptionsEngine::RegistrationExemption, { active?: true }],
+    invite_user: [:invite, User],
+    manage_charges: %i[manage_charges all],
+    manage_feature_toggles: [:manage, WasteExemptionsEngine::FeatureToggle],
+    read_quarterly_stats: [:read, Reports::DefraQuarterlyStatsService],
+    download_reports: [:read, Reports::Download],
+    read_generated_report: [:read, Reports::GeneratedReport],
+    read_user: [:read, User],
+    read_registration: [:read, WasteExemptionsEngine::Registration],
+    read_new_registration: [:read, WasteExemptionsEngine::NewRegistration],
+    renew_registration: [:renew, WasteExemptionsEngine::Registration],
+    reset_transient_registration: [:reset_transient_registrations, WasteExemptionsEngine::Registration],
+    send_edit_invite_email: [:send_edit_invite_email, WasteExemptionsEngine::Registration],
+    update_registration: [:update, WasteExemptionsEngine::Registration],
+    update_new_registration: [:update, WasteExemptionsEngine::NewRegistration],
+    update_expiry_date: [:update_expiry_date, WasteExemptionsEngine::Registration],
+    use_back_office: %i[use_back_office all],
+    view_analytics: %i[view_analytics all]
+  }.freeze
+
+  # placeholder to be populated by the roles_and_permissions initializer
+  ROLE_PERMISSIONS = {} # rubocop:disable Style/MutableConstant
+
   def initialize(user)
     return if user.blank?
 
@@ -12,63 +41,8 @@ class Ability
   private
 
   def assign_permissions_based_on_role(user)
-    permissions_for_system_user if user.role_is?(:system)
-    permissions_for_super_agent if user.role_is?(:super_agent)
-    permissions_for_admin_agent if user.role_is?(:admin_agent)
-    permissions_for_data_agent if user.role_is?(:data_agent)
-    permissions_for_developer if user.role_is?(:developer)
-  end
-
-  def permissions_for_system_user
-    can :invite, User
-    can :read, User
-    can :change_role, User
-    can :activate_or_deactivate, User
-    can :read, Reports::DefraQuarterlyStatsService
-    can :read, Reports::Download
-
-    permissions_for_super_agent
-  end
-
-  def permissions_for_super_agent
-    can :update, WasteExemptionsEngine::Registration
-    can :update_expiry_date, WasteExemptionsEngine::Registration
-    can :deregister, WasteExemptionsEngine::Registration, &:active?
-    can :deregister, WasteExemptionsEngine::RegistrationExemption, &:active?
-    can :view_analytics, :all
-
-    permissions_for_admin_agent
-  end
-
-  def permissions_for_admin_agent
-    can :renew, WasteExemptionsEngine::Registration
-    can :create, WasteExemptionsEngine::Registration
-    can :send_edit_invite_email, WasteExemptionsEngine::Registration
-    can :create, WasteExemptionsEngine::NewRegistration
-    can :update, WasteExemptionsEngine::NewRegistration
-
-    permissions_for_data_agent
-  end
-
-  def permissions_for_data_agent
-    can :use_back_office, :all
-    can :read, WasteExemptionsEngine::Registration
-    can :read, WasteExemptionsEngine::NewRegistration
-    can :read, Reports::GeneratedReport
-  end
-
-  # Developer users should just be those on the current delivery team and/or
-  # those providing system support. We allow the same permissions as an admin
-  # agent as they will often need to interact with the service including
-  # creating exemptions in order to test and debug.
-  def permissions_for_developer
-    permissions_for_admin_agent
-
-    can :manage, WasteExemptionsEngine::FeatureToggle
-    can :read, Reports::DefraQuarterlyStatsService
-    can :reset_transient_registrations, WasteExemptionsEngine::Registration
-    can :view_analytics, :all
-    can :manage_charges, :all
-    can :manage_charge_catalogue, :all
+    ROLE_PERMISSIONS[user.role].each do |permission|
+      can(*ACTIONS[permission.to_sym])
+    end
   end
 end

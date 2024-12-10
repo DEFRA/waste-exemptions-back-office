@@ -7,28 +7,28 @@ class RecordRefundForm
 
   validates :amount,
             "defra_ruby/validators/price": true,
-            presence: { message: I18n.t(".record_refunds.form.errors.blank_refund_amount") },
-            numericality: { greater_than: 0, message: I18n.t(".record_refunds.form.errors.amount_zero_or_lower") }
-  validate :payment_exists
+            presence: true,
+            numericality: { greater_than: 0 }
   validate :amount_within_limits, if: -> { payment.present? }
-  validate :reason_present_in_comments
+  validates :comments, presence: true
 
-  def submit(params, record_refund_service: RecordRefundService)
+  def submit(params)
     self.amount = params[:amount]
     self.comments = params[:comments]
     self.payment_id = params[:payment_id]
 
+    return false unless check_payment_exists?
+
     @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
-    @balance = payment&.account&.balance
+
+    @balance = payment.account.balance
 
     return false unless valid?
 
-    Rails.logger.info "running RecordRefundService with arguments: #{comments}, #{payment}, #{amount.to_f}"
-
-    record_refund_service.run(
+    RecordRefundService.run(
       comments: comments,
       payment: payment,
-      amount_in_pounds: amount.to_f
+      amount_in_pence: amount_in_pence
     )
   end
 
@@ -36,28 +36,24 @@ class RecordRefundForm
 
   attr_reader :payment, :balance
 
-  def payment_exists
-    return if payment_id.blank?
-    return if WasteExemptionsEngine::Payment.exists?(id: payment_id)
+  def check_payment_exists?
+    return true if WasteExemptionsEngine::Payment.exists?(id: payment_id)
 
-    errors.add(:payment, I18n.t(".record_refunds.form.errors.payment_missing"))
+    errors.add(:payment, :payment_missing)
+    false
   end
 
   def amount_within_limits
     return if amount.blank? || !amount.to_f.positive?
 
-    if amount.to_f > payment.payment_amount.to_f / 100
-      errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_payment_amount"))
-    end
+    errors.add(:amount, :exceeds_payment_amount) if amount_in_pence > payment.payment_amount.to_f
 
-    return unless amount.to_f > balance
+    return unless amount_in_pence > balance
 
-    errors.add(:amount, I18n.t(".record_refunds.form.errors.exceeds_balance"))
+    errors.add(:amount, :exceeds_balance)
   end
 
-  def reason_present_in_comments
-    return if comments.present?
-
-    errors.add(:comments, I18n.t(".record_refunds.form.errors.reason_missing"))
+  def amount_in_pence
+    WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(amount.to_f)
   end
 end

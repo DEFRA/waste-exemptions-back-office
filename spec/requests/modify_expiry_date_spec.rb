@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Modify Registration Date Forms" do
   let(:form) { ModifyExpiryDateForm.new }
-  let(:user) { create(:user, :super_agent) }
+  let(:user) { create(:user, :system) }
   let(:registration) { create(:registration) }
   let(:original_registration_date) { registration.registration_exemptions.first.expires_on }
 
@@ -19,14 +19,14 @@ RSpec.describe "Modify Registration Date Forms" do
 
     before { get modify_expiry_date_form_path(registration.reference) }
 
-    context "when the user is not a super_agent" do
-      let(:user) { create(:user, :admin_agent) }
+    context "when the user is not a system user" do
+      let(:user) { create(:user, :data_agent) }
 
       it_behaves_like "not permitted"
     end
 
-    context "when the user is a super_agent" do
-      let(:user) { create(:user, :super_agent) }
+    context "when the user is a system user" do
+      let(:user) { create(:user, :system) }
 
       it { expect(response).to have_http_status(:ok) }
       it { expect(response).to render_template("modify_expiry_date/new") }
@@ -39,14 +39,14 @@ RSpec.describe "Modify Registration Date Forms" do
 
     before { post modify_expiry_date_path(registration.reference), params: request_body }
 
-    context "when the user is not a super_agent" do
-      let(:user) { create(:user, :admin_agent) }
+    context "when the user is not a system user" do
+      let(:user) { create(:user, :data_agent) }
 
       it_behaves_like "not permitted"
     end
 
-    context "when the user is a super_agent" do
-      let(:user) { create(:user, :super_agent) }
+    context "when the user is a system user" do
+      let(:user) { create(:user, :system) }
 
       context "when the form is not valid" do
         let(:request_body) do

@@ -8,7 +8,6 @@ module Reports
     admin_agent
     data_agent
     developer
-    super_agent
     system
   ].freeze
 

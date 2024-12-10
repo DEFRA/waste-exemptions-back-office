@@ -6,7 +6,6 @@ class User < WasteExemptionsEngine::ApplicationRecord
   has_paper_trail
 
   ROLES = %w[system
-             super_agent
              admin_agent
              data_agent
              developer].freeze

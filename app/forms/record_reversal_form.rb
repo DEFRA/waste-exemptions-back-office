@@ -16,9 +16,7 @@ class RecordReversalForm
 
     payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
 
-    Rails.logger.info "running ReversePaymentService with arguments: #{comments}, #{payment}"
-
-    ReversePaymentService.new.run(
+    ReversePaymentService.run(
       comments: comments,
       payment: payment,
       user: user
@@ -30,6 +28,6 @@ class RecordReversalForm
   def reason_present_in_comments
     return if comments.present?
 
-    errors.add(:comments, I18n.t(".record_refunds.form.errors.reason_missing"))
+    errors.add(:comments, I18n.t(".record_reversals.create.form.errors.reason_missing"))
   end
 end
