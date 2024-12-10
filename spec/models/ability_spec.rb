@@ -71,7 +71,7 @@ RSpec.describe Ability do
     it_behaves_like "can manage users"
     it_behaves_like "can manage registrations"
 
-    it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
   end
 
