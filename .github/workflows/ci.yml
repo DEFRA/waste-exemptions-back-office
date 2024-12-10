@@ -90,9 +90,11 @@ jobs:
           bundle exec rspec
           sed -i "s@${GITHUB_WORKSPACE}@/home/runner/work/${{ github.repository }}@g" coverage/coverage.json
 
-      - name: Debug: List files
+      - name: Debug Coverage
         run: |
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
           pwd
+          cat coverage/coverage.json | grep can_be_searched_like_registration
           ls -la app/models/concerns/
 
       - name: Analyze with SonarCloud
