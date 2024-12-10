@@ -64,6 +64,23 @@ RSpec.describe Ability do
     it_behaves_like "cannot manage users"
   end
 
+  context "when the user role is service_manager" do
+    let(:user) { build(:user, :service_manager) }
+
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage users"
+    it_behaves_like "can manage registrations"
+
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, Reports::Download) }
+
+    it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
+    it { expect(ability).not_to be_able_to(:add_payment, registration) }
+    it { expect(ability).not_to be_able_to(:reverse_payment, registration) }
+    it { expect(ability).not_to be_able_to(:refund_payment, registration) }
+    it { expect(ability).not_to be_able_to(:writeoff_payment, registration) }
+  end
+
   context "when the user account is inactive" do
     let(:user) { build(:user, :data_agent, :inactive) }
 
