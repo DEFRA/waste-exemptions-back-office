@@ -73,6 +73,12 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
+
+    it { expect(ability).not_to be_able_to(:create, WasteExemptionsEngine::ChargeAdjustment) }
+    it { expect(ability).not_to be_able_to(:create, WasteExemptionsEngine::Payment) }
+    it { expect(ability).not_to be_able_to(:reverse, WasteExemptionsEngine::Payment) }
+    it { expect(ability).not_to be_able_to(:refund, WasteExemptionsEngine::Payment) }
+    it { expect(ability).not_to be_able_to(:writeoff, WasteExemptionsEngine::Payment) }
   end
 
   context "when the user account is inactive" do

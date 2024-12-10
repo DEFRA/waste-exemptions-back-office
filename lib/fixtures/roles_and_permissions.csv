@@ -22,3 +22,8 @@ download_reports,                         ,            ,      Y,          ,     
 read_user,                                ,            ,      Y,          ,               Y
 manage_charges,                           ,            ,       ,         Y,               Y
 manage_feature_toggles,                   ,            ,       ,         Y,                
+add_charge_adjustment,                    ,            ,       ,          ,                
+add_payment,                              ,            ,       ,          ,                
+reverse_payment,                          ,            ,       ,          ,                
+refund_payment,                           ,            ,       ,          ,                
+writeoff_payment,                         ,            ,       ,          ,                

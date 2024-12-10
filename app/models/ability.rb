@@ -26,7 +26,12 @@ class Ability
     update_new_registration: [:update, WasteExemptionsEngine::NewRegistration],
     update_expiry_date: [:update_expiry_date, WasteExemptionsEngine::Registration],
     use_back_office: %i[use_back_office all],
-    view_analytics: %i[view_analytics all]
+    view_analytics: %i[view_analytics all],
+    add_charge_adjustment: [:create, WasteExemptionsEngine::ChargeAdjustment],
+    add_payment: [:create, WasteExemptionsEngine::Payment],
+    reverse_payment: [:reverse, WasteExemptionsEngine::Payment],
+    refund_payment: [:refund, WasteExemptionsEngine::Payment],
+    writeoff_payment: [:writeoff, WasteExemptionsEngine::Payment]
   }.freeze
 
   # placeholder to be populated by the roles_and_permissions initializer
