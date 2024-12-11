@@ -15,6 +15,10 @@
     {
       "email" : "developer@wex.gov.uk",
       "role" : "developer"
+    },
+    {
+      "email" : "service_manager@wex.gov.uk",
+      "role" : "service_manager"
     }
   ]
 }
