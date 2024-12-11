@@ -1,24 +1,29 @@
-permission,                     data_agent, admin_agent, system, developer
-use_back_office,                         Y,           Y,      Y,         Y
-read_registration,                       Y,           Y,      Y,         Y
-read_new_registration,                   Y,           Y,      Y,         Y
-read_generated_report,                   Y,           Y,      Y,         Y
-create_registration,                      ,           Y,      Y,         Y
-create_new_registration,                  ,           Y,      Y,         Y
-update_new_registration,                  ,           Y,      Y,         Y
-renew_registration,                       ,           Y,      Y,         Y
-send_edit_invite_email,                   ,           Y,      Y,         Y
-view_analytics,                           ,            ,      Y,         Y
-deregister_exemption,                     ,           Y,      Y,         Y
-deregister_registration_exemption,        ,           Y,      Y,         Y
-update_registration,                      ,           Y,      Y,         Y
-update_expiry_date,                       ,           Y,      Y,         Y
-read_quarterly_stats,                     ,            ,      Y,         Y
-reset_transient_registration,             ,            ,      Y,         Y
-change_role,                              ,            ,      Y,          
-activate_or_deactivate_user,              ,            ,      Y,          
-invite_user,                              ,            ,      Y,          
-download_reports,                         ,            ,      Y,          
-read_user,                                ,            ,      Y,          
-manage_charges,                           ,            ,       ,         Y
-manage_feature_toggles,                   ,            ,       ,         Y
+permission,                     data_agent, admin_agent, system, developer, service_manager
+use_back_office,                         Y,           Y,      Y,         Y,               Y
+read_registration,                       Y,           Y,      Y,         Y,               Y
+read_new_registration,                   Y,           Y,      Y,         Y,               Y
+read_generated_report,                   Y,           Y,      Y,         Y,               Y
+create_registration,                      ,           Y,      Y,         Y,               Y
+create_new_registration,                  ,           Y,      Y,         Y,               Y
+update_new_registration,                  ,           Y,      Y,         Y,               Y
+renew_registration,                       ,           Y,      Y,         Y,               Y
+send_edit_invite_email,                   ,           Y,      Y,         Y,               Y
+view_analytics,                           ,            ,      Y,         Y,               Y
+deregister_exemption,                     ,           Y,      Y,         Y,               Y
+deregister_registration_exemption,        ,           Y,      Y,         Y,               Y
+update_registration,                      ,           Y,      Y,         Y,               Y
+update_expiry_date,                       ,           Y,      Y,         Y,               Y
+read_quarterly_stats,                     ,            ,      Y,         Y,               Y
+reset_transient_registration,             ,            ,      Y,         Y,                
+change_role,                              ,            ,      Y,          ,               Y
+activate_or_deactivate_user,              ,            ,      Y,          ,               Y
+invite_user,                              ,            ,      Y,          ,               Y
+download_reports,                         ,            ,      Y,          ,               Y
+read_user,                                ,            ,      Y,          ,               Y
+manage_charges,                           ,            ,       ,         Y,               Y
+manage_feature_toggles,                   ,            ,       ,         Y,                
+add_charge_adjustment,                    ,            ,       ,         Y,                
+add_payment,                              ,            ,       ,         Y,                
+reverse_payment,                          ,            ,       ,         Y,                
+refund_payment,                           ,            ,       ,         Y,                
+writeoff_payment,                         ,            ,       ,         Y,                

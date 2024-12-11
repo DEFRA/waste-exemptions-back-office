@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RecordRefundsController < ApplicationController
+  before_action :authorize
+
   def index
     find_resource(params[:registration_reference])
     @payments = @resource.account.payments.refundable.map { |payment| PaymentPresenter.new(payment) }
@@ -33,6 +35,11 @@ class RecordRefundsController < ApplicationController
   end
 
   private
+
+  def authorize
+    resource = find_resource(params[:registration_reference])
+    authorize! :refund_payment, resource
+  end
 
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)

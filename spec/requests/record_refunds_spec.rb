@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Record Refund Forms" do
-  let(:user) { create(:user, :admin_agent) }
+  let(:user) { create(:user, :developer) }
   let(:registration) { create(:registration) }
   let(:payment) do
     create(:payment,
@@ -16,6 +16,11 @@ RSpec.describe "Record Refund Forms" do
     registration.account.payments << payment
     registration.account
     sign_in(user)
+  end
+
+  shared_examples "not permitted" do
+    it { expect(response.code).to eq(WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE.to_s) }
+    it { expect(response.location).to include("/pages/permission") }
   end
 
   describe "GET /registrations/:reference/record-refund" do
@@ -43,6 +48,16 @@ RSpec.describe "Record Refund Forms" do
         expect(response).to redirect_to(new_user_session_path)
       end
     end
+
+    context "when the user does not have permission to access the page" do
+      let(:user) { create(:user, :data_agent) }
+
+      before do
+        get registration_record_refunds_path(registration_reference: registration.reference)
+      end
+
+      it_behaves_like "not permitted"
+    end
   end
 
   describe "GET /registrations/:reference/record-refund/:payment_id/new" do
@@ -69,6 +84,16 @@ RSpec.describe "Record Refund Forms" do
 
         expect(response).to redirect_to(new_user_session_path)
       end
+    end
+
+    context "when the user does not have permission to access the page" do
+      let(:user) { create(:user, :data_agent) }
+
+      before do
+        get new_registration_record_refund_path(registration_reference: registration.reference, payment_id: payment.id)
+      end
+
+      it_behaves_like "not permitted"
     end
 
     context "when the payment doesn't exist" do
@@ -148,6 +173,16 @@ RSpec.describe "Record Refund Forms" do
 
         expect(response).to redirect_to(new_user_session_path)
       end
+    end
+
+    context "when the user does not have permission to access the page" do
+      let(:user) { create(:user, :data_agent) }
+
+      before do
+        post registration_record_refunds_path(registration_reference: registration.reference), params: valid_params
+      end
+
+      it_behaves_like "not permitted"
     end
   end
 end
