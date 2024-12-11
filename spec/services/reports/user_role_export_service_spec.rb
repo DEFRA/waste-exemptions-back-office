@@ -9,6 +9,7 @@ module Reports
     data_agent
     developer
     system
+    service_manager
   ].freeze
 
   RSpec.describe UserRoleExportService do
