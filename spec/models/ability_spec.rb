@@ -23,6 +23,8 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
+
+    it_behaves_like "cannot manage charges and bands"
   end
 
   context "when the user role is admin_agent" do
@@ -33,6 +35,7 @@ RSpec.describe Ability do
     it { expect(ability).to be_able_to(:read, Reports::GeneratedReport) }
 
     it_behaves_like "cannot manage users"
+    it_behaves_like "cannot manage charges and bands"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
   end
@@ -47,6 +50,7 @@ RSpec.describe Ability do
 
     it_behaves_like "cannot manage users"
     it_behaves_like "cannot manage registrations"
+    it_behaves_like "cannot manage charges and bands"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
 
@@ -57,6 +61,7 @@ RSpec.describe Ability do
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage registrations"
+    it_behaves_like "can manage charges and bands"
 
     it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
@@ -70,6 +75,7 @@ RSpec.describe Ability do
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"
     it_behaves_like "can manage registrations"
+    it_behaves_like "can manage charges and bands"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
@@ -79,6 +85,25 @@ RSpec.describe Ability do
     it { expect(ability).not_to be_able_to(:reverse_payment, registration) }
     it { expect(ability).not_to be_able_to(:refund_payment, registration) }
     it { expect(ability).not_to be_able_to(:writeoff_payment, registration) }
+  end
+
+  context "when the user role is admin_team_lead" do
+    let(:user) { build(:user, :admin_team_lead) }
+
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage users"
+    it_behaves_like "can manage registrations"
+
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, Reports::Download) }
+    it { expect(ability).to be_able_to(:add_payment, registration) }
+    it { expect(ability).to be_able_to(:reverse_payment, registration) }
+    it { expect(ability).to be_able_to(:refund_payment, registration) }
+    it { expect(ability).to be_able_to(:writeoff_payment, registration) }
+
+    it_behaves_like "cannot manage charges and bands"
+
+    it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
   end
 
   context "when the user account is inactive" do

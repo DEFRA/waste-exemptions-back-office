@@ -29,6 +29,10 @@ FactoryBot.define do
       role { "service_manager" }
     end
 
+    trait :admin_team_lead do
+      role { "admin_team_lead" }
+    end
+
     trait :inactive do
       active { false }
     end

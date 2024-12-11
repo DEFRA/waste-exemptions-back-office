@@ -19,6 +19,10 @@
     {
       "email" : "service_manager@wex.gov.uk",
       "role" : "service_manager"
+    },
+    {
+      "email" : "admin_team_lead@wex.gov.uk",
+      "role" : "admin_team_lead"
     }
   ]
 }

@@ -25,6 +25,7 @@ en:
           data_agent: "Data agent"
           developer: "Developer"
           service_manager: "Service manager"
+          admin_team_lead: "Administration team leader"
 
     charge:
       initial_compliance_charge: "Initial compliance charge"

@@ -9,4 +9,5 @@ en:
         data_agent: " is currently a data agent."
         developer: " is currently a developer."
         service_manager: " is currently a service manager."
+        admin_team_lead: " is currently an administration team leader."
       submit_button: "Change role"

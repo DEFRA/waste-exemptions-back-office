@@ -10,6 +10,7 @@ module Reports
     developer
     system
     service_manager
+    admin_team_lead
   ].freeze
 
   RSpec.describe UserRoleExportService do
