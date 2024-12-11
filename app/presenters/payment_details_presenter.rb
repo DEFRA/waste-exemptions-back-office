@@ -57,10 +57,6 @@ class PaymentDetailsPresenter
       .refundable.any?
   end
 
-  def can_display_charge_adjustments_link?
-    true
-  end
-
   def format_date(datetime)
     datetime.to_date.to_fs(:day_month_year_slashes)
   end
