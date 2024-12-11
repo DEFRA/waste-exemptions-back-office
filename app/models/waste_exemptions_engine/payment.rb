@@ -3,13 +3,13 @@
 require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "payment")
 
 module WasteExemptionsEngine
-  class Payment
+  class Payment < ApplicationRecord
     scope :not_cancelled, -> { where.not(payment_status: PAYMENT_STATUS_CANCELLED) }
     scope :refunds_and_reversals, lambda {
-      where(payment_type: [PAYMENT_TYPE_REFUND, PAYMENT_TYPE_REVERSAL]).order(date_time: :desc)
+      where(payment_type: [PAYMENT_TYPE_REFUND, PAYMENT_TYPE_REVERSAL]).order(date_time: :desc).success
     }
     scope :excluding_refunds_and_reversals, -> { where.not(payment_type: [PAYMENT_TYPE_REFUND, PAYMENT_TYPE_REVERSAL]) }
-    scope :refundable, -> { where(payment_type: REFUNDABLE_PAYMENT_TYPES) }
+    scope :refundable, -> { where(payment_type: REFUNDABLE_PAYMENT_TYPES).success }
     scope :successful_payments, -> { excluding_refunds_and_reversals.success.order(date_time: :desc) }
     scope :reverseable, lambda {
       excluding_refunds_and_reversals
