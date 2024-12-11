@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Charge Adjustments" do
-  let(:user) { create(:user, :super_agent) }
+  let(:user) { create(:user, :admin_agent) }
   let(:registration) { create(:registration) }
 
   before do
