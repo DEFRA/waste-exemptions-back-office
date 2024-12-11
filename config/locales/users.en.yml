@@ -19,6 +19,7 @@ en:
           admin_agent: admin agent
           data_agent: data agent
           developer: developer
+          service_manager: service manager
         statuses:
           active: active
           deactivated: deactivated

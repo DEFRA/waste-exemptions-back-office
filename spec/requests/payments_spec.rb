@@ -13,8 +13,7 @@ RSpec.describe "Add Payment Forms" do
     sign_in(user)
   end
 
-  # permission checks to be added later
-  shared_examples "not permitted", skip: "permission checks to be added later" do
+  shared_examples "not permitted" do
     it { expect(response.code).to eq(WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE.to_s) }
     it { expect(response.location).to include("/pages/permission") }
   end
@@ -41,13 +40,13 @@ RSpec.describe "Add Payment Forms" do
 
     before { get registration_add_payment_form_path(registration.reference) }
 
-    context "when the user is not a developer" do
+    context "when the user does not have permission to access the page" do
       let(:user) { create(:user, :data_agent) }
 
       it_behaves_like "not permitted"
     end
 
-    context "when the user is a developer" do
+    context "when the user has permission to access the page" do
       let(:user) { create(:user, :developer) }
 
       it { expect(response).to have_http_status(:ok) }
@@ -70,7 +69,7 @@ RSpec.describe "Add Payment Forms" do
 
     let(:request_body) { { add_payment_form: add_payment_form } }
 
-    context "when the user is not a developer" do
+    context "when the user does not have permission to access the page" do
       let(:user) { create(:user, :data_agent) }
 
       before do

@@ -20,7 +20,7 @@ class PaymentsController < ApplicationController
   private
 
   def authorize
-    # permission checks to be added later
+    authorize! :add_payment, resource
   end
 
   def resource
