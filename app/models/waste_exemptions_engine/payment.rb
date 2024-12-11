@@ -4,7 +4,6 @@ require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptio
 
 module WasteExemptionsEngine
   class Payment < ApplicationRecord
-    # :nocov:
     scope :not_cancelled, -> { where.not(payment_status: PAYMENT_STATUS_CANCELLED) }
     scope :refunds_and_reversals, lambda {
       where(payment_type: [PAYMENT_TYPE_REFUND, PAYMENT_TYPE_REVERSAL]).order(date_time: :desc).success
@@ -18,6 +17,5 @@ module WasteExemptionsEngine
 
       [payment_amount, account.balance].min
     end
-    # :nocov:
   end
 end
