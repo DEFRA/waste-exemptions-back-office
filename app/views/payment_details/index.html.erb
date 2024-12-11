@@ -158,12 +158,14 @@
       <%= t(".actions_section.heading", reference: @resource.reference) %>
     </h2>
 
+    <% if can?(:add_payment, @resource) %>
     <p class="govuk-body">
       <%= link_to(t(".actions_section.add_payment"),
                 registration_add_payment_path(reference: @resource.reference)) %>
     </p>
+    <% end %>
 
-    <% if can_display_refund_link?(@resource) %>
+    <% if can?(:refund_payment, @resource) && can_display_refund_link?(@resource) %>
       <p class="govuk-body">
       <%= link_to t(".actions_section.links.record_refund"),
         registration_record_refunds_path(registration_reference: @resource.reference) %>
