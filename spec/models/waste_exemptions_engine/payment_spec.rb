@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "payment")
 
 module WasteExemptionsEngine
   RSpec.describe Payment do
     describe "#maximum_refund_amount" do
       let(:payment_amount) { 100 }
-      let(:payment) { create(:payment, :success, payment_amount:) }
+      let(:payment) { create(:payment, :success, payment_amount:, payment_type:) }
 
       context "when payment type is not refundable" do
-        before do
-          allow(payment).to receive(:payment_type).and_return(Payment::PAYMENT_TYPE_REVERSAL)
-        end
+        let(:payment_type) { Payment::PAYMENT_TYPE_REVERSAL }
 
         it "returns nil" do
           expect(payment.maximum_refund_amount).to be_nil
@@ -20,11 +17,8 @@ module WasteExemptionsEngine
       end
 
       context "when payment type is refundable" do
-        let(:account) { instance_double(Account) }
-
-        before do
-          allow(payment).to receive_messages(payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER, account: account)
-        end
+        let(:account) { payment.account }
+        let(:payment_type) { Payment::PAYMENT_TYPE_BANK_TRANSFER }
 
         context "when payment amount is less than account balance" do
           before do
