@@ -9,6 +9,10 @@ FactoryBot.define do
     reference { Faker::Lorem.word }
     date_time { Time.zone.now }
 
+    trait :success do
+      payment_status { "success" }
+    end
+
     trait :bank_transfer do
       payment_type { WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER }
       payment_status { WasteExemptionsEngine::Payment::PAYMENT_STATUS_SUCCESS }
