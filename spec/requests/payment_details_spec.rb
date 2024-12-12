@@ -7,7 +7,6 @@ RSpec.describe "Payment details" do
     let(:registration) { create(:registration, account: build(:account, :with_order, :with_payment)) }
     let(:account) { registration.account }
     let(:order) { account.orders.first }
-    let(:payment) { account.payments.first }
     let(:added_payments) { [] }
     let(:i18n_page) { ".payment_details.index" }
 
@@ -23,6 +22,7 @@ RSpec.describe "Payment details" do
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
+      let(:i18n_actions_section) { "#{i18n_page}.actions_section" }
 
       before do
         sign_in(user)
@@ -91,7 +91,7 @@ RSpec.describe "Payment details" do
         end
 
         it "includes payment details" do
-          expect(response.body).to include payment.reference
+          expect(response.body).to include account.payments.first.reference
         end
 
         # refunds
@@ -112,34 +112,33 @@ RSpec.describe "Payment details" do
         it { expect(response.body).to include (registration.account.balance / 100).round(2).to_s }
       end
 
-      let(:i18n_actions_section) { "#{i18n_page}.actions_section" }
-
       it { expect(response.body).to include I18n.t("#{i18n_actions_section}.heading", reference: registration.reference) }
 
-      describe "reverse payment link" do
-        let(:added_payments) do
-          [
-            create(:payment,
-                   payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER,
-                   payment_status: "success",
-                   account:)
-          ]
+    end
+
+    describe "reverse payment link" do
+      let(:added_payments) do
+        [
+          create(:payment,
+                 payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER,
+                 payment_status: "success",
+                 account:)
+        ]
+      end
+
+      context "when user does not have reverse_payment permission" do
+        let(:user) { create(:user) }
+
+        it "does not display the reverse payment link" do
+          expect(response.body).not_to include(I18n.t("#{i18n_actions_section}.links.reverse_payment"))
         end
+      end
 
-        context "when user does not have reverse_payment permission" do
-          let(:user) { create(:user) }
+      context "when user has reverse_payment permission" do
+        let(:user) { create(:user, :developer) }
 
-          it "does not display the reverse payment link" do
-            expect(response.body).not_to include(I18n.t("#{i18n_actions_section}.links.reverse_payment"))
-          end
-        end
-
-        context "when user has reverse_payment permission" do
-          let(:user) { create(:user, :developer) }
-
-          it "displays the reverse payment link" do
-            expect(response.body).to include(I18n.t("#{i18n_actions_section}.links.reverse_payment"))
-          end
+        it "displays the reverse payment link" do
+          expect(response.body).to include(I18n.t("#{i18n_actions_section}.links.reverse_payment"))
         end
       end
     end
