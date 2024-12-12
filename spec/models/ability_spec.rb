@@ -87,8 +87,8 @@ RSpec.describe Ability do
     it { expect(ability).not_to be_able_to(:writeoff_payment, registration) }
   end
 
-  context "when the user role is admin_team_lead" do
-    let(:user) { build(:user, :admin_team_lead) }
+  context "when the user role is wex_admin_team_leader" do
+    let(:user) { build(:user, :wex_admin_team_leader) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"

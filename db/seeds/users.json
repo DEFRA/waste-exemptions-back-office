@@ -21,8 +21,8 @@
       "role" : "service_manager"
     },
     {
-      "email" : "admin_team_lead@wex.gov.uk",
-      "role" : "admin_team_lead"
+      "email" : "wex_admin_team_leader@wex.gov.uk",
+      "role" : "wex_admin_team_leader"
     }
   ]
 }

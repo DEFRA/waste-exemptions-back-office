@@ -20,7 +20,7 @@ en:
           data_agent: data agent
           developer: developer
           service_manager: service manager
-          admin_team_lead: administration team leder
+          wex_admin_team_leader: waste exemptions administration team leader
         statuses:
           active: active
           deactivated: deactivated

@@ -10,7 +10,7 @@ module Reports
     developer
     system
     service_manager
-    admin_team_lead
+    wex_admin_team_leader
   ].freeze
 
   RSpec.describe UserRoleExportService do

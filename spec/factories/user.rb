@@ -29,8 +29,8 @@ FactoryBot.define do
       role { "service_manager" }
     end
 
-    trait :admin_team_lead do
-      role { "admin_team_lead" }
+    trait :wex_admin_team_leader do
+      role { "wex_admin_team_leader" }
     end
 
     trait :inactive do
