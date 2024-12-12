@@ -87,7 +87,7 @@ RSpec.describe "Payment details" do
         end
 
         it "includes payment details" do
-          expect(response.body).to include account.payments.first.reference
+          expect(response.body).to include account.payments.success.first.reference
         end
 
         # refunds
