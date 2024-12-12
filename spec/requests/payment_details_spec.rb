@@ -7,8 +7,8 @@ RSpec.describe "Payment details" do
     let(:registration) { create(:registration, account: build(:account, :with_order, :with_payment)) }
     let(:account) { registration.account }
     let(:order) { account.orders.first }
-    let(:added_payments) { [] }
     let(:i18n_page) { ".payment_details.index" }
+    let(:i18n_actions_section) { "#{i18n_page}.actions_section" }
 
     context "when a valid user is not signed in" do
       before { sign_out(create(:user)) }
@@ -22,13 +22,9 @@ RSpec.describe "Payment details" do
 
     context "when a valid user is signed in" do
       let(:user) { create(:user) }
-      let(:i18n_actions_section) { "#{i18n_page}.actions_section" }
 
       before do
         sign_in(user)
-
-        account.payments << added_payments
-
         get registration_payment_details_path(registration.reference)
       end
 
@@ -117,13 +113,19 @@ RSpec.describe "Payment details" do
     end
 
     describe "reverse payment link" do
-      let(:added_payments) do
-        [
-          create(:payment,
-                 payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER,
-                 payment_status: "success",
-                 account:)
-        ]
+      let(:payment) do
+        create(:payment,
+               payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER,
+               payment_status: "success",
+               account:)
+      end
+
+      before do
+        sign_in(user)
+
+        account.payments << payment
+
+        get registration_payment_details_path(registration.reference)
       end
 
       context "when user does not have reverse_payment permission" do
