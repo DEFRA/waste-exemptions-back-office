@@ -27,8 +27,4 @@ class AdjustmentTypesController < ApplicationController
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)
   end
-
-  def adjustment_type_params
-    params.fetch(:adjustment_type_form, {}).permit(:adjustment_type)
-  end
 end
