@@ -190,17 +190,10 @@
       </p>
     <% end %>
 
-    <% if can_display_reversal_link?(@resource) %>
+    <% if can?(:reverse_payment, @resource) && can_display_reversal_link?(@resource) %>
       <p class="govuk-body">
       <%= link_to t(".actions_section.links.reverse_payment"),
         registration_record_reversals_path(registration_reference: @resource.reference) %>
-      </p>
-    <% end %>
-
-    <% if can?(:add_charge_adjustment, @resource) %>
-      <p class="govuk-body">
-      <%= link_to t(".actions_section.links.charge_adjustment"),
-        new_registration_adjustment_type_path(registration_reference: @resource.reference) %>
       </p>
     <% end %>
   </div>
