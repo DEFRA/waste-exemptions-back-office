@@ -22,5 +22,15 @@ FactoryBot.define do
     trait :with_order do
       order
     end
+
+    trait :refund do
+      payment_type { WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND }
+      payment_status { WasteExemptionsEngine::Payment::PAYMENT_STATUS_SUCCESS }
+    end
+
+    trait :reversal do
+      payment_type { WasteExemptionsEngine::Payment::PAYMENT_TYPE_REVERSAL }
+      payment_status { WasteExemptionsEngine::Payment::PAYMENT_STATUS_SUCCESS }
+    end
   end
 end

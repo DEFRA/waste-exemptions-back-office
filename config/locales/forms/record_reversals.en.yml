@@ -1,0 +1,34 @@
+en:
+  record_reversals:
+    index:
+      title: Which payment do you want to reverse?
+      heading: Which payment do you want to reverse?
+      date: Date
+      reference: Reference
+      payment_type: Payment type
+      amount: Amount in £
+      action: Action
+      reverse_payment: Reverse payment
+      submit: Continue
+      payment_types:
+        bank_transfer: "Via bank transfer"
+        govpay_payment: "Via govpay"
+        missing_card_payment: "Missing card payment"
+        other_payment: "Other payment"
+    new:
+      heading: "Reverse a payment for %{reference}"
+      payment_type: "Payment type"
+      amount_to_reverse: "Amount to reverse"
+      reason: "Reason"
+      reverse_button: "Reverse payment"
+      payment_types:
+        govpay_payment: "Via govpay"
+        bank_transfer: "Via bank transfer"
+        missing_card_payment: "Missing card payment"
+        other_payment: "Other payment"
+    create:
+      success: "Reversal was successfully recorded"
+      not_found: "Could not find the specified payment"
+      form:
+        errors:
+          reason_missing: "You need to give a reason for reversing the payment."

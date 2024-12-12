@@ -1,0 +1,47 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render("waste_exemptions_engine/shared/back", back_path: registration_record_reversals_path(registration_reference: @resource.reference)) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= t(".heading", reference: @resource.reference) %>
+    </h1>
+
+    <%= form_for @record_reversal_form,
+                 url: registration_record_reversals_path(registration_reference: @resource.reference),
+                 builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+                 method: :post do |f| %>
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
+
+      <div class="govuk-form-group">
+        <h2 class="govuk-heading-m"><%= t(".payment_type") %></h2>
+        <p class="govuk-body">
+          <%= t(".payment_types.#{@payment.payment_type}") %>
+        </p>
+      </div>
+
+      <div class="govuk-form-group">
+        <h2 class="govuk-heading-m"><%= t(".amount_to_reverse") %></h2>
+        <p class="govuk-body">
+          <%= display_pence_as_pounds_sterling_and_pence(pence: @payment.payment_amount) %>
+        </p>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :comments, class: "govuk-label govuk-label--m" do %>
+          <%= t(".reason") %>
+        <% end %>
+        <%= f.text_area :comments, class: "govuk-textarea", rows: 5 %>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.submit t(".reverse_button"), class: "govuk-button", "data-module": "govuk-button" %>
+      </div>
+
+      <%= f.hidden_field :payment_id, value: @payment.id %>
+    <% end %>
+  </div>
+</div>

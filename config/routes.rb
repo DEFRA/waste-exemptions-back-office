@@ -44,6 +44,11 @@ Rails.application.routes.draw do
               only: %i[index new create],
               path: "record-refund",
               path_names: { new: ":payment_id/new" }
+
+    resources :record_reversals,
+              only: %i[index new create],
+              path: "record-reversal",
+              path_names: { new: ":payment_id/new" }
   end
 
   resources :deregistrations, only: :show, param: :reference
