@@ -21,8 +21,16 @@
       "role" : "service_manager"
     },
     {
-      "email" : "wex_admin_team_leader@wex.gov.uk",
-      "role" : "wex_admin_team_leader"
+      "email" : "admin_team_lead@wex.gov.uk",
+      "role" : "admin_team_lead"
+    },
+    {
+      "email" : "policy_adviser@wex.gov.uk",
+      "role" : "policy_adviser"
+    },
+    {
+      "email" : "finance_user@wex.gov.uk",
+      "role" : "finance_user"
     }
   ]
 }

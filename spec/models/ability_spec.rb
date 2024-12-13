@@ -87,8 +87,8 @@ RSpec.describe Ability do
     it { expect(ability).not_to be_able_to(:writeoff_payment, registration) }
   end
 
-  context "when the user role is wex_admin_team_leader" do
-    let(:user) { build(:user, :wex_admin_team_leader) }
+  context "when the user role is admin_team_lead" do
+    let(:user) { build(:user, :admin_team_lead) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"
@@ -103,6 +103,44 @@ RSpec.describe Ability do
 
     it_behaves_like "cannot manage charges and bands"
 
+    it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
+  end
+
+  context "when the user role is policy_adviser" do
+    let(:user) { build(:user, :policy_adviser) }
+
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage users"
+    it_behaves_like "can manage charges and bands"
+
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, Reports::Download) }
+
+    it_behaves_like "cannot manage registrations"
+
+    it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
+    it { expect(ability).not_to be_able_to(:add_payment, registration) }
+    it { expect(ability).not_to be_able_to(:reverse_payment, registration) }
+    it { expect(ability).not_to be_able_to(:refund_payment, registration) }
+    it { expect(ability).not_to be_able_to(:writeoff_payment, registration) }
+  end
+
+  context "when the user role is finance_user" do
+    let(:user) { build(:user, :finance_user) }
+
+    it_behaves_like "can use back office"
+
+    it { expect(ability).to be_able_to(:add_payment, registration) }
+    it { expect(ability).to be_able_to(:reverse_payment, registration) }
+    it { expect(ability).to be_able_to(:refund_payment, registration) }
+    it { expect(ability).to be_able_to(:writeoff_payment, registration) }
+
+    it_behaves_like "cannot manage users"
+    it_behaves_like "cannot manage registrations"
+    it_behaves_like "cannot manage charges and bands"
+
+    it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).not_to be_able_to(:read, Reports::Download) }
     it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
   end
 

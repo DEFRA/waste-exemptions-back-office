@@ -10,7 +10,9 @@ class User < WasteExemptionsEngine::ApplicationRecord
              data_agent
              developer
              service_manager
-             wex_admin_team_leader].freeze
+             admin_team_lead
+             policy_adviser
+             finance_user].freeze
 
   def role_is?(target_role)
     role == target_role.to_s

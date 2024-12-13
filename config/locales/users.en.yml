@@ -15,12 +15,14 @@ en:
           status: Status
           actions: Actions
         roles:
-          system: system user
-          admin_agent: admin agent
-          data_agent: data agent
+          system: waste exemptions administration team user
+          admin_agent: customer service adviser
+          data_agent: data viewer
           developer: developer
           service_manager: service manager
-          wex_admin_team_leader: waste exemptions administration team leader
+          admin_team_lead: waste exemptions administration team leader
+          policy_adviser: waste exemptions policy adviser
+          finance_user: SSCL finance user
         statuses:
           active: active
           deactivated: deactivated
