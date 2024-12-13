@@ -144,5 +144,62 @@ RSpec.describe "Payment details" do
         end
       end
     end
+
+    describe "refund payment link" do
+      let(:payment) do
+        create(:payment,
+               payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_BANK_TRANSFER,
+               payment_status: "success",
+               account:)
+      end
+
+      before do
+        sign_in(user)
+
+        account.payments << payment
+
+        get registration_payment_details_path(registration.reference)
+      end
+
+      context "when user does not have refund_payment permission" do
+        let(:user) { create(:user) }
+
+        it "does not display the refund payment link" do
+          expect(response.body).not_to include(I18n.t("#{i18n_actions_section}.links.record_refund"))
+        end
+      end
+
+      context "when user has refund_payment permission" do
+        let(:user) { create(:user, :developer) }
+
+        it "displays the refund payment link" do
+          expect(response.body).to include(I18n.t("#{i18n_actions_section}.links.record_refund"))
+        end
+      end
+    end
+
+    describe "increase or decrease a charge link" do
+      before do
+        sign_in(user)
+
+        get registration_payment_details_path(registration.reference)
+      end
+
+      context "when user does not have add_charge_adjustment permission" do
+        let(:user) { create(:user) }
+
+        it "does not display the increase or decrease a charge link" do
+          expect(response.body).not_to include(I18n.t("#{i18n_actions_section}.links.charge_adjustment"))
+        end
+      end
+
+      context "when user has add_charge_adjustment permission" do
+        let(:user) { create(:user, :developer) }
+
+        it "displays the increase or decrease a charge link" do
+          expect(response.body).to include(I18n.t("#{i18n_actions_section}.links.charge_adjustment"))
+        end
+      end
+    end
   end
 end

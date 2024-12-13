@@ -71,19 +71,19 @@
         </tr>
       </thead>
       <tbody>
-        <% @presenter.charge_adjustments&.each do |adjustment| %>
+        <% @presenter.charge_adjustments.each do |adjustment| %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell">
-              <%= @presenter.format_date(adjustment.created_at) %>
+              <%= adjustment.created_at %>
             </td>
             <td class="govuk-table__cell">
-              <%= t(".details_section.charge_adjustments.types.#{adjustment.adjustment_type}") %>
+              <%= adjustment.adjustment_type %>
             </td>
             <td class="govuk-table__cell">
               <%= adjustment.reason %>
             </td>
             <td class="govuk-table__cell govuk-!-text-align-right">
-              <%= @presenter.display_pence_as_pounds_and_cents(adjustment.amount) %>
+              <%= adjustment.amount %>
             </td>
           </tr>
         <% end %>
@@ -194,6 +194,13 @@
       <p class="govuk-body">
       <%= link_to t(".actions_section.links.reverse_payment"),
         registration_record_reversals_path(registration_reference: @resource.reference) %>
+      </p>
+    <% end %>
+
+    <% if can?(:add_charge_adjustment, @resource) %>
+      <p class="govuk-body">
+      <%= link_to t(".actions_section.links.charge_adjustment"),
+        new_registration_adjustment_type_path(registration_reference: @resource.reference) %>
       </p>
     <% end %>
   </div>

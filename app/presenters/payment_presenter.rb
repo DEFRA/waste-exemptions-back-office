@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PaymentPresenter < BasePresenter
-  include ApplicationHelper
   include FinanceDetailsHelper
 
   def payment_type

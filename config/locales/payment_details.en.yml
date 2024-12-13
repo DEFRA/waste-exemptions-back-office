@@ -22,9 +22,6 @@ en:
             type: Type
             comments: Reason
             amount: Amount
-          types:
-            increase: Charge increase
-            decrease: Charge decrease
 
         payments:
           heading: Payments received

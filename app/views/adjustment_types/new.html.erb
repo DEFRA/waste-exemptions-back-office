@@ -11,7 +11,7 @@
       <%= t(".heading", reference: @resource.reference) %>
     </h1>
 
-    <p><%= displayable_address(@resource.contact_address).join(", ") %></p>
+    <p class="govuk-body"><%= displayable_address(@resource.contact_address).join(", ") %></p>
 
     <%= form_for @adjustment_type_form,
                  url: registration_adjustment_types_path(registration_reference: @resource.reference),
