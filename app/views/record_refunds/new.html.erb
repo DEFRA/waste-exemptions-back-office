@@ -1,3 +1,5 @@
+<% content_for :title, t(".title", reference: @resource.reference) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= render("waste_exemptions_engine/shared/back", back_path: registration_record_refunds_path(registration_reference: @resource.reference)) %>
