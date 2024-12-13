@@ -17,7 +17,7 @@ en:
         other_payment: "Other payment"
     new:
       heading: "Record a refund for %{reference}"
-      title: "Record a refund"
+      title: "Record a refund for %{reference}"
       payment_type: "Payment type"
       payment_types:
         govpay_payment: Govpay

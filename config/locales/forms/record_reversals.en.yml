@@ -17,7 +17,7 @@ en:
         other_payment: "Other payment"
     new:
       heading: "Reverse a payment for %{reference}"
-      title: "Reverse a payment"
+      title: "Reverse a payment for %{reference}"
       payment_type: "Payment type"
       amount_to_reverse: "Amount to reverse"
       reason: "Reason"
