@@ -16,6 +16,7 @@ module WasteExemptionsEngine
         .success
         .where.not(payment_type: PAYMENT_TYPE_GOVPAY)
         .where.not(id: Payment.where.not(associated_payment_id: nil).select(:associated_payment_id))
+        .order(date_time: :desc)
     }
 
     def maximum_refund_amount
