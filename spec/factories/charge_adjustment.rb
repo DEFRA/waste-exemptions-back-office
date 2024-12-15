@@ -7,4 +7,3 @@ FactoryBot.define do
     reason { Faker::Lorem.sentence }
   end
 end
-
