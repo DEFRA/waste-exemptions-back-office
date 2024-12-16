@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RecordReversalsController < ApplicationController
+  before_action :authorize
+
   def index
     find_resource(params[:registration_reference])
     @payments = @resource.account.payments.reverseable.map { |payment| PaymentPresenter.new(payment) }
@@ -34,6 +36,11 @@ class RecordReversalsController < ApplicationController
   end
 
   private
+
+  def authorize
+    resource = find_resource(params[:registration_reference])
+    authorize! :reverse_payment, resource
+  end
 
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)
