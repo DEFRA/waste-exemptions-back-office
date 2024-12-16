@@ -19,8 +19,7 @@
 
       <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
 
-      <%= f.govuk_radio_buttons_fieldset :adjustment_type,
-                                        legend: { text: "Adjustment_type", hidden: true } do %>
+      <%= f.govuk_radio_buttons_fieldset :adjustment_type, legend: { hidden: true } do %>
         <%= f.govuk_radio_button :adjustment_type,
                                 "increase",
                                 label: { text: t(".increase_label") },
