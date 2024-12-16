@@ -1,0 +1,39 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render("waste_exemptions_engine/shared/back",
+              back_path: registration_charge_adjustments_path(reference: @resource.reference)) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= t(".heading.#{@charge_adjustment_form.adjustment_type}", reference: @resource.reference) %>
+    </h1>
+
+    <%= form_for @charge_adjustment_form,
+                 url: registration_charge_adjustments_path(registration_reference: @resource.reference),
+                 builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
+
+      <div class="govuk-form-group">
+        <%= f.label :amount, class: "govuk-label govuk-label--m" %>
+        <%= f.hint :amount, text: t(".amount_hint") %>
+        <div class="govuk-input__wrapper">
+          <div class="govuk-input__prefix">£</div>
+          <%= f.text_field :amount, class: "govuk-input govuk-input--width-5" %>
+        </div>
+      </div>
+
+      <div class="govuk-form-group">
+        <%= f.label :reason, class: "govuk-label govuk-label--m" %>
+        <%= f.text_area :reason, class: "govuk-textarea", rows: 5 %>
+      </div>
+
+      <%= f.hidden_field :adjustment_type %>
+      <%= f.submit t(".submit_button"), class: "govuk-button" %>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,38 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render("waste_exemptions_engine/shared/back",
+              back_path: registration_payment_details_path(reference: @resource.reference)) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= t(".heading", reference: @resource.reference) %>
+    </h1>
+
+    <p class="govuk-body"><%= displayable_address(@resource.contact_address).join(", ") %></p>
+
+    <%= form_for @adjustment_type_form,
+                 url: registration_adjustment_types_path(registration_reference: @resource.reference),
+                 builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
+
+      <%= f.govuk_radio_buttons_fieldset :adjustment_type, legend: { hidden: true } do %>
+        <%= f.govuk_radio_button :adjustment_type,
+                                "increase",
+                                label: { text: t(".increase_label") },
+                                link_errors: true,
+                                hint: { text: t(".increase_hint") } %>
+
+        <%= f.govuk_radio_button :adjustment_type,
+                                "decrease",
+                                label: { text: t(".decrease_label") },
+                                hint: { text: t(".decrease_hint") } %>
+      <% end %>
+
+      <%= f.govuk_submit t(".continue") %>
+    <% end %>
+  </div>
+</div>
