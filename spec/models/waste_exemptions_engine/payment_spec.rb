@@ -106,6 +106,55 @@ module WasteExemptionsEngine
           expect(result).not_to include(refund)
         end
       end
+
+      describe ".reverseable" do
+        let!(:successful_bank_transfer) do
+          create(:payment,
+                 payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER,
+                 payment_status: "success")
+        end
+        let!(:successful_govpay) do
+          create(:payment,
+                 payment_type: Payment::PAYMENT_TYPE_GOVPAY,
+                 payment_status: "success")
+        end
+        let!(:failed_payment) do
+          create(:payment,
+                 payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER,
+                 payment_status: "failed")
+        end
+        let!(:reversed_payment) do
+          create(:payment,
+                 payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER,
+                 payment_status: "success")
+        end
+        let!(:reversal) do
+          create(:payment,
+                 payment_type: Payment::PAYMENT_TYPE_REVERSAL,
+                 payment_status: "success",
+                 associated_payment_id: reversed_payment.id)
+        end
+
+        it "includes successful bank transfer payments that haven't been reversed" do
+          expect(described_class.reverseable).to include(successful_bank_transfer)
+        end
+
+        it "excludes govpay payments" do
+          expect(described_class.reverseable).not_to include(successful_govpay)
+        end
+
+        it "excludes failed payments" do
+          expect(described_class.reverseable).not_to include(failed_payment)
+        end
+
+        it "excludes payments that have already been reversed" do
+          expect(described_class.reverseable).not_to include(reversed_payment)
+        end
+
+        it "excludes reversal payments themselves" do
+          expect(described_class.reverseable).not_to include(reversal)
+        end
+      end
     end
   end
 end

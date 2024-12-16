@@ -11,8 +11,8 @@ class RecordRefundService < WasteExemptionsEngine::BaseService
 
     true
   rescue StandardError => e
-    Rails.logger.error "#{e.class} error processing refund for payment #{payment.id}"
-    Airbrake.notify(e, message: "Error processing refund for payment ", payment_id: payment.id)
+    Rails.logger.error "#{e.class} error processing refund for payment #{payment&.id}"
+    Airbrake.notify(e, message: "Error processing refund for payment ", payment_id: payment&.id)
     false
   end
 
@@ -28,7 +28,8 @@ class RecordRefundService < WasteExemptionsEngine::BaseService
       account_id: payment.account_id,
       reference: "#{payment.reference}/REFUND",
       payment_uuid: SecureRandom.uuid,
-      comments: comments
+      comments: comments,
+      associated_payment: payment
     )
   end
 end

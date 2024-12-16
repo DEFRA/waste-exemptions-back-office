@@ -593,4 +593,35 @@ RSpec.describe ActionLinksHelper do
       it { expect(helper.can_display_refund_link?(registration)).to be true }
     end
   end
+
+  describe "#can_display_reversal_link?" do
+
+    context "with an overpayment" do
+      let(:registration) { create(:registration, account: build(:account)) }
+
+      before do
+        registration.account.payments << build(:payment, :bank_transfer)
+      end
+
+      it { expect(helper.can_display_reversal_link?(registration)).to be true }
+    end
+
+    context "with no overpayment" do
+      let(:registration) { create(:registration, account: build(:account, balance: 0)) }
+
+      it { expect(helper.can_display_reversal_link?(registration)).to be false }
+    end
+
+    context "with a payment that is not reversible" do
+      let(:registration) { create(:registration, account: build(:account)) }
+      let(:bank_transfer) { build(:payment, :bank_transfer) }
+
+      before do
+        registration.account.payments << bank_transfer
+        registration.account.payments << build(:payment, account: registration.account, associated_payment: bank_transfer)
+      end
+
+      it { expect(helper.can_display_reversal_link?(registration)).to be false }
+    end
+  end
 end

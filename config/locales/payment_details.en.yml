@@ -47,4 +47,5 @@ en:
         heading: Payment actions for %{reference}
         links:
           record_refund: Record a refund
+          reverse_payment: Reverse a payment
         add_payment: Record a payment
