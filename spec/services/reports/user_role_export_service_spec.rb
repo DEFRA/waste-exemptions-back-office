@@ -8,7 +8,7 @@ module Reports
     customer_service_adviser
     data_viewer
     developer
-    system
+    admin_team_user
     service_manager
     admin_team_lead
     policy_adviser

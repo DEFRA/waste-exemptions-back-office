@@ -48,7 +48,7 @@ RSpec.describe "Charge Adjustments" do
       end
 
       context "when the user does not have permission to access the page" do
-        let(:user) { create(:user, :data_agent) }
+        let(:user) { create(:user, :data_viewer) }
 
         before do
           get new_registration_charge_adjustment_path(
@@ -135,7 +135,7 @@ RSpec.describe "Charge Adjustments" do
       end
 
       context "when the user does not have permission to access the page" do
-        let(:user) { create(:user, :data_agent) }
+        let(:user) { create(:user, :data_viewer) }
 
         before do
           post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
