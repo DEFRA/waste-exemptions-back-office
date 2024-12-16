@@ -1,8 +1,8 @@
 {
   "users" : [
     {
-      "email" : "system_user@wex.gov.uk",
-      "role" : "system"
+      "email" : "admin_team_user_user@wex.gov.uk",
+      "role" : "admin_team_user"
     },
     {
       "email" : "customer_service_adviser@wex.gov.uk",

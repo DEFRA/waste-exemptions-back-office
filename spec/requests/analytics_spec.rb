@@ -16,7 +16,7 @@ RSpec.describe "Analytics" do
     let(:end_date) { "2023-01-31" }
 
     context "when user has permission to view analytics" do
-      let(:role) { "system" }
+      let(:role) { "admin_team_user" }
 
       before do
         get analytics_path, params: { start_date: start_date, end_date: end_date }

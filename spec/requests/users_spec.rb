@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe "Users" do
   describe "/users" do
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before { sign_in(user) }
 
@@ -24,7 +24,7 @@ RSpec.describe "Users" do
       end
     end
 
-    context "when a non-system user is signed in" do
+    context "when a non-admin_team_user user is signed in" do
       let(:user) { create(:user, :data_viewer) }
 
       before { sign_in(user) }
@@ -46,8 +46,8 @@ RSpec.describe "Users" do
   end
 
   describe "/users/all" do
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before { sign_in(user) }
 
@@ -79,7 +79,7 @@ RSpec.describe "Users" do
       end
     end
 
-    context "when a non-system user is signed in" do
+    context "when a non-admin_team_user user is signed in" do
       let(:user) { create(:user, :data_viewer) }
 
       before { sign_in(user) }

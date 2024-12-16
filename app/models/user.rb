@@ -5,7 +5,7 @@ require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptio
 class User < WasteExemptionsEngine::ApplicationRecord
   has_paper_trail
 
-  ROLES = %w[system
+  ROLES = %w[admin_team_user
              customer_service_adviser
              data_viewer
              developer

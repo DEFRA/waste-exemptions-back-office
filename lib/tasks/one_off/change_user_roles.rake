@@ -10,7 +10,8 @@ namespace :one_off do
     # role to change from => role to change to
     role_changes = {
       "data_agent" => "data_viewer",
-      "admin_agent" => "customer_service_adviser"
+      "admin_agent" => "customer_service_adviser",
+      "system" => "admin_team_user"
     }
 
     role_changes.each do |role_from, role_to|

@@ -3,8 +3,8 @@
 class UserGroupRolesService
   def self.call(user)
     case user.role
-    when "system" # Waste Exemptions Administration Team User
-      system_roles
+    when "admin_team_user" # Waste Exemptions Administration Team User
+      admin_team_user_roles
     when "service_manager" # Service Manager
       service_manager_roles
     when "admin_team_lead" # Waste Exemptions Administration Team Leader
@@ -16,8 +16,8 @@ class UserGroupRolesService
     end
   end
 
-  def self.system_roles
-    %w[system]
+  def self.admin_team_user_roles
+    %w[admin_team_user]
   end
 
   def self.service_manager_roles
@@ -26,7 +26,7 @@ class UserGroupRolesService
        finance_user
        developer
        service_manager
-       system
+       admin_team_user
        admin_team_lead
        policy_advisor]
   end
@@ -34,7 +34,7 @@ class UserGroupRolesService
   def self.admin_team_lead_roles
     %w[customer_service_adviser
        data_viewer
-       system
+       admin_team_user
        admin_team_lead]
   end
 

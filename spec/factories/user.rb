@@ -6,11 +6,11 @@ FactoryBot.define do
       "user#{n}@example.com"
     end
 
-    role { "system" }
+    role { "admin_team_user" }
     password { "Secret123" }
 
-    trait :system do
-      role { "system" }
+    trait :admin_team_user do
+      role { "admin_team_user" }
     end
 
     trait :customer_service_adviser do

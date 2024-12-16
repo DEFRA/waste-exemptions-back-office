@@ -27,7 +27,7 @@ RSpec.describe User do
 
   describe "#role" do
     context "when the role is in the allowed list" do
-      let(:user) { build(:user, role: "system") }
+      let(:user) { build(:user, role: "admin_team_user") }
 
       it "is valid" do
         expect(user).to be_valid
@@ -130,7 +130,7 @@ RSpec.describe User do
   end
 
   describe "role_is?" do
-    let(:user) { build(:user, role: "system") }
+    let(:user) { build(:user, role: "admin_team_user") }
 
     context "when the user has the same role" do
       it "returns true" do

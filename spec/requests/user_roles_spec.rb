@@ -4,12 +4,12 @@ require "rails_helper"
 
 RSpec.describe "User Roles" do
   let(:role_change_user) { create(:user, :data_viewer) }
-  let(:system_user) { create(:user, :system) }
+  let(:admin_team_user_user) { create(:user, :admin_team_user) }
 
   describe "GET /users/role/:id" do
-    context "when a system user is signed in" do
+    context "when a admin_team_user user is signed in" do
       before do
-        sign_in(system_user)
+        sign_in(admin_team_user_user)
       end
 
       it "renders the edit template" do
@@ -19,7 +19,7 @@ RSpec.describe "User Roles" do
       end
     end
 
-    context "when a non-system user is signed in" do
+    context "when a non-admin_team_user user is signed in" do
       let(:user) { create(:user, :data_viewer) }
 
       before do
@@ -37,9 +37,9 @@ RSpec.describe "User Roles" do
   describe "POST /users/role" do
     let(:params) { { role: "customer_service_adviser" } }
 
-    context "when a system user is signed in" do
+    context "when a admin_team_user user is signed in" do
       before do
-        sign_in(system_user)
+        sign_in(admin_team_user_user)
       end
 
       it "updates the user role, redirects to the user list and assigns the correct whodunnit to the version", :versioning do
@@ -47,7 +47,7 @@ RSpec.describe "User Roles" do
 
         expect(role_change_user.reload.role).to eq(params[:role])
         expect(response).to redirect_to(users_path)
-        expect(role_change_user.reload.versions.last.whodunnit).to eq(system_user.id.to_s)
+        expect(role_change_user.reload.versions.last.whodunnit).to eq(admin_team_user_user.id.to_s)
       end
 
       context "when the params are invalid" do
@@ -71,7 +71,7 @@ RSpec.describe "User Roles" do
       end
     end
 
-    context "when a non-system user is signed in" do
+    context "when a non-admin_team_user user is signed in" do
       let(:user) { create(:user, :data_viewer) }
 
       before do

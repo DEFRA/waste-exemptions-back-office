@@ -4,11 +4,11 @@ require "rails_helper"
 
 RSpec.describe UserGroupRolesService do
   describe ".call" do
-    context "when user role is system" do
-      let(:user) { build(:user, role: "system") }
+    context "when user role is admin_team_user" do
+      let(:user) { build(:user, role: "admin_team_user") }
 
       it "returns list of group roles" do
-        expect(described_class.call(user)).to eq(%w[system])
+        expect(described_class.call(user)).to eq(%w[admin_team_user])
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe UserGroupRolesService do
                                                     finance_user
                                                     developer
                                                     service_manager
-                                                    system
+                                                    admin_team_user
                                                     admin_team_lead
                                                     policy_advisor])
       end
@@ -33,7 +33,7 @@ RSpec.describe UserGroupRolesService do
       it "returns list of group roles" do
         expect(described_class.call(user)).to eq(%w[customer_service_adviser
                                                     data_viewer
-                                                    system
+                                                    admin_team_user
                                                     admin_team_lead])
       end
     end

@@ -14,8 +14,8 @@ RSpec.describe Ability do
     it { expect(subject).to be_able_to(:use_back_office, :all) }
   end
 
-  context "when the user role is system" do
-    let(:user) { build(:user, :system) }
+  context "when the user role is admin_team_user" do
+    let(:user) { build(:user, :admin_team_user) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"

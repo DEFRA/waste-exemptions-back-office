@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe "User Invitations" do
   describe "GET /users/invitation/new" do
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before do
         sign_in(user)
@@ -18,7 +18,7 @@ RSpec.describe "User Invitations" do
       end
     end
 
-    context "when a non-system user is signed in" do
+    context "when a non-admin_team_user user is signed in" do
       let(:user) { create(:user, :data_viewer) }
 
       before do
@@ -40,8 +40,8 @@ RSpec.describe "User Invitations" do
       { user: { email: email, role: role } }
     end
 
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before do
         sign_in(user)
@@ -58,7 +58,7 @@ RSpec.describe "User Invitations" do
       end
     end
 
-    context "when a non-system user is signed in" do
+    context "when a non-admin_team_user user is signed in" do
       let(:user) { create(:user, :data_viewer) }
 
       before do
