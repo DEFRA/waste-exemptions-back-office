@@ -25,7 +25,7 @@ RSpec.describe "Users" do
     end
 
     context "when a non-system user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       before { sign_in(user) }
 
@@ -80,7 +80,7 @@ RSpec.describe "Users" do
     end
 
     context "when a non-system user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       before { sign_in(user) }
 

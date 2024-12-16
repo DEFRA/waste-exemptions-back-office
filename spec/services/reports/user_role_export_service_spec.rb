@@ -6,7 +6,7 @@ module Reports
 
   ALL_ROLES = %w[
     admin_agent
-    data_agent
+    data_viewer
     developer
     system
     service_manager

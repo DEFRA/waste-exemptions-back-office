@@ -17,8 +17,8 @@ FactoryBot.define do
       role { "admin_agent" }
     end
 
-    trait :data_agent do
-      role { "data_agent" }
+    trait :data_viewer do
+      role { "data_viewer" }
     end
 
     trait :developer do

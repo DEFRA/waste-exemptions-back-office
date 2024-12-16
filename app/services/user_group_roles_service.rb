@@ -22,7 +22,7 @@ class UserGroupRolesService
 
   def self.service_manager_roles
     %w[admin_agent
-       data_agent
+       data_viewer
        finance_user
        developer
        service_manager
@@ -33,13 +33,13 @@ class UserGroupRolesService
 
   def self.admin_team_lead_roles
     %w[admin_agent
-       data_agent
+       data_viewer
        system
        admin_team_lead]
   end
 
   def self.policy_adviser_roles
     %w[policy_advisor
-       data_agent]
+       data_viewer]
   end
 end

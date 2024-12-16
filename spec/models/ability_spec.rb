@@ -40,8 +40,8 @@ RSpec.describe Ability do
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
   end
 
-  context "when the user role is data_agent" do
-    let(:user) { build(:user, :data_agent) }
+  context "when the user role is data_viewer" do
+    let(:user) { build(:user, :data_viewer) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can view registrations"
@@ -145,7 +145,7 @@ RSpec.describe Ability do
   end
 
   context "when the user account is inactive" do
-    let(:user) { build(:user, :data_agent, :inactive) }
+    let(:user) { build(:user, :data_viewer, :inactive) }
 
     it "is not able to use the back office" do
       expect(ability).not_to be_able_to(:use_back_office, :all)

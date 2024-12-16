@@ -7,7 +7,7 @@ class User < WasteExemptionsEngine::ApplicationRecord
 
   ROLES = %w[system
              admin_agent
-             data_agent
+             data_viewer
              developer
              service_manager
              admin_team_lead

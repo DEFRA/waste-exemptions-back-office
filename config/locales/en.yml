@@ -22,7 +22,7 @@ en:
         options:
           system: "Waste exemptions administration team user"
           admin_agent: "Customer service adviser"
-          data_agent: "Data viewer"
+          data_viewer: "Data viewer"
           developer: "Developer"
           service_manager: "Service manager"
           admin_team_lead: "Waste exemptions administration team leader"

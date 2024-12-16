@@ -6,7 +6,7 @@ en:
       paragraph_1:
         system: " is currently a waste exemptions administration team user."
         admin_agent: " is currently an customer service adviser."
-        data_agent: " is currently a data viewer."
+        data_viewer: " is currently a data viewer."
         developer: " is currently a developer."
         service_manager: " is currently a service manager."
         admin_team_lead: " is currently an waste exemptions administration team leader."

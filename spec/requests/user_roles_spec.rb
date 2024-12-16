@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "User Roles" do
-  let(:role_change_user) { create(:user, :data_agent) }
+  let(:role_change_user) { create(:user, :data_viewer) }
   let(:system_user) { create(:user, :system) }
 
   describe "GET /users/role/:id" do
@@ -20,7 +20,7 @@ RSpec.describe "User Roles" do
     end
 
     context "when a non-system user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       before do
         sign_in(user)
@@ -56,7 +56,7 @@ RSpec.describe "User Roles" do
         it "does not update the user role and renders the edit template" do
           post "/users/role/#{role_change_user.id}", params: { user: params }
 
-          expect(role_change_user.reload.role).to eq("data_agent")
+          expect(role_change_user.reload.role).to eq("data_viewer")
           expect(response).to render_template(:edit)
         end
       end
@@ -65,14 +65,14 @@ RSpec.describe "User Roles" do
         it "does not update the user role and renders the edit template" do
           post "/users/role/#{role_change_user.id}"
 
-          expect(role_change_user.reload.role).to eq("data_agent")
+          expect(role_change_user.reload.role).to eq("data_viewer")
           expect(response).to render_template(:edit)
         end
       end
     end
 
     context "when a non-system user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       before do
         sign_in(user)

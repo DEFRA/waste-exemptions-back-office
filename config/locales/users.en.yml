@@ -17,7 +17,7 @@ en:
         roles:
           system: waste exemptions administration team user
           admin_agent: customer service adviser
-          data_agent: data viewer
+          data_viewer: data viewer
           developer: developer
           service_manager: service manager
           admin_team_lead: waste exemptions administration team leader

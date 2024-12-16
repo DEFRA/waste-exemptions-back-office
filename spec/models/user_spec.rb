@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe User do
   describe "PaperTrail", :versioning do
-    let(:user) { create(:user, :data_agent) }
+    let(:user) { create(:user, :data_viewer) }
 
     it "has PaperTrail" do
       expect(PaperTrail).to be_enabled
@@ -20,8 +20,8 @@ RSpec.describe User do
 
     it "stores the correct values when it is updated" do
       user.update(role: "admin_agent")
-      user.update(role: "data_agent")
-      expect(user).to have_a_version_with(role: "data_agent")
+      user.update(role: "data_viewer")
+      expect(user).to have_a_version_with(role: "data_viewer")
     end
   end
 
@@ -141,14 +141,14 @@ RSpec.describe User do
 
     context "when the user has a different role" do
       it "returns false" do
-        role = "data_agent"
+        role = "data_viewer"
         expect(user.role_is?(role)).to be(false)
       end
     end
   end
 
   describe "change_role" do
-    let(:user) { create(:user, :data_agent) }
+    let(:user) { create(:user, :data_viewer) }
 
     it "updates the user's role" do
       new_role = "admin_agent"

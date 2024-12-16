@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Analytics" do
-  let(:role) { "data_agent" }
+  let(:role) { "data_viewer" }
   let(:user) { create(:user, role: role) }
 
   before do

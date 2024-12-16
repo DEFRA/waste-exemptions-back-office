@@ -20,7 +20,7 @@ RSpec.describe "Modify Registration Date Forms" do
     before { get modify_expiry_date_form_path(registration.reference) }
 
     context "when the user is not a system user" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       it_behaves_like "not permitted"
     end
@@ -40,7 +40,7 @@ RSpec.describe "Modify Registration Date Forms" do
     before { post modify_expiry_date_path(registration.reference), params: request_body }
 
     context "when the user is not a system user" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       it_behaves_like "not permitted"
     end

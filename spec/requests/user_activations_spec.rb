@@ -32,7 +32,7 @@ RSpec.describe "User Activations" do
     end
 
     context "when a non-system user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       before do
         sign_in(user)

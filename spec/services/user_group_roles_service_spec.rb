@@ -17,7 +17,7 @@ RSpec.describe UserGroupRolesService do
 
       it "returns list of group roles" do
         expect(described_class.call(user)).to eq(%w[admin_agent
-                                                    data_agent
+                                                    data_viewer
                                                     finance_user
                                                     developer
                                                     service_manager
@@ -32,7 +32,7 @@ RSpec.describe UserGroupRolesService do
 
       it "returns list of group roles" do
         expect(described_class.call(user)).to eq(%w[admin_agent
-                                                    data_agent
+                                                    data_viewer
                                                     system
                                                     admin_team_lead])
       end
@@ -43,7 +43,7 @@ RSpec.describe UserGroupRolesService do
 
       it "returns list of group roles" do
         expect(described_class.call(user)).to eq(%w[policy_advisor
-                                                    data_agent])
+                                                    data_viewer])
       end
     end
 

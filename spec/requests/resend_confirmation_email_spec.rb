@@ -14,7 +14,7 @@ RSpec.describe "ResendConfirmationEmail" do
     end
 
     context "when a data agent user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       it "redirects to permission page" do
         get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
