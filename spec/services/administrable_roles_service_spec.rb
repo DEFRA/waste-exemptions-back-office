@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe UserGroupRolesService do
+RSpec.describe AdministrableRolesService do
   describe ".call" do
     context "when user role is admin_team_user" do
       let(:user) { build(:user, role: "admin_team_user") }

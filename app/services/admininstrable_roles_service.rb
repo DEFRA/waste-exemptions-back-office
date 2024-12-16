@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UserGroupRolesService
+class AdministrableRolesService
   def self.call(user)
     case user.role
     when "admin_team_user" # Waste Exemptions Administration Team User
