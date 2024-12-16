@@ -32,12 +32,10 @@
         </p>
       </div>
 
-      <div class="govuk-form-group">
-        <%= f.label :comments, class: "govuk-label govuk-label--m" do %>
-          <%= t(".reason") %>
-        <% end %>
-        <%= f.text_area :comments, class: "govuk-textarea", rows: 5 %>
-      </div>
+      <%= f.govuk_text_area :comments,
+                           label: { text: t(".reason"), size: "m" },
+                           rows: 5,
+                           link_errors: true %>
 
       <div class="govuk-form-group">
         <%= f.submit t(".reverse_button"), class: "govuk-button", "data-module": "govuk-button" %>

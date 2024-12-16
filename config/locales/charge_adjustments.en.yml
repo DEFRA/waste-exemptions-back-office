@@ -1,0 +1,46 @@
+en:
+  charge_adjustments:
+    index:
+      title: "Increase or decrease a charge"
+      heading: "Increase or decrease a charge for %{reference}"
+      legend: "What do you want to do?"
+      increase_label: "Increase the charge"
+      increase_hint: "For example, to recover an underpayment."
+      decrease_label: "Decrease the charge"
+      decrease_hint: "For example, to enable a refund."
+      continue: "Continue"
+    new:
+      title:
+        increase: "Increase the charge for %{reference}"
+        decrease: "Decrease the charge for %{reference}"
+      heading:
+        increase: "Increase the charge for %{reference}"
+        decrease: "Decrease the charge for %{reference}"
+      amount_label: "Amount"
+      amount_hint: "For example 120.50"
+      reason_label: "Reason"
+      submit: "Continue"
+    create:
+      success: "Charge adjustment was successfully recorded"
+    form:
+      errors:
+        reason_missing: "Enter a reason for the adjustment"
+        amount:
+          not_a_number: "Amount must be a number"
+          greater_than: "Amount must be greater than 0"
+          invalid_format: "Enter the amount in the correct format (for example, 120.50)"
+        adjustment_type:
+          blank: "Select whether you want to increase or decrease the charge"
+  activemodel:
+    errors:
+      models:
+        charge_adjustment_form:
+          attributes:
+            adjustment_type:
+              blank: "No adjustment type selected"
+              inclusion: "Select whether you want to increase or decrease the charge"
+            amount:
+              blank: "Enter an amount for the adjustment"
+              greater_than: "Amount must be greater than 0"
+            reason:
+              blank: "Enter a reason for the adjustment"

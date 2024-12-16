@@ -36,7 +36,11 @@ en:
     payment:
       payment_type:
         govpay_payment: Card
-        govpay_payment_moto: Card (MOTO) 
+        govpay_payment_moto: Card (MOTO)
         bank_transfer: BACS
         missing_card_payment: Missing card payment
         other_payment: Other
+    charge_adjustments:
+      adjustment_type:
+        increase: Charge increase
+        decrease: Charge decrease

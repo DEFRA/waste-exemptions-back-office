@@ -20,4 +20,8 @@ class AccountPresenter < BasePresenter
   def sorted_orders
     orders.order(created_at: :desc).map { |order| OrderPresenter.new(order) }
   end
+
+  def charge_adjustments
+    super.order(created_at: :desc).map { |charge_adjustment| ChargeAdjustmentPresenter.new(charge_adjustment) }
+  end
 end
