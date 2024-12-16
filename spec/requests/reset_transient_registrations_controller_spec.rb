@@ -18,7 +18,7 @@ RSpec.describe ResetTransientRegistrationsController do
     end
 
     context "when the user is not a developer" do
-      let(:user) { create(:user, role: :admin_agent) }  # Change role as needed for testing
+      let(:user) { create(:user, role: :customer_service_adviser) }  # Change role as needed for testing
 
       before { sign_in(user) }
 
@@ -60,7 +60,7 @@ RSpec.describe ResetTransientRegistrationsController do
     end
 
     context "when the user is not a developer" do
-      let(:user) { create(:user, role: :admin_agent) }  # Change role as needed for testing
+      let(:user) { create(:user, role: :customer_service_adviser) }  # Change role as needed for testing
 
       before { sign_in(user) }
 

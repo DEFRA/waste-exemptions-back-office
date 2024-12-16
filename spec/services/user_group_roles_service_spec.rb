@@ -16,7 +16,7 @@ RSpec.describe UserGroupRolesService do
       let(:user) { build(:user, role: "service_manager") }
 
       it "returns list of group roles" do
-        expect(described_class.call(user)).to eq(%w[admin_agent
+        expect(described_class.call(user)).to eq(%w[customer_service_adviser
                                                     data_viewer
                                                     finance_user
                                                     developer
@@ -31,7 +31,7 @@ RSpec.describe UserGroupRolesService do
       let(:user) { build(:user, role: "admin_team_lead") }
 
       it "returns list of group roles" do
-        expect(described_class.call(user)).to eq(%w[admin_agent
+        expect(described_class.call(user)).to eq(%w[customer_service_adviser
                                                     data_viewer
                                                     system
                                                     admin_team_lead])

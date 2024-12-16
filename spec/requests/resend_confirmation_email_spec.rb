@@ -25,7 +25,7 @@ RSpec.describe "ResendConfirmationEmail" do
     end
 
     context "when an admin agent user is signed in", :disable_bullet do
-      let(:user) { create(:user, :admin_agent) }
+      let(:user) { create(:user, :customer_service_adviser) }
 
       around do |example|
         # Bullet can't make up its mind about whether or not we should eager-load

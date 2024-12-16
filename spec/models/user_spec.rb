@@ -15,11 +15,11 @@ RSpec.describe User do
     end
 
     it "creates a new version when it is updated" do
-      expect { user.update(role: "admin_agent") }.to change { user.versions.count }.by(1)
+      expect { user.update(role: "customer_service_adviser") }.to change { user.versions.count }.by(1)
     end
 
     it "stores the correct values when it is updated" do
-      user.update(role: "admin_agent")
+      user.update(role: "customer_service_adviser")
       user.update(role: "data_viewer")
       expect(user).to have_a_version_with(role: "data_viewer")
     end
@@ -151,7 +151,7 @@ RSpec.describe User do
     let(:user) { create(:user, :data_viewer) }
 
     it "updates the user's role" do
-      new_role = "admin_agent"
+      new_role = "customer_service_adviser"
       user.change_role(new_role)
 
       expect(user.reload.role).to eq(new_role)

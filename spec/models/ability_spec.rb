@@ -27,8 +27,8 @@ RSpec.describe Ability do
     it_behaves_like "cannot manage charges and bands"
   end
 
-  context "when the user role is admin_agent" do
-    let(:user) { build(:user, :admin_agent) }
+  context "when the user role is customer_service_adviser" do
+    let(:user) { build(:user, :customer_service_adviser) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage registrations"

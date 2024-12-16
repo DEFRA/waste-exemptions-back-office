@@ -35,7 +35,7 @@ RSpec.describe "User Roles" do
   end
 
   describe "POST /users/role" do
-    let(:params) { { role: "admin_agent" } }
+    let(:params) { { role: "customer_service_adviser" } }
 
     context "when a system user is signed in" do
       before do

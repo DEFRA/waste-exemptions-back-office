@@ -13,8 +13,8 @@ FactoryBot.define do
       role { "system" }
     end
 
-    trait :admin_agent do
-      role { "admin_agent" }
+    trait :customer_service_adviser do
+      role { "customer_service_adviser" }
     end
 
     trait :data_viewer do

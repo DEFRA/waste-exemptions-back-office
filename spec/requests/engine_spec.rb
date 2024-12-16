@@ -7,7 +7,7 @@ RSpec.describe "Waste Exemptions Engine" do
     let(:request_path) { "/start" }
 
     context "when a valid user is signed in" do
-      before { sign_in(create(:user, :admin_agent)) }
+      before { sign_in(create(:user, :customer_service_adviser)) }
 
       it "returns a 200 response" do
         get request_path

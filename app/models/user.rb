@@ -6,7 +6,7 @@ class User < WasteExemptionsEngine::ApplicationRecord
   has_paper_trail
 
   ROLES = %w[system
-             admin_agent
+             customer_service_adviser
              data_viewer
              developer
              service_manager

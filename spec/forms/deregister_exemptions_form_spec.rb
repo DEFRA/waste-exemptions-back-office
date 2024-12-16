@@ -5,13 +5,13 @@ require "rails_helper"
 RSpec.describe DeregisterExemptionsForm, type: :model do
   subject(:form) { described_class.new }
 
-  let(:admin_agent_user) { build(:user, :admin_agent) }
+  let(:customer_service_adviser_user) { build(:user, :customer_service_adviser) }
   let(:active_registration_exemption) do
     reg_exemption = build(:registration).registration_exemptions.first
     reg_exemption.state = "active"
     reg_exemption
   end
-  let(:deregistration_service) { DeregistrationService.new(admin_agent_user, active_registration_exemption) }
+  let(:deregistration_service) { DeregistrationService.new(customer_service_adviser_user, active_registration_exemption) }
 
   describe "validations" do
     subject(:validators) { form._validators }

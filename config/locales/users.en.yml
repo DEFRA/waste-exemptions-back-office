@@ -16,7 +16,7 @@ en:
           actions: Actions
         roles:
           system: waste exemptions administration team user
-          admin_agent: customer service adviser
+          customer_service_adviser: customer service adviser
           data_viewer: data viewer
           developer: developer
           service_manager: service manager

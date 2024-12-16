@@ -5,8 +5,8 @@
       "role" : "system"
     },
     {
-      "email" : "admin_agent@wex.gov.uk",
-      "role" : "admin_agent"
+      "email" : "customer_service_adviser@wex.gov.uk",
+      "role" : "customer_service_adviser"
     },
     {
       "email" : "data_viewer@wex.gov.uk",

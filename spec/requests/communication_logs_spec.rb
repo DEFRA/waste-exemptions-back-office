@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Communication Logs" do
   let(:registration) { create(:registration) }
-  let(:user) { create(:user, role: :admin_agent) }
+  let(:user) { create(:user, role: :customer_service_adviser) }
 
   before do
     sign_in(user)

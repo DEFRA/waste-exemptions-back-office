@@ -4,11 +4,13 @@ require "csv"
 
 namespace :one_off do
   # https://eaflood.atlassian.net/browse/RUBY-3448
+  # https://eaflood.atlassian.net/browse/RUBY-3449
   desc "Change user roles"
   task change_user_roles: :environment do
     # role to change from => role to change to
     role_changes = {
-      "data_agent" => "data_viewer"
+      "data_agent" => "data_viewer",
+      "admin_agent" => "customer_service_adviser"
     }
 
     role_changes.each do |role_from, role_to|

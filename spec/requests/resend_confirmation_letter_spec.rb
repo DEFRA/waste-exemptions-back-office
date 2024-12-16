@@ -22,7 +22,7 @@ RSpec.describe "ResendConfirmationLetter" do
     end
 
     context "when an admin agent user is signed in" do
-      let(:user) { create(:user, :admin_agent) }
+      let(:user) { create(:user, :customer_service_adviser) }
 
       it "returns a 200 code and includes the correct data" do
         get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
@@ -50,7 +50,7 @@ RSpec.describe "ResendConfirmationLetter" do
     end
 
     context "when an admin agent user is signed in" do
-      let(:user) { create(:user, :admin_agent) }
+      let(:user) { create(:user, :customer_service_adviser) }
 
       it "return a 302 redirect code" do
         VCR.use_cassette("notify_confirmation_letter") do

@@ -21,7 +21,7 @@ en:
         legend: "Select a role:"
         options:
           system: "Waste exemptions administration team user"
-          admin_agent: "Customer service adviser"
+          customer_service_adviser: "Customer service adviser"
           data_viewer: "Data viewer"
           developer: "Developer"
           service_manager: "Service manager"

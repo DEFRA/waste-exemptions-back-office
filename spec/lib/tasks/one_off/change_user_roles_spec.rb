@@ -24,4 +24,13 @@ RSpec.describe "one_off:change_user_roles", type: :rake do
       expect { run_rake_task }.to change { user.reload.role }.to("data_viewer")
     end
   end
+
+  context "when the user role is admin_agent" do
+    it "changes the role name to customer_service_adviser" do
+      user.role = "admin_agent"
+      user.save(validate: false)
+
+      expect { run_rake_task }.to change { user.reload.role }.to("customer_service_adviser")
+    end
+  end
 end
