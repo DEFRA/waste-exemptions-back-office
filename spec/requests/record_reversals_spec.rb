@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Record Reversal Forms" do
-  let(:user) { create(:user, :admin_agent) }
+  let(:user) { create(:user, :developer) }
   let(:registration) { create(:registration) }
   let(:payment) do
     create(:payment,
@@ -20,6 +20,11 @@ RSpec.describe "Record Reversal Forms" do
     sign_in(user)
   end
 
+  shared_examples "not permitted" do
+    it { expect(response.code).to eq(WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE.to_s) }
+    it { expect(response.location).to include("/pages/permission") }
+  end
+
   describe "GET /registrations/:reference/record-reversal" do
     context "when the user is signed in" do
       it "renders the index template and returns a 200 status" do
@@ -33,6 +38,16 @@ RSpec.describe "Record Reversal Forms" do
         get registration_record_reversals_path(registration_reference: registration.reference)
 
         expect(response.body).to include("£30")
+      end
+
+      context "when the user does not have permission to access the page" do
+        let(:user) { create(:user, :data_agent) }
+
+        before do
+          get registration_record_reversals_path(registration_reference: registration.reference)
+        end
+
+        it_behaves_like "not permitted"
       end
     end
 
@@ -60,6 +75,16 @@ RSpec.describe "Record Reversal Forms" do
         get new_registration_record_reversal_path(registration_reference: registration.reference, payment_id: payment.id)
 
         expect(response.body).to include("£30")
+      end
+
+      context "when the user does not have permission to access the page" do
+        let(:user) { create(:user, :data_agent) }
+
+        before do
+          get new_registration_record_reversal_path(registration_reference: registration.reference, payment_id: payment.id)
+        end
+
+        it_behaves_like "not permitted"
       end
     end
 
@@ -138,6 +163,16 @@ RSpec.describe "Record Reversal Forms" do
             post registration_record_reversals_path(registration_reference: registration.reference), params: invalid_params
           end.not_to change(WasteExemptionsEngine::Payment, :count)
         end
+      end
+
+      context "when the user does not have permission to access the page" do
+        let(:user) { create(:user, :data_agent) }
+
+        before do
+          post registration_record_reversals_path(registration_reference: registration.reference), params: valid_params
+        end
+
+        it_behaves_like "not permitted"
       end
     end
 
