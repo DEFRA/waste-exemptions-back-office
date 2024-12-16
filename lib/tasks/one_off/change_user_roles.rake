@@ -5,6 +5,7 @@ require "csv"
 namespace :one_off do
   # https://eaflood.atlassian.net/browse/RUBY-3448
   # https://eaflood.atlassian.net/browse/RUBY-3449
+  # https://eaflood.atlassian.net/browse/RUBY-3389
   desc "Change user roles"
   task change_user_roles: :environment do
     # role to change from => role to change to
