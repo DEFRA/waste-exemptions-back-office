@@ -20,7 +20,7 @@ en:
       roles:
         legend: "Select a role:"
         options:
-          system: "Waste exemptions administration team user"
+          admin_team_user: "Waste exemptions administration team user"
           customer_service_adviser: "Customer service adviser"
           data_viewer: "Data viewer"
           developer: "Developer"

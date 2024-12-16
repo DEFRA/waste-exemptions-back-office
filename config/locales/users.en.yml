@@ -15,7 +15,7 @@ en:
           status: Status
           actions: Actions
         roles:
-          system: waste exemptions administration team user
+          admin_team_user: waste exemptions administration team user
           customer_service_adviser: customer service adviser
           data_viewer: data viewer
           developer: developer

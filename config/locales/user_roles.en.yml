@@ -4,7 +4,7 @@ en:
       title: "Change a user's role"
       heading: "Change a user's role"
       paragraph_1:
-        system: " is currently a waste exemptions administration team user."
+        admin_team_user: " is currently a waste exemptions administration team user."
         customer_service_adviser: " is currently an customer service adviser."
         data_viewer: " is currently a data viewer."
         developer: " is currently a developer."
