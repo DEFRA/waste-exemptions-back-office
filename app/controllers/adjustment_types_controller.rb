@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AdjustmentTypesController < ApplicationController
+  before_action :authorize
+
   def new
     find_resource(params[:registration_reference])
     @adjustment_type_form = AdjustmentTypeForm.new
@@ -23,6 +25,11 @@ class AdjustmentTypesController < ApplicationController
   end
 
   private
+
+  def authorize
+    resource = find_resource(params[:registration_reference])
+    authorize! :add_charge_adjustment, resource
+  end
 
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)

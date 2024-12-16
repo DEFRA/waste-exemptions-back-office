@@ -3,11 +3,16 @@
 require "rails_helper"
 
 RSpec.describe "Adjustment Types" do
-  let(:user) { create(:user, :admin_agent) }
+  let(:user) { create(:user, :developer) }
   let(:registration) { create(:registration) }
 
   before do
     sign_in(user)
+  end
+
+  shared_examples "not permitted" do
+    it { expect(response.code).to eq(WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE.to_s) }
+    it { expect(response.location).to include("/pages/permission") }
   end
 
   describe "GET /registrations/:reference/adjustment_types/new" do
@@ -17,6 +22,16 @@ RSpec.describe "Adjustment Types" do
 
         expect(response).to render_template(:new)
         expect(response).to have_http_status(:ok)
+      end
+
+      context "when the user does not have permission to access the page" do
+        let(:user) { create(:user, :data_agent) }
+
+        before do
+          get new_registration_adjustment_type_path(registration_reference: registration.reference)
+        end
+
+        it_behaves_like "not permitted"
       end
     end
 
@@ -68,6 +83,16 @@ RSpec.describe "Adjustment Types" do
 
           expect(response).to render_template(:new)
         end
+      end
+
+      context "when the user does not have permission to access the page" do
+        let(:user) { create(:user, :data_agent) }
+
+        before do
+          post registration_adjustment_types_path(registration_reference: registration.reference), params: valid_params
+        end
+
+        it_behaves_like "not permitted"
       end
     end
 

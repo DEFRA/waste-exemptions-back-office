@@ -3,11 +3,16 @@
 require "rails_helper"
 
 RSpec.describe "Charge Adjustments" do
-  let(:user) { create(:user, :admin_agent) }
+  let(:user) { create(:user, :developer) }
   let(:registration) { create(:registration) }
 
   before do
     sign_in(user)
+  end
+
+  shared_examples "not permitted" do
+    it { expect(response.code).to eq(WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE.to_s) }
+    it { expect(response.location).to include("/pages/permission") }
   end
 
   describe "GET /registrations/:reference/charge-adjustment/new" do
@@ -40,6 +45,19 @@ RSpec.describe "Charge Adjustments" do
         )
 
         expect(response).to redirect_to(new_registration_adjustment_type_path)
+      end
+
+      context "when the user does not have permission to access the page" do
+        let(:user) { create(:user, :data_agent) }
+
+        before do
+          get new_registration_charge_adjustment_path(
+            registration_reference: registration.reference,
+            adjustment_type: "increase"
+          )
+        end
+
+        it_behaves_like "not permitted"
       end
     end
 
@@ -114,6 +132,16 @@ RSpec.describe "Charge Adjustments" do
             post registration_charge_adjustments_path(registration_reference: registration.reference), params: invalid_params
           end.not_to change(WasteExemptionsEngine::ChargeAdjustment, :count)
         end
+      end
+
+      context "when the user does not have permission to access the page" do
+        let(:user) { create(:user, :data_agent) }
+
+        before do
+          post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
+        end
+
+        it_behaves_like "not permitted"
       end
     end
 
