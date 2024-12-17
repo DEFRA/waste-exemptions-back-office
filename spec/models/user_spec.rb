@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe User do
   describe "PaperTrail", :versioning do
-    let(:user) { create(:user, :data_agent) }
+    let(:user) { create(:user, :data_viewer) }
 
     it "has PaperTrail" do
       expect(PaperTrail).to be_enabled
@@ -15,19 +15,19 @@ RSpec.describe User do
     end
 
     it "creates a new version when it is updated" do
-      expect { user.update(role: "admin_agent") }.to change { user.versions.count }.by(1)
+      expect { user.update(role: "customer_service_adviser") }.to change { user.versions.count }.by(1)
     end
 
     it "stores the correct values when it is updated" do
-      user.update(role: "admin_agent")
-      user.update(role: "super_agent")
-      expect(user).to have_a_version_with(role: "admin_agent")
+      user.update(role: "customer_service_adviser")
+      user.update(role: "data_viewer")
+      expect(user).to have_a_version_with(role: "data_viewer")
     end
   end
 
   describe "#role" do
     context "when the role is in the allowed list" do
-      let(:user) { build(:user, role: "system") }
+      let(:user) { build(:user, role: "admin_team_user") }
 
       it "is valid" do
         expect(user).to be_valid
@@ -130,7 +130,7 @@ RSpec.describe User do
   end
 
   describe "role_is?" do
-    let(:user) { build(:user, role: "system") }
+    let(:user) { build(:user, role: "admin_team_user") }
 
     context "when the user has the same role" do
       it "returns true" do
@@ -141,17 +141,17 @@ RSpec.describe User do
 
     context "when the user has a different role" do
       it "returns false" do
-        role = "data_agent"
+        role = "data_viewer"
         expect(user.role_is?(role)).to be(false)
       end
     end
   end
 
   describe "change_role" do
-    let(:user) { create(:user, :data_agent) }
+    let(:user) { create(:user, :data_viewer) }
 
     it "updates the user's role" do
-      new_role = "admin_agent"
+      new_role = "customer_service_adviser"
       user.change_role(new_role)
 
       expect(user.reload.role).to eq(new_role)

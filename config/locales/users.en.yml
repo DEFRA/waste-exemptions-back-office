@@ -15,11 +15,14 @@ en:
           status: Status
           actions: Actions
         roles:
-          system: system user
-          super_agent: super agent
-          admin_agent: admin agent
-          data_agent: data agent
+          admin_team_user: waste exemptions administration team user
+          customer_service_adviser: customer service adviser
+          data_viewer: data viewer
           developer: developer
+          service_manager: service manager
+          admin_team_lead: waste exemptions administration team leader
+          policy_adviser: waste exemptions policy adviser
+          finance_user: SSCL finance user
         statuses:
           active: active
           deactivated: deactivated

@@ -7,8 +7,8 @@ RSpec.describe "User Activations" do
   let(:inactive_user) { create(:user, :inactive) }
 
   describe "GET /users/activate/:id" do
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before do
         sign_in(user)
@@ -31,8 +31,8 @@ RSpec.describe "User Activations" do
       end
     end
 
-    context "when a non-system user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+    context "when a non-admin_team_user user is signed in" do
+      let(:user) { create(:user, :data_viewer) }
 
       before do
         sign_in(user)
@@ -47,8 +47,8 @@ RSpec.describe "User Activations" do
   end
 
   describe "GET /users/deactivate/:id" do
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before do
         sign_in(user)
@@ -73,8 +73,8 @@ RSpec.describe "User Activations" do
   end
 
   describe "POST /users/activate" do
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before do
         sign_in(user)
@@ -100,8 +100,8 @@ RSpec.describe "User Activations" do
   end
 
   describe "POST /users/deactivate" do
-    context "when a system user is signed in" do
-      let(:user) { create(:user, :system) }
+    context "when a admin_team_user user is signed in" do
+      let(:user) { create(:user, :admin_team_user) }
 
       before do
         sign_in(user)

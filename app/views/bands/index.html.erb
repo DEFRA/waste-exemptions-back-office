@@ -25,10 +25,10 @@
                 <%= band.sequence %>
               </td>
               <td class="govuk-table__cell">
-                <%= display_pence_as_pounds_and_cents(band.initial_compliance_charge.charge_amount, hide_pence_if_zero: false) %>
+                <%= display_pence_as_pounds_and_pence(pence: band.initial_compliance_charge.charge_amount) %>
               </td>
               <td class="govuk-table__cell">
-                <%= display_pence_as_pounds_and_cents(band.additional_compliance_charge.charge_amount, hide_pence_if_zero: false) %>
+                <%= display_pence_as_pounds_and_pence(pence: band.additional_compliance_charge.charge_amount) %>
               </td>
               <td class="govuk-table__cell">
                 <%= link_to t('.band_list.actions.delete.link_text'), destroy_confirmation_band_path(band) %>
@@ -66,7 +66,7 @@
             <td class="govuk-table__cell">
             </td>
             <td class="govuk-table__cell">
-              <%= display_pence_as_pounds_and_cents(@registration_charge.charge_amount, hide_pence_if_zero: false) %>
+              <%= display_pence_as_pounds_and_pence(pence: @registration_charge.charge_amount) %>
             </td>
             <td class="govuk-table__cell">
               <%= link_to t('.other_charges.actions.edit.link_text'), edit_charge_path(@registration_charge) %>
@@ -79,7 +79,7 @@
                 <%= bucket.name %>
               </td>
               <td class="govuk-table__cell">
-                <%= display_pence_as_pounds_and_cents(bucket.initial_compliance_charge.charge_amount, hide_pence_if_zero: false) %>
+                <%= display_pence_as_pounds_and_pence(pence: bucket.initial_compliance_charge.charge_amount) %>
               </td>
               <td class="govuk-table__cell">
               </td>

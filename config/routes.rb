@@ -33,9 +33,31 @@ Rails.application.routes.draw do
   get "/data-exports/:id", to: "bulk_exports#download", as: :bulk_export_download
 
   # Registration management
-  resources :registrations, only: :show, param: :reference do
+  resources :registrations, only: %i[show index], param: :reference do
     get "certificate", to: "certificates#show", as: :certificate
     get "communication_logs", to: "communication_logs#index", as: :communication_logs
+    get "payments", to: "payments#new", as: :add_payment_form
+    post "payments", to: "payments#create", as: :add_payment
+    get "payment_details", to: "payment_details#index", as: :payment_details
+
+    resources :record_refunds,
+              only: %i[index new create],
+              path: "record-refund",
+              path_names: { new: ":payment_id/new" }
+
+    resources :record_reversals,
+              only: %i[index new create],
+              path: "record-reversal",
+              path_names: { new: ":payment_id/new" }
+
+    resources :adjustment_types,
+              only: %i[new create],
+              path: "adjustment-type"
+
+    resources :charge_adjustments,
+              only: %i[new create],
+              path: "charge-adjustment"
+
   end
 
   resources :deregistrations, only: :show, param: :reference

@@ -1,0 +1,30 @@
+en:
+  payments:
+    new:
+      title: "Record a payment"
+      heading: "Record a payment for %{registration_reference}"
+      submit_button: "Continue"
+      fields:
+        payment_type: "Payment type"
+        payment_type_labels:
+          govpay_payment: "Missing card payment"
+          bank_transfer: "Bank transfer"
+          other: "Other"
+
+        payment_reference: "Payment reference"
+        payment_amount: "Enter an amount"
+        comments: "Comments (optional)"
+        comments_hint: "Enter details of the payment received for this registration"
+        payment_date: "Date received"
+        payment_date_day: "Day"
+        payment_date_month: "Month"
+        payment_date_year: "Year"
+    
+    errors:
+      date_invalid: "You must enter a payment received date"
+      date_not_current_or_past: "You must enter a valid payment received date"
+      payment_type_invalid: "You must select a payment type"
+      payment_amount_blank: "You must enter an amount"
+      payment_amount_invalid: "You must enter a valid amount"
+      payment_reference_blank: "You must enter a payment reference"
+      comments_too_long: "Your comment must be no more than 500 characters"

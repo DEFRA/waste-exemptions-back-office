@@ -1,4 +1,4 @@
-<div class="govuk-form-group <%= "govuk-form-group--error" if form.errors[:premises].any? %>">
+<div class="govuk-form-group <%= "govuk-form-group--error" if form.errors[:charge_amount_in_pounds].any? %>">
   <% if form.errors[:charge_amount_in_pounds].any? %>
     <span class="govuk-error-message" id="<%= prefix %>-field-error"><%= form.errors[:charge_amount_in_pounds].join(", ") %></span>
   <% end %>

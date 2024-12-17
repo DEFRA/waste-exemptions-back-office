@@ -1,0 +1,33 @@
+# frozen_string_literal: true
+
+class RecordReversalForm
+  include ActiveModel::Model
+
+  attr_accessor :comments, :payment_id, :user
+
+  validates :payment_id, presence: true
+  validate :reason_present_in_comments
+
+  def submit(params)
+    self.comments = params[:comments]
+    self.payment_id = params[:payment_id]
+
+    return false unless valid?
+
+    payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
+
+    ReversePaymentService.run(
+      comments: comments,
+      payment: payment,
+      user: user
+    )
+  end
+
+  private
+
+  def reason_present_in_comments
+    return if comments.present?
+
+    errors.add(:comments, I18n.t(".record_reversals.create.form.errors.reason_missing"))
+  end
+end

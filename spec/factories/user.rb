@@ -6,27 +6,39 @@ FactoryBot.define do
       "user#{n}@example.com"
     end
 
-    role { "system" }
+    role { "admin_team_user" }
     password { "Secret123" }
 
-    trait :system do
-      role { "system" }
+    trait :admin_team_user do
+      role { "admin_team_user" }
     end
 
-    trait :super_agent do
-      role { "super_agent" }
+    trait :customer_service_adviser do
+      role { "customer_service_adviser" }
     end
 
-    trait :admin_agent do
-      role { "admin_agent" }
-    end
-
-    trait :data_agent do
-      role { "data_agent" }
+    trait :data_viewer do
+      role { "data_viewer" }
     end
 
     trait :developer do
       role { "developer" }
+    end
+
+    trait :service_manager do
+      role { "service_manager" }
+    end
+
+    trait :admin_team_lead do
+      role { "admin_team_lead" }
+    end
+
+    trait :policy_adviser do
+      role { "policy_adviser" }
+    end
+
+    trait :finance_user do
+      role { "finance_user" }
     end
 
     trait :inactive do

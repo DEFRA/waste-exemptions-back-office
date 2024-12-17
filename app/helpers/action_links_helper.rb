@@ -109,4 +109,19 @@ module ActionLinksHelper
   def display_reset_transient_registrations_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:reset_transient_registrations, resource)
   end
+
+  def display_payment_details_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
+  end
+
+  def can_display_refund_link?(resource)
+    resource.account.overpaid?
+  end
+
+  def can_display_reversal_link?(resource)
+    resource
+      .account
+      .payments
+      .reverseable.any?
+  end
 end

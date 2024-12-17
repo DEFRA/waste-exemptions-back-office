@@ -21,7 +21,7 @@ RSpec.describe "Charges" do
     end
 
     context "when user without permission is signed in" do
-      let(:non_permitted_user) { create(:user, :data_agent) }
+      let(:non_permitted_user) { create(:user, :data_viewer) }
 
       before do
         sign_in(non_permitted_user)
@@ -67,7 +67,7 @@ RSpec.describe "Charges" do
     end
 
     context "when a non-permitted user is signed in" do
-      let(:non_permitted_user) { create(:user, :data_agent) }
+      let(:non_permitted_user) { create(:user, :data_viewer) }
 
       before do
         sign_in(non_permitted_user)

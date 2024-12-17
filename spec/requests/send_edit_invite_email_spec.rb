@@ -13,7 +13,7 @@ RSpec.describe "sendEditInviteEmails" do
     before { sign_in(user) if defined?(user) }
 
     context "when a valid user is signed in" do
-      let(:user) { create(:user, :admin_agent) }
+      let(:user) { create(:user, :customer_service_adviser) }
 
       context "when the service executes successfully" do
         before do
@@ -76,7 +76,7 @@ RSpec.describe "sendEditInviteEmails" do
     end
 
     context "when a data agent user is signed in" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       it "redirects to permission page" do
         get request_path, params: {}, headers: { "HTTP_REFERER" => referer }
