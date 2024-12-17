@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Modify Registration Date Forms" do
   let(:form) { ModifyExpiryDateForm.new }
-  let(:user) { create(:user, :system) }
+  let(:user) { create(:user, :admin_team_user) }
   let(:registration) { create(:registration) }
   let(:original_registration_date) { registration.registration_exemptions.first.expires_on }
 
@@ -19,14 +19,14 @@ RSpec.describe "Modify Registration Date Forms" do
 
     before { get modify_expiry_date_form_path(registration.reference) }
 
-    context "when the user is not a system user" do
-      let(:user) { create(:user, :data_agent) }
+    context "when the user is not a admin_team_user user" do
+      let(:user) { create(:user, :data_viewer) }
 
       it_behaves_like "not permitted"
     end
 
-    context "when the user is a system user" do
-      let(:user) { create(:user, :system) }
+    context "when the user is a admin_team_user user" do
+      let(:user) { create(:user, :admin_team_user) }
 
       it { expect(response).to have_http_status(:ok) }
       it { expect(response).to render_template("modify_expiry_date/new") }
@@ -39,14 +39,14 @@ RSpec.describe "Modify Registration Date Forms" do
 
     before { post modify_expiry_date_path(registration.reference), params: request_body }
 
-    context "when the user is not a system user" do
-      let(:user) { create(:user, :data_agent) }
+    context "when the user is not a admin_team_user user" do
+      let(:user) { create(:user, :data_viewer) }
 
       it_behaves_like "not permitted"
     end
 
-    context "when the user is a system user" do
-      let(:user) { create(:user, :system) }
+    context "when the user is a admin_team_user user" do
+      let(:user) { create(:user, :admin_team_user) }
 
       context "when the form is not valid" do
         let(:request_body) do

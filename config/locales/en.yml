@@ -20,11 +20,14 @@ en:
       roles:
         legend: "Select a role:"
         options:
-          system: "System user"
-          admin_agent: "Admin agent"
-          data_agent: "Data agent"
+          admin_team_user: "Waste exemptions administration team user"
+          customer_service_adviser: "Customer service adviser"
+          data_viewer: "Data viewer"
           developer: "Developer"
           service_manager: "Service manager"
+          admin_team_lead: "Waste exemptions administration team leader"
+          policy_adviser: "Waste exemptions policy adviser"
+          finance_user: "SSCL finance user"
 
     charge:
       initial_compliance_charge: "Initial compliance charge"

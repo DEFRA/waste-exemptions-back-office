@@ -41,7 +41,7 @@ RSpec.describe "Record Reversal Forms" do
       end
 
       context "when the user does not have permission to access the page" do
-        let(:user) { create(:user, :data_agent) }
+        let(:user) { create(:user, :data_viewer) }
 
         before do
           get registration_record_reversals_path(registration_reference: registration.reference)
@@ -78,7 +78,7 @@ RSpec.describe "Record Reversal Forms" do
       end
 
       context "when the user does not have permission to access the page" do
-        let(:user) { create(:user, :data_agent) }
+        let(:user) { create(:user, :data_viewer) }
 
         before do
           get new_registration_record_reversal_path(registration_reference: registration.reference, payment_id: payment.id)
@@ -166,7 +166,7 @@ RSpec.describe "Record Reversal Forms" do
       end
 
       context "when the user does not have permission to access the page" do
-        let(:user) { create(:user, :data_agent) }
+        let(:user) { create(:user, :data_viewer) }
 
         before do
           post registration_record_reversals_path(registration_reference: registration.reference), params: valid_params

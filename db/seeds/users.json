@@ -1,16 +1,16 @@
 {
   "users" : [
     {
-      "email" : "system_user@wex.gov.uk",
-      "role" : "system"
+      "email" : "admin_team_user_user@wex.gov.uk",
+      "role" : "admin_team_user"
     },
     {
-      "email" : "admin_agent@wex.gov.uk",
-      "role" : "admin_agent"
+      "email" : "customer_service_adviser@wex.gov.uk",
+      "role" : "customer_service_adviser"
     },
     {
-      "email" : "data_agent@wex.gov.uk",
-      "role" : "data_agent"
+      "email" : "data_viewer@wex.gov.uk",
+      "role" : "data_viewer"
     },
     {
       "email" : "developer@wex.gov.uk",
@@ -19,6 +19,18 @@
     {
       "email" : "service_manager@wex.gov.uk",
       "role" : "service_manager"
+    },
+    {
+      "email" : "admin_team_lead@wex.gov.uk",
+      "role" : "admin_team_lead"
+    },
+    {
+      "email" : "policy_adviser@wex.gov.uk",
+      "role" : "policy_adviser"
+    },
+    {
+      "email" : "finance_user@wex.gov.uk",
+      "role" : "finance_user"
     }
   ]
 }

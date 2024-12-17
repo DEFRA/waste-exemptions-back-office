@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe UserMailer do
   let(:token) { "abcde12345" }
-  let(:user) { build(:user, :system, email: "grace.hopper@example.com", invitation_token: token, invitation_created_at: Time.zone.now) }
+  let(:user) { build(:user, :admin_team_user, email: "grace.hopper@example.com", invitation_token: token, invitation_created_at: Time.zone.now) }
 
   describe "invitation_instructions" do
     let(:mail) { described_class.invitation_instructions(user, token) }

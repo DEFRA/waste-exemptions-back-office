@@ -41,7 +41,7 @@ RSpec.describe "Add Payment Forms" do
     before { get registration_add_payment_form_path(registration.reference) }
 
     context "when the user does not have permission to access the page" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       it_behaves_like "not permitted"
     end
@@ -70,7 +70,7 @@ RSpec.describe "Add Payment Forms" do
     let(:request_body) { { add_payment_form: add_payment_form } }
 
     context "when the user does not have permission to access the page" do
-      let(:user) { create(:user, :data_agent) }
+      let(:user) { create(:user, :data_viewer) }
 
       before do
         post registration_add_payment_form_path(registration.reference), params: request_body

@@ -3,14 +3,14 @@
 require "rails_helper"
 
 RSpec.describe DeregistrationService do
-  let(:admin_agent_user) { build(:user, :admin_agent) }
-  let(:data_agent_user) { build(:user, :data_agent) }
+  let(:customer_service_adviser_user) { build(:user, :customer_service_adviser) }
+  let(:data_viewer_user) { build(:user, :data_viewer) }
   let(:deregistration_message) { "This resource is no longer relevant." }
 
   describe "#deregister!" do
     context "when the resource is a Registration" do
       context "when the registration is active" do
-        subject(:dereg_service) { described_class.new(admin_agent_user, registration) }
+        subject(:dereg_service) { described_class.new(customer_service_adviser_user, registration) }
 
         let(:registration) do
           registration = create(:registration)
@@ -59,13 +59,13 @@ RSpec.describe DeregistrationService do
               dereg_service.deregister!(:revoke, deregistration_message)
               registration.registration_exemptions.each do |re|
                 expect(re.versions.size).to eq(1)
-                expect(re.versions.first.whodunnit).to eq(admin_agent_user.email)
+                expect(re.versions.first.whodunnit).to eq(customer_service_adviser_user.email)
               end
             end
           end
 
           context "when only some of its registration_exemptions are active" do
-            subject(:dereg_service) { described_class.new(admin_agent_user, registration) }
+            subject(:dereg_service) { described_class.new(customer_service_adviser_user, registration) }
 
             let(:ceased_message) { "This exemption is ceased!" }
             let(:registration) do
@@ -145,7 +145,7 @@ RSpec.describe DeregistrationService do
         end
 
         context "when the user has insufficient permissions" do
-          subject(:dereg_service) { described_class.new(data_agent_user, registration) }
+          subject(:dereg_service) { described_class.new(data_viewer_user, registration) }
 
           it "does not change the state of the registration or any of its registration_exemptions" do
             expect { dereg_service.deregister!(:revoke, deregistration_message) }
@@ -156,7 +156,7 @@ RSpec.describe DeregistrationService do
       end
 
       context "when the registration is not active" do
-        subject(:dereg_service) { described_class.new(admin_agent_user, registration) }
+        subject(:dereg_service) { described_class.new(customer_service_adviser_user, registration) }
 
         let(:registration) do
           registration = create(:registration)
@@ -173,7 +173,7 @@ RSpec.describe DeregistrationService do
         end
 
         context "when the user has insufficient permissions" do
-          subject(:dereg_service) { described_class.new(data_agent_user, registration) }
+          subject(:dereg_service) { described_class.new(data_viewer_user, registration) }
 
           it "does not change the state of the registration or any of its registration_exemptions" do
             expect { dereg_service.deregister!(:revoke, deregistration_message) }
@@ -207,7 +207,7 @@ RSpec.describe DeregistrationService do
 
       context "when the registration_exemption is active" do
         context "when the user has sufficient permissions" do
-          subject(:dereg_service) { described_class.new(admin_agent_user, active_registration_exemption) }
+          subject(:dereg_service) { described_class.new(customer_service_adviser_user, active_registration_exemption) }
 
           %i[revoke cease].each do |allowed_state|
             context "when the new state is '#{allowed_state}'" do
@@ -243,7 +243,7 @@ RSpec.describe DeregistrationService do
           end
 
           context "when it is the last registration_exemption to become inactive for the registration" do
-            subject(:dereg_service) { described_class.new(admin_agent_user, last_active_registration_exemption) }
+            subject(:dereg_service) { described_class.new(customer_service_adviser_user, last_active_registration_exemption) }
 
             it "results in a change in the state for the registration" do
               expect(last_active_registration_exemption.registration.state).to eq("active")
@@ -255,7 +255,7 @@ RSpec.describe DeregistrationService do
         end
 
         context "when the user has insufficient permissions" do
-          subject(:dereg_service) { described_class.new(data_agent_user, active_registration_exemption) }
+          subject(:dereg_service) { described_class.new(data_viewer_user, active_registration_exemption) }
 
           it "does not change the registration_exemption state" do
             expect { dereg_service.deregister!(:revoke, deregistration_message) }
@@ -267,7 +267,7 @@ RSpec.describe DeregistrationService do
 
       context "when the registration_exemption is inactive" do
         context "when the user has sufficient permissions" do
-          subject(:dereg_service) { described_class.new(admin_agent_user, inactive_registration_exemption) }
+          subject(:dereg_service) { described_class.new(customer_service_adviser_user, inactive_registration_exemption) }
 
           it "does not change the registration_exemption state" do
             expect { dereg_service.deregister!(:revoke, deregistration_message) }
@@ -277,7 +277,7 @@ RSpec.describe DeregistrationService do
         end
 
         context "when the user has insufficient permissions" do
-          subject(:dereg_service) { described_class.new(data_agent_user, inactive_registration_exemption) }
+          subject(:dereg_service) { described_class.new(data_viewer_user, inactive_registration_exemption) }
 
           it "does not change the registration_exemption state" do
             expect { dereg_service.deregister!(:revoke, deregistration_message) }

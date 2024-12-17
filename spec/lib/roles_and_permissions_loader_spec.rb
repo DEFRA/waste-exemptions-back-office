@@ -51,7 +51,7 @@ RSpec.describe RolesAndPermissionsLoader do
 
     it "populates the roles and permissions in the Ability class" do
       expect(Ability::ROLE_PERMISSIONS.keys.length).to be_zero
-      expect { run_loader }.to change { Ability::ROLE_PERMISSIONS.keys.length }.from(0).to(5)
+      expect { run_loader }.to change { Ability::ROLE_PERMISSIONS.keys.length }.from(0).to(8)
     end
   end
 end

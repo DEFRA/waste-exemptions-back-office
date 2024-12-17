@@ -5,11 +5,14 @@ require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptio
 class User < WasteExemptionsEngine::ApplicationRecord
   has_paper_trail
 
-  ROLES = %w[system
-             admin_agent
-             data_agent
+  ROLES = %w[admin_team_user
+             customer_service_adviser
+             data_viewer
              developer
-             service_manager].freeze
+             service_manager
+             admin_team_lead
+             policy_adviser
+             finance_user].freeze
 
   def role_is?(target_role)
     role == target_role.to_s

@@ -5,11 +5,14 @@ require "rails_helper"
 module Reports
 
   ALL_ROLES = %w[
-    admin_agent
-    data_agent
+    customer_service_adviser
+    data_viewer
     developer
-    system
+    admin_team_user
     service_manager
+    admin_team_lead
+    policy_adviser
+    finance_user
   ].freeze
 
   RSpec.describe UserRoleExportService do
@@ -28,7 +31,7 @@ module Reports
 
       before do
         Reports::ALL_ROLES.each { |role| create(:user, role) }
-        create(:user, :admin_agent, :inactive, last_sign_in_at: nil)
+        create(:user, :customer_service_adviser, :inactive, last_sign_in_at: nil)
       end
 
       def row_for_user(user)
@@ -52,13 +55,13 @@ module Reports
       end
 
       context "with a user who has not yet logged in" do
-        let(:not_logged_in_user) { create(:user, :admin_agent, last_sign_in_at: nil) }
+        let(:not_logged_in_user) { create(:user, :customer_service_adviser, last_sign_in_at: nil) }
 
         it { expect(row_for_user(not_logged_in_user).split(",")[last_sign_in_column_index]).to be_nil }
       end
 
       context "with a user who has logged in" do
-        let(:logged_in_user) { create(:user, :admin_agent, last_sign_in_at: last_sign_in_time) }
+        let(:logged_in_user) { create(:user, :customer_service_adviser, last_sign_in_at: last_sign_in_time) }
 
         it do
           expect(row_for_user(logged_in_user).split(",")[last_sign_in_column_index])

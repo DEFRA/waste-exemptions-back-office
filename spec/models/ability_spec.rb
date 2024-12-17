@@ -14,8 +14,8 @@ RSpec.describe Ability do
     it { expect(subject).to be_able_to(:use_back_office, :all) }
   end
 
-  context "when the user role is system" do
-    let(:user) { build(:user, :system) }
+  context "when the user role is admin_team_user" do
+    let(:user) { build(:user, :admin_team_user) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"
@@ -23,22 +23,25 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
+
+    it_behaves_like "cannot manage charges and bands"
   end
 
-  context "when the user role is admin_agent" do
-    let(:user) { build(:user, :admin_agent) }
+  context "when the user role is customer_service_adviser" do
+    let(:user) { build(:user, :customer_service_adviser) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage registrations"
     it { expect(ability).to be_able_to(:read, Reports::GeneratedReport) }
 
     it_behaves_like "cannot manage users"
+    it_behaves_like "cannot manage charges and bands"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
   end
 
-  context "when the user role is data_agent" do
-    let(:user) { build(:user, :data_agent) }
+  context "when the user role is data_viewer" do
+    let(:user) { build(:user, :data_viewer) }
 
     it_behaves_like "can use back office"
     it_behaves_like "can view registrations"
@@ -47,6 +50,7 @@ RSpec.describe Ability do
 
     it_behaves_like "cannot manage users"
     it_behaves_like "cannot manage registrations"
+    it_behaves_like "cannot manage charges and bands"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
 
@@ -57,6 +61,7 @@ RSpec.describe Ability do
 
     it_behaves_like "can use back office"
     it_behaves_like "can manage registrations"
+    it_behaves_like "can manage charges and bands"
 
     it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
@@ -70,6 +75,7 @@ RSpec.describe Ability do
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"
     it_behaves_like "can manage registrations"
+    it_behaves_like "can manage charges and bands"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
@@ -81,8 +87,65 @@ RSpec.describe Ability do
     it { expect(ability).not_to be_able_to(:writeoff_payment, registration) }
   end
 
+  context "when the user role is admin_team_lead" do
+    let(:user) { build(:user, :admin_team_lead) }
+
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage users"
+    it_behaves_like "can manage registrations"
+
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, Reports::Download) }
+    it { expect(ability).to be_able_to(:add_payment, registration) }
+    it { expect(ability).to be_able_to(:reverse_payment, registration) }
+    it { expect(ability).to be_able_to(:refund_payment, registration) }
+    it { expect(ability).to be_able_to(:writeoff_payment, registration) }
+
+    it_behaves_like "cannot manage charges and bands"
+
+    it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
+  end
+
+  context "when the user role is policy_adviser" do
+    let(:user) { build(:user, :policy_adviser) }
+
+    it_behaves_like "can use back office"
+    it_behaves_like "can manage users"
+    it_behaves_like "can manage charges and bands"
+
+    it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, Reports::Download) }
+
+    it_behaves_like "cannot manage registrations"
+
+    it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
+    it { expect(ability).not_to be_able_to(:add_payment, registration) }
+    it { expect(ability).not_to be_able_to(:reverse_payment, registration) }
+    it { expect(ability).not_to be_able_to(:refund_payment, registration) }
+    it { expect(ability).not_to be_able_to(:writeoff_payment, registration) }
+  end
+
+  context "when the user role is finance_user" do
+    let(:user) { build(:user, :finance_user) }
+
+    it_behaves_like "can use back office"
+
+    it { expect(ability).to be_able_to(:add_payment, registration) }
+    it { expect(ability).to be_able_to(:reverse_payment, registration) }
+    it { expect(ability).to be_able_to(:refund_payment, registration) }
+    it { expect(ability).to be_able_to(:writeoff_payment, registration) }
+
+    it_behaves_like "cannot manage users"
+    it_behaves_like "cannot manage registrations"
+    it_behaves_like "cannot manage charges and bands"
+
+    it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).not_to be_able_to(:read, Reports::Download) }
+    it { expect(ability).not_to be_able_to(:add_charge_adjustment, registration) }
+  end
+
   context "when the user account is inactive" do
-    let(:user) { build(:user, :data_agent, :inactive) }
+    let(:user) { build(:user, :data_viewer, :inactive) }
 
     it "is not able to use the back office" do
       expect(ability).not_to be_able_to(:use_back_office, :all)

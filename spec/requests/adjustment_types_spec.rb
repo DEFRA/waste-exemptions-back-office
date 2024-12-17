@@ -25,7 +25,7 @@ RSpec.describe "Adjustment Types" do
       end
 
       context "when the user does not have permission to access the page" do
-        let(:user) { create(:user, :data_agent) }
+        let(:user) { create(:user, :data_viewer) }
 
         before do
           get new_registration_adjustment_type_path(registration_reference: registration.reference)
@@ -86,7 +86,7 @@ RSpec.describe "Adjustment Types" do
       end
 
       context "when the user does not have permission to access the page" do
-        let(:user) { create(:user, :data_agent) }
+        let(:user) { create(:user, :data_viewer) }
 
         before do
           post registration_adjustment_types_path(registration_reference: registration.reference), params: valid_params
