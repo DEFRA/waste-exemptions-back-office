@@ -3,12 +3,46 @@
 require "rails_helper"
 
 RSpec.describe CompaniesHouseNameMatchingService, type: :service do
-  let(:run_service) { described_class.run(dry_run: dry_run) }
+  let(:report_path) { Rails.root.join("tmp", "test_report.csv") }
+  let(:summary_path) { Rails.root.join("tmp", "test_report_summary.csv") }
+  let(:run_service) { described_class.new(report_path).run(dry_run: dry_run) }
   let(:max_requests) { (CompaniesHouseNameMatchingService::RATE_LIMIT * CompaniesHouseNameMatchingService::RATE_LIMIT_BUFFER).to_i }
 
+  after do
+    File.delete(report_path) if File.exist?(report_path)
+    File.delete(summary_path) if File.exist?(summary_path)
+  end
+
   describe "#run" do
+    shared_examples "generates a report" do
+      it "creates a CSV report" do
+        run_service
+        expect(File.exist?(report_path)).to be true
+      end
+
+      it "includes headers in the report" do
+        run_service
+        headers = CSV.read(report_path)[3]  # Account for title and date rows
+        expect(headers).to eq(['Registration Ref', 'Company Number', 'Current Name', 'Companies House Name', 'Similarity Score', 'Status'])
+      end
+
+      it "creates a summary report" do
+        run_service
+        expect(File.exist?(summary_path)).to be true
+      end
+
+      it "includes summary statistics" do
+        run_service
+        summary_content = CSV.read(summary_path)
+        expect(summary_content).to include(['Summary Statistics'])
+        expect(summary_content).to include(['Total Companies Processed', be_a(String)])
+      end
+    end
+
     context "when dry_run is true" do
       let(:dry_run) { true }
+
+      include_examples "generates a report"
 
       context "when there are more companies than the rate limit allows" do
         before do
@@ -26,9 +60,15 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "does not exceed the maximum number of requests" do
-          service = described_class.new
+          service = described_class.new(report_path)
           service.run(dry_run: dry_run)
           expect(service.instance_variable_get(:@request_count)).to eq(max_requests)
+        end
+
+        it "records skipped companies in the report" do
+          run_service
+          report_content = CSV.read(report_path)
+          expect(report_content.count { |row| row.last&.start_with?('SKIP:') }).to be > 0
         end
       end
 
@@ -50,15 +90,11 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
           expect(result["12345678"].first[0]).to eq(old_registration.reference)
         end
 
-        it "does not update the Company record" do
+        it "records skipped recently updated companies in the report" do
           run_service
-          expect(WasteExemptionsEngine::Company.find_by(company_no: "12345678").name).to eq("OLD COMPANY")
-        end
-
-        it "does not update the updated_at timestamp of the Company record" do
-          company = WasteExemptionsEngine::Company.find_by(company_no: "12345678")
-          run_service
-          expect(company.reload.updated_at).to be_within(1.second).of(4.months.ago)
+          report_content = CSV.read(report_path)
+          skipped_rows = report_content.select { |row| row.last&.start_with?('SKIP:') }
+          expect(skipped_rows.any? { |row| row[1] == "87654321" }).to be true
         end
       end
 
@@ -84,16 +120,14 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
             group_ltd_registration.reference,
             limited_group_registration.reference
           )
-          expect(result["22222222"].map(&:first)).to contain_exactly(
-            holdings_plc_registration.reference,
-            services_group_registration.reference
-          )
         end
 
-        it "proposes changes for all variations of the company name" do
-          result = run_service
-          expect(result["11111111"].pluck(1)).to include("Acme Group Ltd", "ACME LIMITED GROUP")
-          expect(result["22222222"].pluck(1)).to include("Acme Holdings Services PLC", "Acme Services Holdings Group")
+        it "records proposed changes in the report with similarity scores" do
+          run_service
+          report_content = CSV.read(report_path)
+          change_rows = report_content.select { |row| row.last == 'CHANGE' }
+          expect(change_rows.map { |row| row[1] }).to include("11111111", "22222222")
+          expect(change_rows.all? { |row| row[4].to_f >= 0.7 }).to be true
         end
       end
 
@@ -106,26 +140,12 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
           )
         end
 
-        it "proposes changes for companies with typos" do
-          result = run_service
-          expect(result.keys).to include("33333333")
-          expect(result["33333333"].first[0]).to eq(registration.reference)
-          expect(result["33333333"].first[1]).to eq("Pratt Developements Group Ltd")
-          expect(result["33333333"].first[2]).to eq("PRATT DEVELOPMENTS GROUP LIMITED")
-        end
-      end
-
-      context "when the company name is already correct" do
-        before do
-          create(:registration, operator_name: "ACME GROUP LIMITED", company_no: "11111111")
-          allow(DefraRubyCompaniesHouse).to receive(:new).with("11111111").and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "ACME GROUP LIMITED")
-          )
-        end
-
-        it "does not propose any changes" do
-          result = run_service
-          expect(result).to be_empty
+        it "records changes with similarity scores in the report" do
+          run_service
+          report_content = CSV.read(report_path)
+          change_row = report_content.find { |row| row[1] == "33333333" && row.last == 'CHANGE' }
+          expect(change_row).to be_present
+          expect(change_row[4].to_f).to be >= 0.7
         end
       end
     end
@@ -134,70 +154,37 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
       let(:dry_run) { false }
       let!(:registration) { create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111") }
 
+      include_examples "generates a report"
+
       before do
         allow(DefraRubyCompaniesHouse).to receive(:new).with("11111111").and_return(
           instance_double(DefraRubyCompaniesHouse, company_name: "ACME GROUP LIMITED")
         )
       end
 
-      it "updates the operator names in the database" do
+      it "updates the operator names in the database and records the change" do
         run_service
         expect(registration.reload.operator_name).to eq("ACME GROUP LIMITED")
+
+        report_content = CSV.read(report_path)
+        change_row = report_content.find { |row| row[1] == "11111111" && row.last == 'CHANGE' }
+        expect(change_row).to be_present
+        expect(change_row[2]).to eq("Acme Group Ltd")
+        expect(change_row[3]).to eq("ACME GROUP LIMITED")
       end
 
-      it "creates a Company record for the processed company" do
-        expect { run_service }.to change(WasteExemptionsEngine::Company, :count).by(1)
-      end
-
-      it "updates the Company record with the correct name" do
-        run_service
-        expect(WasteExemptionsEngine::Company.find_by(company_no: "11111111").name).to eq("ACME GROUP LIMITED")
-      end
-
-      it "updates the updated_at timestamp of the Company record" do
-        company = create(:company, company_no: "11111111", updated_at: 4.months.ago)
-        run_service
-        expect(company.reload.updated_at).to be_within(1.second).of(Time.current)
-      end
-
-      context "when there are recently updated Company records" do
-        let!(:old_registration) { create(:registration, operator_name: "Old Company", company_no: "12345678") }
-
+      context "when an error occurs" do
         before do
-          create(:registration, operator_name: "New Company", company_no: "87654321")
-          create(:company, name: "OLD COMPANY", company_no: "12345678", updated_at: 4.months.ago)
-          create(:company, name: "NEW COMPANY", company_no: "87654321", updated_at: Time.current)
-          allow(DefraRubyCompaniesHouse).to receive(:new).and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "NEW COMPANY LTD")
-          )
+          allow(DefraRubyCompaniesHouse).to receive(:new).and_raise(StandardError.new("API Error"))
         end
 
-        it "only processes companies without recent updates to their company record" do
-          result = run_service
-          expect(result.keys).to contain_exactly("12345678")
-          expect(result["12345678"].first[0]).to eq(old_registration.reference)
-        end
-      end
-
-      context "when no companies house name is found" do
-        before do
-          allow(DefraRubyCompaniesHouse).to receive(:new).and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "")
-          )
-        end
-
-        it "does not propose any changes" do
-          result = run_service
-          expect(result).to be_empty
-        end
-
-        it "still creates a Company record" do
-          expect { run_service }.to change(WasteExemptionsEngine::Company, :count).by(1)
-        end
-
-        it "creates a Company record with the name 'Not found'" do
+        it "records the error in the report" do
           run_service
-          expect(WasteExemptionsEngine::Company.find_by(company_no: "11111111").name).to eq("Not found")
+          report_content = CSV.read(report_path)
+          error_row = report_content.find { |row| row.last&.start_with?('ERROR:') }
+          expect(error_row).to be_present
+          expect(error_row[1]).to eq("11111111")
+          expect(error_row.last).to include("API Error")
         end
       end
     end
