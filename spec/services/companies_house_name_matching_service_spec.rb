@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe CompaniesHouseNameMatchingService, type: :service do
   let(:report_path) { Rails.root.join("tmp", "test_report.csv") }
   let(:summary_path) { Rails.root.join("tmp", "test_report_summary.csv") }
-  let(:run_service) { described_class.new(report_path).run(dry_run: dry_run) }
+  let(:run_service) { described_class.new.run(dry_run: dry_run, report_path: report_path) }
   let(:max_requests) { (CompaniesHouseNameMatchingService::RATE_LIMIT * CompaniesHouseNameMatchingService::RATE_LIMIT_BUFFER).to_i }
 
   after do
@@ -60,8 +60,8 @@ RSpec.describe CompaniesHouseNameMatchingService, type: :service do
         end
 
         it "does not exceed the maximum number of requests" do
-          service = described_class.new(report_path)
-          service.run(dry_run: dry_run)
+          service = described_class.new
+          service.run(dry_run: dry_run, report_path: report_path)
           expect(service.instance_variable_get(:@request_count)).to eq(max_requests)
         end
 

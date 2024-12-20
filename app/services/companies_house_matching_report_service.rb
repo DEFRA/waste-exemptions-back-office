@@ -11,7 +11,7 @@ class CompaniesHouseNameMatchingReportService
     @updated_count = 0
     @skipped_count = 0
     ensure_report_directory
-    initialize_csv unless File.exist?(report_path)
+    initialize_csv unless File.exist?(@report_path)
     log_report_path
   end
 

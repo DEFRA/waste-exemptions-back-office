@@ -9,16 +9,16 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   TIME_WINDOW = 300 # 5 minutes in seconds
   RATE_LIMIT_BUFFER = 0.75 # Use only 75% of the rate limit
 
-  def initialize(report_path = nil)
+  def initialize
     super()
     @request_count = 0
     @max_requests = (RATE_LIMIT * RATE_LIMIT_BUFFER).to_i
     @unproposed_changes = {}
-    @report = CompaniesHouseNameMatchingReportService.new(report_path)
   end
 
-  def run(dry_run: true)
+  def run(dry_run: true, report_path: nil)
     @dry_run = dry_run
+    @report = CompaniesHouseNameMatchingReportService.new(report_path)
 
     Rails.logger.info("Starting Companies House name matching process...")
     active_registrations = fetch_active_registrations
