@@ -107,6 +107,6 @@ class CompaniesHouseNameMatchingReportService
 
   def log_report_path
     relative_path = report_path.to_s.sub(Rails.root.join('public').to_s, '')
-    Rails.logger.info "Report will be generated at: #{relative_path}"
+    puts "Report will be generated at: #{relative_path}"
   end
 end

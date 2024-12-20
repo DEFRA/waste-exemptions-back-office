@@ -21,7 +21,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     @dry_run = dry_run
     @report = CompaniesHouseNameMatchingReportService.new(report_path)
 
-    Rails.logger.info("Starting Companies House name matching process...")
+    puts("Starting Companies House name matching process...")
     active_registrations = fetch_active_registrations
     grouped_registrations = group_registrations(active_registrations)
     proposed_changes = identify_name_changes(grouped_registrations)
@@ -35,8 +35,8 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
     end
 
     @report.finalize
-    Rails.logger.info("Process complete.")
-    Rails.logger.info("Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}")
+    puts("Process complete.")
+    puts("Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}")
 
     proposed_changes
   end
@@ -80,7 +80,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   def identify_name_changes(grouped_registrations)
     proposed_changes = {}
 
-    Rails.logger.debug { "Total number of company numbers to process: #{grouped_registrations.size}" }
+    puts { "Total number of company numbers to process: #{grouped_registrations.size}" }
 
     sorted_grouped_registrations = grouped_registrations.sort_by { |_, group| -group.size }.first(@max_requests)
 
@@ -161,17 +161,17 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   def print_summary(proposed_changes, applied: false)
     action = applied ? "applied" : "proposed"
 
-    Rails.logger.info("=== Summary ===")
-    Rails.logger.info("Total number of company numbers processed: #{@request_count}")
-    Rails.logger.info("Total number of company numbers with #{action} name changes: #{proposed_changes.size}")
-    Rails.logger.info("Full report available at: /company_reports/#{File.basename(@report.report_path)}")
-    Rails.logger.info("\n#{action.capitalize} name changes:")
+    puts("=== Summary ===")
+    puts("Total number of company numbers processed: #{@request_count}")
+    puts("Total number of company numbers with #{action} name changes: #{proposed_changes.size}")
+    puts("Full report available at: /company_reports/#{File.basename(@report.report_path)}")
+    puts("\n#{action.capitalize} name changes:")
 
     if proposed_changes.empty?
-      Rails.logger.info(" No changes #{action}.")
+      puts(" No changes #{action}.")
     else
       proposed_changes.each do |company_no, changes|
-        Rails.logger.info(" Company number: #{company_no}")
+        puts(" Company number: #{company_no}")
         changes.each do |reference, old_name, new_name|
           puts " Registration reference: #{reference}, Old name: '#{old_name}', New name: '#{new_name}'"
         end
@@ -180,28 +180,28 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   end
 
   def print_unproposed_changes
-    Rails.logger.debug do
+    puts do
       "\nChanges not proposed - company names too different from Companies House records:"
     end
 
     if @unproposed_changes.empty?
-      Rails.logger.debug " No unproposed changes."
+      puts " No unproposed changes."
     else
       @unproposed_changes.each do |company_no, details|
-        Rails.logger.debug { " Company number: #{company_no}" }
+        puts " Company number: #{company_no}"
         details.each do |detail|
-          Rails.logger.debug { " Registration reference: #{detail[:registration_reference]}" }
-          Rails.logger.debug { " Current name: '#{detail[:current_name]}'" }
-          Rails.logger.debug { " Companies House name: '#{detail[:companies_house_name]}'" }
-          Rails.logger.debug { " Name similarity: #{detail[:similarity].round(2)}" }
-          Rails.logger.debug ""
+          puts  " Registration reference: #{detail[:registration_reference]}"
+          puts  " Current name: '#{detail[:current_name]}'"
+          puts  " Companies House name: '#{detail[:companies_house_name]}'"
+          puts  " Name similarity: #{detail[:similarity].round(2)}"
+          puts ""
         end
       end
     end
   end
 
   def log_unproposed_changes_count
-    Rails.logger.debug do
+    puts do
       "Total registrations with names too different from Companies House: #{@unproposed_changes.size}"
     end
   end
