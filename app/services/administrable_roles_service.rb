@@ -17,7 +17,9 @@ class AdministrableRolesService
   end
 
   def self.admin_team_user_roles
-    %w[admin_team_user]
+    %w[admin_team_user
+       customer_service_adviser
+       data_viewer]
   end
 
   def self.service_manager_roles

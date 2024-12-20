@@ -14,7 +14,7 @@ deregister_registration_exemption,         ,                        Y,          
 update_registration,                       ,                        Y,               Y,         Y,               Y,               Y,               ,             
 update_expiry_date,                        ,                        Y,               Y,         Y,               Y,               Y,               ,             
 read_quarterly_stats,                      ,                         ,               Y,         Y,               Y,               Y,              Y,             
-reset_transient_registration,              ,                         ,               Y,         Y,                ,                ,               ,             
+reset_transient_registration,              ,                         ,                ,         Y,                ,                ,               ,             
 change_role,                               ,                         ,               Y,          ,               Y,               Y,              Y,             
 activate_or_deactivate_user,               ,                         ,               Y,          ,               Y,               Y,              Y,             
 invite_user,                               ,                         ,               Y,          ,               Y,               Y,              Y,             
@@ -22,8 +22,8 @@ download_reports,                          ,                         ,          
 read_user,                                 ,                         ,               Y,          ,               Y,               Y,              Y,             
 manage_charges,                            ,                         ,                ,         Y,               Y,                ,              Y,             
 manage_feature_toggles,                    ,                         ,                ,         Y,                ,                ,               ,             
-add_charge_adjustment,                     ,                         ,                ,         Y,                ,                ,               ,             
-add_payment,                               ,                         ,                ,         Y,                ,               Y,               ,            Y
-reverse_payment,                           ,                         ,                ,         Y,                ,               Y,               ,            Y
+add_charge_adjustment,                     ,                         ,               Y,         Y,                ,                ,               ,             
+add_payment,                               ,                         ,               Y,         Y,                ,               Y,               ,            Y
+reverse_payment,                           ,                         ,               Y,         Y,                ,               Y,               ,            Y
 refund_payment,                            ,                         ,                ,         Y,                ,               Y,               ,            Y
-writeoff_payment,                          ,                         ,                ,         Y,                ,               Y,               ,            Y
+writeoff_payment,                          ,                         ,               Y,         Y,                ,               Y,               ,            Y
