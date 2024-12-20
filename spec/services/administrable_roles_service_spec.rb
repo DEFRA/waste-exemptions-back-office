@@ -33,12 +33,8 @@ RSpec.describe AdministrableRolesService do
       it "returns list of group roles" do
         expect(described_class.call(user)).to eq(%w[customer_service_adviser
                                                     data_viewer
-                                                    finance_user
-                                                    developer
-                                                    service_manager
                                                     admin_team_user
-                                                    admin_team_lead
-                                                    policy_advisor])
+                                                    admin_team_lead])
       end
     end
 
