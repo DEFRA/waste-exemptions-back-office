@@ -17,6 +17,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   end
 
   def run(dry_run: true, report_path: nil)
+    WasteExemptionsEngine::Company.destroy_all
     @dry_run = dry_run
     @report = CompaniesHouseNameMatchingReportService.new(report_path)
 
