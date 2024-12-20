@@ -36,8 +36,7 @@ RSpec.describe Ability do
     let(:user) { build(:user, :customer_service_adviser) }
 
     it_behaves_like "can use back office"
-    it_behaves_like "can manage registrations"
-    it { expect(ability).to be_able_to(:read, Reports::GeneratedReport) }
+    it_behaves_like "can view registrations"
 
     it_behaves_like "cannot manage users"
     it_behaves_like "cannot manage charges and bands"
@@ -47,7 +46,9 @@ RSpec.describe Ability do
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
 
+    it { expect(ability).not_to be_able_to(:deregister, registration) }
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).not_to be_able_to(:read, Reports::GeneratedReport) }
   end
 
   context "when the user role is data_viewer" do
