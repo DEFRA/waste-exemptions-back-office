@@ -23,6 +23,7 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
 
     puts("Starting Companies House name matching process...")
     active_registrations = fetch_active_registrations
+    puts "Total number of active registrations to process: #{active_registrations.size}"
     grouped_registrations = group_registrations(active_registrations)
     proposed_changes = identify_name_changes(grouped_registrations)
 
