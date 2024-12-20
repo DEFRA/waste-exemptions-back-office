@@ -129,7 +129,7 @@ RSpec.describe "Payment details" do
       end
 
       context "when user does not have reverse_payment permission" do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, :data_viewer) }
 
         it "does not display the reverse payment link" do
           expect(response.body).not_to include(I18n.t("#{i18n_actions_section}.links.reverse_payment"))
@@ -186,7 +186,7 @@ RSpec.describe "Payment details" do
       end
 
       context "when user does not have add_charge_adjustment permission" do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, :data_viewer) }
 
         it "does not display the increase or decrease a charge link" do
           expect(response.body).not_to include(I18n.t("#{i18n_actions_section}.links.charge_adjustment"))
