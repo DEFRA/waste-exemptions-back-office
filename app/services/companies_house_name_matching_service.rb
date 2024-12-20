@@ -17,13 +17,14 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
   end
 
   def run(dry_run: true, report_path: nil)
-    WasteExemptionsEngine::Company.destroy_all
     @dry_run = dry_run
     @report = CompaniesHouseNameMatchingReportService.new(report_path)
 
     puts("Starting Companies House name matching process...")
     active_registrations = fetch_active_registrations
+    puts "Total number of registrations in state active: #{WasteExemptionsEngine::Registration.joins(:registration_exemptions).where(registration_exemptions: { state: :active }).count}"
     puts "Total number of active registrations to process: #{active_registrations.size}"
+    puts "Total number of recently updated companies: #{WasteExemptionsEngine::Company.recently_updated.count}"
     grouped_registrations = group_registrations(active_registrations)
     proposed_changes = identify_name_changes(grouped_registrations)
 
