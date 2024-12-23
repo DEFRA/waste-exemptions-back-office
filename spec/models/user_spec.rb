@@ -166,4 +166,20 @@ RSpec.describe User do
       end
     end
   end
+
+  describe "can_administer?" do
+    let(:user) { create(:user, :admin_team_lead) }
+
+    context "when the user is permitted to administer user in question" do
+      let(:user_in_question) { create(:user, :data_viewer) }
+
+      it { expect(user.can_administer?(user_in_question)).to be(true) }
+    end
+
+    context "when the user is not permitted to administer user in question" do
+      let(:user_in_question) { create(:user, :developer) }
+
+      it { expect(user.can_administer?(user_in_question)).to be(false) }
+    end
+  end
 end
