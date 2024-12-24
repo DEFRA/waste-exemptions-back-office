@@ -82,6 +82,7 @@ class CompaniesHouseNameMatchingReportService
   end
 
   def initialize_csv
+    puts "Creating new report at: #{@report_path}"
     CSV.open(report_path, 'w') do |csv|
       csv << ['Companies House Name Matching Report']
       csv << ['Started at', @started_at]
