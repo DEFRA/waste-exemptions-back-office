@@ -4,7 +4,7 @@ class CompaniesHouseNameMatchingReportService
   attr_reader :report_path, :summary_path
 
   def initialize(report_path = nil)
-    @report_path = set_report_path(report_path) || default_report_path
+    @report_path = set_report_path(report_path)
     @summary_path = @report_path.sub('.csv', '_summary.csv')
     @started_at = Time.current
     @processed_count = 0
@@ -109,7 +109,11 @@ class CompaniesHouseNameMatchingReportService
   end
 
   def set_report_path(report_path)
-    Rails.root.join('public', 'company_reports', report_path)
+    if report_path.present?
+      Rails.root.join('public', 'company_reports', report_path) if report_path.present?
+    else
+      default_report_path
+    end
   end
 
 
