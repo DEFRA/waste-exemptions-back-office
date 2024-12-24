@@ -68,9 +68,6 @@ class CompaniesHouseNameMatchingService < WasteExemptionsEngine::BaseService
 
     # Keep track of which registrations were skipped due to recent updates
     skipped_registrations = registrations.where(company_no: recently_updated_companies)
-    skipped_registrations.each do |reg|
-      @report.record_skip(reg, "Company record recently updated")
-    end
 
     registrations.where.not(company_no: recently_updated_companies)
   end
