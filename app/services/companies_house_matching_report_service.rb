@@ -78,7 +78,9 @@ class CompaniesHouseNameMatchingReportService
   end
 
   def ensure_report_directory
-    FileUtils.mkdir_p(File.dirname(report_path))
+    directory = File.dirname(report_path)
+    puts "Ensuring report directory exists at: #{directory}"
+    FileUtils.mkdir_p(directory)
   end
 
   def initialize_csv
