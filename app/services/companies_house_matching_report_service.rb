@@ -110,7 +110,7 @@ class CompaniesHouseNameMatchingReportService
 
   def set_report_path(report_path)
     if report_path.present?
-      Rails.root.join('public', 'company_reports', report_path) if report_path.present?
+      Rails.root.join('public', 'company_reports', report_path)
     else
       default_report_path
     end
