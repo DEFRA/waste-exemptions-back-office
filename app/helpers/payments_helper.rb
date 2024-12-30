@@ -19,7 +19,7 @@ module PaymentsHelper
   end
 
   def payment_type
-    return if params&.dig(:add_payment_form)&.dig(:payment_type).blank?
+    return if params&.dig(:add_payment_form, :payment_type).blank?
 
     @payment_type = params[:add_payment_form][:payment_type].to_sym
   end
