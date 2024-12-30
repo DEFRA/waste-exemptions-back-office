@@ -61,7 +61,7 @@ module WasteExemptionsBackOffice
     config.back_office_url = ENV["BACK_OFFICE_URL"] || "http://localhost:8000"
 
     # Companies House config
-    config.companies_house_host = ENV["COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk/company/"
+    config.companies_house_host = ENV["COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk"
     config.companies_house_api_key = ENV.fetch("COMPANIES_HOUSE_API_KEY", nil)
 
     # Data export config

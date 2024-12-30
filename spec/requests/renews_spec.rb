@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 
 RSpec.describe "Renews" do
   let(:registration) { create(:registration, :expires_tomorrow) }
@@ -26,15 +26,19 @@ RSpec.describe "Renews" do
     end
 
     context "when an admin agent user is signed in" do
-      let(:user) { create(:user, :customer_service_adviser) }
-
-      # rubocop:disable RSpec/AnyInstance
-      before do
-        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
-        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(Faker::Company.name)
-        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:registered_office_address_lines).and_return(["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"])
+      let(:user) { create(:user, :admin_agent) }
+      let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
+      let(:companies_house_api_response) do
+        {
+          company_name: Faker::Company.name,
+          registered_office_address: ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"]
+        }
       end
-      # rubocop:enable RSpec/AnyInstance
+
+      before do
+        allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
+        allow(companies_house_api).to receive(:run).and_return(companies_house_api_response)
+      end
 
       it "return a 303 redirect code and redirect to the renewal start form" do
         get request_path
