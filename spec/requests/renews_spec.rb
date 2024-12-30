@@ -26,7 +26,7 @@ RSpec.describe "Renews" do
     end
 
     context "when an admin agent user is signed in" do
-      let(:user) { create(:user, :admin_agent) }
+      let(:user) { create(:user, :customer_service_adviser) }
       let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
       let(:companies_house_api_response) do
         {
