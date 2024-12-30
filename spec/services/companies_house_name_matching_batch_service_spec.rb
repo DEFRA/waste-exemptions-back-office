@@ -7,7 +7,7 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
   let(:summary_path) { Rails.root.join("tmp", "test_report_summary.csv") }
   let(:batch_service) { described_class.new }
   let(:similarity_threshold) { CompaniesHouseNameMatchingBatchService::SIMILARITY_THRESHOLD }
-  let(:run_service) { batch_service.run_batch(dry_run: dry_run, report_path: report_path) }
+  let(:run_service) { batch_service.run(dry_run: dry_run, report_path: report_path) }
 
   let(:max_requests) { (described_class::RATE_LIMIT * described_class::RATE_LIMIT_BUFFER).to_i }
 
@@ -16,7 +16,7 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
     File.delete(summary_path) if File.exist?(summary_path)
   end
 
-  describe "#run_batch" do
+  describe "#run" do
     shared_examples "generates a report" do
       let!(:registration) { create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111") }
 

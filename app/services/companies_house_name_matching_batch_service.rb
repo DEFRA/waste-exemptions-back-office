@@ -16,7 +16,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     @unproposed_changes = {}
   end
 
-  def run_batch(dry_run: true, report_path: nil)
+  def run(dry_run: true, report_path: nil)
     @dry_run = dry_run
     @report = CompaniesHouseNameMatchingReportService.new(report_path)
 
