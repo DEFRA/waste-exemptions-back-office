@@ -1,13 +1,37 @@
 # frozen_string_literal: true
 
 namespace :companies_house_name_matching do
-  desc "Match company names and those from companies house to change names (DRY RUN)"
-  task :dry_run, [:report_path] => :environment do |_, args|
-    CompaniesHouseNameMatchingService.run(dry_run: true, report_path: args[:report_path])
+  desc "Process a SINGLE batch (DRY RUN), then stop."
+  task :dry_run_batch, [:report_path] => :environment do |_, args|
+    CompaniesHouseNameMatchingBatchService.run_batch(
+      dry_run: true,
+      report_path: args[:report_path]
+    )
   end
 
-  desc "Match company names and those from companies house to change names"
-  task :run, [:report_path] => :environment do |_, args|
-    CompaniesHouseNameMatchingService.run(dry_run: false, report_path: args[:report_path])
+  desc "Process a SINGLE batch (REAL RUN), then stop."
+  task :run_batch, [:report_path] => :environment do |_, args|
+    CompaniesHouseNameMatchingBatchService.run_batch(
+      dry_run: false,
+      report_path: args[:report_path]
+    )
+  end
+
+  desc "DRY RUN - keep running batch after batch (with a 5-minute pause) until no more left."
+  task :dry_run_until_done, [:report_path] => :environment do |_, args|
+    # Option A: use a runner service
+    CompaniesHouseNameMatchingRunnerService.run_until_done(
+      dry_run: true,
+      report_path: args[:report_path]
+    )
+  end
+
+  desc "REAL RUN - keep running batch after batch (with a 5-minute pause) until no more left."
+  task :run_until_done, [:report_path] => :environment do |_, args|
+    # Option A: use a runner service
+    CompaniesHouseNameMatchingRunnerService.run_until_done(
+      dry_run: false,
+      report_path: args[:report_path]
+    )
   end
 end

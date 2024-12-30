@@ -67,7 +67,11 @@ class CompaniesHouseNameMatchingReportService
   end
 
   def finalize
-    create_summary_report
+    if File.exist?(summary_path)
+      append_summary_report
+    else
+      create_summary_report
+    end
   end
 
   private
@@ -94,18 +98,44 @@ class CompaniesHouseNameMatchingReportService
   end
 
   def create_summary_report
-    CSV.open(summary_path, 'w') do |csv|
-      csv << ['Companies House Name Matching Summary']
-      csv << ['Started at', @started_at]
-      csv << ['Completed at', Time.current]
-      csv << []
-      csv << ['Summary Statistics']
-      csv << ['Total Companies Processed', @processed_count]
-      csv << ['Companies Updated', @updated_count]
-      csv << ['Companies Skipped', @skipped_count]
-      csv << []
-      csv << ['Report Location:', File.basename(report_path)]
+    CSV.open(summary_path, "w") do |csv|
+      csv << [
+        "Batch #",
+        "Started at",
+        "Completed at",
+        "Processed",
+        "Updated",
+        "Skipped"
+      ]
+      csv << [
+        next_batch_number,
+        @started_at,
+        Time.current,
+        @processed_count,
+        @updated_count,
+        @skipped_count
+      ]
     end
+  end
+
+  def append_summary_report
+    CSV.open(summary_path, "ab") do |csv|
+      csv << [
+        next_batch_number,
+        @started_at,
+        Time.current,
+        @processed_count,
+        @updated_count,
+        @skipped_count
+      ]
+    end
+  end
+
+  def next_batch_number
+    return 1 unless File.exist?(summary_path)
+
+    lines = CSV.read(summary_path).size + 1
+    lines
   end
 
   def set_report_path(report_path)

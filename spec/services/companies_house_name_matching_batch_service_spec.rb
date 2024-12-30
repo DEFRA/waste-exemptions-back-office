@@ -39,11 +39,25 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
         expect(File.exist?(summary_path)).to be true
       end
 
-      it "includes summary statistics" do
+      it "includes a batch row with totals" do
         run_service
         summary_content = CSV.read(summary_path)
-        expect(summary_content).to include(["Summary Statistics"])
-        expect(summary_content).to include(["Total Companies Processed", kind_of(String)])
+
+        expect(summary_content[0]).to eq([
+          "Batch #",
+          "Started at",
+          "Completed at",
+          "Processed",
+          "Updated",
+          "Skipped"
+        ])
+
+        expect(summary_content.size).to be >= 2
+        data_row = summary_content[1]
+
+        expect(data_row[3].to_i).to be >= 0
+        expect(data_row[4].to_i).to be >= 0
+        expect(data_row[5].to_i).to be >= 0
       end
     end
 
