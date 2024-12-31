@@ -10,8 +10,8 @@ class RefreshCompaniesHouseNameController < ApplicationController
     begin
       RefreshCompaniesHouseNameService.run(reference)
       flash_success(success_message)
-    rescue StandardError
-      Rails.logger.error "Failed to refresh"
+    rescue StandardError => e
+      Rails.logger.error "Failed to refresh: #{e}"
       flash_error(failure_message, failure_desciption)
     end
     redirect_back(fallback_location: registration_path(reference))

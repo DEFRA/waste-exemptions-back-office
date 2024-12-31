@@ -38,6 +38,10 @@ class User < WasteExemptionsEngine::ApplicationRecord
     update(role: new_role)
   end
 
+  def can_administer?(user)
+    AdministrableRolesService.call(self).include?(user.role)
+  end
+
   def ability
     @ability ||= Ability.new(self)
   end

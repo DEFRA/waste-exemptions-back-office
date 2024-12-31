@@ -8,7 +8,7 @@ RSpec.describe AdministrableRolesService do
       let(:user) { build(:user, role: "admin_team_user") }
 
       it "returns list of group roles" do
-        expect(described_class.call(user)).to eq(%w[admin_team_user])
+        expect(described_class.call(user)).to eq(%w[admin_team_user customer_service_adviser data_viewer])
       end
     end
 

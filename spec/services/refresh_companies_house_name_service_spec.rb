@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 
-# rubocop:disable RSpec/AnyInstance
 RSpec.describe RefreshCompaniesHouseNameService do
   describe ".run" do
 
@@ -13,10 +12,18 @@ RSpec.describe RefreshCompaniesHouseNameService do
     let(:registration) { create(:registration, operator_name: old_registered_name) }
     let(:reference) { registration.reference }
     let(:companies_house_name) { new_registration_name }
+    let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
+    let(:company_address) { ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"] }
+    let(:companies_house_api_response) do
+      {
+        company_name: companies_house_name,
+        registered_office_address: company_address
+      }
+    end
 
     before do
-      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(true)
-      allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:company_name).and_return(companies_house_name)
+      allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
+      allow(companies_house_api).to receive(:run).and_return(companies_house_api_response)
     end
 
     context "with no previous companies house name" do
@@ -31,7 +38,7 @@ RSpec.describe RefreshCompaniesHouseNameService do
 
     context "when an error happens" do
       before do
-        allow_any_instance_of(DefraRubyCompaniesHouse).to receive(:load_company).and_return(false)
+        allow(companies_house_api).to receive(:run).and_raise(StandardError)
       end
 
       let(:old_registered_name) { Faker::Company.name }
@@ -74,4 +81,3 @@ RSpec.describe RefreshCompaniesHouseNameService do
     WasteExemptionsEngine::Registration.find_by(reference: registration.reference)
   end
 end
-# rubocop:enable RSpec/AnyInstance

@@ -11,7 +11,7 @@ WasteExemptionsEngine.configure do |configuration|
   configuration.host_is_back_office = true
 
   # Companies house API config
-  configuration.companies_house_host = ENV["COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk/company/"
+  configuration.companies_house_host = ENV["COMPANIES_HOUSE_URL"] || "https://api.companieshouse.gov.uk"
   configuration.companies_house_api_key = ENV.fetch("COMPANIES_HOUSE_API_KEY", nil)
 
   # Address lookup config
