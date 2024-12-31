@@ -3,14 +3,14 @@
     {
       "name": "Band 1",
       "sequence": 1,
-      "initial_compliance_charge": 40900,
-      "additional_compliance_charge": 7400
+      "initial_compliance_charge": 42000,
+      "additional_compliance_charge": 7600
     },
     {
       "name": "Band 2",
       "sequence": 2,
-      "initial_compliance_charge": 20700,
-      "additional_compliance_charge": 7400
+      "initial_compliance_charge": 21200,
+      "additional_compliance_charge": 7600
     },
     {
       "name": "Band 3",
@@ -21,22 +21,22 @@
     {
       "name": "Upper Band",
       "sequence": 4,
-      "initial_compliance_charge": 118000,
-      "additional_compliance_charge": 22100
+      "initial_compliance_charge": 123600,
+      "additional_compliance_charge": 22700
     }
   ],
   "charges" : [
     {
       "name": "Registration charge",
       "charge_type": "registration_charge",
-      "charge_amount": 4100
+      "charge_amount": 5600
     }
   ],
   "buckets" : [
     {
       "name": "Farmer exemptions",
       "bucket_type": "farmer",
-      "initial_compliance_charge": 9000
+      "initial_compliance_charge": 8800
     }
   ],
   "band_exemptions" : [
