@@ -106,9 +106,3 @@ end
 every :day, at: ENV["FINAL_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "10:00", roles: [:db] do
   rake_and_format "text:renew_reminder:final:send"
 end
-
-# This is the final renewal text reminder job. For each registration expiring
-# in 7 days time, it will generate and send the final text reminder
-every :day, at: ENV["COMPANIES_HOUSE_NAME_MATCHING_RUN_TIME"] || "14:00", roles: [:db] do
-  rake_and_format "companies_house_name_matching:run"
-end
