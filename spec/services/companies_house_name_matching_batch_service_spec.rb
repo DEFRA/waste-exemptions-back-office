@@ -8,8 +8,21 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
   let(:batch_service) { described_class.new }
   let(:similarity_threshold) { CompaniesHouseNameMatchingBatchService::SIMILARITY_THRESHOLD }
   let(:run_service) { batch_service.run(dry_run: dry_run, report_path: report_path) }
+  let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API)}
+  let(:company_name) { "COMPANY NAME"}
+  let(:companies_house_api_response) do
+    {
+      company_name:,
+      registered_office_address: ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"]
+    }
+  end
 
   let(:max_requests) { (described_class::RATE_LIMIT * described_class::RATE_LIMIT_BUFFER).to_i }
+
+  before do
+    allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
+    allow(companies_house_api).to receive(:run).and_return(companies_house_api_response)
+  end
 
   after do
     File.delete(report_path) if File.exist?(report_path)
@@ -71,9 +84,6 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
           (max_requests + 10).times do |i|
             create(:registration, operator_name: "Company #{i}", company_no: "1234567#{i}")
           end
-          allow(DefraRubyCompaniesHouse).to receive(:new).and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "COMPANY NAME")
-          )
         end
 
         it "processes only up to the maximum number of requests" do
@@ -95,14 +105,12 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
 
       context "when there are recently updated Company records" do
         let!(:old_registration) { create(:registration, operator_name: "OLD COMPANY", company_no: "12345678") }
+        let(:company_name) { "NEW COMPANY LTD" }
 
         before do
           create(:registration, operator_name: "NEW COMPANY", company_no: "87654321")
           create(:company, name: "OLD COMPANY", company_no: "12345678", updated_at: 4.months.ago)
           create(:company, name: "NEW COMPANY", company_no: "87654321", updated_at: Time.current)
-          allow(DefraRubyCompaniesHouse).to receive(:new).and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "NEW COMPANY LTD")
-          )
         end
 
         it "will not procress that registration" do
@@ -120,12 +128,10 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
         let!(:services_group_registration) { create(:registration, operator_name: "Acme Services Holdings Group", company_no: "22222222") }
 
         before do
-          allow(DefraRubyCompaniesHouse).to receive(:new).with("11111111").and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "ACME GROUP LIMITED")
-          )
-          allow(DefraRubyCompaniesHouse).to receive(:new).with("22222222").and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "ACME HOLDINGS SERVICES PLC")
-          )
+          allow(companies_house_api).to receive(:run).with(company_number: "11111111")
+            .and_return(companies_house_api_response.merge(company_name: "ACME GROUP LIMITED"))
+          allow(companies_house_api).to receive(:run).with(company_number: "22222222")
+            .and_return(companies_house_api_response.merge(company_name: "ACME HOLDINGS SERVICES PLC"))
         end
 
         it "records proposed changes in the report with similarity scores" do
@@ -141,9 +147,8 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
         let!(:registration) { create(:registration, operator_name: "Pratt Developements Group Ltd", company_no: "33333333") }
 
         before do
-          allow(DefraRubyCompaniesHouse).to receive(:new).with("33333333").and_return(
-            instance_double(DefraRubyCompaniesHouse, company_name: "PRATT DEVELOPMENTS GROUP LIMITED")
-          )
+          allow(companies_house_api).to receive(:run).with(company_number: "33333333")
+            .and_return(companies_house_api_response.merge(company_name: "PRATT DEVELOPMENTS GROUP LIMITED"))
         end
 
         it "records changes with similarity scores in the report" do
@@ -163,9 +168,8 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
       include_examples "generates a report"
 
       before do
-        allow(DefraRubyCompaniesHouse).to receive(:new).with("11111111").and_return(
-          instance_double(DefraRubyCompaniesHouse, company_name: "ACME GROUP LIMITED")
-        )
+          allow(companies_house_api).to receive(:run).with(company_number: "11111111")
+            .and_return(companies_house_api_response.merge(company_name: "ACME GROUP LIMITED"))
       end
 
       it "updates the operator names in the database and records the change" do
@@ -181,7 +185,7 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
 
       context "when an error occurs" do
         before do
-          allow(DefraRubyCompaniesHouse).to receive(:new).and_raise(StandardError.new("API Error"))
+          allow(companies_house_api).to receive(:run).and_raise(StandardError.new("API Error"))
         end
 
         it "records the error in the report" do

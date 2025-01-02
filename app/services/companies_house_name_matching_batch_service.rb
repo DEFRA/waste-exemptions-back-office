@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "defra_ruby_companies_house"
+require "defra_ruby/companies_house"
 require_relative "./companies_house_matching_report_service.rb"
 
 class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseService
@@ -173,8 +173,8 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     return nil if @request_count >= @max_requests
 
     @request_count += 1
-    client = DefraRubyCompaniesHouse.new(company_no)
-    client.company_name
+    companies_house_details = DefraRuby::CompaniesHouse::API.new.run(company_number: company_no)
+    companies_house_details[:company_name]
   rescue StandardError => e
     Rails.logger.error("Failed to fetch company name for #{company_no}: #{e.message}")
     raise
