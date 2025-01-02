@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "defra_ruby_companies_house"
-require_relative "./companies_house_matching_report_service.rb"
+#require_relative "./companies_house_matching_report_service.rb"
 
 class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseService
   SIMILARITY_THRESHOLD = 0.7
@@ -18,7 +18,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
 
   def run(dry_run: true, report_path: nil)
     @dry_run = dry_run
-    @report = CompaniesHouseNameMatchingReportService.new(report_path)
+    #@report = CompaniesHouseNameMatchingReportService.new(report_path)
 
     puts("Starting a single batch of Companies House name matching...")
 
@@ -52,9 +52,9 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
       print_summary(proposed_changes, applied: true)
     end
 
-    @report.finalize
+    #@report.finalize
     puts("Batch complete.")
-    puts("Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}")
+    #puts("Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}")
 
     # 4) Figure out how many *total* registrations remain for the next batch.
     #    This will do another query to see if there are more left to do.
@@ -107,7 +107,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     sorted_grouped_registrations = grouped_registrations.sort_by { |_, group| -group.size }.first(@max_requests)
 
     sorted_grouped_registrations.each do |company_no, registrations|
-      @report.record_processed
+      #@report.record_processed
       begin
         companies_house_name = fetch_companies_house_name(company_no)
 
@@ -120,8 +120,8 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
         end
 
         if companies_house_name.blank?
-          registrations.each { |reg| @report.record_skip(reg, "No Companies House name found") }
-          @report.record_skipped
+          #registrations.each { |reg| @report.record_skip(reg, "No Companies House name found") }
+          #@report.record_skipped
           next
         end
 
@@ -130,13 +130,13 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
         changes = propose_name_changes(company_no, registrations, companies_house_name, compare_name_service)
         if changes.any?
           proposed_changes[company_no] = changes
-          @report.record_updated unless @dry_run
+          #@report.record_updated unless @dry_run
         else
-          @report.record_skipped
+          #@report.record_skipped
         end
       rescue StandardError => e
-        @report.record_error(company_no, e)
-        registrations.each { |reg| @report.record_skip(reg, "Error: #{e.message}") }
+        #@report.record_error(company_no, e)
+        #registrations.each { |reg| @report.record_skip(reg, "Error: #{e.message}") }
         Rails.logger.error("Error processing company #{company_no}: #{e.message}")
       end
     end
@@ -150,13 +150,13 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
       similarity = compare_name_service.compare(registration.operator_name)
 
       if companies_house_name == registration.operator_name
-        @report.record_skip(registration, "Name already matches")
+        #@report.record_skip(registration, "Name already matches")
         nil
       elsif similarity >= SIMILARITY_THRESHOLD
-        @report.record_change(registration, companies_house_name, similarity)
+        #@report.record_change(registration, companies_house_name, similarity)
         [registration.reference, registration.operator_name, companies_house_name]
       else
-        @report.record_skip(registration, "Similarity below threshold (#{similarity.round(2)})")
+        #@report.record_skip(registration, "Similarity below threshold (#{similarity.round(2)})")
         @unproposed_changes[company_no] ||= []
         @unproposed_changes[company_no] << {
           registration_reference: registration.reference,
@@ -186,7 +186,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     puts("=== Summary ===")
     puts("Total number of company numbers processed this batch: #{@request_count}")
     puts("Total number of company numbers with #{action} name changes: #{proposed_changes.size}")
-    puts("Full report available at: /company_reports/#{File.basename(@report.report_path)}")
+    #puts("Full report available at: /company_reports/#{File.basename(@report.report_path)}")
     puts("\n#{action.capitalize} name changes:")
 
     if proposed_changes.empty?
