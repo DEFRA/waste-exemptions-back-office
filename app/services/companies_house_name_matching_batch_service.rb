@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "defra_ruby/companies_house"
-require_relative "./companies_house_matching_report_service.rb"
 
 class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseService
   SIMILARITY_THRESHOLD = 0.7
