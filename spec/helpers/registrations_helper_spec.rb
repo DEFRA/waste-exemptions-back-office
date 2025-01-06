@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe RegistrationsHelper do
   let(:resource) { build(:new_registration) }
 
-  describe "applicant_data_present?" do
+  describe "#applicant_data_present?" do
     context "when the resource has data in at least one relevant field" do
       before { resource.applicant_first_name = "Foo" }
 
@@ -28,7 +28,7 @@ RSpec.describe RegistrationsHelper do
     end
   end
 
-  describe "contact_data_present?" do
+  describe "#contact_data_present?" do
     context "when the resource has data in at least one relevant field" do
       before { resource.contact_first_name = "Foo" }
 
@@ -49,6 +49,43 @@ RSpec.describe RegistrationsHelper do
       it "returns true" do
         expect(helper.contact_data_present?(resource)).to be(false)
       end
+    end
+  end
+
+  describe "#renewal_history" do
+    let(:original_registration) { create(:registration) }
+    let(:previous_registration) { create(:registration, referring_registration: original_registration) }
+    let(:current_registration) { create(:registration, referring_registration: previous_registration) }
+
+    it "returns an array of registrations in reverse chronological order" do
+      expect(helper.renewal_history(current_registration)).to eq [
+        current_registration,
+        previous_registration,
+        original_registration
+      ]
+    end
+  end
+
+  describe "#registration_date_range" do
+    let(:registration) { create(:registration) }
+
+    it do
+      expect(helper.registration_date_range(registration))
+        .to eq "(#{registration.created_at.strftime('%-d %B %Y')} to #{registration.expires_on.strftime('%-d %B %Y')})"
+    end
+  end
+
+  describe "#registration_details_link_with_dates" do
+    subject(:link_response) { helper.registration_details_link_with_dates(registration) }
+
+    let(:registration) { create(:registration) }
+
+    it "returns a link to the details page for the registration" do
+      expect(link_response).to match(%r{href="/registrations/#{registration.reference}"})
+    end
+
+    it "includes the date range for the registration" do
+      expect(link_response).to include(helper.registration_date_range(registration))
     end
   end
 end
