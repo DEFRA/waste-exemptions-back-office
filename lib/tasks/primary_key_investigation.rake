@@ -64,4 +64,22 @@ namespace :primary_key_investigation do
       puts e.backtrace.first(5)
     end
   end
+
+  desc "Add primary key constraint to analytics_user_journeys table"
+  task fix_primary_key: :environment do
+    puts "Adding primary key constraint to analytics_user_journeys table..."
+
+    ActiveRecord::Base.connection.execute(
+      "ALTER TABLE analytics_user_journeys ADD PRIMARY KEY (id);"
+    )
+
+    puts "Primary key constraint added successfully."
+    puts "Clearing schema cache..."
+    ActiveRecord::Base.connection.schema_cache.clear!
+    puts "Done!"
+
+    # Verify the fix
+    puts "\nVerifying primary key..."
+    puts "Primary key is now: #{WasteExemptionsEngine::Analytics::UserJourney.primary_key.inspect}"
+  end
 end
