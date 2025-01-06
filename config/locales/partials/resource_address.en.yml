@@ -27,6 +27,7 @@ en:
         is_a_farmer: Is a farmer?
       values:
         site_location_input_method:
+          unknown_mode: Unknown
           auto: Grid reference
           manual: Manual
           lookup: Lookup

@@ -67,11 +67,22 @@ RSpec.describe RegistrationsHelper do
   end
 
   describe "#registration_date_range" do
-    let(:registration) { create(:registration) }
+    context "with a registration" do
+      let(:registration) { create(:registration) }
 
-    it do
-      expect(helper.registration_date_range(registration))
-        .to eq "(#{registration.created_at.strftime('%-d %B %Y')} to #{registration.expires_on.strftime('%-d %B %Y')})"
+      it do
+        expect(helper.registration_date_range(registration))
+          .to eq "(#{registration.created_at.strftime('%-d %B %Y')} to #{registration.expires_on.strftime('%-d %B %Y')})"
+      end
+    end
+
+    context "with a new_registration" do
+      let(:registration) { create(:new_registration) }
+
+      it do
+        expect(helper.registration_date_range(registration))
+          .to eq "(created on #{registration.created_at.strftime('%-d %B %Y')})"
+      end
     end
   end
 

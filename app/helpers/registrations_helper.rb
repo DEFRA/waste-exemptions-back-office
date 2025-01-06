@@ -29,7 +29,12 @@ module RegistrationsHelper
   end
 
   def registration_date_range(resource)
-    "(#{resource.created_at.strftime('%-d %B %Y')} to #{resource.expires_on.strftime('%-d %B %Y')})"
+    created_on = resource.created_at.strftime("%-d %B %Y")
+    if resource.respond_to?(:expires_on)
+      "(#{created_on} to #{resource.expires_on.strftime('%-d %B %Y')})"
+    else
+      "(created on #{created_on})"
+    end
   end
 
   def registration_details_link_with_dates(resource)
