@@ -175,6 +175,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     puts "running fetch_companies_house_name for company_no: #{company_no}"
     companies_house_details = DefraRuby::CompaniesHouse::API.new.run(company_number: company_no)
     companies_house_details[:company_name]
+    puts "companies_house_details: #{companies_house_details}"
   rescue StandardError => e
     Rails.logger.error("Failed to fetch company name for #{company_no}: #{e.message}")
     raise
