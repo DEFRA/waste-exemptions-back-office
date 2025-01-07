@@ -7,7 +7,7 @@
     <% end %>
   </dt>
   <dd class="govuk-summary-list__value">
-  <% if address.address_type == 'site' %>
+  <% if address.site? %>
     <p class="govuk-body govuk-!-font-weight-bold">
       <%= t(".labels.grid_reference") %>
     </p>
@@ -49,7 +49,7 @@
       </p>
     <% end %>
 
-    <% if address.address_type == 'site' && address.x.present? %>
+    <% if address.site? && address.x.present? %>
       <p class="govuk-body govuk-!-font-weight-bold">
         <%= t(".labels.x") %>
       </p>
@@ -58,7 +58,7 @@
       </p>
     <% end %>
 
-    <% if address.address_type == 'site' && address.y.present? %>
+    <% if address.site? && address.y.present? %>
       <p class="govuk-body govuk-!-font-weight-bold">
         <%= t(".labels.y") %>
       </p>
@@ -130,7 +130,7 @@
       </p>
     <% end %>
 
-    <% if address.address_type == 'site' %>
+    <% if address.site? %>
       <% if defined?(on_a_farm) %>
         <p class="govuk-body govuk-!-font-weight-bold">
           <%= t(".labels.on_a_farm") %>
