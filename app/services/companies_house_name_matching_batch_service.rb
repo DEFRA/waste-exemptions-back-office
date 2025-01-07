@@ -172,6 +172,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     return nil if @request_count >= @max_requests
 
     @request_count += 1
+    puts "running fetch_companies_house_name for company_no: #{company_no}"
     companies_house_details = DefraRuby::CompaniesHouse::API.new.run(company_number: company_no)
     companies_house_details[:company_name]
   rescue StandardError => e
