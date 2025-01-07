@@ -130,10 +130,10 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
           .with(company_number: "11111111")
           .and_return({ company_name: "ACME GROUP LIMITED",
                         registered_office_address: ["10 Downing St"] })
+        registration
       end
 
       it "updates operator names and records changes" do
-        registration # Create the registration
         run_service
 
         expect(registration.reload.operator_name).to eq("ACME GROUP LIMITED")
@@ -149,7 +149,6 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
         end
 
         it "records errors in the report" do
-          registration # Create the registration
           run_service
 
           report_content = CSV.read(report_path)
