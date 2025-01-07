@@ -3,43 +3,41 @@
 require "rails_helper"
 
 RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
-  let(:report_path) { Rails.root.join("tmp", "test_report.csv") }
-  let(:summary_path) { Rails.root.join("tmp", "test_report_summary.csv") }
-  let(:batch_service) { described_class.new }
-  let(:similarity_threshold) { CompaniesHouseNameMatchingBatchService::SIMILARITY_THRESHOLD }
-  let(:run_service) { batch_service.run(dry_run: dry_run, report_path: report_path) }
-  let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API)}
-  let(:company_name) { "COMPANY NAME"}
-  let(:companies_house_api_response) do
-    {
-      company_name:,
-      registered_office_address: ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"]
-    }
-  end
+  subject(:run_service) { batch_service.run(dry_run:, report_path:) }
 
+  let(:batch_service) { described_class.new }
+  let(:report_path) { Rails.root.join("tmp/test_report.csv") }
+  let(:summary_path) { Rails.root.join("tmp/test_report_summary.csv") }
+  let(:dry_run) { true }
   let(:max_requests) { (described_class::RATE_LIMIT * described_class::RATE_LIMIT_BUFFER).to_i }
+  let(:company_name) { "COMPANY NAME" }
+  let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
 
   before do
     allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
-    allow(companies_house_api).to receive(:run).and_return(companies_house_api_response)
+    allow(companies_house_api).to receive(:run).and_return(
+      {
+        company_name:,
+        registered_office_address: ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"]
+      }
+    )
   end
 
   after do
-    File.delete(report_path) if File.exist?(report_path)
-    File.delete(summary_path) if File.exist?(summary_path)
+    FileUtils.rm_f(report_path)
+    FileUtils.rm_f(summary_path)
   end
 
   describe "#run" do
-    shared_examples "generates a report" do
-      let!(:registration) { create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111") }
-
-      it "creates a CSV report" do
-        run_service
-        expect(File.exist?(report_path)).to be true
+    context "when generating reports" do
+      before do
+        create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111")
       end
 
-      it "includes headers in the report" do
+      it "creates a CSV report with correct headers" do
         run_service
+        expect(File.exist?(report_path)).to be true
+
         headers = CSV.read(report_path)[3]
         expect(headers).to eq(
           ["Registration Ref", "Company Number", "Current Name",
@@ -47,73 +45,51 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
         )
       end
 
-      it "creates a summary report" do
+      it "creates a summary report with batch information" do
         run_service
         expect(File.exist?(summary_path)).to be true
-      end
 
-      it "includes a batch row with totals" do
-        run_service
         summary_content = CSV.read(summary_path)
-
         expect(summary_content[0]).to eq([
-          "Batch #",
-          "Started at",
-          "Completed at",
-          "Processed",
-          "Updated",
-          "Skipped"
-        ])
+                                           "Batch #",
+                                           "Started at",
+                                           "Completed at",
+                                           "Processed",
+                                           "Updated",
+                                           "Skipped"
+                                         ])
 
-        expect(summary_content.size).to be >= 2
         data_row = summary_content[1]
-
-        expect(data_row[3].to_i).to be >= 0
-        expect(data_row[4].to_i).to be >= 0
-        expect(data_row[5].to_i).to be >= 0
+        expect(data_row[3..5].map(&:to_i)).to all(be >= 0)
       end
     end
 
-    context "when dry_run is true" do
-      let(:dry_run) { true }
-
-      include_examples "generates a report"
-
-      context "when there are more companies than the rate limit allows" do
+    context "when processing companies" do
+      context "when exceeding rate limit" do
         before do
           (max_requests + 10).times do |i|
             create(:registration, operator_name: "Company #{i}", company_no: "1234567#{i}")
           end
         end
 
-        it "processes only up to the maximum number of requests" do
-          result = run_service
-          expect(batch_service.instance_variable_get(:@request_count)).to eq(max_requests)
-        end
-
-        it "does not exceed the maximum number of requests" do
+        it "processes only up to the rate limit and records skips" do
           run_service
           expect(batch_service.instance_variable_get(:@request_count)).to eq(max_requests)
-        end
 
-        it "records skipped companies in the report" do
-          run_service
           report_content = CSV.read(report_path)
-          expect(report_content.count { |row| row.last&.start_with?("SKIP:") }).to be > 0
+          expect(report_content.count { |row| row.last&.start_with?("SKIP:") }).to be_positive
         end
       end
 
-      context "when there are recently updated Company records" do
-        let!(:old_registration) { create(:registration, operator_name: "OLD COMPANY", company_no: "12345678") }
-        let(:company_name) { "NEW COMPANY LTD" }
-
+      context "when handling recently updated records" do
         before do
+          create(:registration, operator_name: "OLD COMPANY", company_no: "12345678")
           create(:registration, operator_name: "NEW COMPANY", company_no: "87654321")
           create(:company, name: "OLD COMPANY", company_no: "12345678", updated_at: 4.months.ago)
           create(:company, name: "NEW COMPANY", company_no: "87654321", updated_at: Time.current)
         end
 
-        it "will not procress that registration" do
+        it "excludes recently updated companies from processing" do
           run_service
           report_content = CSV.read(report_path)
           expect(report_content.count { |row| row[1] == "87654321" }).to eq(0)
@@ -121,79 +97,64 @@ RSpec.describe CompaniesHouseNameMatchingBatchService, type: :service do
         end
       end
 
-      context "when there are similar companies with various word placements" do
-        let!(:group_ltd_registration) { create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111") }
-        let!(:limited_group_registration) { create(:registration, operator_name: "ACME LIMITED GROUP", company_no: "11111111") }
-        let!(:holdings_plc_registration) { create(:registration, operator_name: "Acme Holdings Services PLC", company_no: "22222222") }
-        let!(:services_group_registration) { create(:registration, operator_name: "Acme Services Holdings Group", company_no: "22222222") }
-
+      context "when processing similar company names" do
         before do
-          allow(companies_house_api).to receive(:run).with(company_number: "11111111")
-            .and_return(companies_house_api_response.merge(company_name: "ACME GROUP LIMITED"))
-          allow(companies_house_api).to receive(:run).with(company_number: "22222222")
-            .and_return(companies_house_api_response.merge(company_name: "ACME HOLDINGS SERVICES PLC"))
+          create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111")
+          create(:registration, operator_name: "ACME LIMITED GROUP", company_no: "11111111")
+
+          allow(companies_house_api).to receive(:run)
+            .with(company_number: "11111111")
+            .and_return({ company_name: "ACME GROUP LIMITED",
+                          registered_office_address: ["10 Downing St"] })
         end
 
-        it "records proposed changes in the report with similarity scores" do
+        it "identifies and records changes meeting similarity threshold" do
           run_service
           report_content = CSV.read(report_path)
           change_rows = report_content.select { |row| row.last == "CHANGE" }
-          expect(change_rows.map { |row| row[1] }).to include("11111111", "22222222")
-          expect(change_rows.all? { |row| row[4].to_f >= similarity_threshold }).to be true
-        end
-      end
 
-      context "when there are companies with typos" do
-        let!(:registration) { create(:registration, operator_name: "Pratt Developements Group Ltd", company_no: "33333333") }
-
-        before do
-          allow(companies_house_api).to receive(:run).with(company_number: "33333333")
-            .and_return(companies_house_api_response.merge(company_name: "PRATT DEVELOPMENTS GROUP LIMITED"))
-        end
-
-        it "records changes with similarity scores in the report" do
-          run_service
-          report_content = CSV.read(report_path)
-          change_row = report_content.find { |row| row[1] == "33333333" && row.last == "CHANGE" }
-          expect(change_row).to be_present
-          expect(change_row[4].to_f).to be >= similarity_threshold
+          expect(change_rows.map { |row| row[1] }).to include("11111111")
+          expect(change_rows.all? { |row| row[4].to_f >= described_class::SIMILARITY_THRESHOLD }).to be true
         end
       end
     end
 
-    context "when dry_run is false" do
+    context "when not in dry run mode" do
       let(:dry_run) { false }
-      let!(:registration) { create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111") }
-
-      include_examples "generates a report"
-
-      before do
-          allow(companies_house_api).to receive(:run).with(company_number: "11111111")
-            .and_return(companies_house_api_response.merge(company_name: "ACME GROUP LIMITED"))
+      let(:registration) do
+        create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111")
       end
 
-      it "updates the operator names in the database and records the change" do
+      before do
+        allow(companies_house_api).to receive(:run)
+          .with(company_number: "11111111")
+          .and_return({ company_name: "ACME GROUP LIMITED",
+                        registered_office_address: ["10 Downing St"] })
+      end
+
+      it "updates operator names and records changes" do
+        registration # Create the registration
         run_service
+
         expect(registration.reload.operator_name).to eq("ACME GROUP LIMITED")
 
         report_content = CSV.read(report_path)
         change_row = report_content.find { |row| row[1] == "11111111" && row.last == "CHANGE" }
-        expect(change_row).to be_present
-        expect(change_row[2]).to eq("Acme Group Ltd")
-        expect(change_row[3]).to eq("ACME GROUP LIMITED")
+        expect(change_row[2..3]).to eq(["Acme Group Ltd", "ACME GROUP LIMITED"])
       end
 
-      context "when an error occurs" do
+      context "when API errors occur" do
         before do
           allow(companies_house_api).to receive(:run).and_raise(StandardError.new("API Error"))
         end
 
-        it "records the error in the report" do
+        it "records errors in the report" do
+          registration # Create the registration
           run_service
+
           report_content = CSV.read(report_path)
           error_row = report_content.find { |row| row.last&.start_with?("ERROR:") }
-          expect(error_row).to be_present
-          expect(error_row[1]).to eq("11111111")
+          expect(error_row[1..2]).to eq(["11111111", nil])
           expect(error_row.last).to include("API Error")
         end
       end

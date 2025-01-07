@@ -5,7 +5,7 @@ class CompaniesHouseNameMatchingReportService
 
   def initialize(report_path = nil)
     @report_path = set_report_path(report_path)
-    @summary_path = @report_path.sub('.csv', '_summary.csv')
+    @summary_path = @report_path.sub(".csv", "_summary.csv")
     @started_at = Time.current
     @processed_count = 0
     @updated_count = 0
@@ -28,20 +28,20 @@ class CompaniesHouseNameMatchingReportService
   end
 
   def record_change(registration, companies_house_name, similarity = nil)
-    CSV.open(report_path, 'a') do |csv|
+    CSV.open(report_path, "a") do |csv|
       csv << [
         registration.reference,
         registration.company_no,
         registration.operator_name,
         companies_house_name,
         similarity&.round(2),
-        'CHANGE'
+        "CHANGE"
       ]
     end
   end
 
   def record_skip(registration, reason)
-    CSV.open(report_path, 'a') do |csv|
+    CSV.open(report_path, "a") do |csv|
       csv << [
         registration.reference,
         registration.company_no,
@@ -54,7 +54,7 @@ class CompaniesHouseNameMatchingReportService
   end
 
   def record_error(company_no, error)
-    CSV.open(report_path, 'a') do |csv|
+    CSV.open(report_path, "a") do |csv|
       csv << [
         nil,
         company_no,
@@ -77,23 +77,24 @@ class CompaniesHouseNameMatchingReportService
   private
 
   def default_report_path
-    date = Time.current.strftime('%Y%m%d')
-    Rails.root.join('public', 'company_reports', "companies_house_update_#{date}.csv")
+    date = Time.current.strftime("%Y%m%d")
+    Rails.public_path.join("company_reports", "companies_house_update_#{date}.csv")
   end
 
   def ensure_report_directory
     directory = File.dirname(report_path)
-    puts "Ensuring report directory exists at: #{directory}"
+    Rails.logger.info { "Ensuring report directory exists at: #{directory}" }
     FileUtils.mkdir_p(directory)
   end
 
   def initialize_csv
-    puts "Creating new report at: #{@report_path}"
-    CSV.open(report_path, 'w') do |csv|
-      csv << ['Companies House Name Matching Report']
-      csv << ['Started at', @started_at]
+    Rails.logger.info { "Creating new report at: #{@report_path}" }
+    CSV.open(report_path, "w") do |csv|
+      csv << ["Companies House Name Matching Report"]
+      csv << ["Started at", @started_at]
       csv << []
-      csv << ['Registration Ref', 'Company Number', 'Current Name', 'Companies House Name', 'Similarity Score', 'Status']
+      csv << ["Registration Ref", "Company Number", "Current Name", "Companies House Name", "Similarity Score",
+              "Status"]
     end
   end
 
@@ -134,21 +135,19 @@ class CompaniesHouseNameMatchingReportService
   def next_batch_number
     return 1 unless File.exist?(summary_path)
 
-    lines = CSV.read(summary_path).size + 1
-    lines
+    CSV.read(summary_path).size + 1
   end
 
   def set_report_path(report_path)
     if report_path.present?
-      Rails.root.join('public', 'company_reports', report_path)
+      Rails.public_path.join("company_reports", report_path)
     else
       default_report_path
     end
   end
 
-
   def log_report_path
-    relative_path = report_path.to_s.sub(Rails.root.join('public').to_s, '')
-    puts "Report will be generated at: #{relative_path}"
+    relative_path = report_path.to_s.sub(Rails.public_path.to_s, "")
+    Rails.logger.info { "Report will be generated at: #{relative_path}" }
   end
 end

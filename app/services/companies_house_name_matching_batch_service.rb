@@ -9,7 +9,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
   RATE_LIMIT_BUFFER = 0.75
 
   def initialize
-    super()
+    super
     @request_count = 0
     @max_requests = (RATE_LIMIT * RATE_LIMIT_BUFFER).to_i
     @unproposed_changes = {}
@@ -19,13 +19,13 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     @dry_run = dry_run
     @report = CompaniesHouseNameMatchingReportService.new(report_path)
 
-    puts("Starting a single batch of Companies House name matching...")
+    Rails.logger.info("Starting a single batch of Companies House name matching...")
 
     # 1) Fetch the registrations that are eligible to be processed this batch
     active_registrations = fetch_active_registrations
 
     if active_registrations.none?
-      puts "No registrations left to process (they are all recently updated or do not exist)."
+      Rails.logger.info "No registrations left to process (they are all recently updated or do not exist)."
       return {
         processed_company_count: 0,
         skipped_company_count: 0,
@@ -34,9 +34,15 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
       }
     end
 
-    puts "Total number of registrations in state active overall: #{WasteExemptionsEngine::Registration.joins(:registration_exemptions).where(registration_exemptions: { state: :active }).count}"
-    puts "Number of active registrations to process in this batch (not recently updated): #{active_registrations.size}"
-    puts "Total number of recently updated companies: #{WasteExemptionsEngine::Company.recently_updated.count}"
+    Rails.logger.info do
+      "Total number of registrations in state active overall: #{WasteExemptionsEngine::Registration.joins(:registration_exemptions).where(registration_exemptions: { state: :active }).count}"
+    end
+    Rails.logger.info do
+      "Number of active registrations to process in this batch (not recently updated): #{active_registrations.size}"
+    end
+    Rails.logger.info do
+      "Total number of recently updated companies: #{WasteExemptionsEngine::Company.recently_updated.count}"
+    end
 
     # 2) Group and limit by max_requests
     grouped_registrations = active_registrations.group_by(&:company_no)
@@ -52,19 +58,19 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
     end
 
     @report.finalize
-    puts("Batch complete.")
-    puts("Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}")
+    Rails.logger.info("Batch complete.")
+    Rails.logger.info { "Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}" }
 
     # 4) Figure out how many *total* registrations remain for the next batch.
     #    This will do another query to see if there are more left to do.
     remaining = fetch_active_registrations.count
-    puts "Total number of registrations left to process: #{remaining}"
+    Rails.logger.info { "Total number of registrations left to process: #{remaining}" }
 
     {
       processed_company_count: proposed_changes.size,
       skipped_company_count: @unproposed_changes.size,
       total_left_to_process: remaining,
-      any_left_to_process?: (remaining > 0)
+      any_left_to_process?: remaining.positive?
     }
   end
 
@@ -87,7 +93,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
   def fetch_active_registrations
     recently_updated_companies = WasteExemptionsEngine::Company.recently_updated.select(:company_no)
 
-    registrations = WasteExemptionsEngine::Registration
+    WasteExemptionsEngine::Registration
       .joins(:registration_exemptions)
       .where(registration_exemptions: { state: :active })
       .where.not(operator_name: nil)
@@ -99,7 +105,7 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
   def identify_name_changes(grouped_registrations)
     proposed_changes = {}
 
-    puts "Total number of company numbers to process in this batch: #{grouped_registrations.size}"
+    Rails.logger.info { "Total number of company numbers to process in this batch: #{grouped_registrations.size}" }
 
     # Sort by group size and only pick the number of groups allowed by
     # @max_requests
@@ -182,43 +188,45 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
   def print_summary(proposed_changes, applied: false)
     action = applied ? "applied" : "proposed"
 
-    puts("=== Summary ===")
-    puts("Total number of company numbers processed this batch: #{@request_count}")
-    puts("Total number of company numbers with #{action} name changes: #{proposed_changes.size}")
-    puts("Full report available at: /company_reports/#{File.basename(@report.report_path)}")
-    puts("\n#{action.capitalize} name changes:")
+    Rails.logger.info("=== Summary ===")
+    Rails.logger.info { "Total number of company numbers processed this batch: #{@request_count}" }
+    Rails.logger.info { "Total number of company numbers with #{action} name changes: #{proposed_changes.size}" }
+    Rails.logger.info { "Full report available at: /company_reports/#{File.basename(@report.report_path)}" }
+    Rails.logger.info { "\n#{action.capitalize} name changes:" }
 
     if proposed_changes.empty?
-      puts(" No changes #{action}.")
+      Rails.logger.info { " No changes #{action}." }
     else
       proposed_changes.each do |company_no, changes|
-        puts(" Company number: #{company_no}")
+        Rails.logger.info { " Company number: #{company_no}" }
         changes.each do |reference, old_name, new_name|
-          puts "   Registration reference: #{reference}, Old name: '#{old_name}', New name: '#{new_name}'"
+          Rails.logger.info "   Registration reference: #{reference}, Old name: '#{old_name}', New name: '#{new_name}'"
         end
       end
     end
   end
 
   def print_unproposed_changes
-    puts "\nChanges not proposed (too different from Companies House records):"
+    Rails.logger.info "\nChanges not proposed (too different from Companies House records):"
     if @unproposed_changes.empty?
-      puts " No unproposed changes."
+      Rails.logger.info " No unproposed changes."
     else
       @unproposed_changes.each do |company_no, details|
-        puts " Company number: #{company_no}"
+        Rails.logger.info { " Company number: #{company_no}" }
         details.each do |detail|
-          puts "   Registration reference: #{detail[:registration_reference]}"
-          puts "   Current name: '#{detail[:current_name]}'"
-          puts "   Companies House name: '#{detail[:companies_house_name]}'"
-          puts "   Name similarity: #{detail[:similarity].round(2)}"
-          puts ""
+          Rails.logger.info { "   Registration reference: #{detail[:registration_reference]}" }
+          Rails.logger.info { "   Current name: '#{detail[:current_name]}'" }
+          Rails.logger.info { "   Companies House name: '#{detail[:companies_house_name]}'" }
+          Rails.logger.info { "   Name similarity: #{detail[:similarity].round(2)}" }
+          Rails.logger.info ""
         end
       end
     end
   end
 
   def log_unproposed_changes_count
-    puts "Total registrations with names too different from Companies House: #{@unproposed_changes.size}"
+    Rails.logger.info do
+      "Total registrations with names too different from Companies House: #{@unproposed_changes.size}"
+    end
   end
 end
