@@ -173,7 +173,11 @@ class CompaniesHouseNameMatchingBatchService < WasteExemptionsEngine::BaseServic
 
     @request_count += 1
     puts "running fetch_companies_house_name for company_no: #{company_no}"
-    companies_house_details = DefraRuby::CompaniesHouse::API.new.run(company_number: company_no)
+    puts "making get request to #{}"
+    companies_house_api = DefraRuby::CompaniesHouse::API.new
+    puts "making get request to #{companies_house_api.send(:companies_house_endpoint)}"
+    puts "api_key: #{companies_house_api.send(:api_key)}"
+    companies_house_details = companies_house_api.run(company_number: company_no)
     companies_house_details[:company_name]
     puts "companies_house_details: #{companies_house_details}"
   rescue StandardError => e
