@@ -188,13 +188,26 @@
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
+      <%= t(".subheadings.assistance_mode") %>
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        <%= t(".values.assistance_mode.#{resource.assistance_mode || "none"}") %>
+      </p>
+    </dd>
+  </div>
+</dl>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
       <%= t(".subheadings.renewal_history") %>
     </dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         <%= "#{resource.reference} #{registration_date_range(resource)} #{t(".this_registration")}" %>
       </p>
-      <% renewal_history(resource).each do |registration| %>
+      <% renewal_history(resource)[1..].each do |registration| %>
         <p>
           <%= registration_details_link_with_dates(registration) %>
         <p>
