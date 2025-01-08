@@ -4,7 +4,7 @@ namespace :companies_house_name_matching do
   desc "Process a SINGLE batch (DRY RUN), then stop."
   task :dry_run_batch, [:report_path] => :environment do |_, args|
     with_stdout_logger do
-      CompaniesHouseNameMatchingBatchService.run(
+      CompaniesHouseNameMatching::ProcessBatch.run(
         dry_run: true,
         report_path: args[:report_path]
       )
@@ -14,7 +14,7 @@ namespace :companies_house_name_matching do
   desc "Process a SINGLE batch (REAL RUN), then stop."
   task :run_batch, [:report_path] => :environment do |_, args|
     with_stdout_logger do
-      CompaniesHouseNameMatchingBatchService.run(
+      CompaniesHouseNameMatching::ProcessBatch.run(
         dry_run: false,
         report_path: args[:report_path]
       )
