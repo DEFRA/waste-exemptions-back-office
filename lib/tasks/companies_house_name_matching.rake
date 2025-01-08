@@ -24,7 +24,7 @@ namespace :companies_house_name_matching do
   desc "DRY RUN - keep running batch after batch (with a 5-minute pause) until no more left."
   task :dry_run_until_done, [:report_path] => :environment do |_, args|
     with_stdout_logger do
-      CompaniesHouseNameMatchingRunnerService.run_until_done(
+      CompaniesHouseNameMatching::RunnerService.run_until_done(
         dry_run: true,
         report_path: args[:report_path]
       )
@@ -34,7 +34,7 @@ namespace :companies_house_name_matching do
   desc "REAL RUN - keep running batch after batch (with a 5-minute pause) until no more left."
   task :run_until_done, [:report_path] => :environment do |_, args|
     with_stdout_logger do
-      CompaniesHouseNameMatchingRunnerService.run_until_done(
+      CompaniesHouseNameMatching::RunnerService.run_until_done(
         dry_run: false,
         report_path: args[:report_path]
       )

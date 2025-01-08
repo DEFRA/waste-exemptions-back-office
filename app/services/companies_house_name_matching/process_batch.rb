@@ -15,7 +15,7 @@ module CompaniesHouseNameMatching
 
     def run(dry_run: true, report_path: nil)
       @dry_run = dry_run
-      @report = CompaniesHouseNameMatchingReportService.new(report_path)
+      @report = ReportService.new(report_path)
       process_batch
     end
 
