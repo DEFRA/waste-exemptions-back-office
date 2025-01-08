@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 module CompaniesHouseNameMatching
-  class ProcessRegistrations
+  class ProcessRegistrations < WasteExemptionsEngine::BaseService
     SIMILARITY_THRESHOLD = 0.7
 
-    def initialize(report_service, dry_run)
+    def run(report_service:, dry_run:, grouped_registrations:, max_requests:)
       @report = report_service
       @dry_run = dry_run
       @unproposed_changes = {}
-    end
 
-    def process_registrations(grouped_registrations, max_requests)
       proposed_changes = {}
       sorted_groups = sort_and_limit_groups(grouped_registrations, max_requests)
       sorted_groups.each do |company_no, registrations|
@@ -35,16 +33,16 @@ module CompaniesHouseNameMatching
         return
       end
 
-      compare_name_service = CompareCompanyNames.new(companies_house_name)
-      changes = propose_name_changes(company_no, registrations, companies_house_name, compare_name_service)
+      changes = propose_name_changes(company_no, registrations, companies_house_name)
       handle_changes(changes, company_no, proposed_changes)
     rescue StandardError => e
       handle_error(company_no, registrations, e)
     end
 
-    def propose_name_changes(company_no, registrations, companies_house_name, compare_name_service)
+    def propose_name_changes(company_no, registrations, companies_house_name)
       registrations.map do |registration|
-        similarity = compare_name_service.compare(registration.operator_name)
+        similarity = CompareCompanyNames.run(companies_house_name:,
+                                             other_company_name: registration.operator_name)
 
         if companies_house_name == registration.operator_name
           @report.record_skip(registration, "Name already matches")

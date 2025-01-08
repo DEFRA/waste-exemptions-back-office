@@ -27,7 +27,11 @@ module CompaniesHouseNameMatching
 
       log_batch_info(active_registrations)
       grouped_registrations = active_registrations.group_by(&:company_no)
-      proposed_changes = process_registrations(grouped_registrations)
+
+      proposed_changes = ProcessRegistrations.run(report_service: @report,
+                                                  dry_run: @dry_run,
+                                                  grouped_registrations: grouped_registrations,
+                                                  max_requests: @max_requests)
       handle_changes(proposed_changes)
       remaining = fetch_active_registrations.count
       build_result(proposed_changes, remaining)
@@ -47,7 +51,7 @@ module CompaniesHouseNameMatching
         print_summary(proposed_changes)
         print_unproposed_changes
       else
-        apply_changes(proposed_changes)
+        ApplyChanges.run(proposed_changes)
         print_summary(proposed_changes, applied: true)
       end
       @report.finalize
@@ -70,15 +74,6 @@ module CompaniesHouseNameMatching
 
     def fetch_active_registrations
       FetchData.fetch_active_registrations
-    end
-
-    def process_registrations(grouped_registrations)
-      registration_processor = ProcessRegistrations.new(@report, @dry_run)
-      registration_processor.process_registrations(grouped_registrations, @max_requests)
-    end
-
-    def apply_changes(proposed_changes)
-      ApplyChanges.run(proposed_changes)
     end
   end
 end

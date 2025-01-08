@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 module CompaniesHouseNameMatching
-  class CompareCompanyNames
+  class CompareCompanyNames < WasteExemptionsEngine::BaseService
     COMMON_WORDS = %w[LIMITED LTD PLC HOLDINGS SERVICES GROUP INCORPORATED INC].freeze
 
-    def initialize(companies_house_name)
+    def run(companies_house_name:, other_company_name:)
       @companies_house_name = companies_house_name
-    end
-
-    def compare(other_company_name)
       return 0.0 if other_company_name.blank? || @companies_house_name.blank?
 
       normalized_companies_house_name = normalize_company_name(@companies_house_name)
