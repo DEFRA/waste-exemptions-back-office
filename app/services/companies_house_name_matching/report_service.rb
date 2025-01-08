@@ -4,15 +4,13 @@ module CompaniesHouseNameMatching
   class ReportService
     attr_reader :report_path, :summary_path
 
+    delegate :record_change, :record_skip, :record_error, to: :@report
+
     def initialize(report_path = nil)
-      @report_path = set_report_path(report_path)
+      @report_path = parse_report_path(report_path)
       @summary_path = @report_path.sub(".csv", "_summary.csv")
-      @started_at = Time.current
-      @processed_count = 0
-      @updated_count = 0
-      @skipped_count = 0
-      ensure_report_directory
-      initialize_csv unless File.exist?(@report_path)
+      @report = CsvReportWriter.new(@report_path)
+      initialize_counters
       log_report_path
     end
 
@@ -28,45 +26,6 @@ module CompaniesHouseNameMatching
       @skipped_count += 1
     end
 
-    def record_change(registration, companies_house_name, similarity = nil)
-      CSV.open(report_path, "a") do |csv|
-        csv << [
-          registration.reference,
-          registration.company_no,
-          registration.operator_name,
-          companies_house_name,
-          similarity&.round(2),
-          "CHANGE"
-        ]
-      end
-    end
-
-    def record_skip(registration, reason)
-      CSV.open(report_path, "a") do |csv|
-        csv << [
-          registration.reference,
-          registration.company_no,
-          registration.operator_name,
-          nil,
-          nil,
-          "SKIP: #{reason}"
-        ]
-      end
-    end
-
-    def record_error(company_no, error)
-      CSV.open(report_path, "a") do |csv|
-        csv << [
-          nil,
-          company_no,
-          nil,
-          nil,
-          nil,
-          "ERROR: #{error.message}"
-        ]
-      end
-    end
-
     def finalize
       if File.exist?(summary_path)
         append_summary_report
@@ -77,26 +36,11 @@ module CompaniesHouseNameMatching
 
     private
 
-    def default_report_path
-      date = Time.current.strftime("%Y%m%d")
-      Rails.public_path.join("company_reports", "companies_house_update_#{date}.csv")
-    end
-
-    def ensure_report_directory
-      directory = File.dirname(report_path)
-      Rails.logger.info { "Ensuring report directory exists at: #{directory}" }
-      FileUtils.mkdir_p(directory)
-    end
-
-    def initialize_csv
-      Rails.logger.info { "Creating new report at: #{@report_path}" }
-      CSV.open(report_path, "w") do |csv|
-        csv << ["Companies House Name Matching Report"]
-        csv << ["Started at", @started_at]
-        csv << []
-        csv << ["Registration Ref", "Company Number", "Current Name", "Companies House Name", "Similarity Score",
-                "Status"]
-      end
+    def initialize_counters
+      @processed_count = 0
+      @updated_count = 0
+      @skipped_count = 0
+      @started_at = Time.current
     end
 
     def create_summary_report
@@ -139,12 +83,17 @@ module CompaniesHouseNameMatching
       CSV.read(summary_path).size + 1
     end
 
-    def set_report_path(report_path)
+    def parse_report_path(report_path)
       if report_path.present?
         Rails.public_path.join("company_reports", report_path)
       else
         default_report_path
       end
+    end
+
+    def default_report_path
+      date = Time.current.strftime("%Y%m%d")
+      Rails.public_path.join("company_reports", "companies_house_update_#{date}.csv")
     end
 
     def log_report_path

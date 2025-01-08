@@ -9,6 +9,7 @@ module CompaniesHouseNameMatching
     RATE_LIMIT_BUFFER = 0.75
 
     def initialize
+      super
       @max_requests = (RATE_LIMIT * RATE_LIMIT_BUFFER).to_i
       @unproposed_changes = {}
     end
