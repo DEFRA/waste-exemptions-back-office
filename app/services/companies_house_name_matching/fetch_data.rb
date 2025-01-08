@@ -25,4 +25,3 @@ module CompaniesHouseNameMatching
     end
   end
 end
-

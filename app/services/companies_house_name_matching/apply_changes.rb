@@ -2,9 +2,6 @@
 
 module CompaniesHouseNameMatching
   class ApplyChanges < WasteExemptionsEngine::BaseService
-    def initialize
-      super()
-    end
 
     def run(proposed_changes = {})
       raise ArgumentError, "proposed_changes must be a Hash" unless proposed_changes.is_a?(Hash)

@@ -159,4 +159,3 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
     end
   end
 end
-
