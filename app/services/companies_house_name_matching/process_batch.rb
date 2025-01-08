@@ -17,7 +17,9 @@ module CompaniesHouseNameMatching
     def run(dry_run: true, report_path: nil)
       @dry_run = dry_run
       @report = ReportService.new(report_path)
-      process_batch
+      with_stdout_logger do
+        process_batch
+      end
     end
 
     private
@@ -70,6 +72,14 @@ module CompaniesHouseNameMatching
 
     def fetch_active_registrations
       FetchData.fetch_active_registrations
+    end
+
+    def with_stdout_logger
+      original_logger = Rails.logger
+      Rails.logger = Logger.new($stdout)
+      yield
+    ensure
+      Rails.logger = original_logger
     end
   end
 end

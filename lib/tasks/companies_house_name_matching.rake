@@ -3,49 +3,27 @@
 namespace :companies_house_name_matching do
   desc "Process a SINGLE batch (DRY RUN), then stop."
   task :dry_run_batch, [:report_path] => :environment do |_, args|
-    with_stdout_logger do
-      CompaniesHouseNameMatching::ProcessBatch.run(
-        dry_run: true,
-        report_path: args[:report_path]
-      )
-    end
+    CompaniesHouseNameMatching::ProcessBatch.run(dry_run: true, report_path: args[:report_path])
   end
 
   desc "Process a SINGLE batch (REAL RUN), then stop."
   task :run_batch, [:report_path] => :environment do |_, args|
-    with_stdout_logger do
-      CompaniesHouseNameMatching::ProcessBatch.run(
-        dry_run: false,
-        report_path: args[:report_path]
-      )
-    end
+    CompaniesHouseNameMatching::ProcessBatch.run(dry_run: false, report_path: args[:report_path])
   end
 
   desc "DRY RUN - keep running batch after batch (with a 5-minute pause) until no more left."
   task :dry_run_until_done, [:report_path] => :environment do |_, args|
-    with_stdout_logger do
-      CompaniesHouseNameMatching::RunnerService.run_until_done(
-        dry_run: true,
-        report_path: args[:report_path]
-      )
-    end
+    CompaniesHouseNameMatching::RunnerService.run_until_done(
+      dry_run: true,
+      report_path: args[:report_path]
+    )
   end
 
   desc "REAL RUN - keep running batch after batch (with a 5-minute pause) until no more left."
   task :run_until_done, [:report_path] => :environment do |_, args|
-    with_stdout_logger do
-      CompaniesHouseNameMatching::RunnerService.run_until_done(
-        dry_run: false,
-        report_path: args[:report_path]
-      )
-    end
-  end
-
-  def with_stdout_logger
-    original_logger = Rails.logger
-    Rails.logger = Logger.new($stdout)
-    yield
-  ensure
-    Rails.logger = original_logger
+    CompaniesHouseNameMatching::RunnerService.run_until_done(
+      dry_run: false,
+      report_path: args[:report_path]
+    )
   end
 end
