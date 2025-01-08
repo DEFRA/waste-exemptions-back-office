@@ -20,13 +20,13 @@ module CompaniesHouseNameMatching
       end
     end
 
-    def print_summary(proposed_changes, applied: false)
+    def log_summary(proposed_changes, applied: false)
       action = applied ? "applied" : "proposed"
       log_summary_header(action, proposed_changes)
       log_summary_changes(proposed_changes, action)
     end
 
-    def print_unproposed_changes
+    def log_unproposed_changes
       Rails.logger.info "\nChanges not proposed (too different from Companies House records):"
       if @unproposed_changes.empty?
         Rails.logger.info " No unproposed changes."
@@ -70,6 +70,11 @@ module CompaniesHouseNameMatching
           Rails.logger.info ""
         end
       end
+    end
+
+    def log_completion
+      Rails.logger.info("Batch complete.")
+      Rails.logger.info("Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}")
     end
 
     def total_active_registrations

@@ -48,11 +48,11 @@ module CompaniesHouseNameMatching
 
     def handle_changes(proposed_changes)
       if @dry_run
-        print_summary(proposed_changes)
-        print_unproposed_changes
+        log_summary(proposed_changes)
+        log_unproposed_changes
       else
         ApplyChanges.run(proposed_changes)
-        print_summary(proposed_changes, applied: true)
+        log_summary(proposed_changes, applied: true)
       end
       @report.finalize
       log_completion
@@ -65,11 +65,6 @@ module CompaniesHouseNameMatching
         total_left_to_process: remaining,
         any_left_to_process?: remaining.positive?
       }
-    end
-
-    def log_completion
-      Rails.logger.info("Batch complete.")
-      Rails.logger.info("Report can be accessed at: /company_reports/#{File.basename(@report.report_path)}")
     end
 
     def fetch_active_registrations
