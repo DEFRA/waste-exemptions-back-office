@@ -4,8 +4,9 @@ en:
       subheadings:
         applicant: Applicant details
         contact: Contact details
-        business_or_organisation_details: Business or organisation
+        business_or_organisation_details: Business or organisation details
         exemptions: Exemptions
+        assistance_mode: Registration method
         renewal_history: Renewal history
         actions: Actions
         current_balance: Current balance
@@ -26,7 +27,6 @@ en:
         contact_position: Contact position
         contact_phone: Contact phone
         contact_email: Contact email
-        assistance_mode: Registration method
         submitted_at: Submitted at
         amount: Amount
       values:
