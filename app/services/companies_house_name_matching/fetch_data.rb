@@ -21,7 +21,7 @@ module CompaniesHouseNameMatching
       companies_house_details[:company_name]
     rescue StandardError => e
       Rails.logger.error("Failed to fetch company name for #{company_no}: #{e.message}")
-      raise
+      nil
     end
   end
 end
