@@ -4,7 +4,7 @@ require "rails_helper"
 require "rake"
 
 RSpec.describe "companies_house_name_matching" do
-  context "batch tasks" do
+  describe "batch tasks" do
     before do
       allow(CompaniesHouseNameMatching::ProcessBatch).to receive(:run)
     end
@@ -39,7 +39,8 @@ RSpec.describe "companies_house_name_matching" do
       end
     end
   end
-  context "run_until_done tasks" do
+
+  describe "run_until_done tasks" do
     before do
       allow(CompaniesHouseNameMatching::RunnerService).to receive(:run_until_done)
     end

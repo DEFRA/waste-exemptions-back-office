@@ -42,9 +42,9 @@ module CompaniesHouseNameMatching
         end
 
         it "respects the rate limit by sleeping between batches" do
-          expect(described_class).to receive(:sleep).with(ProcessBatch::TIME_BETWEEN_BATCHES).once
 
           described_class.run_until_done(dry_run: true, report_path: report_path)
+          expect(described_class).to have_received(:sleep).with(ProcessBatch::TIME_BETWEEN_BATCHES).once
         end
       end
 
@@ -68,9 +68,9 @@ module CompaniesHouseNameMatching
         end
 
         it "does not sleep between batches" do
-          expect(described_class).not_to receive(:sleep)
-
           described_class.run_until_done(dry_run: true, report_path: report_path)
+
+          expect(described_class).not_to have_received(:sleep)
         end
       end
 
