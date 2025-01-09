@@ -1,0 +1,31 @@
+en:
+  shared:
+    resource_details_actions:
+      subheadings:
+        actions: Actions
+      actions:
+        edit: Edit
+        edit_expiry_date: Set a new expiry date
+        deregister: Deregister
+        show_communication_history: Show communication history
+        resume: Resume
+        resend_confirmation_email: Resend confirmation email
+        resend_confirmation_letter: Resend confirmation letter
+        refresh_companies_house: Refresh Companies House information
+        reset_transient_registrations: Reset transient registrations
+        renew:
+          link_text: Start renewal
+          visually_hidden_text: "of %{name}"
+          renew_window_closed: Renewal period closed
+          already_renewed: Already renewed
+        resend_renew_email:
+          link_text: Resend renewal email
+          visually_hidden_text: "of %{name}"
+        resend_renewal_letter: Resend renewal letter
+        send_edit_invite_email:
+          link_text: Send edit invite email
+          visually_hidden_text: "send edit invite email for %{name}"
+        view_certificate:
+          link_text: View certificate
+          visually_hidden_text: "of %{name}"
+        payment_details: Payment details

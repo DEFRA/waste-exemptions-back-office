@@ -4,10 +4,10 @@ en:
       heading:
         unknown: Unknown address
         contact: Contact address
-        operator: Address
+        operator: Business or organisation address
         site: Site location
       labels:
-        mode: Mode
+        mode: Site location input method
         grid_reference: Site grid reference
         address:
           contact: Address
@@ -23,3 +23,17 @@ en:
         source_data_type: Source data type
         country_iso: Country ISO
         area: Area
+        on_a_farm: On a farm?
+        is_a_farmer: Is a farmer?
+      values:
+        site_location_input_method:
+          unknown_mode: Unknown
+          auto: Grid reference
+          manual: Manual
+          lookup: Lookup
+        on_a_farm:
+          "true": "Yes"
+          "false": "No"
+        is_a_farmer:
+          "true": "Yes"
+          "false": "No"

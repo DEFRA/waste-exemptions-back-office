@@ -7,7 +7,7 @@
     <% end %>
   </dt>
   <dd class="govuk-summary-list__value">
-  <% if address.address_type == 'site' %>
+  <% if address.site? %>
     <p class="govuk-body govuk-!-font-weight-bold">
       <%= t(".labels.grid_reference") %>
     </p>
@@ -36,7 +36,7 @@
         <%= t(".labels.mode") %>
       </p>
       <p class="govuk-body">
-        <%= address.mode %>
+        <%= t(".values.site_location_input_method.#{address.mode}") %>
       </p>
     <% end %>
 
@@ -49,7 +49,7 @@
       </p>
     <% end %>
 
-    <% if address.x.present? %>
+    <% if address.site? && address.x.present? %>
       <p class="govuk-body govuk-!-font-weight-bold">
         <%= t(".labels.x") %>
       </p>
@@ -58,7 +58,7 @@
       </p>
     <% end %>
 
-    <% if address.y.present? %>
+    <% if address.site? && address.y.present? %>
       <p class="govuk-body govuk-!-font-weight-bold">
         <%= t(".labels.y") %>
       </p>
@@ -128,6 +128,26 @@
       <p class="govuk-body">
         <%= address.area %>
       </p>
+    <% end %>
+
+    <% if address.site? %>
+      <% if defined?(on_a_farm) %>
+        <p class="govuk-body govuk-!-font-weight-bold">
+          <%= t(".labels.on_a_farm") %>
+        </p>
+        <p class="govuk-body">
+          <%= t(".values.on_a_farm.#{on_a_farm}") %>
+        </p>
+      <% end %>
+
+      <% if defined?(is_a_farmer) %>
+        <p class="govuk-body govuk-!-font-weight-bold">
+          <%= t(".labels.is_a_farmer") %>
+        </p>
+        <p class="govuk-body">
+          <%= t(".values.is_a_farmer.#{is_a_farmer}") %>
+        </p>
+      <% end %>
     <% end %>
   </dd>
 </div>
