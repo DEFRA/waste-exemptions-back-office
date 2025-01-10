@@ -5,7 +5,7 @@ en:
       heading: "Increase or reduce a charge for registration %{reference}"
       increase_label: Increase the charge
       increase_hint: For example, if the customer needs a bulk registration.
-      decrease_label: Reduce the charge to enable a refund
+      decrease_label: Reduce the charge
       decrease_hint: For example, if the customer has removed an exemption from their registration.
       continue: Continue
       errors:
