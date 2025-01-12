@@ -45,13 +45,13 @@ module CompaniesHouseNameMatching
                                              other_company_name: registration.operator_name)
 
         if companies_house_name == registration.operator_name
-          @report.record_skip(registration, "Name already matches")
+          @report.record_skip(registration, "Name already matches", companies_house_name:, similarity:)
           nil
         elsif similarity >= SIMILARITY_THRESHOLD
           @report.record_change(registration, companies_house_name, similarity)
           [registration.reference, registration.operator_name, companies_house_name]
         else
-          @report.record_skip(registration, "Similarity below threshold (#{similarity.round(2)})")
+          @report.record_skip(registration, "Similarity below threshold", companies_house_name:, similarity:)
           record_unproposed_change(company_no, registration, companies_house_name, similarity)
           nil
         end

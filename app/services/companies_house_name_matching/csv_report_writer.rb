@@ -23,14 +23,14 @@ module CompaniesHouseNameMatching
       end
     end
 
-    def record_skip(registration, reason)
+    def record_skip(registration, reason, companies_house_name: nil, similarity: nil)
       CSV.open(report_path, "a") do |csv|
         csv << [
           registration.reference,
           registration.company_no,
           registration.operator_name,
-          nil,
-          nil,
+          companies_house_name,
+          similarity&.round(2),
           "SKIP: #{reason}"
         ]
       end

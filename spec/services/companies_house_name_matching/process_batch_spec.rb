@@ -120,8 +120,9 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
 
     context "when not in dry run mode" do
       let(:dry_run) { false }
+      let(:operator_name) { "Acme Group Ltd" }
       let(:registration) do
-        create(:registration, operator_name: "Acme Group Ltd", company_no: "11111111")
+        create(:registration, operator_name: operator_name, company_no: "11111111")
       end
 
       before do
@@ -147,13 +148,13 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
           allow(companies_house_api).to receive(:run).and_raise(StandardError.new("API Error"))
         end
 
-        it "records errors in the report" do
+        it "skips row in the report" do
           run_service
 
           report_content = CSV.read(report_path)
-          error_row = report_content.find { |row| row.last&.start_with?("ERROR:") }
-          expect(error_row[1..2]).to eq(["11111111", nil])
-          expect(error_row.last).to include("API Error")
+          skip_row = report_content.find { |row| row.last&.start_with?("SKIP:") }
+          expect(skip_row[1..2]).to eq(["11111111", operator_name])
+          expect(skip_row.last).to include("SKIP: No Companies House name found")
         end
       end
     end
