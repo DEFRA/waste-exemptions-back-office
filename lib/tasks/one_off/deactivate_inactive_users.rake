@@ -14,7 +14,7 @@ namespace :one_off do
         puts "Currently in dry run mode. Would deactivate user #{user.email}" unless Rails.env.test?
       else
         puts "Deactivating user #{user.email}" unless Rails.env.test?
-        user.update!(active: false)
+        user.update(active: false)
       end
     end
   end
