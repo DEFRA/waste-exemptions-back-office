@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: f3006511e6b79f67ab422f67ac92c2cf550ee957
-  branch: RUBY-3406-wex-company-name-rechecks-via-companies-house-re-checking-data-cleanse
+  revision: 804b89eef0c2fb45fabbc27bcbffcd11a6a7345c
+  branch: RUBY-3406-wex-company-name-rechecks-via-companies-house-re-checking-data-cleanse-3
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -337,7 +337,7 @@ GEM
     mime-types (3.6.0)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.1203)
+    mime-types-data (3.2025.0107)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.4)
