@@ -2,7 +2,58 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.16.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.17.0...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-2703\] Update adjustment\_types.en.yml to improve charge adjustment labels and hints [\#1578](https://github.com/DEFRA/waste-exemptions-back-office/pull/1578) ([brujeo](https://github.com/brujeo))
+- \[RUBY-2703\] Updating H1 text, option texts and hints [\#1577](https://github.com/DEFRA/waste-exemptions-back-office/pull/1577) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 3296 display registration details [\#1573](https://github.com/DEFRA/waste-exemptions-back-office/pull/1573) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- RUBY-3388-3389-3449-3453-3451-3448: Adding new roles and adjusting existing ones [\#1559](https://github.com/DEFRA/waste-exemptions-back-office/pull/1559) ([brujeo](https://github.com/brujeo))
+- RUBY-3384: Add service\_manager role [\#1550](https://github.com/DEFRA/waste-exemptions-back-office/pull/1550) ([brujeo](https://github.com/brujeo))
+- RUBY-3055: Seed data for waste activities [\#1536](https://github.com/DEFRA/waste-exemptions-back-office/pull/1536) ([brujeo](https://github.com/brujeo))
+- Chore/ruby 3465 remove super agent role [\#1532](https://github.com/DEFRA/waste-exemptions-back-office/pull/1532) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- RUBY 2703 wex charging bo 3 1 2 increase or decrease a charge page [\#1527](https://github.com/DEFRA/waste-exemptions-back-office/pull/1527) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2704\] Fix bug where refund can be higher than balance [\#1526](https://github.com/DEFRA/waste-exemptions-back-office/pull/1526) ([jjromeo](https://github.com/jjromeo))
+- Feature/ruby 2701 payment details [\#1524](https://github.com/DEFRA/waste-exemptions-back-office/pull/1524) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Feature/ruby 2705 add a payment page improvements [\#1523](https://github.com/DEFRA/waste-exemptions-back-office/pull/1523) ([brujeo](https://github.com/brujeo))
+- RUBY 2713 wex charging bo 3 1 5 reverse a payment page [\#1522](https://github.com/DEFRA/waste-exemptions-back-office/pull/1522) ([jjromeo](https://github.com/jjromeo))
+- RUBY-3456: WEX charging - account balance calculations [\#1521](https://github.com/DEFRA/waste-exemptions-back-office/pull/1521) ([brujeo](https://github.com/brujeo))
+- RUBY 2704 wex charging bo 3 1 3 refund a payment page [\#1515](https://github.com/DEFRA/waste-exemptions-back-office/pull/1515) ([jjromeo](https://github.com/jjromeo))
+- RUBY-2705: WEX charging - Add a payment page [\#1514](https://github.com/DEFRA/waste-exemptions-back-office/pull/1514) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 2701 payment details [\#1507](https://github.com/DEFRA/waste-exemptions-back-office/pull/1507) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- \[RUBY-3414\] Add payment details page and link to registrations [\#1500](https://github.com/DEFRA/waste-exemptions-back-office/pull/1500) ([jjromeo](https://github.com/jjromeo))
+
+**Fixed bugs:**
+
+- Fix/ruby 3296 display registration details [\#1576](https://github.com/DEFRA/waste-exemptions-back-office/pull/1576) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Fix/adjusting roles and permissions [\#1564](https://github.com/DEFRA/waste-exemptions-back-office/pull/1564) ([brujeo](https://github.com/brujeo))
+- \[RUBY-2713\] Add authorization to RecordReversalsController and fix Accessibility issue [\#1558](https://github.com/DEFRA/waste-exemptions-back-office/pull/1558) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2713\] Add titles to 'Record a refund' and 'Reverse a payment' forms in locales [\#1556](https://github.com/DEFRA/waste-exemptions-back-office/pull/1556) ([jjromeo](https://github.com/jjromeo))
+- Add content to hidden headers [\#1553](https://github.com/DEFRA/waste-exemptions-back-office/pull/1553) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Feature/ruby 2701 payment details [\#1549](https://github.com/DEFRA/waste-exemptions-back-office/pull/1549) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- \[RUBY-2704\] Fix scoping issues in `Payment` model and update tests [\#1548](https://github.com/DEFRA/waste-exemptions-back-office/pull/1548) ([jjromeo](https://github.com/jjromeo))
+- Update error message for refund amount validation [\#1546](https://github.com/DEFRA/waste-exemptions-back-office/pull/1546) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-2704\] Fix presenters bug in `RecordRefundsController` and views [\#1543](https://github.com/DEFRA/waste-exemptions-back-office/pull/1543) ([jjromeo](https://github.com/jjromeo))
+- Fixes to Rounding defect and misleading refund amount [\#1542](https://github.com/DEFRA/waste-exemptions-back-office/pull/1542) ([jjromeo](https://github.com/jjromeo))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `f3f54ec` to `012b94e` [\#1572](https://github.com/DEFRA/waste-exemptions-back-office/pull/1572) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update charge seed values [\#1571](https://github.com/DEFRA/waste-exemptions-back-office/pull/1571) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump waste\_exemptions\_engine from `510f091` to `f3f54ec` [\#1570](https://github.com/DEFRA/waste-exemptions-back-office/pull/1570) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `f9448ef` to `510f091` [\#1569](https://github.com/DEFRA/waste-exemptions-back-office/pull/1569) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Chore/ruby 3441 companies house gem [\#1567](https://github.com/DEFRA/waste-exemptions-back-office/pull/1567) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump waste\_exemptions\_engine from `be25d2d` to `7650caa` [\#1561](https://github.com/DEFRA/waste-exemptions-back-office/pull/1561) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `3245209` to `be25d2d` [\#1547](https://github.com/DEFRA/waste-exemptions-back-office/pull/1547) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump webrick from 1.9.0 to 1.9.1 [\#1539](https://github.com/DEFRA/waste-exemptions-back-office/pull/1539) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[RUBY-2703\] Update schema to include charge adjustments table and modify payments table [\#1535](https://github.com/DEFRA/waste-exemptions-back-office/pull/1535) ([jjromeo](https://github.com/jjromeo))
+- RUBY 2704 payment details presenter refactor [\#1534](https://github.com/DEFRA/waste-exemptions-back-office/pull/1534) ([jjromeo](https://github.com/jjromeo))
+- Bump selenium-webdriver from 4.26.0 to 4.27.0 [\#1531](https://github.com/DEFRA/waste-exemptions-back-office/pull/1531) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.17.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.17.0) (2024-10-30)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.16.0...v2.17.0)
 
 **Implemented enhancements:**
 
@@ -16,6 +67,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1510](https://github.com/DEFRA/waste-exemptions-back-office/pull/1510) ([brujeo](https://github.com/brujeo))
 - Bump waste\_exemptions\_engine from `1217660` to `d98f4cf` [\#1508](https://github.com/DEFRA/waste-exemptions-back-office/pull/1508) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump pg from 1.5.8 to 1.5.9 [\#1506](https://github.com/DEFRA/waste-exemptions-back-office/pull/1506) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump rubocop-rails from 2.26.2 to 2.27.0 [\#1505](https://github.com/DEFRA/waste-exemptions-back-office/pull/1505) ([dependabot[bot]](https://github.com/apps/dependabot))
