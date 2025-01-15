@@ -5,7 +5,7 @@ class SendEditInviteEmailsController < ApplicationController
     @resource = WasteExemptionsEngine::Registration.find(params[:id])
     @resource.regenerate_and_timestamp_edit_token
 
-    authorize! :send_edit_invite_email, @resource
+    authorize! :send_comms, @resource
 
     if @resource.contact_email.blank?
       flash[:error] = I18n.t(".send_edit_invite_emails.flash.no_contact_email.error")
