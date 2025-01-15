@@ -1,12 +1,12 @@
 en:
   adjustment_types:
     new:
-      title: Select adjustment type
-      heading: "Select adjustment type for registration %{reference}"
+      title: Increase or reduce a charge
+      heading: "Increase or reduce a charge for registration %{reference}"
       increase_label: Increase the charge
-      increase_hint: For example, to recover an underpayment
-      decrease_label: Decrease the charge
-      decrease_hint: For example, to enable a refund.
+      increase_hint: For example, if the customer needs a bulk registration.
+      decrease_label: Reduce the charge
+      decrease_hint: For example, if the customer has removed an exemption from their registration.
       continue: Continue
       errors:
         adjustment_type:

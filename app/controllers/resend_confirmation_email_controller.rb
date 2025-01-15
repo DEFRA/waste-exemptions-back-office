@@ -29,7 +29,7 @@ class ResendConfirmationEmailController < ApplicationController
   end
 
   def authorize
-    authorize! :renew, WasteExemptionsEngine::Registration
+    authorize! :send_comms, WasteExemptionsEngine::Registration
   end
 
   def send_emails

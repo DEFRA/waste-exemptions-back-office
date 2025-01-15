@@ -267,7 +267,7 @@ RSpec.describe ActionLinksHelper do
   describe "display_send_edit_invite_email_link_for?" do
     let(:can) { true }
 
-    before { allow(helper).to receive(:can?).with(:send_edit_invite_email, resource).and_return(can) }
+    before { allow(helper).to receive(:can?).with(:send_comms, resource).and_return(can) }
 
     context "when the resource is an active registration" do
       let(:resource) { create(:registration, :with_active_exemptions) }
@@ -304,29 +304,41 @@ RSpec.describe ActionLinksHelper do
     end
   end
 
-  describe "display_confirmation_letter_link_for?" do
-    context "when the resource is a registration" do
-      let(:resource) { create(:registration) }
+  describe "display_confirmation_communication_links_for?" do
+    context "when the resource is an active registration" do
+      let(:resource) { create(:registration, :with_active_exemptions) }
 
-      context "when the registration is active" do
-        it { expect(helper.display_confirmation_letter_link_for?(resource)).to be(true) }
+      before { allow(helper).to receive(:can?).with(:send_comms, resource).and_return(can) }
+
+      context "when the user has permission to send communications" do
+        let(:can) { true }
+
+        it { expect(helper.display_confirmation_communication_links_for?(resource)).to be(true) }
       end
 
-      context "when the resource is an inactive registration" do
-        let(:resource) do
-          registration = create(:registration)
-          registration.registration_exemptions.each(&:revoke!)
-          registration
-        end
+      context "when the user does not have permission to send communications" do
+        let(:can) { false }
 
-        it { expect(helper.display_confirmation_letter_link_for?(resource)).to be(false) }
+        it { expect(helper.display_confirmation_communication_links_for?(resource)).to be(false) }
       end
+    end
+
+    context "when the resource is a ceased registration" do
+      let(:resource) { create(:registration, :with_ceased_exemptions) }
+
+      it { expect(helper.display_confirmation_communication_links_for?(resource)).to be(false) }
+    end
+
+    context "when the resource is an expired registration" do
+      let(:resource) { create(:registration, registration_exemptions: build_list(:registration_exemption, 3, :expired)) }
+
+      it { expect(helper.display_confirmation_communication_links_for?(resource)).to be(false) }
     end
 
     context "when the resource is not a registration" do
       let(:resource) { nil }
 
-      it { expect(helper.display_confirmation_letter_link_for?(resource)).to be(false) }
+      it { expect(helper.display_confirmation_communication_links_for?(resource)).to be(false) }
     end
   end
 
