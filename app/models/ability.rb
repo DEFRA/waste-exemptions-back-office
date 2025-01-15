@@ -21,7 +21,7 @@ class Ability
     read_new_registration: [:read, WasteExemptionsEngine::NewRegistration],
     renew_registration: [:renew, WasteExemptionsEngine::Registration],
     reset_transient_registration: [:reset_transient_registrations, WasteExemptionsEngine::Registration],
-    send_comms: [:send_edit_comms, WasteExemptionsEngine::Registration],
+    send_comms: [:send_comms, WasteExemptionsEngine::Registration],
     update_registration: [:update, WasteExemptionsEngine::Registration],
     update_new_registration: [:update, WasteExemptionsEngine::NewRegistration],
     update_expiry_date: [:update_expiry_date, WasteExemptionsEngine::Registration],
