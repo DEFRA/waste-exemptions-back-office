@@ -73,7 +73,7 @@ module ActionLinksHelper
     resource.is_a?(WasteExemptionsEngine::Registration) && resource.active?
   end
 
-  def display_confirmation_letter_link_for?(resource)
+  def display_confirmation_communication_links_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) &&
       can?(:send_comms, resource) &&
       resource.active?
