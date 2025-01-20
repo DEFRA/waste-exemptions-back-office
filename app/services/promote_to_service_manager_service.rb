@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class PromoteToServiceManagerService < WasteExemptionsEngine::BaseService
+  def initialize
+    @logger = Logger.new($stdout)
+    super
+  end
+
   def run(email)
     return log_error("Email address is required") if email.blank?
 
@@ -29,21 +34,12 @@ class PromoteToServiceManagerService < WasteExemptionsEngine::BaseService
   end
 
   def log_error(message)
-    handle_log { Rails.logger.info "Error: #{message}" }
+    @logger.info "Error: #{message}"
     false
   end
 
   def log_message(message)
-    handle_log { Rails.logger.info message }
+    @logger.info message
     false
-  end
-
-  def handle_log
-    original_logger = Rails.logger
-    Rails.logger = Logger.new($stdout)
-    yield
-    false
-  ensure
-    Rails.logger = original_logger
   end
 end

@@ -9,7 +9,7 @@ RSpec.describe PromoteToServiceManagerService do
   let(:logger) { instance_spy(Logger) }
 
   before do
-    allow(Rails).to receive(:logger).and_return(logger)
+    allow(Logger).to receive(:new).and_return(logger)
   end
 
   describe "#run" do
