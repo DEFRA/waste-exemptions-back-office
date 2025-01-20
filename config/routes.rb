@@ -106,6 +106,10 @@ Rails.application.routes.draw do
       to: "renews#new",
       as: "renew"
 
+  get "/beta_start",
+      to: "beta_start#show",
+      as: "beta_start"
+
   get "/resend-confirmation-email/:reference",
       to: "resend_confirmation_email#new",
       as: "resend_confirmation_email"

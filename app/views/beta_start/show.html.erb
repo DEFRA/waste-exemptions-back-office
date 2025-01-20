@@ -1,0 +1,64 @@
+<% content_for :title, "Heading"%>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
+
+    <h1 class="govuk-heading-l">
+      Heading
+    </h1>
+    <div class="govuk-inset-text">
+      Sub heading
+    </div>
+    <p class="govuk-body">
+      First paragraph
+    </p>
+    <p class="govuk-body">
+      Second paragraph
+    </p>
+    <p class="govuk-body">
+      Third paragraph
+    </p>
+    <p class="govuk-body">
+      Fourth paragraph
+    </p>
+
+    <p class="govuk-body">
+    </p>
+
+    <br/>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Summary
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        <p class="govuk-body">
+          Additional information
+        </p>
+        <p class="govuk-body">
+          Email
+        </p>
+      </div>
+    </details>
+
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Summary
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        Website
+      </div>
+    </details>
+
+    <p class="govuk-body">
+      <%= link_to "Continue", WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_forms_path(SecureRandom.uuid), class: "govuk-button" %>
+    </p>
+  </div>
+</div>
+
+
