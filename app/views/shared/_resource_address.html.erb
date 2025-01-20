@@ -76,42 +76,6 @@
       </p>
     <% end %>
 
-    <% if address.blpu_state_code.present? %>
-      <p class="govuk-body govuk-!-font-weight-bold">
-        <%= t(".labels.blpu_state_code") %>
-      </p>
-      <p class="govuk-body">
-        <%= address.blpu_state_code %>
-      </p>
-    <% end %>
-
-    <% if address.postal_address_code.present? %>
-      <p class="govuk-body govuk-!-font-weight-bold">
-        <%= t(".labels.postal_address_code") %>
-      </p>
-      <p class="govuk-body">
-        <%= address.postal_address_code %>
-      </p>
-    <% end %>
-
-    <% if address.logical_status_code.present? %>
-      <p class="govuk-body govuk-!-font-weight-bold">
-        <%= t(".labels.logical_status_code") %>
-      </p>
-      <p class="govuk-body">
-        <%= address.logical_status_code %>
-      </p>
-    <% end %>
-
-    <% if address.source_data_type.present? %>
-      <p class="govuk-body govuk-!-font-weight-bold">
-        <%= t(".labels.source_data_type") %>
-      </p>
-      <p class="govuk-body">
-        <%= address.source_data_type %>
-      </p>
-    <% end %>
-
     <% if address.country_iso.present? %>
       <p class="govuk-body govuk-!-font-weight-bold">
         <%= t(".labels.country_iso") %>
