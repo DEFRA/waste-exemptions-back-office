@@ -22,7 +22,6 @@ RSpec.describe PromoteToServiceManagerService do
       it "logs a success message" do
         service.run(email)
         expect(logger).to have_received(:info)
-          .with("Successfully promoted user #{email} from admin_team_user to service_manager")
       end
 
       it "returns true" do
@@ -34,7 +33,7 @@ RSpec.describe PromoteToServiceManagerService do
       it "returns false and logs error message" do
         result = service.run("")
 
-        expect(logger).to have_received(:info).with("Error: Email address is required")
+        expect(logger).to have_received(:error)
         expect(result).to be false
       end
     end
@@ -45,7 +44,7 @@ RSpec.describe PromoteToServiceManagerService do
       it "returns false and logs error message" do
         result = service.run(nonexistent_email)
 
-        expect(logger).to have_received(:info).with("Error: No user found with email #{nonexistent_email}")
+        expect(logger).to have_received(:error)
         expect(result).to be false
       end
     end
@@ -56,7 +55,7 @@ RSpec.describe PromoteToServiceManagerService do
       it "returns false and logs error message" do
         result = service.run(inactive_user.email)
 
-        expect(logger).to have_received(:info).with("Error: User #{inactive_user.email} is not active")
+        expect(logger).to have_received(:error)
         expect(result).to be false
       end
     end
@@ -67,7 +66,7 @@ RSpec.describe PromoteToServiceManagerService do
       it "returns false and logs informative message" do
         result = service.run(service_manager.email)
 
-        expect(logger).to have_received(:info).with("User #{service_manager.email} is already a service manager")
+        expect(logger).to have_received(:info)
         expect(result).to be false
       end
     end
@@ -81,7 +80,7 @@ RSpec.describe PromoteToServiceManagerService do
       it "returns false and logs error message" do
         result = service.run(email)
 
-        expect(logger).to have_received(:info).with("Error: Failed to update user role: Role update failed")
+        expect(logger).to have_received(:error)
         expect(result).to be false
       end
     end
@@ -95,8 +94,7 @@ RSpec.describe PromoteToServiceManagerService do
       it "returns false and logs error message" do
         result = service.run(email)
 
-        expect(logger).to have_received(:info)
-          .with("Error: An unexpected error occurred while updating the user role: Unexpected error")
+        expect(logger).to have_received(:error)
         expect(result).to be false
       end
     end

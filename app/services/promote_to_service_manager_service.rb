@@ -34,7 +34,7 @@ class PromoteToServiceManagerService < WasteExemptionsEngine::BaseService
   end
 
   def log_error(message)
-    @logger.info "Error: #{message}"
+    @logger.error message
     false
   end
 
