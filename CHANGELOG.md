@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.17.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.18.0...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-3596\] Add feature to promote back office user to service manager [\#1585](https://github.com/DEFRA/waste-exemptions-back-office/pull/1585) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-3539\] Update communication role permission to `send_comms` [\#1583](https://github.com/DEFRA/waste-exemptions-back-office/pull/1583) ([jjromeo](https://github.com/jjromeo))
+
+## [v2.18.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.18.0) (2025-01-14)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.17.0...v2.18.0)
 
 **Implemented enhancements:**
 
@@ -39,6 +48,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1581](https://github.com/DEFRA/waste-exemptions-back-office/pull/1581) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Bump waste\_exemptions\_engine from `f3f54ec` to `012b94e` [\#1572](https://github.com/DEFRA/waste-exemptions-back-office/pull/1572) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Update charge seed values [\#1571](https://github.com/DEFRA/waste-exemptions-back-office/pull/1571) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Bump waste\_exemptions\_engine from `510f091` to `f3f54ec` [\#1570](https://github.com/DEFRA/waste-exemptions-back-office/pull/1570) ([dependabot[bot]](https://github.com/apps/dependabot))
