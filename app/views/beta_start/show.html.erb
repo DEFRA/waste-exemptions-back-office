@@ -56,7 +56,7 @@
     </details>
 
     <p class="govuk-body">
-      <%= link_to "Continue", WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_forms_path(SecureRandom.uuid), class: "govuk-button" %>
+      <%= link_to "Continue", WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(@transient_registration.reference), class: "govuk-button" %>
     </p>
   </div>
 </div>

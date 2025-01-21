@@ -1,7 +1,5 @@
-GIT
-  remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 176910f7661ed52b4b1c5593e626d848604f6c72
-  branch: feature/RUBY-3232-wex-charging-private-beta-invite-token
+PATH
+  remote: ../waste-exemptions-engine
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)

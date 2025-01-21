@@ -58,6 +58,10 @@ Rails.application.routes.draw do
               only: %i[new create],
               path: "charge-adjustment"
 
+    get "/beta_start",
+        to: "beta_start#new",
+        as: "beta_start"
+
   end
 
   resources :deregistrations, only: :show, param: :reference
@@ -105,10 +109,6 @@ Rails.application.routes.draw do
   get "/renew/:reference",
       to: "renews#new",
       as: "renew"
-
-  get "/beta_start",
-      to: "beta_start#show",
-      as: "beta_start"
 
   get "/resend-confirmation-email/:reference",
       to: "resend_confirmation_email#new",
