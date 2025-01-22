@@ -7,7 +7,7 @@ en:
         operator: Business or organisation address
         site: Site location
       labels:
-        mode: Site location input method
+        mode: Address input method
         grid_reference: Site grid reference
         address:
           contact: Address
@@ -17,7 +17,6 @@ en:
         x: X coordinate
         y: Y coordinate
         coordinate_system: Coordinate system
-        country_iso: Country ISO
         area: Area
         on_a_farm: On a farm?
         is_a_farmer: Is a farmer?

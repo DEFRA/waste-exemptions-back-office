@@ -30,7 +30,7 @@
     </p>
   <% end %>
 
-  <% if display_confirmation_letter_link_for?(resource) %>
+  <% if display_confirmation_communication_links_for?(resource) %>
     <p class="govuk-body">
       <%= link_to t(".actions.resend_confirmation_email"), resend_confirmation_email_path(resource.reference) %>
     </p>
