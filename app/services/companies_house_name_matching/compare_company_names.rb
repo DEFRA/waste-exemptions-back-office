@@ -2,7 +2,7 @@
 
 module CompaniesHouseNameMatching
   class CompareCompanyNames < WasteExemptionsEngine::BaseService
-    COMMON_WORDS = %w[LIMITED LTD PLC HOLDINGS SERVICES GROUP INCORPORATED INC].freeze
+    COMMON_WORDS = %w[LIMITED LTD PLC HOLDINGS SERVICES GROUP INCORPORATED INC AND &].freeze
 
     def run(companies_house_name:, other_company_name:)
       @companies_house_name = companies_house_name
