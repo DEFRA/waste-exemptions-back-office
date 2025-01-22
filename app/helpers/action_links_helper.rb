@@ -126,4 +126,10 @@ module ActionLinksHelper
       .payments
       .reverseable.any?
   end
+
+  def display_private_beta_registration_link_for?(resource)
+    return false unless WasteExemptionsEngine::FeatureToggle.active?(:private_beta)
+
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:start_private_beta_registration, resource)
+  end
 end

@@ -115,7 +115,9 @@
     </p>
   <% end %>
 
-  <p class="govuk-body">
+  <% if display_private_beta_registration_link_for?(resource) %>
+    <p class="govuk-body">
     <%= link_to t(".actions.start_private_beta_registration"), registration_beta_start_path(resource.reference) %>
-  </p>
+    </p>
+  <% end %>
 </div>
