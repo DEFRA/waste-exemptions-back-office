@@ -49,4 +49,3 @@ FactoryBot.define do
     transient_people { [build(:transient_person), build(:transient_person)] }
   end
 end
-

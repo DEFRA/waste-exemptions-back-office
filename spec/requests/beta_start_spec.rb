@@ -1,8 +1,10 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe "Beta Start", type: :request do
+RSpec.describe "Beta Start" do
   let(:registration) { create(:registration) }
+
   describe "GET /registrations/:reference/beta_start" do
     let(:request_path) { "/registrations/#{registration.reference}/beta_start" }
 
@@ -34,46 +36,55 @@ RSpec.describe "Beta Start", type: :request do
 
       context "when user is an admin team user" do
         let(:user) { create(:user, :admin_team_user) }
+
         include_examples "allows access to beta start"
       end
 
       context "when user is a customer service adviser" do
         let(:user) { create(:user, :customer_service_adviser) }
+
         include_examples "allows access to beta start"
       end
 
       context "when user is a developer" do
         let(:user) { create(:user, :developer) }
+
         include_examples "allows access to beta start"
       end
 
       context "when user is a service manager" do
         let(:user) { create(:user, :service_manager) }
+
         include_examples "allows access to beta start"
       end
 
       context "when user is an admin team lead" do
         let(:user) { create(:user, :admin_team_lead) }
+
         include_examples "allows access to beta start"
       end
 
       context "when user is a data viewer" do
         let(:user) { create(:user, :data_viewer) }
+
         include_examples "denies access to beta start"
       end
 
       context "when user is a policy adviser" do
         let(:user) { create(:user, :policy_adviser) }
+
         include_examples "denies access to beta start"
       end
 
       context "when user is a finance user" do
         let(:user) { create(:user, :finance_user) }
+
         include_examples "denies access to beta start"
       end
 
       context "when user is not signed in" do
         before { sign_out(create(:user)) }
+
         it "redirects to the sign-in page" do
           get request_path
           expect(response).to redirect_to(new_user_session_path)
