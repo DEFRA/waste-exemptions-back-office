@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+
 require "rails_helper"
 RSpec.describe CompaniesHouseNameMatching::CompareCompanyNames do
   subject(:service) { described_class.new(companies_house_name) }
+
   let(:companies_house_name) { "SEVERN TRENT PLC" }
 
   describe "#run" do

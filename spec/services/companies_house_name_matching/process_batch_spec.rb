@@ -10,14 +10,13 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
   let(:summary_path) { Rails.root.join("tmp/test_report_summary.csv") }
   let(:dry_run) { true }
   let(:max_requests) { (described_class::RATE_LIMIT * described_class::RATE_LIMIT_BUFFER).to_i }
-  let(:company_name) { "COMPANY NAME" }
   let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
 
   before do
     allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
     allow(companies_house_api).to receive(:run).and_return(
       {
-        company_name:,
+        company_name: "COMPANY NAME",
         registered_office_address: ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"]
       }
     )
