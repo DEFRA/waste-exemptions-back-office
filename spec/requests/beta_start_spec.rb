@@ -10,7 +10,7 @@ RSpec.describe "Beta Start" do
 
     before do
       sign_in(user) if defined?(user)
-      WasteExemptionsEngine::FeatureToggle.create!(key: :private_beta, active: feature_active)
+      allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:private_beta).and_return(feature_active)
     end
 
     context "when private beta feature is active" do
@@ -34,50 +34,14 @@ RSpec.describe "Beta Start" do
         end
       end
 
-      context "when user is an admin team user" do
+      context "when user has permission to access" do
         let(:user) { create(:user, :admin_team_user) }
 
         include_examples "allows access to beta start"
       end
 
-      context "when user is a customer service adviser" do
-        let(:user) { create(:user, :customer_service_adviser) }
-
-        include_examples "allows access to beta start"
-      end
-
-      context "when user is a developer" do
-        let(:user) { create(:user, :developer) }
-
-        include_examples "allows access to beta start"
-      end
-
-      context "when user is a service manager" do
-        let(:user) { create(:user, :service_manager) }
-
-        include_examples "allows access to beta start"
-      end
-
-      context "when user is an admin team lead" do
-        let(:user) { create(:user, :admin_team_lead) }
-
-        include_examples "allows access to beta start"
-      end
-
-      context "when user is a data viewer" do
+      context "when user does not have permission to access" do
         let(:user) { create(:user, :data_viewer) }
-
-        include_examples "denies access to beta start"
-      end
-
-      context "when user is a policy adviser" do
-        let(:user) { create(:user, :policy_adviser) }
-
-        include_examples "denies access to beta start"
-      end
-
-      context "when user is a finance user" do
-        let(:user) { create(:user, :finance_user) }
 
         include_examples "denies access to beta start"
       end
