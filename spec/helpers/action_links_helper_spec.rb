@@ -668,7 +668,7 @@ RSpec.describe ActionLinksHelper do
 
         before { allow(helper).to receive(:can?).with(:start_private_beta_registration, resource).and_return(can) }
 
-        context "and the user has permission to start private beta registration" do
+        context "when the user has permission to start private beta registration" do
           let(:can) { true }
 
           it "returns true" do
@@ -676,7 +676,7 @@ RSpec.describe ActionLinksHelper do
           end
         end
 
-        context "and the user does not have permission to start private beta registration" do
+        context "when the user does not have permission to start private beta registration" do
           let(:can) { false }
 
           it "returns false" do
