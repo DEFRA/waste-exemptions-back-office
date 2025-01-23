@@ -19,6 +19,12 @@ RSpec.describe "one_off:deactivate_inactive_users", type: :rake do
       expect { rake_task.invoke }.to change { active_user.reload.active }.to(false)
     end
 
+    context "when the user is a data_viewer" do
+      it "deactivates the user" do
+        expect { rake_task.invoke }.to change { active_user.reload.active }.to(false)
+      end
+    end
+
     context "when the user is an admin_team_user" do
       before { active_user.update(role: "admin_team_user") }
 
