@@ -4,6 +4,10 @@
 Rails.application.routes.draw do
   root "dashboards#index"
 
+  # Private Beta Participants
+  resources :beta_participants,
+            only: %i[index new create]
+
   # User management
   devise_for :users,
              controllers: { invitations: "user_invitations", sessions: "sessions" },
