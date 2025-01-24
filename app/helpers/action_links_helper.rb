@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module ActionLinksHelper
   def view_link_for(resource)
     case resource
@@ -133,3 +134,5 @@ module ActionLinksHelper
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:start_private_beta_registration, resource)
   end
 end
+
+# rubocop:enable Metrics/ModuleLength
