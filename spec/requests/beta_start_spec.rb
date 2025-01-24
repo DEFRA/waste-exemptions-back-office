@@ -60,9 +60,10 @@ RSpec.describe "Beta Start" do
       let(:feature_active) { false }
       let(:user) { create(:user, :admin_team_user) }
 
-      it "redirects to permission page 404" do
+      it "tells user feature flag is not active" do
         get request_path
-        expect(response).to redirect_to("/pages/permission")
+        expect(response).to redirect_to(registration_path(registration.reference))
+        expect(flash[:error]).to eq(I18n.t("beta_start.messages.feature_not_active"))
       end
     end
   end

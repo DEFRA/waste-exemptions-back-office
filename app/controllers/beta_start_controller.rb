@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class BetaStartController < ApplicationController
+  include CanSetFlashMessages
+
   def new
     authorize
     return unless ensure_private_beta_active
@@ -22,7 +24,8 @@ class BetaStartController < ApplicationController
   def ensure_private_beta_active
     return true if WasteExemptionsEngine::FeatureToggle.active?(:private_beta)
 
-    redirect_to "/pages/permission"
+    flash[:error] = I18n.t("beta_start.messages.feature_not_active")
+    redirect_to registration_path(params[:registration_reference])
     false
   end
 end
