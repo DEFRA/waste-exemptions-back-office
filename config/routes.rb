@@ -134,6 +134,14 @@ Rails.application.routes.draw do
        to: "resend_renewal_letter#create",
        as: "resend_renewal_letter"
 
+  get "/send-private-beta-invite-email/:reference",
+      to: "send_private_beta_invite_email#new",
+      as: "confirm_send_private_beta_invite_email"
+
+  post "/send-private-beta-invite-email/:reference",
+       to: "send_private_beta_invite_email#create",
+       as: "send_private_beta_invite_email"
+
   patch "/companies-house-details/:reference",
         to: "refresh_companies_house_name#update_companies_house_details",
         as: :refresh_companies_house_name

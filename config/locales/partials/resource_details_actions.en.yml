@@ -5,6 +5,7 @@ en:
         actions: Actions
       actions:
         edit: Edit
+        send_private_beta_invite_email: Send private beta invite email
         edit_expiry_date: Set a new expiry date
         deregister: Deregister
         show_communication_history: Show communication history
