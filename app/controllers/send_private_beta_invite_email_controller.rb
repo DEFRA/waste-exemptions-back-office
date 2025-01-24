@@ -31,7 +31,7 @@ class SendPrivateBetaInviteEmailController < ApplicationController
   end
 
   def send_emails
-    beta_participant = WasteExemptionsEngine::BetaParticipant.find_by(email: recipient_email)
+    beta_participant = WasteExemptionsEngine::BetaParticipant.find_by(reg_number: registration.reference)
     if beta_participant.nil?
       beta_participant = WasteExemptionsEngine::BetaParticipant.create(reg_number: registration.reference,
                                                                        email: recipient_email)

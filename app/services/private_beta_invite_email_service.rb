@@ -29,7 +29,7 @@ class PrivateBetaInviteEmailService < WasteExemptionsEngine::BaseService
     {
       message_type: "email",
       template_id: template,
-      template_label: "Private Beta Invite Email",
+      template_label: "Private beta invite email",
       sent_to: recipient_email
     }
   end
@@ -44,8 +44,21 @@ class PrivateBetaInviteEmailService < WasteExemptionsEngine::BaseService
     @registration.contact_email
   end
 
+  def contact_name
+    "#{@registration.contact_first_name} #{@registration.contact_last_name}"
+  end
+
+  def exemptions
+    relevant_exemptions = @registration.registration_exemptions.order(:exemption_id).select do |re|
+      re.may_expire? || re.expired?
+    end
+    relevant_exemptions.map { |ex| "#{ex.exemption.code} #{ex.exemption.summary}" }
+  end
+
   def personalisation
     {
+      contact_name: contact_name,
+      exemptions: exemptions,
       private_beta_start_url: @beta_participant.private_beta_start_url
     }
   end
