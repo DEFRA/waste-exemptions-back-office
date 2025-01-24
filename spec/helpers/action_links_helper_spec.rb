@@ -304,6 +304,52 @@ RSpec.describe ActionLinksHelper do
     end
   end
 
+  describe "display_send_private_beta_invite_email_link_for?" do
+    let(:resource) { create(:registration) }
+    let(:can) { true }
+    let(:in_renewal_window) { true }
+    let(:private_beta_feature_toggle) { true }
+
+    before do
+      allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:private_beta).and_return(private_beta_feature_toggle)
+      allow(helper).to receive(:can?).with(:invite_private_beta, resource).and_return(can)
+    end
+
+    context "when the resource is a registration" do
+      before { allow(resource).to receive(:in_renewal_window?).and_return(in_renewal_window) }
+
+      context "when all conditions are met" do
+        let(:can) { true }
+
+        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(true) }
+      end
+
+      context "when the private beta feature toggle is inactive" do
+        let(:private_beta_feature_toggle) { false }
+
+        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
+      end
+
+      context "when the user does not have permission to send private beta invite email" do
+        let(:can) { false }
+
+        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
+      end
+
+      context "when the resource is not within a renewal window" do
+        let(:in_renewal_window) { false }
+
+        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
+      end
+    end
+
+    context "when the resource is not a registration" do
+      let(:resource) { nil }
+
+      it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
+    end
+  end
+
   describe "display_confirmation_communication_links_for?" do
     context "when the resource is an active registration" do
       let(:resource) { create(:registration, :with_active_exemptions) }

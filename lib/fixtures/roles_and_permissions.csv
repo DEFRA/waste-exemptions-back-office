@@ -28,3 +28,4 @@ reverse_payment,                           ,                         ,          
 refund_payment,                            ,                         ,                ,         Y,                ,               Y,               ,            Y
 writeoff_payment,                          ,                         ,               Y,         Y,                ,               Y,               ,            Y
 start_private_beta_registration,           ,                        Y,               Y,         Y,                Y,               Y,               ,            
+invite_private_beta,                       ,                         ,               Y,         Y,                ,               Y,               ,             
