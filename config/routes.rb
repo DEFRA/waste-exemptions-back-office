@@ -58,6 +58,10 @@ Rails.application.routes.draw do
               only: %i[new create],
               path: "charge-adjustment"
 
+    get "/beta_start",
+        to: "beta_start#new",
+        as: "beta_start"
+
   end
 
   resources :deregistrations, only: :show, param: :reference

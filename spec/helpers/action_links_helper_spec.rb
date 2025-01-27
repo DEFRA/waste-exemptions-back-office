@@ -682,4 +682,54 @@ RSpec.describe ActionLinksHelper do
       it { expect(helper.can_display_reversal_link?(registration)).to be false }
     end
   end
+
+  describe "#display_private_beta_registration_link_for?" do
+    before do
+      WasteExemptionsEngine::FeatureToggle.create!(key: :private_beta, active: feature_active)
+    end
+
+    context "when the private beta feature is inactive" do
+      let(:feature_active) { false }
+
+      let(:resource) { create(:registration) }
+
+      it "returns false" do
+        expect(helper.display_private_beta_registration_link_for?(resource)).to be(false)
+      end
+    end
+
+    context "when the private beta feature is active" do
+      let(:feature_active) { true }
+
+      context "when the resource is not a registration" do
+        let(:resource) { nil }
+
+        it "returns false" do
+          expect(helper.display_private_beta_registration_link_for?(resource)).to be(false)
+        end
+      end
+
+      context "when the resource is a registration" do
+        let(:resource) { create(:registration) }
+
+        before { allow(helper).to receive(:can?).with(:start_private_beta_registration, resource).and_return(can) }
+
+        context "when the user has permission to start private beta registration" do
+          let(:can) { true }
+
+          it "returns true" do
+            expect(helper.display_private_beta_registration_link_for?(resource)).to be(true)
+          end
+        end
+
+        context "when the user does not have permission to start private beta registration" do
+          let(:can) { false }
+
+          it "returns false" do
+            expect(helper.display_private_beta_registration_link_for?(resource)).to be(false)
+          end
+        end
+      end
+    end
+  end
 end

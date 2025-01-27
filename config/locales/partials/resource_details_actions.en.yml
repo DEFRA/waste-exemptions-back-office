@@ -30,3 +30,4 @@ en:
           link_text: View certificate
           visually_hidden_text: "of %{name}"
         payment_details: Payment details
+        start_private_beta_registration: Start a private beta registration
