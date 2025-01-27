@@ -42,4 +42,8 @@ module RegistrationsHelper
 
     link_to link_text, view_link_for(resource), id: "view_#{resource.reference}"
   end
+
+  def private_beta_participant?(resource)
+    WasteExemptionsEngine::BetaParticipant.find_by(registration_id: resource.id).present?
+  end
 end

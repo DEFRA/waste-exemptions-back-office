@@ -99,4 +99,32 @@ RSpec.describe RegistrationsHelper do
       expect(link_response).to include(helper.registration_date_range(registration))
     end
   end
+
+  describe "#private_beta_participant?" do
+    subject(:is_private_beta) { helper.private_beta_participant?(resource) }
+
+    shared_examples "is / is not a private beta participant" do
+      context "when the resource is not associated with a beta_participant" do
+        it { expect(is_private_beta).to be false }
+      end
+
+      context "when the resource is associated with a beta_participant" do
+        before { create(:beta_participant, registration: resource) }
+
+        it { expect(is_private_beta).to be true }
+      end
+    end
+
+    context "when the resource is a transient registration" do
+      let(:resource) { create(:new_registration) }
+
+      it_behaves_like "is / is not a private beta participant"
+    end
+
+    context "when the resource is a registration" do
+      let(:resource) { create(:registration) }
+
+      it_behaves_like "is / is not a private beta participant"
+    end
+  end
 end
