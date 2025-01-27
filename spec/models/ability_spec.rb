@@ -24,6 +24,8 @@ RSpec.describe Ability do
     it_behaves_like "can add payments"
     it_behaves_like "can reverse payments"
     it_behaves_like "can write-off payments"
+    it_behaves_like "can start private beta registrations"
+    it_behaves_like "can invite to private beta"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
@@ -45,6 +47,8 @@ RSpec.describe Ability do
     it_behaves_like "cannot reverse payments"
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
+    it_behaves_like "can start private beta registrations"
+    it_behaves_like "cannot invite to private beta"
 
     it { expect(ability).not_to be_able_to(:deregister, registration) }
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
@@ -67,6 +71,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot reverse payments"
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
+    it_behaves_like "cannot invite to private beta"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
 
@@ -83,6 +88,8 @@ RSpec.describe Ability do
     it_behaves_like "can reverse payments"
     it_behaves_like "can refund payments"
     it_behaves_like "can write-off payments"
+    it_behaves_like "can start private beta registrations"
+    it_behaves_like "can invite to private beta"
 
     it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
@@ -106,6 +113,8 @@ RSpec.describe Ability do
     it_behaves_like "cannot reverse payments"
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
+    it_behaves_like "can start private beta registrations"
+    it_behaves_like "cannot invite to private beta"
   end
 
   context "when the user role is admin_team_lead" do
@@ -118,12 +127,14 @@ RSpec.describe Ability do
     it_behaves_like "can reverse payments"
     it_behaves_like "can refund payments"
     it_behaves_like "can write-off payments"
+    it_behaves_like "can invite to private beta"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
 
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot add charge adjustments"
+    it_behaves_like "can start private beta registrations"
   end
 
   context "when the user role is policy_adviser" do
@@ -142,6 +153,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot reverse payments"
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
+    it_behaves_like "cannot invite to private beta"
   end
 
   context "when the user role is finance_user" do
@@ -157,6 +169,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot manage registrations"
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot add charge adjustments"
+    it_behaves_like "cannot invite to private beta"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::Download) }

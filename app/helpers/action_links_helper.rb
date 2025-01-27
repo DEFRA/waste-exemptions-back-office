@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ModuleLength
 module ActionLinksHelper
   def view_link_for(resource)
     case resource
@@ -69,6 +70,13 @@ module ActionLinksHelper
       resource.active?
   end
 
+  def display_send_private_beta_invite_email_link_for?(resource)
+    WasteExemptionsEngine::FeatureToggle.active?(:private_beta) &&
+      resource.is_a?(WasteExemptionsEngine::Registration) &&
+      can?(:invite_private_beta, resource) &&
+      resource.in_renewal_window?
+  end
+
   def display_certificate_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && resource.active?
   end
@@ -126,4 +134,12 @@ module ActionLinksHelper
       .payments
       .reverseable.any?
   end
+
+  def display_private_beta_registration_link_for?(resource)
+    return false unless WasteExemptionsEngine::FeatureToggle.active?(:private_beta)
+
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:start_private_beta_registration, resource)
+  end
 end
+
+# rubocop:enable Metrics/ModuleLength
