@@ -4,7 +4,13 @@ class RegistrationsController < ApplicationController
   helper ActionLinksHelper
 
   def show
-    find_resource(params[:reference])
+    resource = find_resource(params[:reference])
+
+    if view_context.private_beta_participant?(resource)
+      flash[:message] = I18n.t("registrations.show.private_beta_banner")
+    end
+
+    resource
   end
 
   private
