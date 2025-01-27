@@ -7,7 +7,7 @@ create_registration,                       ,                        Y,          
 create_new_registration,                   ,                        Y,               Y,         Y,               Y,               Y,               ,             
 update_new_registration,                   ,                        Y,               Y,         Y,               Y,               Y,               ,             
 renew_registration,                        ,                        Y,               Y,         Y,               Y,               Y,               ,             
-send_comms,                    ,                        Y,               Y,         Y,               Y,               Y,               ,             
+send_comms,                                ,                        Y,               Y,         Y,               Y,               Y,               ,             
 view_analytics,                            ,                         ,               Y,         Y,               Y,               Y,              Y,             
 deregister_exemption,                      ,                         ,               Y,         Y,               Y,               Y,               ,             
 deregister_registration_exemption,         ,                         ,               Y,         Y,               Y,               Y,               ,             
@@ -27,4 +27,5 @@ add_payment,                               ,                         ,          
 reverse_payment,                           ,                         ,               Y,         Y,                ,               Y,               ,            Y
 refund_payment,                            ,                         ,                ,         Y,                ,               Y,               ,            Y
 writeoff_payment,                          ,                         ,               Y,         Y,                ,               Y,               ,            Y
+start_private_beta_registration,           ,                        Y,               Y,         Y,                Y,               Y,               ,            
 invite_private_beta,                       ,                         ,               Y,         Y,                ,               Y,               ,             
