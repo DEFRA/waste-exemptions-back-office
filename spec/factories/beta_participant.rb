@@ -5,7 +5,7 @@ FactoryBot.define do
     reg_number { "MyString" }
     email { "MyString" }
     token { "MyString" }
-    invited_at { 1.day.ago }
+    invited_at { nil }
     opted_in { nil }
     registration { nil }
   end
