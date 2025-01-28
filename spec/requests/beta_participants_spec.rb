@@ -18,6 +18,14 @@ RSpec.describe "BetaParticipants" do
         expect(response.body).to include("Manage private beta users")
       end
 
+      context "when there are no beta participants" do
+        it "includes no_results text" do
+          get "/beta_participants"
+
+          expect(response.body).to include(t("beta_participants.index.participant_list.no_results"))
+        end
+      end
+
       context "when private beta participant did not start a registration" do
         let(:beta_participant) { create(:beta_participant, reg_number: original_registration.reference) }
 
