@@ -14,6 +14,7 @@ en:
           in_progress_registration: in-progress-%{registration_id}
           view_registration:
             link_text: View registration
+        no_results: No private beta users found
 
     new:
       title: Add a new private beta participant

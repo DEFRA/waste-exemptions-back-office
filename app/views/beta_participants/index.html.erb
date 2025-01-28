@@ -6,17 +6,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table" aria-label="<%= t(".heading") %>">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.reg_number") %></th>
-          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.email") %></th>
-          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.registration") %></th>
-          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.actions") %></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% if @participants.present? %>
+    <% if @participants.present? %>
+      <table class="govuk-table" aria-label="<%= t(".heading") %>">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.reg_number") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.email") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.registration") %></th>
+            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.actions") %></th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
           <% @participants.each do |participant| %>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
@@ -41,8 +41,10 @@
               </td>
             </tr>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="govuk-body"><%= t(".participant_list.no_results") %></p>
+    <% end %>
   </div>
 </div>
