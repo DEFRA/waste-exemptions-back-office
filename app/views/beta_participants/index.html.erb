@@ -4,45 +4,46 @@
   <%= t(".heading") %>
 </h1>
 
-<p class="govuk-body"><%= link_to t(".add_new_participant_link_text"), new_beta_participant_path %></p>
-
-<% if @participants.present? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <table class="govuk-table" aria-label="<%= t(".heading") %>">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.reg_number") %></th>
-            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.email") %></th>
-            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.registration") %></th>
-            <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.actions") %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table" aria-label="<%= t(".heading") %>">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.reg_number") %></th>
+          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.email") %></th>
+          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.registration") %></th>
+          <th class="govuk-table__header" scope="col"><%= t(".participant_list.th.actions") %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% if @participants.present? %>
           <% @participants.each do |participant| %>
-             <tr class="govuk-table__row">
+            <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                <%= participant.reg_number %>
+                <%= link_to participant.reg_number, registration_path(participant.reg_number, back_to: '/beta_participants') %>
               </td>
               <td class="govuk-table__cell">
                 <%= participant.email %>
               </td>
               <td class="govuk-table__cell">
                 <% if participant.registration && participant.registration_type == "WasteExemptionsEngine::Registration" %>
-                  <%= link_to participant.registration.reference, registration_path(participant.registration.reference), target: "_blank" %>
+                  <%= participant.registration.reference %>
                 <% elsif participant.registration && participant.registration.location.present? %>
-                  <%= link_to "In-progress-#{participant.registration.id}", new_registration_path(participant.registration.id), target: "_blank" %>
+                  <%= t(".participant_list.actions.in_progress_registration", registration_id: participant.registration.id) %>
                 <% end %>
               </td>
               <td class="govuk-table__cell">
-                <%= link_to URI.join(Rails.configuration.front_office_url, "/beta/#{participant.token}/start").to_s, target: "_blank" do %>
-                  <%= t(".participant_list.actions.private_beta_link.link_text") %>
+                <% if participant.registration && participant.registration_type == "WasteExemptionsEngine::Registration" %>
+                  <%= link_to t(".participant_list.actions.view_registration.link_text"), registration_path(participant.registration.reference, back_to: '/beta_participants') %>
+                <% elsif participant.registration && participant.registration.location.present? %>
+                  <%= link_to t(".participant_list.actions.view_registration.link_text"), new_registration_path(participant.registration.id, back_to: '/beta_participants') %>
                 <% end %>
               </td>
             </tr>
           <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-<% end %>
+</div>
+

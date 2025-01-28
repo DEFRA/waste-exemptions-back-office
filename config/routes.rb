@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   # Private Beta Participants
   resources :beta_participants,
-            only: %i[index new create]
+            only: %i[index]
 
   # User management
   devise_for :users,

@@ -1,19 +1,19 @@
 en:
   beta_participants:
     index:
-      title: Manage private beta participants
-      heading: Manage private beta participants
-      add_new_participant_link_text: Add a new participant
+      title: Manage private beta users
+      heading: Manage private beta users
 
       participant_list:
         th:
-          reg_number: Original reg.
+          reg_number: Original registration
           email: Email
-          registration: Private beta reg.
+          registration: Private beta registration
           actions: Actions
         actions:
-          private_beta_link:
-            link_text: Unique link
+          in_progress_registration: in-progress-%{registration_id}
+          view_registration:
+            link_text: View registration
 
     new:
       title: Add a new private beta participant
