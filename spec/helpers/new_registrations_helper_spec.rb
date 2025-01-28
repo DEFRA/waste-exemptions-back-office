@@ -11,7 +11,7 @@ end
 RSpec.describe NewRegistrationsHelper do
   let(:resource) { build(:new_registration) }
   let(:helper) do
-    helper = DummyClass.new 
+    helper = DummyClass.new
     helper.params = {}
     helper.root_path = root_path
     helper
