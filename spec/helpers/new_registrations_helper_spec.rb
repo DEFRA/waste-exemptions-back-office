@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe RegistrationsHelper do
+RSpec.describe NewRegistrationsHelper do
   let(:resource) { build(:new_registration) }
 
   describe "#back_path" do
