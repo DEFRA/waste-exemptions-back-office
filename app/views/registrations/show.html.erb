@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render("waste_exemptions_engine/shared/back", back_path: root_path, back_link_label: t(".back_link_label")) %>
+    <%= render("waste_exemptions_engine/shared/back", back_path: back_path, back_link_label: t(".back_link_label")) %>
     <%= render("shared/message", message: flash[:message]) if flash[:message].present? %>
     <%= render("shared/error", error: flash[:error], details: flash[:error_details]) if flash[:error].present? %>
 
