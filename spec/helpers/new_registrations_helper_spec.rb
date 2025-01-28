@@ -10,7 +10,7 @@ RSpec.describe NewRegistrationsHelper do
       before do
         allow(helper).to receive(:params).and_return({ back_to: "/some-path" })
       end
-  
+
       it "returns the back_to param" do
         expect(helper.back_path).to eq "/some-path"
       end
