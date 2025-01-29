@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+include WasteExemptionsEngine::ApplicationHelper
 
 RSpec.describe PrivateBetaInviteEmailService do
   describe "run" do
@@ -17,12 +18,12 @@ RSpec.describe PrivateBetaInviteEmailService do
 
     it "sends an email" do
       personalisation = {
-        contact_name: "Firstcontact1 Lastcontact1",
-        exemptions: ["F1 Use of spam in cooking", "F2 Use of spam in cooking", "F3 Use of spam in cooking"],
+        contact_name: registration.contact_first_name + " " + registration.contact_last_name,
+        exemptions: registration.registration_exemptions.map(&:exemption).map{ |x| x.code + " " + x.summary },
         expiry_date: registration.registration_exemptions.first.expires_on.to_fs(:day_month_year),
-        private_beta_start_url: "http://localhost:3000/beta/MyString/start",
-        reference: "WEX000001",
-        site_location: "premises_3, street_address_3, locality_3, city_3, BS33AA"
+        private_beta_start_url: beta_participant.private_beta_start_url,
+        reference: registration.reference,
+        site_location: displayable_address(registration.site_address).join(", ")
       }
 
       run_service
