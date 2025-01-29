@@ -134,15 +134,11 @@ RSpec.describe RegistrationsHelper do
         allow(helper).to receive(:params).and_return({ back_to: "/some-path" })
       end
 
-      it "returns the back_to param" do
-        expect(helper.back_path).to eq "/some-path"
-      end
+      it_behaves_like "returns the back_to param"
     end
 
     context "when the back_to param is not present" do
-      it "returns the root path" do
-        expect(helper.back_path).to eq root_path
-      end
+      it_behaves_like "returns the root path"
     end
   end
 end
