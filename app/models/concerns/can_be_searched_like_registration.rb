@@ -3,7 +3,6 @@
 module CanBeSearchedLikeRegistration
   extend ActiveSupport::Concern
 
-  # rubocop:disable Metrics/BlockLength
   included do
     # Allow classes using the concern to extend scope logic
     scope :base_search_registration_and_relations, lambda { |term|
@@ -37,5 +36,4 @@ module CanBeSearchedLikeRegistration
       )
     }
   end
-  # rubocop:enable Metrics/BlockLength
 end
