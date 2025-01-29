@@ -40,14 +40,7 @@ RSpec.describe ActionLinksHelper do
   end
 
   describe "resume_link_for" do
-    context "when the resource is a new_registration" do
-      let(:resource) { create(:new_registration) }
-
-      it "returns the correct path" do
-        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_start_form_path(resource.token)
-        expect(helper.resume_link_for(resource)).to eq(path)
-      end
-
+    shared_examples "assistance mode changes" do
       context "when the registration was started in the back office" do
         it "does not change the assistance_mode" do
           expect { helper.resume_link_for(resource) }.not_to change(resource, :assistance_mode)
@@ -61,6 +54,28 @@ RSpec.describe ActionLinksHelper do
           expect { helper.resume_link_for(resource) }.to change(resource, :assistance_mode).to("partial")
         end
       end
+    end
+
+    context "when the resource is a new_registration" do
+      let(:resource) { create(:new_registration) }
+
+      it "returns the correct path" do
+        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_start_form_path(resource.token)
+        expect(helper.resume_link_for(resource)).to eq(path)
+      end
+
+      it_behaves_like "assistance mode changes"
+    end
+
+    context "when the resource is a new_charged_registration" do
+      let(:resource) { create(:new_charged_registration) }
+
+      it "returns the correct path" do
+        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(resource.token)
+        expect(helper.resume_link_for(resource)).to eq(path)
+      end
+
+      it_behaves_like "assistance mode changes"
     end
 
     context "when the resource is not a new_registration" do
@@ -111,9 +126,7 @@ RSpec.describe ActionLinksHelper do
   end
 
   describe "display_resume_link_for?" do
-    context "when the resource is a new_registration" do
-      let(:resource) { create(:new_registration) }
-
+    shared_examples "displays the resume link" do
       context "when the user has permission" do
         before { allow(helper).to receive(:can?).and_return(true) }
 
@@ -125,6 +138,18 @@ RSpec.describe ActionLinksHelper do
 
         it { expect(helper.display_resume_link_for?(resource)).to be(false) }
       end
+    end
+
+    context "when the resource is a new_registration" do
+      let(:resource) { create(:new_registration) }
+
+      it_behaves_like "displays the resume link"
+    end
+
+    context "when the resource is a new_charged_registration" do
+      let(:resource) { create(:new_charged_registration) }
+
+      it_behaves_like "displays the resume link"
     end
 
     context "when the resource is not a new_registration" do
