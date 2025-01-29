@@ -4,7 +4,8 @@ module CanBeSearchedLikeRegistration
   extend ActiveSupport::Concern
 
   included do
-    scope :search_registration_and_relations, lambda { |term|
+    # Allow classes using the concern to extend scope logic
+    scope :base_search_registration_and_relations, lambda { |term|
       where(id: search_registration(term).ids +
                 search_for_site_address_postcode(term).ids +
                 search_for_contact_address_postcode(term).ids +
@@ -12,6 +13,10 @@ module CanBeSearchedLikeRegistration
                 search_for_person_name(term).ids +
                 search_for_telephone(term).ids)
         .order(created_at: :desc)
+    }
+
+    scope :search_registration_and_relations, lambda { |term|
+      base_search_registration_and_relations(term)
     }
 
     scope :search_registration, lambda { |term|
