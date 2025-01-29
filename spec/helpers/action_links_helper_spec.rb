@@ -22,6 +22,14 @@ RSpec.describe ActionLinksHelper do
       end
     end
 
+    context "when the resource is a new_charged_registration" do
+      let(:resource) { create(:new_charged_registration) }
+
+      it "returns the correct path" do
+        expect(helper.view_link_for(resource)).to eq(new_registration_path(resource.id))
+      end
+    end
+
     context "when the resource is not a registration or a new_registration" do
       let(:resource) { nil }
 

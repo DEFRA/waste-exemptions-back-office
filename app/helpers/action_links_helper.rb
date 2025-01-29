@@ -6,7 +6,7 @@ module ActionLinksHelper
     case resource
     when WasteExemptionsEngine::Registration
       registration_path(resource.reference)
-    when WasteExemptionsEngine::NewRegistration
+    when WasteExemptionsEngine::NewRegistration, WasteExemptionsEngine::NewChargedRegistration
       new_registration_path(resource.id)
     else
       "#"
