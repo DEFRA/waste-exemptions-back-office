@@ -11,7 +11,8 @@ class BetaStartController < ApplicationController
     @participant = WasteExemptionsEngine::BetaParticipant.find_or_create_by(
       email: @registration.contact_email,
       reg_number: @registration.reference
-    )
+    ) { |participant| participant.invited_at = Time.current } # executed if creation is needed
+
     redirect_to WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(@participant.token)
   end
 
