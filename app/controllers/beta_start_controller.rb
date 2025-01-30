@@ -10,6 +10,7 @@ class BetaStartController < ApplicationController
     @registration = WasteExemptionsEngine::Registration.find_by(reference: params[:registration_reference])
     @participant = WasteExemptionsEngine::BetaParticipant.find_or_create_by!(
       email: @registration.contact_email,
+      invited_at: Time.current,
       reg_number: @registration.reference
     ) { |participant| participant.invited_at = Time.current } # executed if creation is needed
 
