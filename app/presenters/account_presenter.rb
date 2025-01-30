@@ -16,6 +16,8 @@ class AccountPresenter < BasePresenter
   end
 
   def refunds_and_reversals
+    # SonarCloud doesn't recognise that "super" in this method and in successful_payments
+    # are different so it complains about identical method bodies. Hence this comment.
     return [] if __getobj__.blank?
 
     super.map { |payment| PaymentPresenter.new(payment) }
