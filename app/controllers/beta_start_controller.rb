@@ -8,10 +8,15 @@ class BetaStartController < ApplicationController
     return unless ensure_private_beta_active
 
     @registration = WasteExemptionsEngine::Registration.find_by(reference: params[:registration_reference])
-    @participant = WasteExemptionsEngine::BetaParticipant.find_or_create_by!(
-      email: @registration.contact_email,
+    @participant = WasteExemptionsEngine::BetaParticipant.find_or_initialize_by(
       reg_number: @registration.reference
-    ) { |participant| participant.invited_at = Time.current } # executed if creation is needed
+    )
+
+    if @participant.new_record?
+      @participant.email = @registration.contact_email
+      @participant.invited_at = Time.current
+      @participant.save!
+    end
 
     redirect_to WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(@participant.token)
   end
