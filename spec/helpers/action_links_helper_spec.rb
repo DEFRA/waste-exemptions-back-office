@@ -765,4 +765,34 @@ RSpec.describe ActionLinksHelper do
       end
     end
   end
+
+  describe "#display_payment_details_link_for?" do
+    before { allow(helper).to receive(:can?).with(:read, resource).and_return(true) }
+
+    context "when the resource is not a registration" do
+      let(:resource) { nil }
+
+      it "returns false" do
+        expect(helper.display_payment_details_link_for?(resource)).to be(false)
+      end
+    end
+
+    context "when the resource is a registration" do
+      context "when the registration does not have an account" do
+        let(:resource) { create(:registration, account: nil) }
+
+        it "returns false" do
+          expect(helper.display_payment_details_link_for?(resource)).to be(false)
+        end
+      end
+
+      context "when the registration has an account" do
+        let(:resource) { create(:registration, account: build(:account)) }
+
+        it "returns true" do
+          expect(helper.display_payment_details_link_for?(resource)).to be(true)
+        end
+      end
+    end
+  end
 end
