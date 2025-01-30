@@ -121,7 +121,7 @@ module ActionLinksHelper
   end
 
   def display_payment_details_link_for?(resource)
-    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource) && resource.account.present?
   end
 
   def can_display_refund_link?(resource)
