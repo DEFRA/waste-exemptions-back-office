@@ -30,7 +30,7 @@ class AdministrableRolesService
        service_manager
        admin_team_user
        admin_team_lead
-       policy_advisor]
+       policy_adviser]
   end
 
   def self.admin_team_lead_administrable_roles
@@ -41,7 +41,7 @@ class AdministrableRolesService
   end
 
   def self.policy_adviser_administrable_roles
-    %w[policy_advisor
+    %w[policy_adviser
        data_viewer]
   end
 end
