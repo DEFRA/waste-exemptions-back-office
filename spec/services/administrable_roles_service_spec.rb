@@ -23,7 +23,7 @@ RSpec.describe AdministrableRolesService do
                                                     service_manager
                                                     admin_team_user
                                                     admin_team_lead
-                                                    policy_advisor])
+                                                    policy_adviser])
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe AdministrableRolesService do
       let(:user) { build(:user, role: "policy_adviser") }
 
       it "returns list of group roles" do
-        expect(described_class.call(user)).to eq(%w[policy_advisor
+        expect(described_class.call(user)).to eq(%w[policy_adviser
                                                     data_viewer])
       end
     end
