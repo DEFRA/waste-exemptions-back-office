@@ -2,12 +2,64 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.18.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.18.1...HEAD)
+
+**Implemented enhancements:**
+
+- ruby-3598: seed task to populate/update exemptions data [\#1617](https://github.com/DEFRA/waste-exemptions-back-office/pull/1617) ([brujeo](https://github.com/brujeo))
+- \[RUBY-3589\] Add more email personalisation details to PrivateBetaInviteEmailService [\#1609](https://github.com/DEFRA/waste-exemptions-back-office/pull/1609) ([brujeo](https://github.com/brujeo))
+- Include new\_charged\_registrations in "New registrations" search results [\#1608](https://github.com/DEFRA/waste-exemptions-back-office/pull/1608) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Add private\_beta\_feedback\_url [\#1604](https://github.com/DEFRA/waste-exemptions-back-office/pull/1604) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- RUBY-3554: Manage Private Beta participants page [\#1603](https://github.com/DEFRA/waste-exemptions-back-office/pull/1603) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 3559 3607 private beta resource flash [\#1599](https://github.com/DEFRA/waste-exemptions-back-office/pull/1599) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- RUBY-3589: post qa additions [\#1598](https://github.com/DEFRA/waste-exemptions-back-office/pull/1598) ([brujeo](https://github.com/brujeo))
+- RUBY-3589: wex charging private beta send invite email [\#1597](https://github.com/DEFRA/waste-exemptions-back-office/pull/1597) ([brujeo](https://github.com/brujeo))
+- RUBY 3571 wex charging bo assisted digital registrations [\#1593](https://github.com/DEFRA/waste-exemptions-back-office/pull/1593) ([jjromeo](https://github.com/jjromeo))
+- Add beta participants seed data [\#1591](https://github.com/DEFRA/waste-exemptions-back-office/pull/1591) ([brujeo](https://github.com/brujeo))
+- RUBY 3483 wex deactivation of back office users based upon last log in time [\#1579](https://github.com/DEFRA/waste-exemptions-back-office/pull/1579) ([jjromeo](https://github.com/jjromeo))
+
+**Fixed bugs:**
+
+- \[RUBY-3605\] Refactor administrable roles service to use consistent spelling for policy adviser [\#1621](https://github.com/DEFRA/waste-exemptions-back-office/pull/1621) ([brujeo](https://github.com/brujeo))
+- Fix back link in new\_registrations show view [\#1619](https://github.com/DEFRA/waste-exemptions-back-office/pull/1619) ([brujeo](https://github.com/brujeo))
+- Fix/ruby 3558 nil orders error [\#1618](https://github.com/DEFRA/waste-exemptions-back-office/pull/1618) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- \[RUBY-3571\] Add `invited_at` timestamp to BetaParticipant creation [\#1616](https://github.com/DEFRA/waste-exemptions-back-office/pull/1616) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-3571\] Add `invited_at` timestamp to `BetaParticipant` creation [\#1613](https://github.com/DEFRA/waste-exemptions-back-office/pull/1613) ([jjromeo](https://github.com/jjromeo))
+- Feature/ruby 3579 find pb in progress regs [\#1612](https://github.com/DEFRA/waste-exemptions-back-office/pull/1612) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- \[RUBY-3571\] Fix link display bug by updating CSS class in resource details partial. [\#1611](https://github.com/DEFRA/waste-exemptions-back-office/pull/1611) ([jjromeo](https://github.com/jjromeo))
+- Fix/ruby 3559 3607 private beta resource flash [\#1610](https://github.com/DEFRA/waste-exemptions-back-office/pull/1610) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Use govuk notification banner instead of flash message [\#1606](https://github.com/DEFRA/waste-exemptions-back-office/pull/1606) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Add config.host [\#1594](https://github.com/DEFRA/waste-exemptions-back-office/pull/1594) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Fix/ruby 3296 display registration details [\#1584](https://github.com/DEFRA/waste-exemptions-back-office/pull/1584) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `3611a5a` to `f2102c2` [\#1623](https://github.com/DEFRA/waste-exemptions-back-office/pull/1623) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `4c76706` to `3611a5a` [\#1622](https://github.com/DEFRA/waste-exemptions-back-office/pull/1622) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `62e8a0d` to `4c76706` [\#1620](https://github.com/DEFRA/waste-exemptions-back-office/pull/1620) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `a6757e2` to `84165f0` [\#1615](https://github.com/DEFRA/waste-exemptions-back-office/pull/1615) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `21eac2e` to `a6757e2` [\#1614](https://github.com/DEFRA/waste-exemptions-back-office/pull/1614) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `cd5ee70` to `21eac2e` [\#1607](https://github.com/DEFRA/waste-exemptions-back-office/pull/1607) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `49cbf39` to `5536e73` [\#1602](https://github.com/DEFRA/waste-exemptions-back-office/pull/1602) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `9d760d8` to `93aac8a` [\#1595](https://github.com/DEFRA/waste-exemptions-back-office/pull/1595) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `eb6e50c` to `9d760d8` [\#1592](https://github.com/DEFRA/waste-exemptions-back-office/pull/1592) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `012b94e` to `eb6e50c` [\#1590](https://github.com/DEFRA/waste-exemptions-back-office/pull/1590) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump selenium-webdriver from 4.27.0 to 4.28.0 [\#1589](https://github.com/DEFRA/waste-exemptions-back-office/pull/1589) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rspec from 3.3.0 to 3.4.0 [\#1587](https://github.com/DEFRA/waste-exemptions-back-office/pull/1587) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rails from 2.28.0 to 2.29.0 [\#1586](https://github.com/DEFRA/waste-exemptions-back-office/pull/1586) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.18.1](https://github.com/defra/waste-exemptions-back-office/tree/v2.18.1) (2025-01-21)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.18.0...v2.18.1)
 
 **Implemented enhancements:**
 
 - \[RUBY-3596\] Add feature to promote back office user to service manager [\#1585](https://github.com/DEFRA/waste-exemptions-back-office/pull/1585) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-3539\] Update communication role permission to `send_comms` [\#1583](https://github.com/DEFRA/waste-exemptions-back-office/pull/1583) ([jjromeo](https://github.com/jjromeo))
+
+**Merged pull requests:**
+
+- Version 2.18.1 [\#1588](https://github.com/DEFRA/waste-exemptions-back-office/pull/1588) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
 ## [v2.18.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.18.0) (2025-01-14)
 
