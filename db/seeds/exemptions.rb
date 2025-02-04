@@ -5,9 +5,7 @@ def assign_category(record, category)
 end
 
 def seed_exemptions
-  # locate the exemptions.csv file from the waste_exemptions_engine gem and parse it
-  engine_path = Gem.loaded_specs["waste_exemptions_engine"].full_gem_path
-  file = Rails.root.join(engine_path, "db/exemptions.csv").read
+  file = Rails.root.join("db/seeds/exemptions.csv").read
   csv = CSV.parse(file, headers: true)
 
   csv.each do |row|
