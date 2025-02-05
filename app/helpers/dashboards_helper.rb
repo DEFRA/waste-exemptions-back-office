@@ -15,7 +15,7 @@ module DashboardsHelper
   end
 
   def status_tag_for(result)
-    return :pending if result.is_a?(WasteExemptionsEngine::NewRegistration)
+    return :pending if result.is_a?(WasteExemptionsEngine::TransientRegistration)
 
     result.state
   end

@@ -13,6 +13,7 @@ en:
         analytics: "Analytics"
         band_management: "Band management"
         charge_catalogue: "Charge catalogue"
+        beta_participants: "Manage private beta users"
   template_labels:
     deregistration_invitation_email: "Deregistration invitation email"
   shared:

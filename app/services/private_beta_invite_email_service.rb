@@ -48,6 +48,21 @@ class PrivateBetaInviteEmailService < WasteExemptionsEngine::BaseService
     "#{@registration.contact_first_name} #{@registration.contact_last_name}"
   end
 
+  def expiry_date
+    # Currently you can only add exemptions when you register, so we can assume they expire at the same time
+    @registration.registration_exemptions.first.expires_on.to_fs(:day_month_year)
+  end
+
+  def site_location
+    address = @registration.site_address
+
+    if address.located_by_grid_reference?
+      address.grid_reference
+    else
+      displayable_address(address).join(", ")
+    end
+  end
+
   def exemptions
     relevant_exemptions = @registration.registration_exemptions.order(:exemption_id).select do |re|
       re.may_expire? || re.expired?
@@ -58,6 +73,9 @@ class PrivateBetaInviteEmailService < WasteExemptionsEngine::BaseService
   def personalisation
     {
       contact_name: contact_name,
+      site_location: site_location,
+      reference: @registration.reference,
+      expiry_date: expiry_date,
       exemptions: exemptions,
       private_beta_start_url: @beta_participant.private_beta_start_url
     }

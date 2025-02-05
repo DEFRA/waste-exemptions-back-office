@@ -15,7 +15,7 @@ class SearchService
   end
 
   def class_to_search(model)
-    return WasteExemptionsEngine::NewRegistration if model == :new_registrations
+    return WasteExemptionsEngine::TransientRegistration if model == :new_registrations
 
     WasteExemptionsEngine::Registration
   end

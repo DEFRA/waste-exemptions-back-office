@@ -6,7 +6,7 @@ module ActionLinksHelper
     case resource
     when WasteExemptionsEngine::Registration
       registration_path(resource.reference)
-    when WasteExemptionsEngine::NewRegistration
+    when WasteExemptionsEngine::NewRegistration, WasteExemptionsEngine::NewChargedRegistration
       new_registration_path(resource.id)
     else
       "#"
@@ -14,7 +14,7 @@ module ActionLinksHelper
   end
 
   def resume_link_for(resource)
-    return "#" unless resource.is_a?(WasteExemptionsEngine::NewRegistration)
+    return "#" unless new_or_new_charged_registration(resource)
 
     # If the assistance_mode is nil, the registration was started in the front-office
     resource.update(assistance_mode: "partial") if resource.assistance_mode.blank?
@@ -43,7 +43,7 @@ module ActionLinksHelper
   end
 
   def display_resume_link_for?(resource)
-    return false unless resource.is_a?(WasteExemptionsEngine::NewRegistration)
+    return false unless new_or_new_charged_registration(resource)
 
     can?(:update, resource)
   end
@@ -121,7 +121,7 @@ module ActionLinksHelper
   end
 
   def display_payment_details_link_for?(resource)
-    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource) && resource.account.present?
   end
 
   def can_display_refund_link?(resource)
@@ -139,6 +139,13 @@ module ActionLinksHelper
     return false unless WasteExemptionsEngine::FeatureToggle.active?(:private_beta)
 
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:start_private_beta_registration, resource)
+  end
+
+  private
+
+  def new_or_new_charged_registration(resource)
+    resource.is_a?(WasteExemptionsEngine::NewRegistration) ||
+      resource.is_a?(WasteExemptionsEngine::NewChargedRegistration)
   end
 end
 

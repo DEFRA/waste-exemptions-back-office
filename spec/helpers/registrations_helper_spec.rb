@@ -127,4 +127,18 @@ RSpec.describe RegistrationsHelper do
       it_behaves_like "is / is not a private beta participant"
     end
   end
+
+  describe "#back_path" do
+    context "when the back_to param is present" do
+      before do
+        allow(helper).to receive(:params).and_return({ back_to: "/some-path" })
+      end
+
+      it_behaves_like "returns the back_to param"
+    end
+
+    context "when the back_to param is not present" do
+      it_behaves_like "returns the root path"
+    end
+  end
 end

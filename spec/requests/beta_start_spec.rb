@@ -17,13 +17,26 @@ RSpec.describe "Beta Start" do
       let(:feature_active) { true }
 
       shared_examples "allows access to beta start" do
+        context "when the beta participant already exists" do
+          let!(:participant) { create(:beta_participant, email: registration.contact_email, reg_number: registration.reference) }
+
+          it "redirects to the beta start form" do
+            get request_path
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(participant.token)
+            expect(response).to redirect_to(path)
+          end
+        end
+
         it "creates a new beta participant and redirects to the beta start form" do
-          get request_path
-          expect(WasteExemptionsEngine::BetaParticipant.count).to eq(1)
-          participant = WasteExemptionsEngine::BetaParticipant.last
-          expect(participant.email).to eq(registration.contact_email)
-          path = WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(participant.token)
-          expect(response).to redirect_to(path)
+          Timecop.freeze(Time.current) do
+            get request_path
+            expect(WasteExemptionsEngine::BetaParticipant.count).to eq(1)
+            participant = WasteExemptionsEngine::BetaParticipant.last
+            expect(participant.email).to eq(registration.contact_email)
+            expect(participant.invited_at).to be_within(1.second).of(Time.current)
+            path = WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(participant.token)
+            expect(response).to redirect_to(path)
+          end
         end
       end
 

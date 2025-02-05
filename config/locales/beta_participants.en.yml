@@ -1,0 +1,37 @@
+en:
+  beta_participants:
+    index:
+      title: Manage private beta users
+      heading: Manage private beta users
+
+      participant_list:
+        th:
+          reg_number: Original registration
+          email: Email
+          registration: Private beta registration
+          actions: Actions
+        actions:
+          in_progress_registration: in-progress-%{registration_id}
+          view_registration:
+            link_text: View registration
+        no_results: No private beta users found
+
+    new:
+      title: Add a new private beta participant
+      heading: Add a new private beta participant
+      fields:
+        reg_number: Registration number
+        email: Email
+      submit_button: Submit
+  activerecord:
+    errors:
+      models:
+        beta_participant:
+          attributes:
+            reg_number:
+              blank: Enter a registration number
+              invalid: Enter a valid registration number
+            email:
+              blank: Enter an email address
+              invalid: Enter a valid email address - there’s a mistake in that one
+              taken: There is already a user with this email

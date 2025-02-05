@@ -60,6 +60,14 @@ RSpec.describe DashboardsHelper do
       end
     end
 
+    context "when the result is a new_charged_registration" do
+      let(:result) { build(:new_charged_registration) }
+
+      it "returns :pending" do
+        expect(helper.status_tag_for(result)).to eq(:pending)
+      end
+    end
+
     context "when the result is not a new_registration" do
       let(:result) { build(:registration) }
 

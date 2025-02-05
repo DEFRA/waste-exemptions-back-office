@@ -46,4 +46,8 @@ module RegistrationsHelper
   def private_beta_participant?(resource)
     WasteExemptionsEngine::BetaParticipant.find_by(registration_id: resource.id).present?
   end
+
+  def back_path
+    params[:back_to].presence || root_path
+  end
 end
