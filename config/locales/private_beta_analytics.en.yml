@@ -1,13 +1,13 @@
 en:
-  analytics:
+  private_beta_analytics:
     index:
-      title: Analytics Dashboard
+      title: Private beta analytics dashboard
       select_date_range: Select date range
       labels:
         start_date: Start date
         end_date: End date
       filter: Filter
-      private_beta_analytics_link_text: Private beta analytics
+      analytics_link_text: Analytics dashboard
       aggregate_data_table:
         header: Aggregate User Journey data
         total_journeys_started: Total journeys started
@@ -18,4 +18,7 @@ en:
         front_office_completed: Front office completions
         back_office_completed: Back office completions
         cross_office_completed: Journeys started in the front office and completed in the back office
-        total_journeys_abandoned: Number of incomplete journeys that have gone past the business location page
+        total_journeys_abandoned: "Number of incomplete journeys (%{link})"
+        incomplete_journeys_link_text: see individual pages where users dropped out
+        average_time_per_page: "Average time taken to complete (%{link})"
+        average_time_per_page_link_text: see time per page

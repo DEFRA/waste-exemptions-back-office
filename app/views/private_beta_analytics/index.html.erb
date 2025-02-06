@@ -2,6 +2,9 @@
   <%= t(".title") %>
 </h1>
 
+<% start_date_value = @start_date&.strftime('%Y-%m-%d') %>
+<% end_date_value = @end_date&.strftime('%Y-%m-%d') %>
+
 <%= form_with url: '#', method: :get, local: true do |form| %>
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset">
@@ -15,14 +18,12 @@
         <div class="govuk-date-input__item">
           <div class="govuk-form-group">
             <%= form.label :start_date, t(".labels.start_date"), class: "govuk-label govuk-date-input__label", for: "start_date" %>
-            <% start_date_value = @start_date&.strftime('%Y-%m-%d') %>
             <%= form.date_field :start_date, max: Date.today.to_s, class: "govuk-input govuk-date-input__input govuk-input--width-20", value: start_date_value, id: "start_date" %>
           </div>
         </div>
         <div class="govuk-date-input__item">
           <div class="govuk-form-group">
             <%= form.label :end_date, t(".labels.end_date"), class: "govuk-label govuk-date-input__label", for: "end_date" %>
-            <% end_date_value = @end_date&.strftime('%Y-%m-%d') %>
             <%= form.date_field :end_date, max: Date.today.to_s, class: "govuk-input govuk-date-input__input govuk-input--width-20", value: end_date_value, id: "end_date" %>
           </div>
         </div>
@@ -31,7 +32,7 @@
   </div>
 
   <div class="govuk-body">
-    <%= link_to t(".private_beta_analytics_link_text"), private_beta_analytics_path %>
+    <%= link_to t(".analytics_link_text"), analytics_path %>
   </div>
 
   <div class="govuk-form-group">
@@ -81,9 +82,29 @@
       <td class="govuk-table__cell"><%= @analytics_data[:cross_office_completed] %></td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header"><%= t(".aggregate_data_table.total_journeys_abandoned") %></th>
-      <td class="govuk-table__cell"><%= @analytics_data[:total_journeys_abandoned] %></td>
+      <th scope="row" class="govuk-table__header">
+        <%=
+          t(".aggregate_data_table.total_journeys_abandoned",
+            link: link_to(
+              t(".aggregate_data_table.incomplete_journeys_link_text"),
+              "#{private_beta_incomplete_journeys_path}?start_date=#{@start_date}&end_date=#{@end_date}"
+            )
+          ).html_safe
+        %>
+      </th>
+      <td class="govuk-table__cell"><%= @analytics_data[:incomplete_journeys] %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">
+        <%=
+          t(".aggregate_data_table.average_time_per_page",
+            link: link_to(t(".aggregate_data_table.average_time_per_page_link_text"),
+            "#{private_beta_average_time_per_pages_path}?start_date=#{start_date_value}&end_date=#{end_date_value}"
+            )
+          ).html_safe
+        %>
+      </th>
+      <td class="govuk-table__cell"></td>
     </tr>
   </tbody>
 </table>
-
