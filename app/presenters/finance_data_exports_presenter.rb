@@ -31,6 +31,6 @@ class FinanceDataExportsPresenter
   end
 
   def bucket_name
-    WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
+    WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
   end
 end

@@ -12,6 +12,7 @@ class BulkExportsController < ApplicationController
     authorize! :read, Reports::GeneratedReport
 
     generated_report = Reports::GeneratedReport.find(params[:id])
+    bucket_name = bucket_name_for_report(generated_report)
 
     bucket = DefraRuby::Aws.get_bucket(bucket_name)
     url = bucket.presigned_url(generated_report.file_name)
@@ -35,7 +36,12 @@ class BulkExportsController < ApplicationController
 
   private
 
-  def bucket_name
-    WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
+  def bucket_name_for_report(generated_report)
+    case generated_report.report_type
+    when "bulk"
+      WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
+    when "finance_data"
+      WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
+    end
   end
 end
