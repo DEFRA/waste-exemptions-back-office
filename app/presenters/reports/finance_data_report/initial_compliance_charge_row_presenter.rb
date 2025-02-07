@@ -15,6 +15,10 @@ module Reports
       def charge_band
         @secondary_object.band.sequence
       end
+
+      def exemption
+        @secondary_object.charge_detail.order.exemptions.select{ |e| e.band_id == @secondary_object.band_id }.map(&:code).sort.join(", ")
+      end
     end
   end
 end

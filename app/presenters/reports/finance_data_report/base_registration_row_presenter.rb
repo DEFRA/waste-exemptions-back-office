@@ -10,7 +10,7 @@ module Reports
         @secondary_object = secondary_object
       end
 
-      def registration_number
+      def registration_no
         @registration.reference
       end
 
@@ -27,6 +27,46 @@ module Reports
       end
 
       def charge_band
+        nil
+      end
+
+      def exemption
+        nil
+      end
+
+      def payment_type
+        nil
+      end
+
+      def refund_type
+        nil
+      end
+
+      def reference
+        nil
+      end
+        
+      def comments
+        nil
+      end
+
+      def payment_amount
+        nil
+      end
+        
+      def on_a_farm
+        @registration.on_a_farm? ? "Yes" : "No"
+      end
+
+      def is_a_farmer
+        @registration.is_a_farmer? ? "Yes" : "No"
+      end
+
+      def ea_admin_area
+        @registration.site_address&.area
+      end
+        
+      def balance
         nil
       end
     end

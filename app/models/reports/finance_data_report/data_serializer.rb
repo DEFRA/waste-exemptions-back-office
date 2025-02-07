@@ -4,11 +4,21 @@ module Reports
   module FinanceDataReport
     class DataSerializer
       ATTRIBUTES = %i[
-        registration_number
+        registration_no
         date
         charge_type
         charge_amount
         charge_band
+        exemption
+        payment_type
+        refund_type
+        reference
+        comments
+        payment_amount
+        on_a_farm
+        is_a_farmer
+        ea_admin_area
+        balance
       ].freeze
 
       def to_csv
@@ -17,12 +27,13 @@ module Reports
 
           registrations_scope.find_in_batches(batch_size: batch_size) do |batch|
             batch.each do |registration|
+              order = registration.account.orders.last
 
               # registration charge row
-              charge_detail = registration.account.orders.last.charge_detail
+              charge_detail = order.charge_detail
               csv << registration_charge_row(registration, charge_detail)
 
-              registration.account.orders.last.charge_detail.band_charge_details.each do |band_charge_detail|
+              order.charge_detail.band_charge_details.each do |band_charge_detail|
                 # initial compliance charge row
                 csv << initial_compliance_charge_row(registration, band_charge_detail)
                 # additional compliance charge row
@@ -34,8 +45,10 @@ module Reports
                 csv << charge_adjustment_row(registration, charge_adjustment)
               end
 
-              # registration empty row
-              csv << registration_empty_row(registration)
+              registration.account.payments.each do |payment|
+                # payment row
+                csv << payment_row(registration, payment)
+              end
             end
           end
         end
@@ -71,9 +84,9 @@ module Reports
         end
       end
 
-      def registration_empty_row(registration)
+      def payment_row(registration, secondary_object)
         ATTRIBUTES.map do |attribute|
-          presenter = FinanceDataReport::BaseRegistrationRowPresenter.new(registration:)
+          presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:)
           presenter.public_send(attribute)
         end
       end
