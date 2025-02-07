@@ -42,6 +42,8 @@ class BulkExportsController < ApplicationController
       WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
     when "finance_data"
       WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
+    else
+      raise "Unknown report type: #{generated_report.report_type}"
     end
   end
 end
