@@ -5,40 +5,8 @@
 <% start_date_value = @start_date&.strftime('%Y-%m-%d') %>
 <% end_date_value = @end_date&.strftime('%Y-%m-%d') %>
 
-<%= form_with url: '#', method: :get, local: true do |form| %>
-  <div class="govuk-form-group">
-    <fieldset class="govuk-fieldset">
-
-      <div class="govuk-date-input" id="date-range">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h2 class="govuk-heading-m">
-            <%= t(".select_date_range") %>
-          </h2>
-        </legend>
-        <div class="govuk-date-input__item">
-          <div class="govuk-form-group">
-            <%= form.label :start_date, t(".labels.start_date"), class: "govuk-label govuk-date-input__label", for: "start_date" %>
-            <%= form.date_field :start_date, max: Date.today.to_s, class: "govuk-input govuk-date-input__input govuk-input--width-20", value: start_date_value, id: "start_date" %>
-          </div>
-        </div>
-        <div class="govuk-date-input__item">
-          <div class="govuk-form-group">
-            <%= form.label :end_date, t(".labels.end_date"), class: "govuk-label govuk-date-input__label", for: "end_date" %>
-            <%= form.date_field :end_date, max: Date.today.to_s, class: "govuk-input govuk-date-input__input govuk-input--width-20", value: end_date_value, id: "end_date" %>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-  </div>
-
-  <div class="govuk-body">
-    <%= link_to t(".analytics_link_text"), analytics_path %>
-  </div>
-
-  <div class="govuk-form-group">
-    <%= form.submit t(".filter"), class: "govuk-button" %>
-  </div>
-<% end %>
+<% other_analytics_link = link_to t(".analytics_link_text"), analytics_path %>
+<%= render("shared/analytics_date_range", other_analytics_link:) %>
 
 <table class="govuk-table">
   <caption class="govuk-table__caption govuk-table__caption--m"><%= t(".aggregate_data_table.header") %></caption>

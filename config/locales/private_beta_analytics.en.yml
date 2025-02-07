@@ -2,11 +2,6 @@ en:
   private_beta_analytics:
     index:
       title: Private beta analytics dashboard
-      select_date_range: Select date range
-      labels:
-        start_date: Start date
-        end_date: End date
-      filter: Filter
       analytics_link_text: Analytics dashboard
       aggregate_data_table:
         header: Aggregate User Journey data
