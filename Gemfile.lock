@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 88e3f5fffc9929d9e2b59aba3e84f387d8f1378f
+  revision: 0cc541187abf9bbe08078f2011116881cf60d710
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -338,7 +338,7 @@ GEM
     mime-types (3.6.0)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0107)
+    mime-types-data (3.2025.0204)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.4)
