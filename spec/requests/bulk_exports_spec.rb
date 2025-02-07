@@ -10,19 +10,35 @@ RSpec.describe "Bulk Exports" do
   end
 
   describe "GET /data-exports" do
-    before do
-      create(:generated_report, created_at: Time.zone.local(2019, 6, 1, 12, 0), data_from_date: Date.new(2019, 6, 1))
+    context "when bulk data report is present" do
+      before do
+        create(:generated_report, created_at: Time.zone.local(2019, 6, 1, 12, 0), data_from_date: Date.new(2019, 6, 1))
+      end
+
+      it "renders the correct template, the timestamp in an accessible format and responds with a 200 status code" do
+        # The 2 in "12:00pm" is optional to allow for changes in daylight savings - 12:00pm or 1:00pm is valid
+        export_at_regex = /These files were created at 12?:00pm on 1 June 2019\./m
+
+        get bulk_exports_path
+
+        expect(response).to render_template("bulk_exports/show")
+        expect(response.body.scan(export_at_regex).count).to eq(1)
+        expect(response).to have_http_status(:ok)
+      end
     end
 
-    it "renders the correct template, the timestamp in an accessible format and responds with a 200 status code" do
-      # The 2 in "12:00pm" is optional to allow for changes in daylight savings - 12:00pm or 1:00pm is valid
-      export_at_regex = /These files were created at 12?:00pm on 1 June 2019\./m
+    context "when finance_data data report is present" do
+      before do
+        create(:generated_report, :finance_data, file_name: "finance_data_report.csv")
+      end
 
-      get bulk_exports_path
+      it "renders the correct template, the report link is present and responds with a 200 status code" do
+        get bulk_exports_path
 
-      expect(response).to render_template("bulk_exports/show")
-      expect(response.body.scan(export_at_regex).count).to eq(1)
-      expect(response).to have_http_status(:ok)
+        expect(response).to render_template("bulk_exports/show")
+        expect(response.body).to include("finance_data_report.csv")
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 

@@ -5,6 +5,7 @@ class BulkExportsController < ApplicationController
     authorize! :read, Reports::GeneratedReport
 
     @bulk_exports = BulkExportsPresenter.new
+    @finance_data_exports = FinanceDataExportsPresenter.new
   end
 
   def download

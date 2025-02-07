@@ -6,5 +6,9 @@ en:
       not_yet_exported: "The files have not yet been generated"
       exported_at:  "These files were created at %{export_executed_at}."
       download_history: "Export download history to CSV"
+      finance_data: 
+        heading: "Daily finance data export"
+        lates_file: "Latest file"
+        no_reports_found: "No reports found"
     reports:
       generated_report: "Registration Data Export"
