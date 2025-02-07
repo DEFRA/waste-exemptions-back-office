@@ -47,3 +47,8 @@ RSpec/SpecFilePathSuffix:
   Exclude:
     # This isn't really a spec, it uses some rspec-related gems
     - 'spec/manual_benchmarks/bulk_seed_registrations.rb'
+
+Naming/PredicateName:
+  Exclude:
+    # Presenter column names are driven by the registration field names and can't be changed
+    - 'app/presenters/reports/finance_data_report/base_registration_row_presenter.rb'

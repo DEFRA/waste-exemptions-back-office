@@ -45,7 +45,7 @@ module Reports
       def reference
         nil
       end
-        
+
       def comments
         nil
       end
@@ -53,7 +53,7 @@ module Reports
       def payment_amount
         nil
       end
-        
+
       def on_a_farm
         @registration.on_a_farm? ? "Yes" : "No"
       end
@@ -65,7 +65,7 @@ module Reports
       def ea_admin_area
         @registration.site_address&.area
       end
-        
+
       def balance
         nil
       end

@@ -17,7 +17,9 @@ module Reports
       end
 
       def exemption
-        @secondary_object.charge_detail.order.exemptions.select{ |e| e.band_id == @secondary_object.band_id }.map(&:code).sort.join(", ")
+        @secondary_object.charge_detail.order.exemptions.select do |e|
+          e.band_id == @secondary_object.band_id
+        end.map(&:code).sort.join(", ")
       end
     end
   end

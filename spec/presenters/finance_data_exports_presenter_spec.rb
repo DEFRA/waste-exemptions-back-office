@@ -4,9 +4,9 @@ require "rails_helper"
 
 RSpec.describe FinanceDataExportsPresenter do
 
-  let(:generated_report) { create(:generated_report, :finance_data, file_name: "finance_data_report.csv") }
-
   subject(:presenter) { described_class.new }
+
+  let(:generated_report) { create(:generated_report, :finance_data, file_name: "finance_data_report.csv") }
 
   describe "#links" do
     before do

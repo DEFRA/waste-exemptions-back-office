@@ -78,7 +78,7 @@ module Reports
         it "returns nil" do
           expect(presenter.payment_amount).to be_nil
         end
-      end 
+      end
 
       describe "#on_a_farm" do
         it "returns nil" do
