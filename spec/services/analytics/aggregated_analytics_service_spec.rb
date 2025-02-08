@@ -17,7 +17,8 @@ module Analytics
           front_office_completed: an_instance_of(Integer),
           back_office_completed: an_instance_of(Integer),
           cross_office_completed: an_instance_of(Integer),
-          total_journeys_abandoned: an_instance_of(Integer)
+          total_journeys_abandoned: an_instance_of(Integer),
+          incomplete_journeys: an_instance_of(Integer)
         }
       end
 
@@ -56,6 +57,7 @@ module Analytics
         it { expect(result[:back_office_completed]).to eq(1) }
         it { expect(result[:cross_office_completed]).to eq(1) }
         it { expect(result[:total_journeys_abandoned]).to eq(7) }
+        it { expect(result[:incomplete_journeys]).to eq(10) }
       end
 
       context "with default date range" do
