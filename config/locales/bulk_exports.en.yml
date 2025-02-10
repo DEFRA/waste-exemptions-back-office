@@ -8,7 +8,7 @@ en:
       download_history: "Export download history to CSV"
       finance_data: 
         heading: "Daily finance data export"
-        lates_file: "Latest file"
-        no_reports_found: "No reports found"
+        latest_file: "Latest file"
+        no_reports_found: "The files have not yet been generated"
     reports:
       generated_report: "Registration Data Export"
