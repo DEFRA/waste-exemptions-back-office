@@ -17,14 +17,23 @@ module Analytics
         front_office_completed:,
         back_office_completed:,
         cross_office_completed:,
-        total_journeys_abandoned:
+        total_journeys_abandoned:,
+        incomplete_journeys:
       }
     end
 
     private
 
+    def journey_base_scope
+      Analytics::UserJourney.only_types(%w[
+                                          NewRegistration
+                                          RenewingRegistration
+                                          FrontOfficeEditRegistration
+                                        ]).date_range(start_date, end_date)
+    end
+
     def default_start_date
-      UserJourney.minimum_created_at&.to_date.presence || Time.zone.today
+      Analytics::UserJourney.minimum_created_at&.to_date.presence || Time.zone.today
     end
 
     def front_office_started
@@ -65,14 +74,6 @@ module Analytics
                         .count
     end
 
-    def journey_base_scope
-      UserJourney.only_types(%w[
-                               NewRegistration
-                               RenewingRegistration
-                               FrontOfficeEditRegistration
-                             ]).date_range(start_date, end_date)
-    end
-
     def total_journeys_abandoned
       total_journeys_started - total_journeys_completed
     end
@@ -81,6 +82,11 @@ module Analytics
       return 0.0 if total_journeys_started.zero?
 
       (total_journeys_completed.to_f / total_journeys_started * 100).round(2)
+    end
+
+    def incomplete_journeys
+      journey_base_scope.incomplete
+                        .count
     end
   end
 end

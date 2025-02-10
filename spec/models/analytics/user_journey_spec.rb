@@ -5,29 +5,40 @@ require "rails_helper"
 # module WasteExemptionsEngine
 #   module Analytics
 
-RSpec.describe UserJourney do
-
-  # rubocop:disable RSpec/IndexedLet
-  let(:count1) { Faker::Number.between(from: 1, to: 5) }
-  let(:count2) { Faker::Number.between(from: 1, to: 5) }
-  let(:count3) { Faker::Number.between(from: 1, to: 5) }
-  # rubocop:enable RSpec/IndexedLet
+RSpec.describe Analytics::UserJourney do
 
   describe "journey type scopes" do
+    # rubocop:disable RSpec/IndexedLet
+    let(:count1) { Faker::Number.between(from: 1, to: 5) }
+    let(:count2) { Faker::Number.between(from: 1, to: 5) }
+    let(:count3) { Faker::Number.between(from: 1, to: 5) }
+    let(:count4) { Faker::Number.between(from: 1, to: 5) }
+    # rubocop:enable RSpec/IndexedLet
+
     before do
       create_list(:user_journey, count1, :registration)
       create_list(:user_journey, count2, :renewal)
       create_list(:user_journey, count3, journey_type: "Foo")
+      create_list(:user_journey, count4, :charged_registration)
     end
 
     it { expect(described_class.registrations.length).to eq count1 }
     it { expect(described_class.renewals.length).to eq count2 }
+    it { expect(described_class.charged_registrations.length).to eq count4 }
     it { expect(described_class.only_types(%w[NewRegistration]).length).to eq count1 }
+    it { expect(described_class.only_types(%w[NewChargedRegistration]).length).to eq count4 }
     it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq count2 }
     it { expect(described_class.only_types(%w[NewRegistration RenewingRegistration]).length).to eq count1 + count2 }
   end
 
   describe "start route scopes" do
+    # rubocop:disable RSpec/IndexedLet
+    let(:count1) { Faker::Number.between(from: 1, to: 5) }
+    let(:count2) { Faker::Number.between(from: 1, to: 5) }
+    let(:count3) { Faker::Number.between(from: 1, to: 5) }
+    let(:count4) { Faker::Number.between(from: 1, to: 5) }
+    # rubocop:enable RSpec/IndexedLet
+
     before do
       create_list(:user_journey, count1, :started_digital)
       create_list(:user_journey, count2, :started_assisted_digital)
@@ -91,6 +102,13 @@ RSpec.describe UserJourney do
   end
 
   describe "completion scopes" do
+    # rubocop:disable RSpec/IndexedLet
+    let(:count1) { Faker::Number.between(from: 1, to: 5) }
+    let(:count2) { Faker::Number.between(from: 1, to: 5) }
+    let(:count3) { Faker::Number.between(from: 1, to: 5) }
+    let(:count4) { Faker::Number.between(from: 1, to: 5) }
+    # rubocop:enable RSpec/IndexedLet
+
     before do
       create_list(:user_journey, count1, :completed_digital)
       create_list(:user_journey, count2, :completed_assisted_digital)
@@ -175,7 +193,6 @@ RSpec.describe UserJourney do
   end
 
   describe "#complete_journey" do
-    let(:transient_registration) { create(:new_registration) }
     let(:journey) { Timecop.freeze(1.hour.ago) { create(:user_journey, token: transient_registration.token) } }
     let(:completion_time) { Time.zone.now }
 
@@ -184,17 +201,31 @@ RSpec.describe UserJourney do
       Timecop.freeze(completion_time) { journey.complete_journey(transient_registration) }
     end
 
-    it "updates the completed_at attribute on completion" do
-      expect(journey.completed_at).to be_within(1.second).of(completion_time)
+    shared_examples "completes the journey" do
+      it "updates the completed_at attribute on completion" do
+        expect(journey.completed_at).to be_within(1.second).of(completion_time)
+      end
+
+      it "sets the completed_route to 'DIGITAL' on completion" do
+        expect(journey.completed_route).to eq "DIGITAL"
+      end
+
+      it "updates registration data with attributes from the transient registration on completion" do
+        expected_attributes = transient_registration.attributes.slice("business_type", "type")
+        expect(journey.registration_data).to include(expected_attributes)
+      end
     end
 
-    it "sets the completed_route to 'DIGITAL' on completion" do
-      expect(journey.completed_route).to eq "DIGITAL"
+    context "with a new registration" do
+      let(:transient_registration) { create(:new_registration) }
+
+      it_behaves_like "completes the journey"
     end
 
-    it "updates registration data with attributes from the transient registration on completion" do
-      expected_attributes = transient_registration.attributes.slice("business_type", "type")
-      expect(journey.registration_data).to include(expected_attributes)
+    context "with a new charged registration" do
+      let(:transient_registration) { create(:new_charged_registration) }
+
+      it_behaves_like "completes the journey"
     end
   end
 

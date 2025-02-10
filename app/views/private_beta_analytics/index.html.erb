@@ -1,0 +1,49 @@
+<h1 class="govuk-heading-l">
+  <%= t(".title") %>
+</h1>
+
+<% start_date_value = @start_date&.strftime('%Y-%m-%d') %>
+<% end_date_value = @end_date&.strftime('%Y-%m-%d') %>
+
+<% other_analytics_link = link_to t(".analytics_link_text"), analytics_path %>
+<%= render("shared/analytics_date_range", other_analytics_link:) %>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m"><%= t(".aggregate_data_table.header") %></caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Metric</th>
+      <th scope="col" class="govuk-table__header">Value</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+
+    <%= render "shared/analytics_table_rows" %>
+
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">
+        <%=
+          t(".aggregate_data_table.total_journeys_abandoned",
+            link: link_to(
+              t(".aggregate_data_table.incomplete_journeys_link_text"),
+              "#{private_beta_incomplete_journeys_path}?start_date=#{@start_date}&end_date=#{@end_date}"
+            )
+          ).html_safe
+        %>
+      </th>
+      <td class="govuk-table__cell"><%= @analytics_data[:incomplete_journeys] %></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">
+        <%=
+          t(".aggregate_data_table.average_time_per_page",
+            link: link_to(t(".aggregate_data_table.average_time_per_page_link_text"),
+            "#{private_beta_average_time_per_pages_path}?start_date=#{start_date_value}&end_date=#{end_date_value}"
+            )
+          ).html_safe
+        %>
+      </th>
+      <td class="govuk-table__cell"></td>
+    </tr>
+  </tbody>
+</table>
