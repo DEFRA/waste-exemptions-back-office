@@ -32,6 +32,8 @@
   </div>
 <% end %>
 
+<% if can?(:read_finance_data, Reports::GeneratedReport) %>
+
 <br/>
 <br/>
 
@@ -66,3 +68,5 @@
 
     </div>
   </div>
+
+  <% end %>

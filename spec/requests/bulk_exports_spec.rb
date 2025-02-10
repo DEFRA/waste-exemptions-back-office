@@ -32,12 +32,28 @@ RSpec.describe "Bulk Exports" do
         create(:generated_report, :finance_data, file_name: "finance_data_report.csv")
       end
 
-      it "renders the correct template, the report link is present and responds with a 200 status code" do
-        get bulk_exports_path
+      context "when user has permission to view finance data report" do
+        let(:user) { create(:user, :admin_team_lead) }
 
-        expect(response).to render_template("bulk_exports/show")
-        expect(response.body).to include("finance_data_report.csv")
-        expect(response).to have_http_status(:ok)
+        it "renders the correct template, the report link is present and responds with a 200 status code" do
+          get bulk_exports_path
+
+          expect(response).to render_template("bulk_exports/show")
+          expect(response).to have_http_status(:ok)
+
+          expect(response.body).to include("finance_data_report.csv")
+        end
+      end
+
+      context "when user has no permission to view finance data report" do
+        it "renders the correct template and responds with a 200 status code, but the report link is NOT present" do
+          get bulk_exports_path
+
+          expect(response).to render_template("bulk_exports/show")
+          expect(response).to have_http_status(:ok)
+
+          expect(response.body).not_to include("finance_data_report.csv")
+        end
       end
     end
   end
