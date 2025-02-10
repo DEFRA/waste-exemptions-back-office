@@ -30,7 +30,7 @@ module Reports
               # support multiple orders per registration
               registration.account.orders.each do |order|
                 order_rows = generate_order_rows(registration, order)
-                order_rows.each{|r| csv << r}
+                order_rows.each { |r| csv << r }
               end
             end
           end
@@ -40,7 +40,7 @@ module Reports
       private
 
       def generate_order_rows(registration, order)
-        return [] unless order&.charge_detail.present?
+        return [] if order&.charge_detail.blank?
 
         order_rows = []
         # registration charge row
