@@ -27,27 +27,10 @@ module Reports
 
           registrations_scope.find_in_batches(batch_size: batch_size) do |batch|
             batch.each do |registration|
-              order = registration.account.orders.last
-
-              # registration charge row
-              charge_detail = order.charge_detail
-              csv << registration_charge_row(registration, charge_detail)
-
-              order.charge_detail.band_charge_details.each do |band_charge_detail|
-                # initial compliance charge row
-                csv << initial_compliance_charge_row(registration, band_charge_detail)
-                # additional compliance charge row
-                csv << additional_compliance_charge_row(registration, band_charge_detail)
-              end
-
-              registration.account.charge_adjustments.each do |charge_adjustment|
-                # charge adjustment row
-                csv << charge_adjustment_row(registration, charge_adjustment)
-              end
-
-              registration.account.payments.each do |payment|
-                # payment row
-                csv << payment_row(registration, payment)
+              # support multiple orders per registration
+              registration.account.orders.each do |order|
+                order_rows = generate_order_rows(registration, order)
+                order_rows.each{|r| csv << r}
               end
             end
           end
@@ -56,37 +39,64 @@ module Reports
 
       private
 
+      def generate_order_rows(registration, order)
+        return [] unless order&.charge_detail.present?
+
+        order_rows = []
+        # registration charge row
+        charge_detail = order.charge_detail
+        order_rows << registration_charge_row(registration, charge_detail)
+
+        order.charge_detail.band_charge_details.each do |band_charge_detail|
+          # initial compliance charge row
+          order_rows << initial_compliance_charge_row(registration, band_charge_detail)
+          # additional compliance charge row
+          order_rows << additional_compliance_charge_row(registration, band_charge_detail)
+        end
+
+        registration.account.charge_adjustments.each do |charge_adjustment|
+          # charge adjustment row
+          order_rows << charge_adjustment_row(registration, charge_adjustment)
+        end
+
+        registration.account.payments.each do |payment|
+          # payment row
+          order_rows << payment_row(registration, payment)
+        end
+        order_rows
+      end
+
       def initial_compliance_charge_row(registration, secondary_object)
+        presenter = FinanceDataReport::InitialComplianceChargeRowPresenter.new(registration:, secondary_object:)
         ATTRIBUTES.map do |attribute|
-          presenter = FinanceDataReport::InitialComplianceChargeRowPresenter.new(registration:, secondary_object:)
           presenter.public_send(attribute)
         end
       end
 
       def additional_compliance_charge_row(registration, secondary_object)
+        presenter = FinanceDataReport::AdditionalComplianceChargeRowPresenter.new(registration:, secondary_object:)
         ATTRIBUTES.map do |attribute|
-          presenter = FinanceDataReport::AdditionalComplianceChargeRowPresenter.new(registration:, secondary_object:)
           presenter.public_send(attribute)
         end
       end
 
       def registration_charge_row(registration, secondary_object)
+        presenter = FinanceDataReport::RegistrationChargeRowPresenter.new(registration:, secondary_object:)
         ATTRIBUTES.map do |attribute|
-          presenter = FinanceDataReport::RegistrationChargeRowPresenter.new(registration:, secondary_object:)
           presenter.public_send(attribute)
         end
       end
 
       def charge_adjustment_row(registration, secondary_object)
+        presenter = FinanceDataReport::ChargeAdjustmentRowPresenter.new(registration:, secondary_object:)
         ATTRIBUTES.map do |attribute|
-          presenter = FinanceDataReport::ChargeAdjustmentRowPresenter.new(registration:, secondary_object:)
           presenter.public_send(attribute)
         end
       end
 
       def payment_row(registration, secondary_object)
+        presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:)
         ATTRIBUTES.map do |attribute|
-          presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:)
           presenter.public_send(attribute)
         end
       end

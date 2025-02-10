@@ -124,17 +124,17 @@ module Reports
       end
 
       describe "#to_csv" do
-        before do
-          order
-          charge_adjustment
-          registration
-          order.charge_detail.band_charge_details.each do |band_charge_detail|
-            band_charge_detail.update(band_id: order.exemptions.last.band_id)
-          end
-        end
-
-        context "when CSV output is generated" do
+        context "when CSV output is generated - registration has single order" do
           let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+          before do
+            order
+            charge_adjustment
+            registration
+            order.charge_detail.band_charge_details.each do |band_charge_detail|
+              band_charge_detail.update(band_id: order.exemptions.last.band_id)
+            end
+          end
 
           it "generates correct header" do
             expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
@@ -154,6 +154,63 @@ module Reports
 
           it_behaves_like "a valid charge adjustment row", 7
           it_behaves_like "a valid payment row", 8
+        end
+
+        context "when CSV output is generated - when registration has multiple orders" do
+          let(:order2) { create(:order, :with_exemptions, :with_charge_detail, order_owner: account) }
+          let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+          before do
+            order
+            charge_adjustment
+            registration
+            order.charge_detail.band_charge_details.each do |band_charge_detail|
+              band_charge_detail.update(band_id: order.exemptions.last.band_id)
+            end
+            order2
+            charge_adjustment
+            registration
+            order2.charge_detail.band_charge_details.each do |band_charge_detail2|
+              band_charge_detail2.update(band_id: order2.exemptions.last.band_id)
+            end
+          end
+
+          it "generates correct header" do
+            expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
+                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance])
+          end
+
+          # ORDER 1
+
+          it_behaves_like "a valid registration charge row", 0
+
+          it_behaves_like "a valid initial compliance charge row", 1
+          it_behaves_like "a valid additional compliance charge row", 2
+
+          it_behaves_like "a valid initial compliance charge row", 3
+          it_behaves_like "a valid additional compliance charge row", 4
+
+          it_behaves_like "a valid initial compliance charge row", 5
+          it_behaves_like "a valid additional compliance charge row", 6
+
+          it_behaves_like "a valid charge adjustment row", 7
+          it_behaves_like "a valid payment row", 8
+
+          # ORDER 2
+
+          it_behaves_like "a valid registration charge row", 9
+
+          it_behaves_like "a valid initial compliance charge row", 10
+          it_behaves_like "a valid additional compliance charge row", 11
+
+          it_behaves_like "a valid initial compliance charge row", 12
+          it_behaves_like "a valid additional compliance charge row", 13
+
+          it_behaves_like "a valid initial compliance charge row", 14
+          it_behaves_like "a valid additional compliance charge row", 15
+
+          it_behaves_like "a valid charge adjustment row", 16
+          it_behaves_like "a valid payment row", 17
         end
       end
     end
