@@ -9,21 +9,32 @@ RSpec.describe "Bulk Exports" do
     sign_in(user)
   end
 
+  shared_examples "renders the correct template and returns correct status" do
+    it "renders the correct template" do
+      get bulk_exports_path
+      expect(response).to render_template("bulk_exports/show")
+    end
+
+    it "responds with a 200 status code" do
+      get bulk_exports_path
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe "GET /data-exports" do
     context "when bulk data report is present" do
       before do
         create(:generated_report, created_at: Time.zone.local(2019, 6, 1, 12, 0), data_from_date: Date.new(2019, 6, 1))
       end
 
+      it_behaves_like "renders the correct template and returns correct status"
+
       it "renders the correct template, the timestamp in an accessible format and responds with a 200 status code" do
         # The 2 in "12:00pm" is optional to allow for changes in daylight savings - 12:00pm or 1:00pm is valid
         export_at_regex = /These files were created at 12?:00pm on 1 June 2019\./m
 
         get bulk_exports_path
-
-        expect(response).to render_template("bulk_exports/show")
         expect(response.body.scan(export_at_regex).count).to eq(1)
-        expect(response).to have_http_status(:ok)
       end
     end
 
@@ -35,23 +46,20 @@ RSpec.describe "Bulk Exports" do
       context "when user has permission to view finance data report" do
         let(:user) { create(:user, :admin_team_lead) }
 
-        it "renders the correct template, the report link is present and responds with a 200 status code" do
+        it_behaves_like "renders the correct template and returns correct status"
+
+        it "contains finance_data report link" do
           get bulk_exports_path
-
-          expect(response).to render_template("bulk_exports/show")
-          expect(response).to have_http_status(:ok)
-
           expect(response.body).to include("finance_data_report.csv")
         end
       end
 
       context "when user has no permission to view finance data report" do
-        it "renders the correct template and responds with a 200 status code, but the report link is NOT present" do
+
+        it_behaves_like "renders the correct template and returns correct status"
+
+        it "does not contain finance_data report link" do
           get bulk_exports_path
-
-          expect(response).to render_template("bulk_exports/show")
-          expect(response).to have_http_status(:ok)
-
           expect(response.body).not_to include("finance_data_report.csv")
         end
       end

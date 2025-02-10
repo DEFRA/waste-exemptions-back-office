@@ -9,15 +9,23 @@ module Reports
         before { allow(Airbrake).to receive(:notify) }
 
         context "when the request succeed" do
-          it "generates a CSV file containing finance data records, upload it to AWS and record the upload" do
+          before do
             stub_successful_request
+          end
 
+          it "creates a GeneratedReport record with correct file name" do
             expect { described_class.run }.to change(GeneratedReport, :count).by(1)
-
             expect(GeneratedReport.last.file_name).to eq("charging_payment_data_#{Time.zone.today.strftime('%Y-%m-%d')}.csv")
+          end
+
+          it "creates a GeneratedReport record with correct from and to dates" do
+            expect { described_class.run }.to change(GeneratedReport, :count).by(1)
             expect(GeneratedReport.last.data_from_date.to_fs(:day_month_year_slashes)).to eq("01/02/2025")
             expect(GeneratedReport.last.data_to_date.to_fs(:day_month_year_slashes)).to eq(Time.zone.today.to_fs(:day_month_year_slashes))
+          end
 
+          it "creates a GeneratedReport record and does not trigger error" do
+            expect { described_class.run }.to change(GeneratedReport, :count).by(1)
             # Expect no error gets notified
             expect(Airbrake).not_to have_received(:notify)
           end
