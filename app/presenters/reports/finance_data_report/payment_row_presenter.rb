@@ -4,7 +4,7 @@ module Reports
   module FinanceDataReport
     class PaymentRowPresenter < BaseRegistrationRowPresenter
       def payment_type
-        @secondary_object.payment_type
+        @secondary_object.payment_type == "govpay_payment" ? "card" : @secondary_object.payment_type
       end
 
       def reference
