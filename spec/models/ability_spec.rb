@@ -32,6 +32,8 @@ RSpec.describe Ability do
 
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot refund payments"
+
+    it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
   end
 
   context "when the user role is customer_service_adviser" do
@@ -53,6 +55,7 @@ RSpec.describe Ability do
     it { expect(ability).not_to be_able_to(:deregister, registration) }
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::GeneratedReport) }
+    it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
   end
 
   context "when the user role is data_viewer" do
@@ -74,7 +77,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot invite to private beta"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
-
+    it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
   end
 
   context "when the user role is developer" do
@@ -93,6 +96,7 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
     it_behaves_like "cannot manage users"
   end
@@ -107,6 +111,7 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
+    it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
     it_behaves_like "cannot add charge adjustments"
     it_behaves_like "cannot add payments"
@@ -131,6 +136,7 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
+    it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot add charge adjustments"
@@ -146,6 +152,7 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
+    it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
     it_behaves_like "cannot manage registrations"
     it_behaves_like "cannot add charge adjustments"
@@ -173,6 +180,7 @@ RSpec.describe Ability do
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::Download) }
+    it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
   end
 
   context "when the user account is inactive" do

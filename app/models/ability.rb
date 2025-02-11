@@ -17,6 +17,7 @@ class Ability
     read_quarterly_stats: [:read, Reports::DefraQuarterlyStatsService],
     download_reports: [:read, Reports::Download],
     read_generated_report: [:read, Reports::GeneratedReport],
+    read_finance_data_report: [:read_finance_data, Reports::GeneratedReport],
     read_user: [:read, User],
     read_registration: [:read, WasteExemptionsEngine::Registration],
     read_new_registration: [:read,
