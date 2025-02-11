@@ -18,6 +18,10 @@ module Analytics
 
     private
 
+    def default_start_date
+      Analytics::UserJourney.minimum_created_at&.to_date.presence || Time.zone.today
+    end
+
     # Aggregate dwell time per page
     def dwell_times
       # Bullet complains about unused eager loading but if its recommendation

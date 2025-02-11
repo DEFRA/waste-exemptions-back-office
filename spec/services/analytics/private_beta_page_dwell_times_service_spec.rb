@@ -53,7 +53,7 @@ module Analytics
         )
       end
 
-      # nil because there is no susbequent page visit
+      # nil because there is no subsequent page visit
       it { expect(result["declaration"]).to be_nil }
 
       # nil because no such page was visited
