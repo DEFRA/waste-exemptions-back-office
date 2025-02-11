@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_10_172421) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_05_115533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_10_172421) do
     t.bigint "registration_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "selected_payment_method"
     t.index ["registration_type", "registration_id"], name: "index_beta_participants_on_registration"
   end
 
@@ -329,6 +330,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_10_172421) do
     t.datetime "updated_at", precision: nil, null: false
     t.date "data_from_date"
     t.date "data_to_date"
+    t.string "report_type", default: "bulk", null: false
   end
 
   create_table "transient_addresses", id: :serial, force: :cascade do |t|

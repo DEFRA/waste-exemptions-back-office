@@ -49,6 +49,7 @@ module Reports
     def record_content_created
       GeneratedReport.create!(
         file_name: file_name,
+        report_type: GeneratedReport::REPORT_TYPE_BULK,
         data_from_date: @first_day_of_the_month,
         data_to_date: @first_day_of_the_month.end_of_month
       )

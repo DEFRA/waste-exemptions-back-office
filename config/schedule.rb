@@ -68,6 +68,12 @@ every :day, at: ENV["EXPORT_SERVICE_BULK_EXPORT_TIME"] || "02:05", roles: [:db] 
   rake_and_format "reports:export:bulk"
 end
 
+# This is the finance data export job. When run, it will delete old finance reports and
+# generate a CSV file containing finance details for all registrations.
+every :day, at: ENV["EXPORT_SERVICE_FINANCE_DATA_EXPORT_TIME"] || "02:25", roles: [:db] do
+  rake_and_format "reports:export:finance_data"
+end
+
 # This is the first renewal email reminder job. For each registration expiring
 # in 30 days time, it will generate and send the first email reminder
 every :day, at: ENV["FIRST_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "02:30", roles: [:db] do
