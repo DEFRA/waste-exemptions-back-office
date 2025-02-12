@@ -62,11 +62,13 @@ module Reports
       def generate_band_charge_rows(registration, charge_detail)
         rows = []
         charge_detail.band_charge_details.each do |band_charge_detail|
-          initial_compliance_charge_row = initial_compliance_charge_row(registration, band_charge_detail)
-          rows << initial_compliance_charge_row unless initial_compliance_charge_row.empty?
+          if band_charge_detail.initial_compliance_charge_amount.positive?
+            rows << initial_compliance_charge_row(registration, band_charge_detail)
+          end
 
-          additional_compliance_charge_row = additional_compliance_charge_row(registration, band_charge_detail)
-          rows << additional_compliance_charge_row unless additional_compliance_charge_row.empty?
+          if band_charge_detail.additional_compliance_charge_amount.positive?
+            rows << additional_compliance_charge_row(registration, band_charge_detail)
+          end
         end
         rows
       end
@@ -93,29 +95,20 @@ module Reports
         presenter = FinanceDataReport::InitialComplianceChargeRowPresenter.new(registration:, secondary_object:,
                                                                                total: @total)
 
-        if presenter.exemption.present?
-          output = ATTRIBUTES.map do |attribute|
-            presenter.public_send(attribute)
-          end
-          @total = presenter.total
-        else
-          output = []
+        output = ATTRIBUTES.map do |attribute|
+          presenter.public_send(attribute)
         end
+        @total = presenter.total
         output
       end
 
       def additional_compliance_charge_row(registration, secondary_object)
         presenter = FinanceDataReport::AdditionalComplianceChargeRowPresenter.new(registration:, secondary_object:,
                                                                                   total: @total)
-
-        if presenter.exemption.present?
-          output = ATTRIBUTES.map do |attribute|
-            presenter.public_send(attribute)
-          end
-          @total = presenter.total
-        else
-          output = []
+        output = ATTRIBUTES.map do |attribute|
+          presenter.public_send(attribute)
         end
+        @total = presenter.total
         output
       end
 
