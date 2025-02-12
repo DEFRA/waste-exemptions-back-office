@@ -80,20 +80,30 @@ module Reports
       def initial_compliance_charge_row(registration, secondary_object)
         presenter = FinanceDataReport::InitialComplianceChargeRowPresenter.new(registration:, secondary_object:,
                                                                                total: @total)
-        output = ATTRIBUTES.map do |attribute|
-          presenter.public_send(attribute)
+
+        if presenter.exemption.present?
+          output = ATTRIBUTES.map do |attribute|
+            presenter.public_send(attribute)
+          end
+          @total = presenter.total
+        else
+          output = []
         end
-        @total = presenter.total
         output
       end
 
       def additional_compliance_charge_row(registration, secondary_object)
         presenter = FinanceDataReport::AdditionalComplianceChargeRowPresenter.new(registration:, secondary_object:,
                                                                                   total: @total)
-        output = ATTRIBUTES.map do |attribute|
-          presenter.public_send(attribute)
+
+        if presenter.exemption.present?
+          output = ATTRIBUTES.map do |attribute|
+            presenter.public_send(attribute)
+          end
+          @total = presenter.total
+        else
+          output = []
         end
-        @total = presenter.total
         output
       end
 
