@@ -3,6 +3,8 @@
 module Reports
   module FinanceDataReport
     class DataSerializer
+      attr_accessor :total
+
       ATTRIBUTES = %i[
         registration_no
         date
@@ -45,6 +47,8 @@ module Reports
         return [] if order&.charge_detail.blank?
 
         order_rows = []
+        @total = 0
+
         # registration charge row
         charge_detail = order.charge_detail
         order_rows << registration_charge_row(registration, charge_detail)
@@ -54,6 +58,11 @@ module Reports
           order_rows << initial_compliance_charge_row(registration, band_charge_detail)
           # additional compliance charge row
           order_rows << additional_compliance_charge_row(registration, band_charge_detail)
+        end
+
+        # farm compliance charge row
+        if charge_detail.bucket_charge_amount.positive?
+          order_rows << farm_compliance_charge_row(registration, charge_detail)
         end
 
         registration.account.charge_adjustments.each do |charge_adjustment|
@@ -69,24 +78,43 @@ module Reports
       end
 
       def initial_compliance_charge_row(registration, secondary_object)
-        presenter = FinanceDataReport::InitialComplianceChargeRowPresenter.new(registration:, secondary_object:)
-        ATTRIBUTES.map do |attribute|
+        presenter = FinanceDataReport::InitialComplianceChargeRowPresenter.new(registration:, secondary_object:,
+                                                                               total: @total)
+        output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @total = presenter.total
+        output
       end
 
       def additional_compliance_charge_row(registration, secondary_object)
-        presenter = FinanceDataReport::AdditionalComplianceChargeRowPresenter.new(registration:, secondary_object:)
-        ATTRIBUTES.map do |attribute|
+        presenter = FinanceDataReport::AdditionalComplianceChargeRowPresenter.new(registration:, secondary_object:,
+                                                                                  total: @total)
+        output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @total = presenter.total
+        output
+      end
+
+      def farm_compliance_charge_row(registration, secondary_object)
+        presenter = FinanceDataReport::FarmComplianceChargeRowPresenter.new(registration:, secondary_object:,
+                                                                            total: @total)
+        output = ATTRIBUTES.map do |attribute|
+          presenter.public_send(attribute)
+        end
+        @total = presenter.total
+        output
       end
 
       def registration_charge_row(registration, secondary_object)
-        presenter = FinanceDataReport::RegistrationChargeRowPresenter.new(registration:, secondary_object:)
-        ATTRIBUTES.map do |attribute|
+        presenter = FinanceDataReport::RegistrationChargeRowPresenter.new(registration:, secondary_object:,
+                                                                          total: @total)
+        output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @total = presenter.total
+        output
       end
 
       def charge_adjustment_row(registration, secondary_object)

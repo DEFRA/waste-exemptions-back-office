@@ -16,7 +16,7 @@ module Reports
       end
 
       let(:registration) { build(:registration, reference: "REG123", submitted_at: Time.zone.now, account: account) }
-      let(:presenter) { described_class.new(registration: registration, secondary_object: band_charge_detail) }
+      let(:presenter) { described_class.new(registration: registration, secondary_object: band_charge_detail, total: 1000) }
 
       describe "#charge_type" do
         it "returns 'compliance_initial'" do
@@ -39,6 +39,12 @@ module Reports
       describe "#exemption" do
         it "returns exemption code(s)" do
           expect(presenter.exemption).to be_present
+        end
+      end
+
+      describe "#balance" do
+        it "returns the formatted balance amount" do
+          expect(presenter.balance).to eq("20")
         end
       end
     end
