@@ -37,8 +37,26 @@ module Reports
       end
 
       describe "#exemption" do
-        it "returns exemption code(s)" do
-          expect(presenter.exemption).to be_present
+        context "when there are no farmer exemptions" do
+          it "returns exemption code(s)" do
+            expect(presenter.exemption).to be_present
+            order.exemptions.each do |exemption|
+              expect(presenter.exemption).to include(exemption.code)
+            end
+          end
+        end
+
+        context "when there are farmer exemptions" do
+          let(:bucket) { build(:bucket, :farmer_exemptions) }
+          let(:order) { build(:order, :with_exemptions, :with_charge_detail, order_owner: account, bucket: bucket) }
+
+          it "does not include farmer exemption code(s)" do
+            farmer_exemption = order.exemptions.last
+            bucket.exemptions << farmer_exemption
+
+            expect(presenter.exemption).to be_present
+            expect(presenter.exemption).not_to include(farmer_exemption.code)
+          end
         end
       end
 
