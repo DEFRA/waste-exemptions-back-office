@@ -52,29 +52,41 @@ module Reports
         # registration charge row
         charge_detail = order.charge_detail
         order_rows << registration_charge_row(registration, charge_detail)
-
-        order.charge_detail.band_charge_details.each do |band_charge_detail|
-          # initial compliance charge row
-          order_rows << initial_compliance_charge_row(registration, band_charge_detail)
-          # additional compliance charge row
-          order_rows << additional_compliance_charge_row(registration, band_charge_detail)
-        end
-
-        # farm compliance charge row
-        if charge_detail.bucket_charge_amount.positive?
-          order_rows << farm_compliance_charge_row(registration, charge_detail)
-        end
-
-        registration.account.charge_adjustments.each do |charge_adjustment|
-          # charge adjustment row
-          order_rows << charge_adjustment_row(registration, charge_adjustment)
-        end
-
-        registration.account.payments.each do |payment|
-          # payment row
-          order_rows << payment_row(registration, payment)
-        end
+        order_rows.concat(generate_band_charge_rows(registration, charge_detail))
+        order_rows.concat(generate_farm_compliance_row(registration, charge_detail))
+        order_rows.concat(generate_charge_adjustment_rows(registration))
+        order_rows.concat(generate_payment_rows(registration))
         order_rows
+      end
+
+      def generate_band_charge_rows(registration, charge_detail)
+        rows = []
+        charge_detail.band_charge_details.each do |band_charge_detail|
+          initial_compliance_charge_row = initial_compliance_charge_row(registration, band_charge_detail)
+          rows << initial_compliance_charge_row unless initial_compliance_charge_row.empty?
+
+          additional_compliance_charge_row = additional_compliance_charge_row(registration, band_charge_detail)
+          rows << additional_compliance_charge_row unless additional_compliance_charge_row.empty?
+        end
+        rows
+      end
+
+      def generate_farm_compliance_row(registration, charge_detail)
+        return [] unless charge_detail.bucket_charge_amount.positive?
+
+        [farm_compliance_charge_row(registration, charge_detail)]
+      end
+
+      def generate_charge_adjustment_rows(registration)
+        registration.account.charge_adjustments.map do |charge_adjustment|
+          charge_adjustment_row(registration, charge_adjustment)
+        end
+      end
+
+      def generate_payment_rows(registration)
+        registration.account.payments.map do |payment|
+          payment_row(registration, payment)
+        end
       end
 
       def initial_compliance_charge_row(registration, secondary_object)
