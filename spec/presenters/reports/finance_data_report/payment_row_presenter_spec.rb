@@ -20,6 +20,11 @@ module Reports
         it "returns card when payment type is govpay_payment" do
           expect(presenter.payment_type).to eq("card")
         end
+
+        it "returns card(moto) when payment type is govpay_payment and journey is assisted" do
+          registration.update(assistance_mode: "full")
+          expect(presenter.payment_type).to eq("card(moto)")
+        end
       end
 
       describe "#reference" do

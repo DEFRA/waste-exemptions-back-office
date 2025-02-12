@@ -4,7 +4,11 @@ module Reports
   module FinanceDataReport
     class PaymentRowPresenter < BaseRegistrationRowPresenter
       def payment_type
-        @secondary_object.payment_type == "govpay_payment" ? "card" : @secondary_object.payment_type
+        if @secondary_object.payment_type == "govpay_payment"
+          @registration.assistance_mode == "full" ? "card(moto)" : "card"
+        else
+          @secondary_object.payment_type
+        end
       end
 
       def reference
