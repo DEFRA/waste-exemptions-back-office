@@ -118,7 +118,7 @@ module Reports
             expect(csv[row_number]["on_a_farm"]).to be_present
             expect(csv[row_number]["is_a_farmer"]).to be_present
             expect(csv[row_number]["ea_admin_area"]).to be_present
-            expect(csv[row_number]["balance"]).to be_nil
+            expect(csv[row_number]["balance"]).to be_present
           end
         end
       end
