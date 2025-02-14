@@ -5,9 +5,9 @@ require "rails_helper"
 module Reports
   module FinanceDataReport
     RSpec.describe ChargeAdjustmentRowPresenter do
-      let(:charge_adjustment) { build(:charge_adjustment, amount: 1500) }
+      let(:charge_adjustment) { build(:charge_adjustment, amount: -1500) }
       let(:registration) { build(:registration, reference: "REG123", submitted_at: Time.zone.now) }
-      let(:presenter) { described_class.new(registration: registration, secondary_object: charge_adjustment) }
+      let(:presenter) { described_class.new(registration: registration, secondary_object: charge_adjustment, total: 3050) }
 
       describe "#charge_type" do
         it "returns 'charge_adjust'" do
@@ -17,7 +17,13 @@ module Reports
 
       describe "#charge_amount" do
         it "returns the formatted charge amount" do
-          expect(presenter.charge_amount).to eq("15")
+          expect(presenter.charge_amount).to eq("-15")
+        end
+      end
+
+      describe "#balance" do
+        it "returns the formatted balance amount" do
+          expect(presenter.balance).to eq("15.50")
         end
       end
     end
