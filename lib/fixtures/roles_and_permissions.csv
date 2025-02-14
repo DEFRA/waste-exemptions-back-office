@@ -3,6 +3,7 @@ use_back_office,                          Y,                        Y,          
 read_registration,                        Y,                        Y,               Y,         Y,               Y,               Y,              Y,            Y
 read_new_registration,                    Y,                        Y,               Y,         Y,               Y,               Y,              Y,            Y
 read_generated_report,                    Y,                         ,               Y,         Y,               Y,               Y,              Y,            Y
+read_finance_data_report,                  ,                         ,                ,         Y,               Y,               Y,              Y,             
 create_registration,                       ,                        Y,               Y,         Y,               Y,               Y,               ,             
 create_new_registration,                   ,                        Y,               Y,         Y,               Y,               Y,               ,             
 update_new_registration,                   ,                        Y,               Y,         Y,               Y,               Y,               ,             

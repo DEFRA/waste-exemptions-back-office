@@ -8,6 +8,7 @@ module Reports
       let(:number_of_months) { 13 }
 
       before do
+        allow(GeneratedReport).to receive(:bulk).and_return(GeneratedReport)
         allow(GeneratedReport).to receive(:delete_all)
         allow(MonthlyBulkReportService).to receive(:run)
       end

@@ -1,0 +1,9 @@
+en:
+  shared:
+    analytics_date_range:
+      select_date_range: Select date range
+      labels:
+        start_date: Start date
+        end_date: End date
+      filter: Filter
+      other_analytics_link_text: "%{other_analytics_path}"

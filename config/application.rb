@@ -69,6 +69,7 @@ module WasteExemptionsBackOffice
 
     # Data export config
     config.bulk_reports_bucket_name = ENV.fetch("AWS_BULK_EXPORT_BUCKET", nil)
+    config.finance_data_reports_bucket_name = ENV.fetch("AWS_FINANCE_DATA_EXPORT_BUCKET", nil)
     config.epr_reports_bucket_name = ENV.fetch("AWS_DAILY_EXPORT_BUCKET", nil)
     config.deregistration_email_bucket_name = ENV.fetch("AWS_DEREGISTRATION_EMAIL_EXPORT_BUCKET", nil)
     config.boxi_exports_bucket_name = ENV.fetch("AWS_BOXI_EXPORT_BUCKET", nil)
@@ -97,6 +98,9 @@ module WasteExemptionsBackOffice
 
     # Database cleanup
     config.max_transient_registration_age_days = ENV["MAX_TRANSIENT_REGISTRATION_AGE_DAYS"] || 30
+
+    # For analytics: The number of days after which we consider a user journey to be abandoned
+    config.user_journey_abandoned_days = ENV.fetch("USER_JOURNEY_ABANDONED_DAYS", 2).to_i
 
     # Version info
     config.application_name = "waste-exemptions-back-office"

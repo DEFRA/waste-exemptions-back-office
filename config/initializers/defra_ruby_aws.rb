@@ -14,6 +14,16 @@ DefraRuby::Aws.configure do |c|
     encrypt_with_kms: ENV.fetch("AWS_BULK_ENCRYPT_WITH_KMS", nil)
   }
 
+  finance_data_bucket = {
+    name: ENV.fetch("AWS_FINANCE_DATA_EXPORT_BUCKET", nil),
+    region: ENV.fetch("AWS_REGION", nil),
+    credentials: {
+      access_key_id: ENV.fetch("AWS_FINANCE_DATA_EXPORT_ACCESS_KEY_ID", nil),
+      secret_access_key: ENV.fetch("AWS_FINANCE_DATA_EXPORT_SECRET_ACCESS_KEY", nil)
+    },
+    encrypt_with_kms: ENV.fetch("AWS_FINANCE_DATA_ENCRYPT_WITH_KMS", nil)
+  }
+
   epr_bucket = {
     name: ENV.fetch("AWS_DAILY_EXPORT_BUCKET", nil),
     region: ENV.fetch("AWS_REGION", nil),
@@ -46,6 +56,7 @@ DefraRuby::Aws.configure do |c|
 
   c.buckets = [
     bulk_bucket,
+    finance_data_bucket,
     epr_bucket,
     boxi_export_bucket,
     deregistration_email_export_bucket

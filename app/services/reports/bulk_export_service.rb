@@ -5,7 +5,7 @@ module Reports
     def run
       return if WasteExemptionsEngine::Registration.count.zero?
 
-      GeneratedReport.delete_all
+      GeneratedReport.bulk.delete_all
 
       first_day_of_the_month = starts_from
 

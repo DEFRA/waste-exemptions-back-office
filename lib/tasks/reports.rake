@@ -7,6 +7,12 @@ namespace :reports do
       Reports::BulkExportService.run
     end
 
+    desc "Generate the finance data reports and upload them to S3."
+    task finance_data: :environment do
+      Reports::GeneratedReport.finance_data.delete_all
+      Reports::FinanceDataReport::ExportService.run
+    end
+
     desc "Generate the EPR report and upload it to S3."
     task epr: :environment do
       Reports::EprExportService.run

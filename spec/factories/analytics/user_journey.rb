@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user_journey, class: "UserJourney" do
+  factory :user_journey, class: "Analytics::UserJourney" do
     journey_type { "NewRegistration" }
     token { SecureRandom.hex(20) }
     started_route { "DIGITAL" }
@@ -19,6 +19,10 @@ FactoryBot.define do
 
     trait :registration do
       journey_type { "NewRegistration" }
+    end
+
+    trait :charged_registration do
+      journey_type { "NewChargedRegistration" }
     end
 
     trait :renewal do
