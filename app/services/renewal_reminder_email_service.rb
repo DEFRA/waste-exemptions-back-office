@@ -34,7 +34,7 @@ class RenewalReminderEmailService < RenewalReminderService
       message_type: "email",
       template_id: nil,
       template_label: "User is opted out - No renewal reminder email sent",
-      sent_to: registration.contact_email
+      sent_to: registration.send(sent_to_method)
     )
   end
 
@@ -44,7 +44,7 @@ class RenewalReminderEmailService < RenewalReminderService
     "email"
   end
 
-  def sent_to
-    @registration.contact_email
+  def sent_to_method
+    :contact_email
   end
 end

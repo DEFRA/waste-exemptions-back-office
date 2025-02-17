@@ -29,7 +29,7 @@ class RenewalReminderTextService < RenewalReminderService
     "text"
   end
 
-  def sent_to
-    @registration.contact_phone
+  def sent_to_method
+    :contact_phone
   end
 end
