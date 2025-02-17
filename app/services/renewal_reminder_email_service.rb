@@ -38,12 +38,13 @@ class RenewalReminderEmailService < RenewalReminderService
     )
   end
 
-  def create_beta_participant_log(registration:)
-    registration.communication_logs.create(
-      message_type: "email",
-      template_id: template,
-      template_label: "beta_participant",
-      sent_to: registration.contact_email
-    )
+  private
+
+  def message_type
+    "email"
+  end
+
+  def sent_to
+    @registration.contact_email
   end
 end

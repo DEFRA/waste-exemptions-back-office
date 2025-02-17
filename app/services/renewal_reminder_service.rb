@@ -63,4 +63,17 @@ class RenewalReminderService < WasteExemptionsEngine::BaseService
   def unsubscribe_link
     WasteExemptionsEngine::UnsubscribeLinkService.run(registration: @registration)
   end
+
+  def message_type
+    raise NotImplementedError
+  end
+
+  def create_beta_participant_log(registration:)
+    registration.communication_logs.create(
+      message_type: message_type,
+      template_id: nil,
+      template_label: "Beta participant - No renewal reminder sent",
+      sent_to: sent_to
+    )
+  end
 end
