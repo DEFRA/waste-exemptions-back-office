@@ -73,7 +73,7 @@ class RenewalReminderService < WasteExemptionsEngine::BaseService
       message_type: message_type,
       template_id: nil,
       template_label: "Beta participant - No renewal reminder sent",
-      sent_to: sent_to
+      sent_to: registration.send(sent_to_method)
     )
   end
 end
