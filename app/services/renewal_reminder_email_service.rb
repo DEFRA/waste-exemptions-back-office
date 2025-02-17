@@ -8,6 +8,11 @@ class RenewalReminderEmailService < RenewalReminderService
   include WasteExemptionsEngine::CanHaveCommunicationLog
 
   def run(registration:, skip_opted_out_check: false)
+    if WasteExemptionsEngine::BetaParticipant.exists?(reg_number: registration.reference)
+      create_beta_participant_log(registration:)
+      return
+    end
+
     if registration.reminder_opt_in? || skip_opted_out_check
       @registration = registration
       client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
@@ -29,6 +34,15 @@ class RenewalReminderEmailService < RenewalReminderService
       message_type: "email",
       template_id: nil,
       template_label: "User is opted out - No renewal reminder email sent",
+      sent_to: registration.contact_email
+    )
+  end
+
+  def create_beta_participant_log(registration:)
+    registration.communication_logs.create(
+      message_type: "email",
+      template_id: template,
+      template_label: "beta_participant",
       sent_to: registration.contact_email
     )
   end
