@@ -27,8 +27,10 @@ module Analytics
       # Bullet complains about unused eager loading but if its recommendation
       # to add .includes([:page_views]) is followed the uj's page_views are truncated.
       # So we disable bullet for this block.
-      bullet_enabled_previous_value = Bullet.enable?
-      Bullet.enable = false
+      if defined?(Bullet)
+        bullet_enabled_previous_value = Bullet.enable?
+        Bullet.enable = false
+      end
 
       # user_journeys_scope.includes([:page_views]).each do |uj|
       user_journeys_scope.each do |uj|
@@ -46,7 +48,7 @@ module Analytics
 
       average_page_dwell_times
     ensure
-      Bullet.enable = bullet_enabled_previous_value
+      Bullet.enable = bullet_enabled_previous_value if defined?(Bullet)
     end
 
     def tally_counts_and_times(timed_page_view, next_page_view)

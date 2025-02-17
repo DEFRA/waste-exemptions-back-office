@@ -340,7 +340,6 @@ RSpec.describe ActionLinksHelper do
   describe "display_send_private_beta_invite_email_link_for?" do
     let(:resource) { create(:registration) }
     let(:can) { true }
-    let(:in_renewal_window) { true }
     let(:private_beta_feature_toggle) { true }
 
     before do
@@ -349,8 +348,6 @@ RSpec.describe ActionLinksHelper do
     end
 
     context "when the resource is a registration" do
-      before { allow(resource).to receive(:in_renewal_window?).and_return(in_renewal_window) }
-
       context "when all conditions are met" do
         let(:can) { true }
 
@@ -365,12 +362,6 @@ RSpec.describe ActionLinksHelper do
 
       context "when the user does not have permission to send private beta invite email" do
         let(:can) { false }
-
-        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
-      end
-
-      context "when the resource is not within a renewal window" do
-        let(:in_renewal_window) { false }
 
         it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
       end
