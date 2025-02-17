@@ -10,6 +10,12 @@ module Reports
       def charge_amount
         display_pence_as_pounds_and_pence(pence: @secondary_object.amount, hide_pence_if_zero: true)
       end
+
+      def balance
+        @total += @secondary_object.amount
+        display_pence_as_pounds_and_pence(pence: @total,
+                                          hide_pence_if_zero: true)
+      end
     end
   end
 end

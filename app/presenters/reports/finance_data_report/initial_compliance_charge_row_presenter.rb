@@ -18,8 +18,20 @@ module Reports
 
       def exemption
         @secondary_object.charge_detail.order.exemptions.select do |e|
-          e.band_id == @secondary_object.band_id
+          e.band_id == @secondary_object.band_id && bucket_exemption_codes.exclude?(e.code)
         end.map(&:code).sort.join(", ")
+      end
+
+      def balance
+        @total += @secondary_object.initial_compliance_charge_amount
+        display_pence_as_pounds_and_pence(pence: @total,
+                                          hide_pence_if_zero: true)
+      end
+
+      private
+
+      def bucket_exemption_codes
+        @secondary_object.charge_detail.order.bucket&.exemptions&.map(&:code) || []
       end
     end
   end
