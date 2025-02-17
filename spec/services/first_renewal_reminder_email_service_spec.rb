@@ -36,7 +36,7 @@ RSpec.describe FirstRenewalReminderEmailService do
           run_service
           log = registration.communication_logs.last
           expect(log.message_type).to eq("email")
-          expect(log.template_label).to eq("beta_participant")
+          expect(log.template_label).to eq("Beta participant - No renewal reminder sent")
           expect(log.sent_to).to eq(registration.contact_email)
         end
       end
