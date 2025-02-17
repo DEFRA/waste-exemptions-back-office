@@ -20,6 +20,12 @@ Metrics/AbcSize:
   # Number of assigments is high but the method is simple and clear
     - app/models/reports/finance_data_report/data_serializer.rb
 
+Metrics/ClassLength:
+  Exclude:
+  # Not worthwhile refacting now as the offense is marginal and we anticipate refactoring 
+  # this serializer anyway once we have more charge and payment data in the system.
+    - app/models/reports/finance_data_report/data_serializer.rb
+
 RSpec/DescribeClass:
   Exclude:
   # This cop is n/a for rake tasks

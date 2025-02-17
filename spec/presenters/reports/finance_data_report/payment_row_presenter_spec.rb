@@ -13,7 +13,17 @@ module Reports
 
       describe "#payment_type" do
         it "returns payment type" do
-          expect(presenter.payment_type).to eq("govpay_payment")
+          account.payments.first.update(payment_type: "bank_transfer")
+          expect(presenter.payment_type).to eq("bank_transfer")
+        end
+
+        it "returns card when payment type is govpay_payment" do
+          expect(presenter.payment_type).to eq("card")
+        end
+
+        it "returns card(moto) when payment type is govpay_payment and journey is assisted" do
+          registration.update(assistance_mode: "full")
+          expect(presenter.payment_type).to eq("card(moto)")
         end
       end
 

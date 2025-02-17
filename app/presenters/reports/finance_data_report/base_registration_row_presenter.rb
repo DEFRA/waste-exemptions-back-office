@@ -3,11 +3,14 @@
 module Reports
   module FinanceDataReport
     class BaseRegistrationRowPresenter
+      attr_accessor :total
+
       include FinanceDetailsHelper
 
-      def initialize(registration:, secondary_object: nil)
+      def initialize(registration:, secondary_object: nil, total: nil)
         @registration = registration
         @secondary_object = secondary_object
+        @total = total
       end
 
       def registration_no
