@@ -54,4 +54,14 @@ class RenewalReminderTextService < RenewalReminderService
       sent_to: @registration.send(sent_to_method)
     }
   end
+
+  private
+
+  def message_type
+    "text"
+  end
+
+  def sent_to_method
+    :contact_phone
+  end
 end
