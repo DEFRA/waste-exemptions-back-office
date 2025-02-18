@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 8fdfb5574ce982f8d795b903349d9cbf1444c918
+  revision: beedaf9ecf551b706386a1e7c69eacbc80ab683a
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -322,7 +322,7 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     language_server-protocol (3.17.0.4)
-    logger (1.6.5)
+    logger (1.6.6)
     loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -545,7 +545,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    stringio (3.1.2)
+    stringio (3.1.3)
     sucker_punch (3.2.0)
       concurrent-ruby (~> 1.0)
     thor (1.3.2)
@@ -595,7 +595,7 @@ GEM
       ostruct
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.7.1)
+    zeitwerk (2.7.2)
 
 PLATFORMS
   ruby
