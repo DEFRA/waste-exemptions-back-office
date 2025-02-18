@@ -7,11 +7,13 @@
   <%= t(".title") %>
 </h1>
 
-<h2 class="govuk-heading-m">
-  <%= t(".start_date", date: @start_date.strftime("%Y-%m-%d")) unless @start_date.blank? %>
-  &nbsp;&nbsp;&nbsp;
-  <%= t(".end_date", date: @end_date.strftime("%Y-%m-%d")) unless @end_date.blank?  %>
-</h2>
+<% if @start_date.present? || @end_date.present? %>
+  <h2 class="govuk-heading-m">
+    <%= t(".start_date", date: @start_date.strftime("%Y-%m-%d")) unless @start_date.blank? %>
+    &nbsp;&nbsp;&nbsp;
+    <%= t(".end_date", date: @end_date.strftime("%Y-%m-%d")) unless @end_date.blank?  %>
+  </h2>
+<% end %>
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
