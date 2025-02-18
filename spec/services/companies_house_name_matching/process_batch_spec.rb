@@ -12,6 +12,9 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
   let(:max_requests) { (described_class::RATE_LIMIT * described_class::RATE_LIMIT_BUFFER).to_i }
   let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
 
+  original_stdout = $stdout
+
+  # rubocop:disable RSpec/ExpectOutput
   before do
     allow(DefraRuby::CompaniesHouse::API).to receive(:new).and_return(companies_house_api)
     allow(companies_house_api).to receive(:run).and_return(
@@ -20,12 +23,18 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
         registered_office_address: ["10 Downing St", "Horizon House", "Bristol", "BS1 5AH"]
       }
     )
+
+    # Suppress noisy console output when unit testing
+    $stdout = StringIO.new
   end
 
   after do
+    $stdout = original_stdout
+
     FileUtils.rm_f(report_path)
     FileUtils.rm_f(summary_path)
   end
+  # rubocop:enable RSpec/ExpectOutput
 
   describe "#run" do
     context "when generating reports" do
