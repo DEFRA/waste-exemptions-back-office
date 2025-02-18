@@ -38,14 +38,6 @@ class RenewalReminderTextService < RenewalReminderService
 
   private
 
-  def template_label
-    raise NotImplementedError
-  end
-
-  def template
-    raise NotImplementedError
-  end
-
   def message_type
     "text"
   end
