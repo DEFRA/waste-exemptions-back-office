@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Rails/HelperInstanceVariable
 module AdPrivacyPolicyHelper
   def link_to_privacy_policy
     link_to(
@@ -10,9 +9,9 @@ module AdPrivacyPolicyHelper
     )
   end
 
-  def destination_path
-    if @registration.present?
-      renew_path(reference: @registration.reference)
+  def destination_path(registration = nil)
+    if registration.present?
+      renew_path(reference: registration.reference)
     elsif WasteExemptionsEngine::FeatureToggle.active?(:ad_charged_journey_link)
       transient_registration = WasteExemptionsEngine::NewChargedRegistration.create!
       WasteExemptionsEngine::Engine.routes.url_helpers.new_location_form_path(transient_registration.token)
@@ -21,4 +20,3 @@ module AdPrivacyPolicyHelper
     end
   end
 end
-# rubocop:enable Rails/HelperInstanceVariable
