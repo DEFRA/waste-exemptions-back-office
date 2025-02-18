@@ -13,7 +13,7 @@ module AdPrivacyPolicyHelper
   def destination_path
     if @registration.present?
       renew_path(reference: @registration.reference)
-    elsif WasteExemptionsEngine::FeatureToggle.active?(:back_office_private_beta_link)
+    elsif WasteExemptionsEngine::FeatureToggle.active?(:ad_charged_journey_link)
       transient_registration = WasteExemptionsEngine::NewChargedRegistration.create!
       WasteExemptionsEngine::Engine.routes.url_helpers.new_location_form_path(transient_registration.token)
     else

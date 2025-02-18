@@ -16,10 +16,10 @@ RSpec.describe AdPrivacyPolicyHelper do
     end
 
     context "when no registration is present" do
-      context "when the back_office_private_beta_link feature toggle is not enabled" do
+      context "when the ad_charged_journey_link feature toggle is not enabled" do
         before do
           allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?)
-            .with(:back_office_private_beta_link).and_return(false)
+            .with(:ad_charged_journey_link).and_return(false)
         end
 
         it "returns the non-charged new registration start path" do
@@ -27,10 +27,10 @@ RSpec.describe AdPrivacyPolicyHelper do
         end
       end
 
-      context "when the back_office_private_beta_link feature toggle is enabled" do
+      context "when the ad_charged_journey_link feature toggle is enabled" do
         before do
           allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?)
-            .with(:back_office_private_beta_link).and_return(true)
+            .with(:ad_charged_journey_link).and_return(true)
         end
 
         it "creates a new charged registration" do
