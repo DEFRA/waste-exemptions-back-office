@@ -2,7 +2,33 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.18.1...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.19.0...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-3644\] Stop sending renewal communications to beta participants [\#1645](https://github.com/DEFRA/waste-exemptions-back-office/pull/1645) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-3617\] updated exemptions [\#1643](https://github.com/DEFRA/waste-exemptions-back-office/pull/1643) ([brujeo](https://github.com/brujeo))
+- \[RUBY-3645\] remove renewal window constraint from Send private beta invite email action [\#1642](https://github.com/DEFRA/waste-exemptions-back-office/pull/1642) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 3492 add support for farming exemptions [\#1641](https://github.com/DEFRA/waste-exemptions-back-office/pull/1641) ([brujeo](https://github.com/brujeo))
+- ruby-3492: wex charging daily finance data export [\#1634](https://github.com/DEFRA/waste-exemptions-back-office/pull/1634) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 3234 analytics track pb [\#1631](https://github.com/DEFRA/waste-exemptions-back-office/pull/1631) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- RUBY 3406 wex company name rechecks via companies house re checking data cleanse [\#1497](https://github.com/DEFRA/waste-exemptions-back-office/pull/1497) ([jjromeo](https://github.com/jjromeo))
+
+**Fixed bugs:**
+
+- fix/RUBY-3234\_analytics\_track\_pb [\#1640](https://github.com/DEFRA/waste-exemptions-back-office/pull/1640) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Feature/ruby 3234 analytics track pb [\#1638](https://github.com/DEFRA/waste-exemptions-back-office/pull/1638) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Feature/ruby 3234 analytics track pb [\#1635](https://github.com/DEFRA/waste-exemptions-back-office/pull/1635) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `88e3f5f` to `0cc5411` [\#1633](https://github.com/DEFRA/waste-exemptions-back-office/pull/1633) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `bd685a4` to `88e3f5f` [\#1627](https://github.com/DEFRA/waste-exemptions-back-office/pull/1627) ([dependabot[bot]](https://github.com/apps/dependabot))
+- tech debt: adding exemptions.csv and refactoring seed job to use it [\#1625](https://github.com/DEFRA/waste-exemptions-back-office/pull/1625) ([brujeo](https://github.com/brujeo))
+
+## [v2.19.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.19.0) (2025-02-03)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.18.1...v2.19.0)
 
 **Implemented enhancements:**
 
@@ -34,6 +60,7 @@
 
 **Merged pull requests:**
 
+- Version 2.19.0 [\#1624](https://github.com/DEFRA/waste-exemptions-back-office/pull/1624) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Bump waste\_exemptions\_engine from `3611a5a` to `f2102c2` [\#1623](https://github.com/DEFRA/waste-exemptions-back-office/pull/1623) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `4c76706` to `3611a5a` [\#1622](https://github.com/DEFRA/waste-exemptions-back-office/pull/1622) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `62e8a0d` to `4c76706` [\#1620](https://github.com/DEFRA/waste-exemptions-back-office/pull/1620) ([dependabot[bot]](https://github.com/apps/dependabot))
