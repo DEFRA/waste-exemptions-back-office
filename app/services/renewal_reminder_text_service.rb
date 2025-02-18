@@ -26,16 +26,6 @@ class RenewalReminderTextService < RenewalReminderService
     create_log(registration:)
   end
 
-  private
-
-  def template_label
-    raise NotImplementedError
-  end
-
-  def template
-    raise NotImplementedError
-  end
-
   # For CanHaveCommunicationLog
   def communications_log_params
     {
@@ -44,6 +34,16 @@ class RenewalReminderTextService < RenewalReminderService
       template_label: template_label,
       sent_to: @registration.send(sent_to_method)
     }
+  end
+
+  private
+
+  def template_label
+    raise NotImplementedError
+  end
+
+  def template
+    raise NotImplementedError
   end
 
   def message_type
