@@ -3,22 +3,10 @@
 require "notifications/client"
 
 class FinalRenewalReminderTextService < RenewalReminderTextService
-  include WasteExemptionsEngine::CanHaveCommunicationLog
+  private
 
-  def run(registration:)
-    super
-
-    create_log(registration:)
-  end
-
-  # For CanHaveCommunicationLog
-  def communications_log_params
-    {
-      message_type: "text",
-      template_id: template,
-      template_label: "Final renewal reminder text",
-      sent_to: @registration.contact_phone
-    }
+  def template_label
+    "Final renewal reminder text"
   end
 
   def template
