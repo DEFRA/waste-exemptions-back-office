@@ -75,4 +75,16 @@ RSpec.describe FinalRenewalReminderTextService do
       let(:parameters) { { registration: create(:registration, :with_valid_mobile_phone_number) } }
     end
   end
+
+  describe "#template" do
+    it "returns the correct template ID" do
+      expect(described_class.new.template).to eq("7d101a7d-9678-464e-a57d-e18714afbc5d")
+    end
+  end
+
+  describe "#template_label" do
+    it "returns the correct template label" do
+      expect(described_class.new.template_label).to eq("Final renewal reminder text")
+    end
+  end
 end
