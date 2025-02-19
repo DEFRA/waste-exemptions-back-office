@@ -3,6 +3,7 @@
 require "notifications/client"
 
 class RenewalReminderTextService < RenewalReminderService
+  include WasteExemptionsEngine::CanHaveCommunicationLog
 
   def run(registration:)
     return unless registration.valid_mobile_phone_number?
@@ -21,6 +22,18 @@ class RenewalReminderTextService < RenewalReminderService
       template_id: template,
       personalisation: personalisation
     )
+
+    create_log(registration:)
+  end
+
+  # For CanHaveCommunicationLog
+  def communications_log_params
+    {
+      message_type: message_type,
+      template_id: template,
+      template_label: template_label,
+      sent_to: @registration.send(sent_to_method)
+    }
   end
 
   private
