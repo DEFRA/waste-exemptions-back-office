@@ -14,6 +14,8 @@ en:
             amount: Amount
           registration_charge_label: Registration charge
           total_charge_label: Total charge
+          bucket_exemptions_label:
+            farmer: Farming exemptions
 
         charge_adjustments:
           heading: Charge adjustments
