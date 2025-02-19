@@ -36,12 +36,19 @@
               <%= order.created_at.strftime("%Y-%m-%d") %>
             </td>
             <td class="govuk-table__cell">
-              <%= order.exemption_codes %> <br>
+              <%= order.exemption_codes_excluding_bucket %> <br>
+              <% if order.bucket.present? %>
+                <%= t(".details_section.charges.bucket_exemptions_label.#{order.bucket.bucket_type}") %> 
+                <%= order.bucket_exemption_codes %> <br>
+              <% end %>
               <%= t(".details_section.charges.registration_charge_label") %> <br>
               <%= t(".details_section.charges.total_charge_label") %>
             </td>
             <td class="govuk-table__cell govuk-!-text-align-right">
-              <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.total_compliance_charge_amount) %> <br>
+              <%= display_pence_as_pounds_sterling_and_pence(pence: (order.charge_detail&.total_compliance_charge_amount_excluding_bucket)) %> <br>
+              <% if order.bucket.present? %>
+                <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.bucket_charge_amount) %> <br>
+              <% end %>
               <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.registration_charge_amount) %> <br>
               <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.total_charge_amount) %>
             </td>
