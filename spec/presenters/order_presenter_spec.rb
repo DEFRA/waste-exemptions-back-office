@@ -19,7 +19,7 @@ RSpec.describe OrderPresenter do
   end
 
   describe "#exemption_codes_excluding_bucket" do
-    it "returns sorted exemption codes excluding bucket exemptions as a comma-separated string" do
+    it "returns sorted exemption codes excluding bucket exemptions" do
       expect(presenter.exemption_codes_excluding_bucket).to eq("EX003")
     end
 
