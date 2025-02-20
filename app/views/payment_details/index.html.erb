@@ -32,7 +32,7 @@
       <tbody>
         <% @presenter.sorted_orders.each do |order| %>
           <tr class="govuk-table__row">
-            <td rowspan="2" valign="top" class="govuk-!-padding-top-2 date-nowrap">
+            <td rowspan="4" class="govuk-table__cell">
               <%= order.created_at.strftime("%Y-%m-%d") %>
             </td>
             <td class="govuk-!-padding-top-2">
@@ -40,7 +40,7 @@
                 <%= order.exemption_codes_excluding_bucket %>
               <% end %>
             </td>
-            <td class="govuk-!-text-align-right govuk-!-padding-top-2" valign="bottom">
+            <td class="govuk-!-text-align-right govuk-!-padding-top-2">
               <% if order.exemption_codes_excluding_bucket.present? %>
                 <%= display_pence_as_pounds_sterling_and_pence(pence: (order.charge_detail&.total_compliance_charge_amount_excluding_bucket)) %>
               <% end %>
@@ -53,14 +53,13 @@
                 <%= order.bucket_exemption_codes %>
               <% end %>
             </td>
-            <td class="govuk-!-text-align-right" valign="bottom">
+            <td class="govuk-!-text-align-right">
               <% if order.bucket.present? %>
                 <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.bucket_charge_amount) %>
               <% end %>
             </td>
           </tr>
           <tr class="govuk-table__row">
-            <td></td>
             <td>
               <%= t(".details_section.charges.registration_charge_label") %>
             </td>
@@ -69,7 +68,6 @@
             </td>
           </tr>
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-padding-top-0"></td>
             <td class="govuk-table__cell govuk-!-padding-top-0">
               <%= t(".details_section.charges.total_charge_label") %>
             </td>
