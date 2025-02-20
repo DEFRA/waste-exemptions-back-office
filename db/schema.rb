@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_05_115533) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_06_113600) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -431,6 +431,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_05_115533) do
     t.text "temp_waste_activities", default: [], array: true
     t.text "temp_exemptions", default: [], array: true
     t.boolean "temp_confirm_exemptions"
+    t.boolean "temp_add_additional_non_bucket_exemptions"
     t.index ["created_at"], name: "index_transient_registrations_on_created_at"
     t.index ["token"], name: "index_transient_registrations_on_token", unique: true
   end
@@ -462,7 +463,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_05_115533) do
     t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: trueg
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
