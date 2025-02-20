@@ -463,7 +463,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_06_113600) do
     t.inet "last_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: trueg
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
