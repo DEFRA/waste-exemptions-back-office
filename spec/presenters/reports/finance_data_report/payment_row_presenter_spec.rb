@@ -51,13 +51,14 @@ module Reports
       end
 
       describe "#balance" do
-        it "returns the formatted balance amount, calculated as the previous balance plus the payment amount" do
-          expect(presenter.balance).to eq("40.50")
+        it "returns the formatted balance amount, calculated as the previous balance minus amount paid" do
+          account.payments.first.update(payment_type: "bank_transfer")
+          expect(presenter.balance).to eq("20.50")
         end
 
-        it "returns the formatted balance amount, calculated as the previous balance minus the payment amount" do
+        it "returns the formatted balance amount, calculated as the previous balance plus the amount refunded" do
           account.payments.first.update(payment_type: "refund")
-          expect(presenter.balance).to eq("20.50")
+          expect(presenter.balance).to eq("40.50")
         end
       end
     end
