@@ -123,6 +123,7 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @total = presenter.total
         [output]
       end
 
@@ -131,6 +132,7 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @total = presenter.total
         [output]
       end
 
