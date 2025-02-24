@@ -2,7 +2,33 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.19.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.0...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-3640\] Refactor charge breakdown layout and styling [\#1660](https://github.com/DEFRA/waste-exemptions-back-office/pull/1660) ([brujeo](https://github.com/brujeo))
+- \[RUBY-3640\] hiding non-farmer exemptions from charge breakdown when non are selected [\#1656](https://github.com/DEFRA/waste-exemptions-back-office/pull/1656) ([brujeo](https://github.com/brujeo))
+- \[RUBY-3640\] add charging breakdown for farming exemptions [\#1654](https://github.com/DEFRA/waste-exemptions-back-office/pull/1654) ([brujeo](https://github.com/brujeo))
+- feature/RUBY-3636\_start\_new\_charged\_registration [\#1652](https://github.com/DEFRA/waste-exemptions-back-office/pull/1652) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+
+**Fixed bugs:**
+
+- \[RUBY-3658\] Refactor payment row presenter to handle negative payment amounts and calculate balance [\#1664](https://github.com/DEFRA/waste-exemptions-back-office/pull/1664) ([brujeo](https://github.com/brujeo))
+- \[RUBY-3658\] refactor finance data report  to show charge adjustment as either positive or negative [\#1662](https://github.com/DEFRA/waste-exemptions-back-office/pull/1662) ([brujeo](https://github.com/brujeo))
+- Suppress date range h2 if no start or end date defined [\#1653](https://github.com/DEFRA/waste-exemptions-back-office/pull/1653) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Fix/ruby 3234 pb analytics track dropoff [\#1650](https://github.com/DEFRA/waste-exemptions-back-office/pull/1650) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- RUBY 3644 wex charging stop renewal communications for private beta participants [\#1649](https://github.com/DEFRA/waste-exemptions-back-office/pull/1649) ([jjromeo](https://github.com/jjromeo))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `394ab72` to `658bc16` [\#1666](https://github.com/DEFRA/waste-exemptions-back-office/pull/1666) ([dependabot[bot]](https://github.com/apps/dependabot))
+- \[RUBY-3618\] Update schema to add `temp_add_additional_non_farm_exemptions` column [\#1659](https://github.com/DEFRA/waste-exemptions-back-office/pull/1659) ([jjromeo](https://github.com/jjromeo))
+- Bump waste\_exemptions\_engine from `0fdb680` to `394ab72` [\#1658](https://github.com/DEFRA/waste-exemptions-back-office/pull/1658) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `8fdfb55` to `0fdb680` [\#1655](https://github.com/DEFRA/waste-exemptions-back-office/pull/1655) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.20.0](https://github.com/defra/waste-exemptions-back-office/tree/v2.20.0) (2025-02-17)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.19.0...v2.20.0)
 
 **Implemented enhancements:**
 
@@ -22,6 +48,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1648](https://github.com/DEFRA/waste-exemptions-back-office/pull/1648) ([brujeo](https://github.com/brujeo))
 - Bump waste\_exemptions\_engine from `88e3f5f` to `0cc5411` [\#1633](https://github.com/DEFRA/waste-exemptions-back-office/pull/1633) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `bd685a4` to `88e3f5f` [\#1627](https://github.com/DEFRA/waste-exemptions-back-office/pull/1627) ([dependabot[bot]](https://github.com/apps/dependabot))
 - tech debt: adding exemptions.csv and refactoring seed job to use it [\#1625](https://github.com/DEFRA/waste-exemptions-back-office/pull/1625) ([brujeo](https://github.com/brujeo))
