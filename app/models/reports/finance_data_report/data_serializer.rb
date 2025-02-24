@@ -123,14 +123,16 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @total = presenter.total
         [output]
       end
 
       def payment_row(registration, secondary_object)
-        presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:)
+        presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:, total: @total)
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @total = presenter.total
         [output]
       end
 

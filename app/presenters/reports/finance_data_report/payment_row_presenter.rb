@@ -4,7 +4,7 @@ module Reports
   module FinanceDataReport
     class PaymentRowPresenter < BaseRegistrationRowPresenter
       def payment_type
-        if @secondary_object.payment_type == "govpay_payment"
+        if @secondary_object.payment_type == WasteExemptionsEngine::Payment::PAYMENT_TYPE_GOVPAY
           @registration.assistance_mode == "full" ? "card(moto)" : "card"
         else
           @secondary_object.payment_type
@@ -16,11 +16,23 @@ module Reports
       end
 
       def payment_amount
-        display_pence_as_pounds_and_pence(pence: @secondary_object.payment_amount, hide_pence_if_zero: true)
+        display_pence_as_pounds_and_pence(pence: amount_to_deduct, hide_pence_if_zero: true)
       end
 
       def balance
-        display_pence_as_pounds_and_pence(pence: @secondary_object.account.balance, hide_pence_if_zero: true)
+        @total -= amount_to_deduct
+        display_pence_as_pounds_and_pence(pence: @total, hide_pence_if_zero: true)
+      end
+
+      private
+
+      def amount_to_deduct
+        if [WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND,
+            WasteExemptionsEngine::Payment::PAYMENT_TYPE_REVERSAL].include?(@secondary_object.payment_type)
+          -@secondary_object.payment_amount
+        else
+          @secondary_object.payment_amount
+        end
       end
     end
   end

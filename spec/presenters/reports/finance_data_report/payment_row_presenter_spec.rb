@@ -9,7 +9,7 @@ module Reports
       let(:order) { build(:order, :with_exemptions, :with_charge_detail, order_owner: account) }
 
       let(:registration) { build(:registration, reference: "REG123", submitted_at: Time.zone.now, account: account) }
-      let(:presenter) { described_class.new(registration: registration, secondary_object: account.payments.first) }
+      let(:presenter) { described_class.new(registration: registration, secondary_object: account.payments.first, total: 3050) }
 
       describe "#payment_type" do
         it "returns payment type" do
@@ -34,14 +34,31 @@ module Reports
       end
 
       describe "#payment_amount" do
-        it "returns formatted payment amount" do
+        it "shows the positive amount when payment type is not refund or reversal" do
+          account.payments.first.update(payment_type: "bank_transfer")
           expect(presenter.payment_amount).to eq("10")
+        end
+
+        it "shows the negative amount when payment type is refund" do
+          account.payments.first.update(payment_type: "refund")
+          expect(presenter.payment_amount).to eq("-10")
+        end
+
+        it "shows the negative amount when payment type is reversal" do
+          account.payments.first.update(payment_type: "reversal")
+          expect(presenter.payment_amount).to eq("-10")
         end
       end
 
       describe "#balance" do
-        it "returns formatted account balance" do
-          expect(presenter.balance).to eq("10")
+        it "returns the formatted balance amount, calculated as the previous balance minus amount paid" do
+          account.payments.first.update(payment_type: "bank_transfer")
+          expect(presenter.balance).to eq("20.50")
+        end
+
+        it "returns the formatted balance amount, calculated as the previous balance plus the amount refunded" do
+          account.payments.first.update(payment_type: "refund")
+          expect(presenter.balance).to eq("40.50")
         end
       end
     end
