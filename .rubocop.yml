@@ -15,6 +15,17 @@ Metrics/BlockLength:
   # Not worthwhile refacting now as the offense is marginal and search may be refactored in the near future.
     - app/models/concerns/can_be_searched_like_registration.rb
 
+Metrics/AbcSize:
+  Exclude:
+  # Number of assigments is high but the method is simple and clear
+    - app/models/reports/finance_data_report/data_serializer.rb
+
+Metrics/ClassLength:
+  Exclude:
+  # Not worthwhile refacting now as the offense is marginal and we anticipate refactoring 
+  # this serializer anyway once we have more charge and payment data in the system.
+    - app/models/reports/finance_data_report/data_serializer.rb
+
 RSpec/DescribeClass:
   Exclude:
   # This cop is n/a for rake tasks
@@ -42,3 +53,8 @@ RSpec/SpecFilePathSuffix:
   Exclude:
     # This isn't really a spec, it uses some rspec-related gems
     - 'spec/manual_benchmarks/bulk_seed_registrations.rb'
+
+Naming/PredicateName:
+  Exclude:
+    # Presenter column names are driven by the registration field names and can't be changed
+    - 'app/presenters/reports/finance_data_report/base_registration_row_presenter.rb'

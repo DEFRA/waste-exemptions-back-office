@@ -30,7 +30,7 @@ class BulkExportsPresenter
   end
 
   def generated_reports_scope
-    Reports::GeneratedReport.order(:created_at)
+    Reports::GeneratedReport.bulk.order(:created_at)
   end
 
   def bucket

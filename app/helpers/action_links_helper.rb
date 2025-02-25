@@ -73,8 +73,7 @@ module ActionLinksHelper
   def display_send_private_beta_invite_email_link_for?(resource)
     WasteExemptionsEngine::FeatureToggle.active?(:private_beta) &&
       resource.is_a?(WasteExemptionsEngine::Registration) &&
-      can?(:invite_private_beta, resource) &&
-      resource.in_renewal_window?
+      can?(:invite_private_beta, resource)
   end
 
   def display_certificate_link_for?(resource)

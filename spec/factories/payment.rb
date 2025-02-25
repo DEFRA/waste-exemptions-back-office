@@ -8,6 +8,7 @@ FactoryBot.define do
     payment_uuid { SecureRandom.uuid }
     reference { Faker::Lorem.word }
     date_time { Time.zone.now }
+    account { association :account }
 
     trait :success do
       payment_status { "success" }

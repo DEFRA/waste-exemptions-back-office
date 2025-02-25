@@ -1,0 +1,33 @@
+<%=
+  render("waste_exemptions_engine/shared/back",
+    back_path: "#{private_beta_analytics_path}?start_date=#{@start_date}&end_date=#{@end_date}")
+%>
+
+<h1 class="govuk-heading-l">
+  <%= t(".title") %>
+</h1>
+
+<% if @start_date.present? || @end_date.present? %>
+  <h2 class="govuk-heading-m">
+    <%= t(".start_date", date: @start_date.strftime("%Y-%m-%d")) unless @start_date.blank? %>
+    &nbsp;&nbsp;&nbsp;
+    <%= t(".end_date", date: @end_date.strftime("%Y-%m-%d")) unless @end_date.blank?  %>
+  </h2>
+<% end %>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"> <%= t(".header_page") %> </th>
+      <th scope="col" class="govuk-table__header"> <%= t(".header_average_time") %> </th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <% Analytics::PrivateBetaPageDwellTimesService.run(start_date: @start_date, end_date: @end_date).each do |page, duration| %>
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><%= page %></th>
+        <td class="govuk-table__cell"><%= duration %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
