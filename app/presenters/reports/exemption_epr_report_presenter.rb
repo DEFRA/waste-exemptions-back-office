@@ -58,7 +58,7 @@ module Reports
     end
 
     def site_ngr
-      return nil if registration.site_address.postcode.present?
+      return nil if registration.site_address&.postcode.present?
 
       registration.site_address&.grid_reference
     end
