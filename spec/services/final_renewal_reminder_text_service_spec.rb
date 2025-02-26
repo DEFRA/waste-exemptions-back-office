@@ -49,7 +49,6 @@ RSpec.describe FinalRenewalReminderTextService do
       end
     end
 
-
     it_behaves_like "CanHaveCommunicationLog" do
       let(:service_class) { described_class }
       let(:parameters) { { registration: create(:registration, :with_valid_mobile_phone_number) } }

@@ -24,7 +24,6 @@ RSpec.describe SecondRenewalReminderEmailService do
 
     it_behaves_like "opted out of renewal reminder"
 
-
     it_behaves_like "CanHaveCommunicationLog" do
       let(:service_class) { described_class }
       let(:parameters) { { registration: create(:registration) } }
