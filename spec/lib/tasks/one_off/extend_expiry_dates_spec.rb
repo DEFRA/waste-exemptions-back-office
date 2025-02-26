@@ -28,6 +28,11 @@ RSpec.describe "one_off:extend_expiry_dates", type: :rake do
 
     it { expect { run_rake_task }.to change { registration_exemption.reload.expires_on.strftime("%Y-%m-%d") }.to "2025-09-28" }
     it { expect { run_rake_task }.not_to change { registration_out_of_scope.registration_exemptions.first.reload.expires_on } }
+
+    context "when the task is run with a custom date range" do
+      it { expect { rake_task.invoke("2025-04-15", "2025-05-15") }.not_to change { registration_exemption.reload.expires_on.strftime("%Y-%m-%d") } }
+      it { expect { rake_task.invoke("2025-03-15", "2025-04-15") }.to change { registration_exemption.reload.expires_on.strftime("%Y-%m-%d") }.to "2025-09-28" }
+    end
   end
 
   describe "one_off:extend_expiry_dates:active_charity_registrations" do
@@ -50,5 +55,10 @@ RSpec.describe "one_off:extend_expiry_dates", type: :rake do
 
     it { expect { run_rake_task }.to change { registration.reload.expires_on.strftime("%Y-%m-%d") }.to "2025-09-28" }
     it { expect { run_rake_task }.not_to change { registration_out_of_scope.registration_exemptions.first.reload.expires_on } }
+
+    context "when the task is run with a custom date range" do
+      it { expect { rake_task.invoke("2025-04-15", "2025-05-15") }.not_to change { registration.reload.expires_on.strftime("%Y-%m-%d") } }
+      it { expect { rake_task.invoke("2025-03-15", "2025-04-15") }.to change { registration.reload.expires_on.strftime("%Y-%m-%d") }.to "2025-09-28" }
+    end
   end
 end
