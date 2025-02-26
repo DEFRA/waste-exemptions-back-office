@@ -8,11 +8,6 @@ class RenewalReminderEmailService < RenewalReminderService
   include WasteExemptionsEngine::CanHaveCommunicationLog
 
   def run(registration:, skip_opted_out_check: false)
-    if WasteExemptionsEngine::BetaParticipant.exists?(reg_number: registration.reference)
-      create_beta_participant_log(registration:)
-      return
-    end
-
     if registration.reminder_opt_in? || skip_opted_out_check
       @registration = registration
       client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)

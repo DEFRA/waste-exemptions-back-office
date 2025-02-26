@@ -49,27 +49,6 @@ RSpec.describe FinalRenewalReminderTextService do
       end
     end
 
-    context "when registration is a beta participant" do
-      before do
-        create(:beta_participant, reg_number: registration.reference)
-      end
-
-      it "does not send a text message" do
-        run_service
-        expect(notifications_client).not_to have_received(:send_sms)
-      end
-
-      it "creates a beta participant log" do
-        run_service
-        log = registration.communication_logs.last
-        expect(log).to have_attributes(
-          message_type: "text",
-          template_label: "Beta participant - No renewal reminder sent",
-          sent_to: registration.contact_phone
-        )
-      end
-    end
-
     it_behaves_like "CanHaveCommunicationLog" do
       let(:service_class) { described_class }
       let(:parameters) { { registration: create(:registration, :with_valid_mobile_phone_number) } }
