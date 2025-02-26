@@ -47,8 +47,8 @@ module Reports
     end
 
     def parse_registration_exemption(registration_exemption)
+      presenter = ExemptionBulkReportPresenter.new(registration_exemption)
       ATTRIBUTES.map do |attribute|
-        presenter = ExemptionBulkReportPresenter.new(registration_exemption)
         presenter.public_send(attribute)
       end
     end
