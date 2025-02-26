@@ -3,16 +3,15 @@
 module Reports
   module FinanceDataReport
     class PaymentRowPresenter < BaseRegistrationRowPresenter
+
+      delegate :reference, to: :@secondary_object
+
       def payment_type
         if @secondary_object.payment_type == WasteExemptionsEngine::Payment::PAYMENT_TYPE_GOVPAY
           @registration.assistance_mode == "full" ? "card(moto)" : "card"
         else
           @secondary_object.payment_type
         end
-      end
-
-      def reference
-        @secondary_object.reference
       end
 
       def payment_amount
