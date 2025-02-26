@@ -24,28 +24,6 @@ RSpec.describe SecondRenewalReminderEmailService do
 
     it_behaves_like "opted out of renewal reminder"
 
-    context "when registration is a beta participant" do
-      before do
-        create(:beta_participant, reg_number: registration.reference)
-      end
-
-      it "does not send an email" do
-        VCR.use_cassette("second_renewal_reminder_email_beta_participant") do
-          response = run_service
-          expect(response).to be_nil
-        end
-      end
-
-      it "creates a communication log for beta participant" do
-        VCR.use_cassette("second_renewal_reminder_email_beta_participant") do
-          run_service
-          log = registration.communication_logs.last
-          expect(log.message_type).to eq("email")
-          expect(log.template_label).to eq("Beta participant - No renewal reminder sent")
-          expect(log.sent_to).to eq(registration.contact_email)
-        end
-      end
-    end
 
     it_behaves_like "CanHaveCommunicationLog" do
       let(:service_class) { described_class }
