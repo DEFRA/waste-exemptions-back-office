@@ -212,6 +212,17 @@ module Reports
     end
 
     describe "#site_ngr" do
+      # Not clear how this can happen, but see https://eaflood.atlassian.net/browse/RUBY-3667
+      context "when the site address does not exist" do
+        let(:registration) { create(:registration) }
+
+        before { registration.update(site_address: nil) }
+
+        it "returns nil" do
+          expect(presenter.site_ngr).to be_nil
+        end
+      end
+
       context "when the site address has a postcode" do
         let(:site_address) { create(:address, :site, grid_reference: "SB1234", postcode: "AB12 3CD") }
         let(:registration) { create(:registration, addresses: [site_address]) }
