@@ -8,11 +8,6 @@ class RenewalReminderTextService < RenewalReminderService
   def run(registration:)
     return unless registration.valid_mobile_phone_number?
 
-    if WasteExemptionsEngine::BetaParticipant.exists?(reg_number: registration.reference)
-      create_beta_participant_log(registration:)
-      return
-    end
-
     @registration = registration
 
     client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
