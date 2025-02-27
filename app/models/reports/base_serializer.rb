@@ -20,6 +20,12 @@ module Reports
       registration_exemptions_scope.find_in_batches(batch_size: batch_size) do |batch|
         batch.each do |registration_exemption|
           yield parse_registration_exemption(registration_exemption)
+        rescue StandardError => e
+          # Handle parsing errors here so that the serializer can continue with the next object.
+          message = "EPR serializer: Error mapping registration_exemption #{registration_exemption.id}, " \
+                    "registration #{registration_exemption.registration.reference}: #{e}"
+          Rails.logger.error message
+          Airbrake.notify(e, message:)
         end
       end
     end
