@@ -2,7 +2,29 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.1...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-3671 & RUBY-3672\] rake tasks to extend expiry dates [\#1676](https://github.com/DEFRA/waste-exemptions-back-office/pull/1676) ([brujeo](https://github.com/brujeo))
+- RUBY 3676 wex charging revert stop renewal communications for private beta participants [\#1673](https://github.com/DEFRA/waste-exemptions-back-office/pull/1673) ([jjromeo](https://github.com/jjromeo))
+
+**Fixed bugs:**
+
+- Fix/ruby 3667 missing site address [\#1674](https://github.com/DEFRA/waste-exemptions-back-office/pull/1674) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+
+**Merged pull requests:**
+
+- Chore/ruby 3655 epr export error handling [\#1678](https://github.com/DEFRA/waste-exemptions-back-office/pull/1678) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump waste\_exemptions\_engine from `c6cc0ec` to `06b7d88` [\#1677](https://github.com/DEFRA/waste-exemptions-back-office/pull/1677) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `658bc16` to `c6cc0ec` [\#1670](https://github.com/DEFRA/waste-exemptions-back-office/pull/1670) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump selenium-webdriver from 4.28.0 to 4.29.1 [\#1667](https://github.com/DEFRA/waste-exemptions-back-office/pull/1667) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rubocop-rspec from 3.4.0 to 3.5.0 [\#1646](https://github.com/DEFRA/waste-exemptions-back-office/pull/1646) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rspec-rails from 7.1.0 to 7.1.1 [\#1632](https://github.com/DEFRA/waste-exemptions-back-office/pull/1632) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v2.20.1](https://github.com/defra/waste-exemptions-back-office/tree/v2.20.1) (2025-02-24)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.0...v2.20.1)
 
 **Implemented enhancements:**
 
@@ -21,6 +43,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1668](https://github.com/DEFRA/waste-exemptions-back-office/pull/1668) ([jjromeo](https://github.com/jjromeo))
 - Bump waste\_exemptions\_engine from `394ab72` to `658bc16` [\#1666](https://github.com/DEFRA/waste-exemptions-back-office/pull/1666) ([dependabot[bot]](https://github.com/apps/dependabot))
 - \[RUBY-3618\] Update schema to add `temp_add_additional_non_farm_exemptions` column [\#1659](https://github.com/DEFRA/waste-exemptions-back-office/pull/1659) ([jjromeo](https://github.com/jjromeo))
 - Bump waste\_exemptions\_engine from `0fdb680` to `394ab72` [\#1658](https://github.com/DEFRA/waste-exemptions-back-office/pull/1658) ([dependabot[bot]](https://github.com/apps/dependabot))
