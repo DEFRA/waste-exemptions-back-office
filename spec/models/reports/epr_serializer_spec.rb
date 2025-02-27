@@ -46,11 +46,39 @@ module Reports
 
       it "writes a header row and a row for each registration exemption" do
         # The registration factory currently creates 3 registration_exemptions per registration
-        expect(rows.length).to eq 1 + (registrations_count * 3)
+        expect(rows.length).to eq(1 + (registrations_count * 3))
       end
 
       it "writes exemption details as a string in CSV format" do
         expect(rows.last.split(",").length).to eq expected_columns.length
+      end
+
+      context "when the presenter encounters an error" do
+        before do
+          WasteExemptionsEngine::RegistrationExemption.first.update(registered_on: nil)
+          allow(Rails.logger).to receive(:error)
+          allow(Airbrake).to receive(:notify)
+        end
+
+        it "handles the error" do
+          expect { csv }.not_to raise_error
+        end
+
+        it "logs the error in the Rails log" do
+          csv
+
+          expect(Rails.logger).to have_received(:error).at_least(:once)
+        end
+
+        it "notifies Airbrake of the error" do
+          csv
+
+          expect(Airbrake).to have_received(:notify).at_least(:once)
+        end
+
+        it "continues the export after the failed row" do
+          expect(rows.length).to eq(registrations_count * 3)
+        end
       end
     end
   end
