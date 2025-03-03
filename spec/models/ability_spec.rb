@@ -137,6 +137,7 @@ RSpec.describe Ability do
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
     it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
+    it { expect(ability).to be_able_to(:reset_transient_registrations, registration) }
 
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot add charge adjustments"
