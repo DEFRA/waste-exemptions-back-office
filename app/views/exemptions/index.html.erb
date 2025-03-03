@@ -22,7 +22,7 @@
     <tbody class="govuk-table__body">
       <% @exemptions.each do |exemption, index| %>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell"><%= "#{exemption.code} #{exemption.description}" %></td>
+          <td class="govuk-table__cell"><%= "#{exemption.code} #{exemption.summary}" %></td>
           <td class="govuk-table__cell">
             <%= f.label "exemptions_#{exemption.id}_band_id", 'Band', class: 'govuk-visually-hidden' %>
             <%= f.select "exemptions[#{exemption.id}][band_id]", options_from_collection_for_select(@bands, :id, :name, exemption.band_id), {}, id: "exemptions_#{exemption.id}_band_id", class: "govuk-select" %>
