@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 803fac469434708b56d72f75aa810e88d48e4334
+  revision: b48a2a777a961cde0ecbc6720e410b128bee74e5
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -403,7 +403,7 @@ GEM
       stringio
     public_suffix (6.0.1)
     racc (1.8.1)
-    rack (2.2.11)
+    rack (2.2.12)
     rack-session (1.0.2)
       rack (< 3)
     rack-test (2.2.0)

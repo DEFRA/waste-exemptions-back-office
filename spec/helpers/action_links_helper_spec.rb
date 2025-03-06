@@ -71,7 +71,7 @@ RSpec.describe ActionLinksHelper do
       let(:resource) { create(:new_charged_registration) }
 
       it "returns the correct path" do
-        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_beta_start_form_path(resource.token)
+        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_start_form_path(resource.token)
         expect(helper.resume_link_for(resource)).to eq(path)
       end
 
