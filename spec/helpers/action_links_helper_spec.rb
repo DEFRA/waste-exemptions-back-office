@@ -337,43 +337,6 @@ RSpec.describe ActionLinksHelper do
     end
   end
 
-  describe "display_send_private_beta_invite_email_link_for?" do
-    let(:resource) { create(:registration) }
-    let(:can) { true }
-    let(:private_beta_feature_toggle) { true }
-
-    before do
-      allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:private_beta).and_return(private_beta_feature_toggle)
-      allow(helper).to receive(:can?).with(:invite_private_beta, resource).and_return(can)
-    end
-
-    context "when the resource is a registration" do
-      context "when all conditions are met" do
-        let(:can) { true }
-
-        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(true) }
-      end
-
-      context "when the private beta feature toggle is inactive" do
-        let(:private_beta_feature_toggle) { false }
-
-        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
-      end
-
-      context "when the user does not have permission to send private beta invite email" do
-        let(:can) { false }
-
-        it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
-      end
-    end
-
-    context "when the resource is not a registration" do
-      let(:resource) { nil }
-
-      it { expect(helper.display_send_private_beta_invite_email_link_for?(resource)).to be(false) }
-    end
-  end
-
   describe "display_confirmation_communication_links_for?" do
     context "when the resource is an active registration" do
       let(:resource) { create(:registration, :with_active_exemptions) }
@@ -704,56 +667,6 @@ RSpec.describe ActionLinksHelper do
       end
 
       it { expect(helper.can_display_reversal_link?(registration)).to be false }
-    end
-  end
-
-  describe "#display_private_beta_registration_link_for?" do
-    before do
-      WasteExemptionsEngine::FeatureToggle.create!(key: :private_beta, active: feature_active)
-    end
-
-    context "when the private beta feature is inactive" do
-      let(:feature_active) { false }
-
-      let(:resource) { create(:registration) }
-
-      it "returns false" do
-        expect(helper.display_private_beta_registration_link_for?(resource)).to be(false)
-      end
-    end
-
-    context "when the private beta feature is active" do
-      let(:feature_active) { true }
-
-      context "when the resource is not a registration" do
-        let(:resource) { nil }
-
-        it "returns false" do
-          expect(helper.display_private_beta_registration_link_for?(resource)).to be(false)
-        end
-      end
-
-      context "when the resource is a registration" do
-        let(:resource) { create(:registration) }
-
-        before { allow(helper).to receive(:can?).with(:start_private_beta_registration, resource).and_return(can) }
-
-        context "when the user has permission to start private beta registration" do
-          let(:can) { true }
-
-          it "returns true" do
-            expect(helper.display_private_beta_registration_link_for?(resource)).to be(true)
-          end
-        end
-
-        context "when the user does not have permission to start private beta registration" do
-          let(:can) { false }
-
-          it "returns false" do
-            expect(helper.display_private_beta_registration_link_for?(resource)).to be(false)
-          end
-        end
-      end
     end
   end
 

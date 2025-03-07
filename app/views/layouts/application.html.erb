@@ -45,12 +45,6 @@
           </li>
         <% end %>
 
-        <li class="govuk-header__navigation-item">
-          <%= link_to t("layouts.application.menu.beta_participants"),
-                      main_app.beta_participants_path,
-                      class: "govuk-header__link" %>
-        </li>
-
         <% if can?(:manage, WasteExemptionsEngine::FeatureToggle, current_user) %>
           <li class="govuk-header__navigation-item">
             <%= link_to t("layouts.application.menu.feature_toggles"),

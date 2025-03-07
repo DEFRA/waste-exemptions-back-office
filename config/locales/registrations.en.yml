@@ -4,4 +4,3 @@ en:
       title: Registration details
       heading: "Registration details for %{reference}"
       back_link_label: Back to search results
-      private_beta_banner: This is a private beta registration
