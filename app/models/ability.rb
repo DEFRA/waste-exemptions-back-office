@@ -35,9 +35,7 @@ class Ability
     add_payment: [:add_payment, WasteExemptionsEngine::Registration],
     reverse_payment: [:reverse_payment, WasteExemptionsEngine::Registration],
     refund_payment: [:refund_payment, WasteExemptionsEngine::Registration],
-    writeoff_payment: [:writeoff_payment, WasteExemptionsEngine::Registration],
-    start_private_beta_registration: [:start_private_beta_registration, WasteExemptionsEngine::Registration],
-    invite_private_beta: [:invite_private_beta, WasteExemptionsEngine::Registration]
+    writeoff_payment: [:writeoff_payment, WasteExemptionsEngine::Registration]
   }.freeze
 
   # placeholder to be populated by the roles_and_permissions initializer

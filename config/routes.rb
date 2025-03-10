@@ -4,10 +4,6 @@
 Rails.application.routes.draw do
   root "dashboards#index"
 
-  # Private Beta Participants
-  resources :beta_participants,
-            only: %i[index]
-
   # User management
   devise_for :users,
              controllers: { invitations: "user_invitations", sessions: "sessions" },
@@ -61,11 +57,6 @@ Rails.application.routes.draw do
     resources :charge_adjustments,
               only: %i[new create],
               path: "charge-adjustment"
-
-    get "/beta_start",
-        to: "beta_start#new",
-        as: "beta_start"
-
   end
 
   resources :deregistrations, only: :show, param: :reference
@@ -137,14 +128,6 @@ Rails.application.routes.draw do
   post "/resend-renewal-letter/:reference",
        to: "resend_renewal_letter#create",
        as: "resend_renewal_letter"
-
-  get "/send-private-beta-invite-email/:reference",
-      to: "send_private_beta_invite_email#new",
-      as: "confirm_send_private_beta_invite_email"
-
-  post "/send-private-beta-invite-email/:reference",
-       to: "send_private_beta_invite_email#create",
-       as: "send_private_beta_invite_email"
 
   patch "/companies-house-details/:reference",
         to: "refresh_companies_house_name#update_companies_house_details",

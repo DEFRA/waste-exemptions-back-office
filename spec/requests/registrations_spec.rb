@@ -27,22 +27,6 @@ RSpec.describe "Registrations" do
         root_path_with_search_terms = root_path(search_terms).gsub("&", "&amp;")
         expect(response.body).to include(root_path_with_search_terms)
       end
-
-      context "when the registration is not a private beta participant" do
-        before { get "/registrations/#{registration.reference}" }
-
-        it { expect(response.body).not_to include I18n.t("registrations.show.private_beta_banner") }
-      end
-
-      context "when the registration is a private beta participant" do
-        before do
-          create(:beta_participant, registration:)
-
-          get "/registrations/#{registration.reference}"
-        end
-
-        it { expect(response.body).to include I18n.t("registrations.show.private_beta_banner") }
-      end
     end
 
     context "when a valid user is not signed in" do
