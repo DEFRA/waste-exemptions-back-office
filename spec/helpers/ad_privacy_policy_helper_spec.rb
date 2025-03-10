@@ -18,34 +18,21 @@ RSpec.describe AdPrivacyPolicyHelper do
     context "when no registration is present" do
       let(:registration) { nil }
 
-      context "when the ad_charged_journey_link feature toggle is not enabled" do
-        before do
-          allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?)
-            .with(:ad_charged_journey_link).and_return(false)
-        end
-
-        it "returns the non-charged new registration start path" do
-          expect(destination_path).to eq WasteExemptionsEngine::Engine.routes.url_helpers.new_start_form_path
-        end
+      before do
+        allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?)
+          .with(:ad_charged_journey_link).and_return(true)
       end
 
-      context "when the ad_charged_journey_link feature toggle is enabled" do
-        before do
-          allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?)
-            .with(:ad_charged_journey_link).and_return(true)
-        end
+      it "creates a new charged registration" do
+        expect { helper.destination_path }.to change(WasteExemptionsEngine::NewChargedRegistration, :count).by(1)
+      end
 
-        it "creates a new charged registration" do
-          expect { helper.destination_path }.to change(WasteExemptionsEngine::NewChargedRegistration, :count).by(1)
-        end
-
-        it "returns the path to the location page" do
-          path = destination_path
-          transient_registration = WasteExemptionsEngine::NewChargedRegistration.last
-          expect(path).to eq WasteExemptionsEngine::Engine
-            .routes.url_helpers
-            .new_location_form_path(transient_registration.token)
-        end
+      it "returns the path to the location page" do
+        path = destination_path
+        transient_registration = WasteExemptionsEngine::NewChargedRegistration.last
+        expect(path).to eq WasteExemptionsEngine::Engine
+          .routes.url_helpers
+          .new_location_form_path(transient_registration.token)
       end
     end
   end
