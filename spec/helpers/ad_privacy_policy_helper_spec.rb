@@ -18,11 +18,6 @@ RSpec.describe AdPrivacyPolicyHelper do
     context "when no registration is present" do
       let(:registration) { nil }
 
-      before do
-        allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?)
-          .with(:ad_charged_journey_link).and_return(true)
-      end
-
       it "creates a new charged registration" do
         expect { helper.destination_path }.to change(WasteExemptionsEngine::NewChargedRegistration, :count).by(1)
       end
