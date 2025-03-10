@@ -4,17 +4,6 @@
     <%= render("shared/message", message: flash[:message]) if flash[:message].present? %>
     <%= render("shared/error", error: flash[:error], details: flash[:error_details]) if flash[:error].present? %>
 
-    <% if private_beta_participant?(@resource) %>
-      <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-label="govuk-notification-banner-title">
-        <div class="govuk-notification-banner__header"></div>
-        <div class="govuk-notification-banner__content">
-          <h3 class="govuk-notification-banner__heading" id="private_beta_banner_text">
-            <%= I18n.t("registrations.show.private_beta_banner") %>
-          </h3>
-        </div>
-      </div>
-    <% end %>
-
     <h1 class="govuk-heading-l">
       <%= t(".heading") %>
     </h1>
