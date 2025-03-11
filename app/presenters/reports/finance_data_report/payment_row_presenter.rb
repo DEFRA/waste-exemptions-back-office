@@ -15,23 +15,18 @@ module Reports
       end
 
       def payment_amount
-        display_pence_as_pounds_and_pence(pence: amount_to_deduct, hide_pence_if_zero: true)
+        display_pence_as_pounds_and_pence(pence: amount_to_credit, hide_pence_if_zero: true)
       end
 
       def balance
-        @total -= amount_to_deduct
+        @total += amount_to_credit
         display_pence_as_pounds_and_pence(pence: @total, hide_pence_if_zero: true)
       end
 
       private
 
-      def amount_to_deduct
-        if [WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND,
-            WasteExemptionsEngine::Payment::PAYMENT_TYPE_REVERSAL].include?(@secondary_object.payment_type)
-          -@secondary_object.payment_amount
-        else
-          @secondary_object.payment_amount
-        end
+      def amount_to_credit
+        @secondary_object.payment_amount
       end
     end
   end

@@ -12,7 +12,7 @@ module Reports
       end
 
       def balance
-        @total += @secondary_object.registration_charge_amount
+        @total -= @secondary_object.registration_charge_amount
         display_pence_as_pounds_and_pence(pence: @total,
                                           hide_pence_if_zero: true)
       end
