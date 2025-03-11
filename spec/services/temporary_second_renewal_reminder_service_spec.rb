@@ -103,7 +103,19 @@ RSpec.describe TemporarySecondRenewalReminderService do
         ]
       )
 
-      create(:registration, :has_been_renewed, referring_registration: active_expiring_registration)
+      # Create a renewal registration manually instead of using the :has_been_renewed trait
+      create(
+        :registration,
+        submitted_at: 2.weeks.ago,
+        referring_registration_id: active_expiring_registration.id,
+        registration_exemptions: [
+          build(:registration_exemption, :active)
+        ]
+      )
+
+      allow(WasteExemptionsEngine::Registration).to receive(:renewals).and_return(
+        WasteExemptionsEngine::Registration.where(referring_registration_id: active_expiring_registration.id)
+      )
 
       described_class.run
 
