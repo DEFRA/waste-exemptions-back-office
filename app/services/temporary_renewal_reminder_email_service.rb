@@ -19,9 +19,9 @@ class TemporaryRenewalReminderEmailService < RenewalReminderEmailService
     "5a4f6146-1952-4e62-9824-ab5d0bd9a978"
   end
 
-  # Override the personalisation method to direct users to register again instead of renewing
+  # replace the magic link URL with the registration URL
   def personalisation
-    super.except(:magic_link_url).merge(registration_url: registration_url)
+    super.merge(magic_link_url: registration_url)
   end
 
   # New method to provide the registration URL instead of renewal link
