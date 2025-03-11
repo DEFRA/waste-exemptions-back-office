@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: c0668242c832f717d3a2eb2b42dd0fb1114cf3d3
+  revision: 04f53570a70b1b38c9eb681b954b76c3e6e89265
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -581,7 +581,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webmock (3.25.0)
+    webmock (3.25.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
