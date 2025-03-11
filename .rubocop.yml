@@ -5,13 +5,13 @@ inherit_gem:
     - default.yml
 
 require:
-  - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rspec_rails
 
 plugins:
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-capybara
 
 Metrics/BlockLength:
   Exclude:
