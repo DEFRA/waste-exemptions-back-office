@@ -28,7 +28,6 @@ RSpec.describe TemporaryRenewalReminderEmailService do
     end
 
     it "includes a registration URL instead of a renewal link" do
-      # Set up notifications_client as a spy
       allow(notifications_client).to receive(:send_email).and_return(response_notification)
 
       run_service
