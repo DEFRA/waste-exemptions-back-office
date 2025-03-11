@@ -15,6 +15,7 @@ class ChargeAdjustmentsController < ApplicationController
 
     if @charge_adjustment_form.submit(charge_adjustment_params)
       flash[:success] = t(".success")
+      SendRegistrationConfirmationWhenBalanceFullyPaidJob.perform_later(reference: @resource.reference)
       redirect_to registration_payment_details_path(registration_reference: @resource.reference)
     else
       render :new
