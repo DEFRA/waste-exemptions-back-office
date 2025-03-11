@@ -108,6 +108,13 @@ RSpec.describe "Charge Adjustments" do
           expect(adjustment.amount).to eq(3000) # Amount in pence
           expect(adjustment.reason).to eq("Additional exemptions added")
         end
+
+        it "triggers the SendRegistrationConfirmationWhenBalanceFullyPaidJob job" do
+          allow(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to receive(:perform_later)
+          post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
+
+          expect(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to have_received(:perform_later).with(reference: registration.reference)
+        end
       end
 
       context "with invalid params" do

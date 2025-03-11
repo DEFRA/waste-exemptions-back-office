@@ -131,6 +131,7 @@ RSpec.describe "Add Payment Forms" do
 
     context "when submitted data is valid" do
       before do
+        allow(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to receive(:perform_later)
         post registration_add_payment_form_path(registration.reference), params: request_body
       end
 
@@ -161,6 +162,10 @@ RSpec.describe "Add Payment Forms" do
 
       it "redirects to registration page" do
         expect(response.location).to include("registrations/#{registration.reference}/payment_details")
+      end
+
+      it "triggers the SendRegistrationConfirmationWhenBalanceFullyPaidJob job" do
+        expect(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to have_received(:perform_later).with(reference: registration.reference)
       end
     end
 
