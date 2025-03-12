@@ -7,7 +7,7 @@ module Reports
     RSpec.describe RegistrationChargeRowPresenter do
       let(:charge_detail) { build(:charge_detail, registration_charge_amount: 3150) }
       let(:registration) { build(:registration, reference: "REG123", submitted_at: Time.zone.now) }
-      let(:presenter) { described_class.new(registration: registration, secondary_object: charge_detail, total: 1000) }
+      let(:presenter) { described_class.new(registration: registration, secondary_object: charge_detail, total: -1000) }
 
       describe "#charge_type" do
         it "returns 'registration'" do
@@ -23,7 +23,7 @@ module Reports
 
       describe "#balance" do
         it "returns the formatted balance amount" do
-          expect(presenter.balance).to eq("41.50")
+          expect(presenter.balance).to eq("-41.50")
         end
       end
     end

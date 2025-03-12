@@ -64,7 +64,7 @@ module Reports
           order_rows.concat(charge_adjustment_row(registration, charge_adjustment).compact)
         end
         # payment rows
-        registration.account.payments.map do |payment|
+        registration.account.payments.order(date_time: :asc).map do |payment|
           order_rows.concat(payment_row(registration, payment).compact)
         end
         order_rows

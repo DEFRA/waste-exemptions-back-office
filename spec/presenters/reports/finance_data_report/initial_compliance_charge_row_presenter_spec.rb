@@ -16,7 +16,7 @@ module Reports
       end
 
       let(:registration) { build(:registration, reference: "REG123", submitted_at: Time.zone.now, account: account) }
-      let(:presenter) { described_class.new(registration: registration, secondary_object: band_charge_detail, total: 1000) }
+      let(:presenter) { described_class.new(registration: registration, secondary_object: band_charge_detail, total: -1000) }
 
       describe "#charge_type" do
         it "returns 'compliance_initial'" do
@@ -62,7 +62,7 @@ module Reports
 
       describe "#balance" do
         it "returns the formatted balance amount" do
-          expect(presenter.balance).to eq("20")
+          expect(presenter.balance).to eq("-20")
         end
       end
     end

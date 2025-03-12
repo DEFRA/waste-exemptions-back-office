@@ -9,7 +9,7 @@ module Reports
       let(:order) { build(:order, :with_exemptions, bucket: bucket) }
       let(:charge_detail) { build(:charge_detail, order: order, registration_charge_amount: 3150, bucket_charge_amount: 8850) }
       let(:registration) { build(:registration, reference: "REG123", submitted_at: Time.zone.now) }
-      let(:presenter) { described_class.new(registration: registration, secondary_object: charge_detail, total: 1000) }
+      let(:presenter) { described_class.new(registration: registration, secondary_object: charge_detail, total: -1000) }
 
       before do
         bucket.exemptions << order.exemptions.last
@@ -35,7 +35,7 @@ module Reports
 
       describe "#balance" do
         it "returns the formatted balance amount" do
-          expect(presenter.balance).to eq("98.50")
+          expect(presenter.balance).to eq("-98.50")
         end
       end
     end
