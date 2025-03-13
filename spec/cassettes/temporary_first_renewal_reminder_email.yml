@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"contact24@example.com","template_id":"5a4f6146-1952-4e62-9824-ab5d0bd9a978","personalisation":{"contact_name":"Firstcontact26
+        Lastcontact26","exemptions":["F52 Use of spam in cooking","F53 Use of spam
+        in cooking","F54 Use of spam in cooking"],"expiry_date":"13 March 2028","magic_link_url":"http://localhost:3000/start","reference":"WEX000026","site_location":"ST
+        58337 72855","unsubscribe_link":"http://localhost:3000/registrations/unsubscribe/oQ5dyyMLgSymL7nAVEapPafK"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/6.2.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1678'
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 13 Mar 2025 12:15:03 GMT
+      X-B3-Spanid:
+      - self-c8ea98d0174ad4e5
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      X-B3-Traceid:
+      - ayH4DQBBWXRpdqUCHhGrXw057EdWHRwLrZ2pQGp-XqlvcR_N3d0XXg==
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 65cbd6c4094454b31bc32d6426b92cf2.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - ayH4DQBBWXRpdqUCHhGrXw057EdWHRwLrZ2pQGp-XqlvcR_N3d0XXg==
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"Dear Firstcontact26 Lastcontact26,\r\n\r\n# Re-register
+        your waste exemptions by 13 March 2028\r\n\r\nYou need to re-register through
+        our new online service in a few minutes. \r\n\r\nRe-register online at:\r\nhttp://localhost:3000/start\r\n\r\nSite
+        location: ST 58337 72855\r\nRegistration number: WEX000026\r\n\r\nThese waste
+        exemptions will expire on 13 March 2028:\r\n\r\n\n\n* F52 Use of spam in cooking\n*
+        F53 Use of spam in cooking\n* F54 Use of spam in cooking\r\n\r\nWaste exemption
+        rules and guidance:\r\nhttps://www.gov.uk/guidance/register-your-waste-exemptions-environmental-permits\r\n\r\nIf
+        you no longer carry out these waste operations, you can ignore any reminders.
+        Your waste exemptions will be removed from the public register when they expire.\r\n\r\nTo
+        unsubscribe from email reminders\r\n[Unsubscribe](http://localhost:3000/registrations/unsubscribe/oQ5dyyMLgSymL7nAVEapPafK)\r\n\r\nEnvironment
+        Agency Helpline\r\n03708 506 506 (Monday to Friday, 8am to 6pm)\r\nenquiries@environment-agency.gov.uk\r\n\r\n----\r\n\r\nThis
+        is an automated email, please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Waste
+        exemptions expire on 13 March 2028, re-register online now"},"id":"51abfb99-d4e0-4bfe-8ec6-559b3219fef7","reference":null,"scheduled_for":null,"template":{"id":"5a4f6146-1952-4e62-9824-ab5d0bd9a978","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/5a4f6146-1952-4e62-9824-ab5d0bd9a978","version":7},"uri":"https://api.notifications.service.gov.uk/v2/notifications/51abfb99-d4e0-4bfe-8ec6-559b3219fef7"}
+
+        '
+  recorded_at: Thu, 13 Mar 2025 12:15:03 GMT
+recorded_with: VCR 6.3.1

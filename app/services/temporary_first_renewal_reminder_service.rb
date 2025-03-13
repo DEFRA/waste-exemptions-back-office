@@ -4,7 +4,7 @@ class TemporaryFirstRenewalReminderService < RenewalReminderServiceBase
   private
 
   def send_email(registration)
-    TemporaryRenewalReminderEmailService.run(registration: registration)
+    TemporaryFirstRenewalReminderEmailService.run(registration: registration)
   end
 
   def expires_in_days

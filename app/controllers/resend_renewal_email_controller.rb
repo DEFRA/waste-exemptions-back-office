@@ -7,7 +7,7 @@ class ResendRenewalEmailController < ApplicationController
     authorize
 
     begin
-      TemporaryFirstRenewalReminderService.run(registration: registration, skip_opted_out_check: true)
+      TemporaryFirstRenewalReminderEmailService.run(registration: registration, skip_opted_out_check: true)
 
       flash_success I18n.t("resend_renewal_email.messages.success", email: registration.contact_email)
     rescue StandardError => e
