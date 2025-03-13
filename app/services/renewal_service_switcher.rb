@@ -2,38 +2,38 @@
 
 class RenewalServiceSwitcher
   def self.first_reminder_service
-    if use_temporary_services?
-      TemporaryFirstRenewalReminderService
-    else
+    if renewals_enabled?
       FirstRenewalReminderService
+    else
+      TemporaryFirstRenewalReminderService
     end
   end
 
   def self.second_reminder_service
-    if use_temporary_services?
-      TemporarySecondRenewalReminderService
-    else
+    if renewals_enabled?
       SecondRenewalReminderService
+    else
+      TemporarySecondRenewalReminderService
     end
   end
 
   def self.first_reminder_email_service
-    if use_temporary_services?
-      TemporaryFirstRenewalReminderEmailService
-    else
+    if renewals_enabled?
       FirstRenewalReminderEmailService
+    else
+      TemporaryFirstRenewalReminderEmailService
     end
   end
 
   def self.second_reminder_email_service
-    if use_temporary_services?
-      TemporarySecondRenewalReminderEmailService
-    else
+    if renewals_enabled?
       SecondRenewalReminderEmailService
+    else
+      TemporarySecondRenewalReminderEmailService
     end
   end
 
-  def self.use_temporary_services?
-    WasteExemptionsEngine::FeatureToggle.active?(:use_temporary_renewal_services)
+  def self.renewals_enabled?
+    WasteExemptionsEngine::FeatureToggle.active?(:enable_renewals)
   end
 end
