@@ -5,5 +5,7 @@ send_second_email_reminder:
   active: <%= ENV["FEATURE_TOGGLE_SEND_SECOND_EMAIL_REMINDER"] || "true" %>
 send_final_text_reminder:
   active: <%= ENV["FEATURE_TOGGLE_SEND_FINAL_TEXT_REMINDER"] || "true" %>
+use_temporary_renewal_services:
+  active: <%= ENV["FEATURE_TOGGLE_USE_TEMPORARY_RENEWAL_SERVICES"] || "true" %>
 generate_boxi_report:
   active: true
