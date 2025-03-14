@@ -2,7 +2,16 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.1...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.2...HEAD)
+
+**Merged pull requests:**
+
+- Switch waste_exemptions_engine to release/v2.20.3 branch [\#1713](https://github.com/DEFRA/waste-exemptions-back-office/pull/1713) ([brujeo](https://github.com/brujeo))
+
+
+## [v2.20.2](https://github.com/defra/waste-exemptions-back-office/tree/v2.20.2) (2025-02-27)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.1...v2.20.2)
 
 **Implemented enhancements:**
 
