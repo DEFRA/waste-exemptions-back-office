@@ -23,8 +23,8 @@ namespace :email do
       task send: :environment do
         return unless WasteExemptionsEngine::FeatureToggle.active?(:send_first_email_reminder)
 
-        # Using temporary service that directs users to register again instead of renewing
-        TemporaryFirstRenewalReminderService.run
+        # Use the switcher to determine which service to use based on feature toggle
+        RenewalReminderEmailServiceSwitcher.first_reminder_service.run
       end
     end
 
@@ -33,8 +33,8 @@ namespace :email do
       task send: :environment do
         return unless WasteExemptionsEngine::FeatureToggle.active?(:send_second_email_reminder)
 
-        # Using temporary service that directs users to register again instead of renewing
-        TemporarySecondRenewalReminderService.run
+        # Use the switcher to determine which service to use based on feature toggle
+        RenewalReminderEmailServiceSwitcher.second_reminder_service.run
       end
     end
   end

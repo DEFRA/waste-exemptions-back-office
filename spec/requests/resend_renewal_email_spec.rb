@@ -25,7 +25,7 @@ RSpec.describe "ResendRenewalEmail" do
       let(:user) { create(:user, :customer_service_adviser) }
 
       it "return a 302 redirect code" do
-        VCR.use_cassette("first_renewal_reminder_email") do
+        VCR.use_cassette("temporary_first_renewal_reminder_email") do
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
 
           expect(response).to have_http_status(:found)
@@ -33,7 +33,7 @@ RSpec.describe "ResendRenewalEmail" do
       end
 
       it "return a success message" do
-        VCR.use_cassette("first_renewal_reminder_email") do
+        VCR.use_cassette("temporary_first_renewal_reminder_email") do
           success_message = I18n.t("resend_renewal_email.messages.success", email: registration.contact_email)
 
           get request_path, params: {}, headers: { "HTTP_REFERER" => "/" }
@@ -45,7 +45,7 @@ RSpec.describe "ResendRenewalEmail" do
 
       context "when an error happens", :disable_bullet do
         before do
-          allow(FirstRenewalReminderEmailService).to receive(:run).and_raise(StandardError)
+          allow(TemporaryFirstRenewalReminderService).to receive(:run).and_raise(StandardError)
         end
 
         around do |example|

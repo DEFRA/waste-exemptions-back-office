@@ -10,13 +10,13 @@ RSpec.describe TemporarySecondRenewalReminderService do
   describe ".run" do
 
     before do
-      allow(TemporaryRenewalReminderEmailService).to receive(:run)
+      allow(TemporarySecondRenewalReminderEmailService).to receive(:run)
       allow(Airbrake).to receive(:notify)
     end
 
     context "when the email sending fails" do
 
-      before { allow(TemporaryRenewalReminderEmailService).to receive(:run).and_raise("An error") }
+      before { allow(TemporarySecondRenewalReminderEmailService).to receive(:run).and_raise("An error") }
 
       it "reports the error to Airbrake" do
         create(
@@ -28,7 +28,7 @@ RSpec.describe TemporarySecondRenewalReminderService do
 
         described_class.run
 
-        expect(TemporaryRenewalReminderEmailService).to have_received(:run)
+        expect(TemporarySecondRenewalReminderEmailService).to have_received(:run)
         expect(Airbrake).to have_received(:notify)
       end
     end
@@ -60,9 +60,9 @@ RSpec.describe TemporarySecondRenewalReminderService do
 
       described_class.run
 
-      expect(TemporaryRenewalReminderEmailService).to have_received(:run).with(registration: active_expiring_registration)
-      expect(TemporaryRenewalReminderEmailService).not_to have_received(:run).with(registration: expiring_non_active_registration)
-      expect(TemporaryRenewalReminderEmailService).not_to have_received(:run).with(registration: non_expiring_non_active_registration)
+      expect(TemporarySecondRenewalReminderEmailService).to have_received(:run).with(registration: active_expiring_registration)
+      expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run).with(registration: expiring_non_active_registration)
+      expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run).with(registration: non_expiring_non_active_registration)
     end
 
     it "does not send emails to blank email addresses" do
@@ -77,7 +77,7 @@ RSpec.describe TemporarySecondRenewalReminderService do
 
       described_class.run
 
-      expect(TemporaryRenewalReminderEmailService).not_to have_received(:run)
+      expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run)
     end
 
     it "does not send emails to registrations with the NCCC postcode" do
@@ -92,7 +92,7 @@ RSpec.describe TemporarySecondRenewalReminderService do
 
       described_class.run
 
-      expect(TemporaryRenewalReminderEmailService).not_to have_received(:run)
+      expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run)
     end
 
     it "does not send emails to registrations that have been renewed in the last month" do
@@ -119,7 +119,7 @@ RSpec.describe TemporarySecondRenewalReminderService do
 
       described_class.run
 
-      expect(TemporaryRenewalReminderEmailService).not_to have_received(:run)
+      expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run)
     end
   end
 end
