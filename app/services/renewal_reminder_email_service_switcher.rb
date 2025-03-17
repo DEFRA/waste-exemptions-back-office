@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RenewalServiceSwitcher
+class RenewalReminderEmailServiceSwitcher
   def self.first_reminder_service
     if renewals_enabled?
       FirstRenewalReminderService
