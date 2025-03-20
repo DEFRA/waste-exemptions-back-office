@@ -6,7 +6,7 @@ RSpec.describe "Add Payment Forms" do
   let(:form) { AddPaymentForm.new }
   let(:user) { create(:user, :developer) }
   let(:registration) { create(:registration) }
-  let(:account) { create(:account, registration: registration) }
+  let(:account) { registration.account }
 
   before do
     account
