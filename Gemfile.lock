@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 500d699a88abefe4f2f70fd496a96ee3362fdc4c
+  revision: 468cb19f362003f33ca0fd1310efd641f203c417
   branch: RUBY-3705-wex-govpay-id-is-updated-when-using-back-browser-button
   specs:
     waste_exemptions_engine (0.1.0)
