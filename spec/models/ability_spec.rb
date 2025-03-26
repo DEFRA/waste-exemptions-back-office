@@ -181,6 +181,7 @@ RSpec.describe Ability do
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::Download) }
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
+    it { expect(ability).not_to be_able_to(:read, Reports::GeneratedReport) }
   end
 
   context "when the user account is inactive" do
