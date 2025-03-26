@@ -17,7 +17,6 @@ test:
   <<: *default
   database: waste_exemptions_test
   min_messages: WARNING
-  pool: 10
 
 production:
   <<: *default
