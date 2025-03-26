@@ -12,8 +12,19 @@ RSpec.configure do |config|
   end
 
   config.around do |example|
-    DatabaseCleaner.cleaning do
-      example.run
+    # Add retry logic to handle potential connection issues in CI
+    retries = 0
+    begin
+      DatabaseCleaner.cleaning do
+        example.run
+      end
+    rescue IOError => e
+      raise e unless e.message.include?("stream closed in another thread") && retries < 3
+
+      retries += 1
+      ActiveRecord::Base.connection_pool.disconnect!
+      ActiveRecord::Base.connection_pool.clear_reloadable_connections!
+      retry
     end
   end
 end
