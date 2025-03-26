@@ -12,9 +12,6 @@ RSpec.configure do |config|
   # Use transaction strategy by default
   config.before do
     DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before do
     DatabaseCleaner.start
   end
 
