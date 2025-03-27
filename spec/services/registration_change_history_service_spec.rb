@@ -12,7 +12,10 @@ RSpec.describe RegistrationChangeHistoryService do
       PaperTrail.request.whodunnit = user.id
 
       # Create versions with changes
+
+      # 2nd version
       registration.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager")
+      # 3rd version
       registration.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
     end
 
@@ -27,7 +30,44 @@ RSpec.describe RegistrationChangeHistoryService do
     it "returns an array of changes for each version" do
       aggregate_failures do
         expect(service_response).to be_an(Array)
-        expect(service_response.length).to eq(3)
+        expect(service_response.length).to eq(4)
+      end
+    end
+
+    context "when several versions" do
+      it "returns correct changes for the most recent version" do
+        last = service_response.last
+
+        aggregate_failures do
+          expect(last[:date]).to be_present
+          expect(last[:changed_to]).to include(
+            { contact_first_name: "John" },
+            { contact_last_name: "Smith" },
+            { contact_position: "Senior Manager" }
+          )
+        end
+      end
+
+      it "returns correct changes for the previous version" do
+        second = service_response[2]
+
+        aggregate_failures do
+          expect(second[:date]).to be_present
+          expect(second[:changed_to]).to include(
+            { contact_first_name: "Johnny" },
+            { contact_last_name: "Smiths" },
+            { contact_position: "Manager" }
+          )
+        end
+      end
+
+      it "returns correct changes for the oldest version" do
+        first = service_response[1]
+
+        aggregate_failures do
+          expect(first[:date]).to be_present
+          expect(first[:changed_to][0]).to include(:reference)
+        end
       end
     end
 
@@ -59,8 +99,8 @@ RSpec.describe RegistrationChangeHistoryService do
     end
 
     it "excludes updated_at and reason_for_change from the changesets" do
-      expect(service_response.last[:changed_to]).not_to include(:updated_at, :reason_for_change)
-      expect(service_response.last[:changed_from]).not_to include(:updated_at, :reason_for_change)
+      expect(service_response.first[:changed_to]).not_to include(:updated_at, :reason_for_change)
+      expect(service_response.first[:changed_from]).not_to include(:updated_at, :reason_for_change)
     end
 
     it "returns an empty array when there are no versions" do
