@@ -4,16 +4,18 @@
 require "database_cleaner"
 
 RSpec.configure do |config|
-  # Clean the database before running tests. Setup as per
-  # https://github.com/DatabaseCleaner/database_cleaner#rspec-example
+  # Clean the database before running tests
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
+  # Use transaction strategy by default
+  config.before do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+  end
+
+  config.after do
+    DatabaseCleaner.clean
   end
 end
