@@ -21,8 +21,28 @@
 #   ...
 # ]
 class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
+
+  REGISTRATION_ATTRIBUTES = %i[
+    reference
+    location
+    applicant_first_name
+    applicant_last_name
+    applicant_phone
+    applicant_email
+    business_type
+    operator_name
+    company_no
+    contact_first_name
+    contact_last_name
+    contact_position
+    contact_phone
+    contact_email
+    on_a_farm
+    is_a_farmer
+  ].freeze
+
   def run(registration)
-    registration.versions.map do |version|
+    registration.versions.includes(:item).map do |version|
       version_changes(version)
     end.compact
   end
@@ -32,11 +52,7 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   def version_changes(version)
     return if version.changeset.nil?
 
-    changes = version.changeset.except(
-      :created_at, :updated_at, :assistance_mode,
-      :view_certificate_token, :view_certificate_token_created_at, :reason_for_change,
-      :submitted_at, :charged, :placeholder
-    )
+    changes = version.changeset.slice(*REGISTRATION_ATTRIBUTES)
     return if changes.empty?
 
     {
