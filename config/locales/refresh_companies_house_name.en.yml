@@ -4,3 +4,4 @@ en:
       success: You have successfully refreshed the Companies House information.
       failure: There was an error refreshing the Companies House information. Try again later
       failure_details: ""
+      reason_for_change: "Companies House information refreshed"
