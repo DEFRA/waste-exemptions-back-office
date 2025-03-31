@@ -21,8 +21,28 @@
 #   ...
 # ]
 class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
+
+  REGISTRATION_ATTRIBUTES = %i[
+    reference
+    location
+    applicant_first_name
+    applicant_last_name
+    applicant_phone
+    applicant_email
+    business_type
+    operator_name
+    company_no
+    contact_first_name
+    contact_last_name
+    contact_position
+    contact_phone
+    contact_email
+    on_a_farm
+    is_a_farmer
+  ].freeze
+
   def run(registration)
-    registration.versions.map do |version|
+    registration.versions.includes(:item).map do |version|
       version_changes(version)
     end.compact
   end
@@ -30,23 +50,28 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   private
 
   def version_changes(version)
-    return if version.reify.nil?
+    return if version.changeset.nil?
 
-    changesets = version.reify.changes.except(:updated_at, :reason_for_change)
+    changes = version.changeset.slice(*REGISTRATION_ATTRIBUTES)
+    return if changes.empty?
+
     {
       date: version.created_at,
-      changed_to: changesets.map { |key, changeset| { "#{key}": changeset[0] } },
-      changed_from: changesets.map { |key, changeset| { "#{key}": changeset[1] } },
+      changed_to: changes.map { |key, changeset| { "#{key}": changeset[1] } },
+      changed_from: changes.map { |key, changeset| { "#{key}": changeset[0] } },
       reason_for_change: reason_for_change(version),
       changed_by: changed_by(version)
     }
   end
 
   def reason_for_change(version)
-    version.reify.changes["reason_for_change"].present? ? version.reify.changes["reason_for_change"].first : nil
+    version.changeset[:reason_for_change]&.last || nil
   end
 
   def changed_by(version)
-    version.whodunnit ? User.find(version.whodunnit).email : "System"
+    return "System" unless version.whodunnit
+    return "Public user" if version.whodunnit == "public user"
+
+    User.find(version.whodunnit).email
   end
 end

@@ -1,0 +1,30 @@
+en:
+  change_history:
+    index:
+      title: "Change history"
+      heading: "Change history"
+      date: "Date"
+      changed_to: "Updated details"
+      changed_from: "Changed from"
+      reason_for_change: "Reason for change"
+      changed_by: "Changed by"
+      view_registration: "View registration"
+    
+    change_history_row:
+      labels:
+        reference: Reference
+        location: Location
+        applicant_first_name: Applicant first name
+        applicant_last_name: Applicant last name
+        applicant_phone: Applicant phone
+        applicant_email: Applicant email
+        business_type: Business type
+        operator_name: Operator name
+        company_no: Company number
+        contact_first_name: Contact first name
+        contact_last_name: Contact last name
+        contact_position: Contact position
+        contact_phone: Contact phone
+        contact_email: Contact email
+        on_a_farm: On a farm
+        is_a_farmer: Is a farmer
