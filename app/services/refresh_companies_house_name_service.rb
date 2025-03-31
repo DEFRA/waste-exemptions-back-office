@@ -11,6 +11,7 @@ class RefreshCompaniesHouseNameService < WasteExemptionsEngine::BaseService
 
     registration.operator_name = company_name
     registration.companies_house_updated_at = Time.current
+    registration.reason_for_change = I18n.t("refresh_companies_house_name.messages.reason_for_change")
     registration.save!
 
     true
