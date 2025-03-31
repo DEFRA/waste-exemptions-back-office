@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :registrations, only: %i[show index], param: :reference do
     get "certificate", to: "certificates#show", as: :certificate
     get "communication_logs", to: "communication_logs#index", as: :communication_logs
+    get "change_history", to: "change_history#index", as: :change_history
     get "payments", to: "payments#new", as: :add_payment_form
     post "payments", to: "payments#create", as: :add_payment
     get "payment_details", to: "payment_details#index", as: :payment_details

@@ -61,3 +61,8 @@ Naming/PredicateName:
   Exclude:
     # Presenter column names are driven by the registration field names and can't be changed
     - 'app/presenters/reports/finance_data_report/base_registration_row_presenter.rb'
+
+Metrics/ModuleLength:
+  Exclude:
+    # these files a simple and easy to read, splitting them into smaller modules would increase complexity for no benefit
+    - app/helpers/action_links_helper.rb

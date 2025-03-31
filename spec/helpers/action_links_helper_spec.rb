@@ -699,4 +699,33 @@ RSpec.describe ActionLinksHelper do
       end
     end
   end
+
+  describe "#display_change_history_link_for?" do
+    before { allow(helper).to receive(:can?).with(:read, resource).and_return(can) }
+
+    context "when the resource is not a registration" do
+      let(:can) { true }
+      let(:resource) { nil }
+
+      it "returns false" do
+        expect(helper.display_change_history_link_for?(resource)).to be(false)
+      end
+    end
+
+    context "when the resource is a registration" do
+      let(:resource) { create(:registration, account: nil) }
+
+      context "when the user does not have permission to view registration" do
+        let(:can) { false }
+
+        it { expect(helper.display_change_history_link_for?(resource)).to be(false) }
+      end
+
+      context "when the user does have permission to view registration" do
+        let(:can) { true }
+
+        it { expect(helper.display_change_history_link_for?(resource)).to be(true) }
+      end
+    end
+  end
 end

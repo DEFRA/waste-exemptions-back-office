@@ -109,6 +109,12 @@
     </p>
   <% end %>
 
+  <% if display_change_history_link_for?(resource) %>
+    <p class="govuk-body">
+      <%= link_to t(".actions.show_change_history"), registration_change_history_path(resource.reference) %>
+    </p>
+  <% end %>
+
   <% if display_payment_details_link_for?(resource) %>
     <p class="govuk-body">
       <%= link_to t(".actions.payment_details"), registration_payment_details_path(resource.reference) %>

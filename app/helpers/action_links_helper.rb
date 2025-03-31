@@ -108,6 +108,10 @@ module ActionLinksHelper
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
   end
 
+  def display_change_history_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:read, resource)
+  end
+
   def display_reset_transient_registrations_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:reset_transient_registrations, resource)
   end
