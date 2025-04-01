@@ -23,7 +23,9 @@ module Reports
         return unless @secondary_object.payment_type == WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND
         return if @secondary_object.associated_payment_id.nil?
 
-        associated_payment = WasteExemptionsEngine::Payment.find(@secondary_object.associated_payment_id)
+        associated_payment = WasteExemptionsEngine::Payment.find_by(id: @secondary_object.associated_payment_id)
+        return if associated_payment.nil?
+
         formatted_payment_type(associated_payment.payment_type, @registration.assistance_mode)
       end
 
