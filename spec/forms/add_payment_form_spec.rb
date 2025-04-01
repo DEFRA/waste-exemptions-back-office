@@ -108,7 +108,7 @@ RSpec.describe AddPaymentForm, type: :model do
         expect(payment.payment_type).to eq("bank_transfer")
         expect(payment.payment_amount).to eq(9326)
         expect(payment.payment_status).to eq(WasteExemptionsEngine::Payment::PAYMENT_STATUS_SUCCESS)
-        expect(payment.date_time).to eq(date)
+        expect(payment.date_time.to_date).to eq(date)
         expect(payment.payment_uuid).not_to be_nil
         expect(payment.reference).to eq("1234567890")
         expect(payment.account).to eq(account)
