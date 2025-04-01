@@ -34,6 +34,10 @@ RSpec.describe RefreshCompaniesHouseNameService do
           .from(nil)
           .to(new_registration_name)
       end
+
+      it "does set the reason_for_change" do
+        expect { run_service }.to change { registration_data(registration).reason_for_change }.to I18n.t("refresh_companies_house_name.messages.reason_for_change")
+      end
     end
 
     context "when an error happens" do
@@ -72,6 +76,10 @@ RSpec.describe RefreshCompaniesHouseNameService do
             .to change { registration_data(registration).operator_name }
             .from(old_registered_name)
             .to(new_registration_name)
+        end
+
+        it "does set the reason_for_change" do
+          expect { run_service }.to change { registration_data(registration).reason_for_change }.to I18n.t("refresh_companies_house_name.messages.reason_for_change")
         end
       end
     end
