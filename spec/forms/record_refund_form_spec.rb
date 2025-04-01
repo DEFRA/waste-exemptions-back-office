@@ -76,13 +76,13 @@ RSpec.describe RecordRefundForm do
       it "returns false when amount is negative" do
         params = { amount: "-10.00", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
-        expect(form.errors[:amount]).to include("Enter a valid price - there's a mistake in that one")
+        expect(form.errors[:amount].first).to eq("Enter a valid price - there’s a mistake in that one")
       end
 
       it "returns false when amount is too high precision" do
         params = { amount: "20.000", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
-        expect(form.errors[:amount]).to include("Enter a valid price - there's a mistake in that one")
+        expect(form.errors[:amount].first).to eq("Enter a valid price - there’s a mistake in that one")
       end
 
       it "returns false when amount is blank" do

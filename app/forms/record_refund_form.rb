@@ -29,6 +29,8 @@ class RecordRefundForm
       payment: payment,
       amount_in_pence: amount_in_pence
     )
+    
+    true
   end
 
   private
