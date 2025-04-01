@@ -7,11 +7,7 @@ module Reports
       delegate :reference, to: :@secondary_object
 
       def payment_type
-        if @secondary_object.payment_type == WasteExemptionsEngine::Payment::PAYMENT_TYPE_GOVPAY
-          @registration.assistance_mode == "full" ? "card(moto)" : "card"
-        else
-          @secondary_object.payment_type
-        end
+        formatted_payment_type(@secondary_object.payment_type, @registration.assistance_mode)
       end
 
       def payment_amount
@@ -23,10 +19,28 @@ module Reports
         display_pence_as_pounds_and_pence(pence: @total, hide_pence_if_zero: true)
       end
 
+      def refund_type
+        return unless @secondary_object.payment_type == WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND
+        return if @secondary_object.associated_payment_id.nil?
+
+        associated_payment = WasteExemptionsEngine::Payment.find_by(id: @secondary_object.associated_payment_id)
+        return if associated_payment.nil?
+
+        formatted_payment_type(associated_payment.payment_type, @registration.assistance_mode)
+      end
+
       private
 
       def amount_to_credit
         @secondary_object.payment_amount
+      end
+
+      def formatted_payment_type(payment_type, assistance_mode)
+        if payment_type == WasteExemptionsEngine::Payment::PAYMENT_TYPE_GOVPAY
+          assistance_mode == "full" ? "card(moto)" : "card"
+        else
+          payment_type
+        end
       end
     end
   end
