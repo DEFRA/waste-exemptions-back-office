@@ -61,6 +61,29 @@ module Reports
           expect(presenter.balance).to eq("-40.50")
         end
       end
+
+      describe "#refund_type" do
+        let(:associated_payment) { create(:payment, associated_payment: account.payments.first) }
+
+        before do
+          account.payments << associated_payment
+          account.payments.first.update(payment_type: "refund", associated_payment: associated_payment)
+        end
+
+        it "returns associated payment type" do
+          associated_payment.update(payment_type: "bank_transfer")
+          expect(presenter.refund_type).to eq("bank_transfer")
+        end
+
+        it "returns card when associated payment type is govpay_payment" do
+          expect(presenter.refund_type).to eq("card")
+        end
+
+        it "returns card(moto) when associated payment type is govpay_payment and journey is assisted" do
+          registration.update(assistance_mode: "full")
+          expect(presenter.refund_type).to eq("card(moto)")
+        end
+      end
     end
   end
 end
