@@ -32,7 +32,7 @@ module WasteExemptionsEngine
             account_id: payment.account_id,
             reference: "#{payment.reference}/REFUND",
             comments: comments,
-            associated_payment: payment
+            associated_payment_id: payment.id
           )
           expect(refund.payment_uuid).not_to be_nil
         end

@@ -1,3 +1,8 @@
+<%
+  # Default to not showing available amount if not specified
+  show_available_amount = local_assigns.fetch(:show_available_amount, false)
+%>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= render("waste_exemptions_engine/shared/back", back_path: registration_payment_details_path(reference: resource.reference)) %>
@@ -24,6 +29,11 @@
           <th class="govuk-table__header govuk-table__header--numeric">
             <%= t("#{translation_prefix}.amount") %>
           </th>
+          <% if show_available_amount %>
+          <th class="govuk-table__header govuk-table__header--numeric">
+            <%= t("#{translation_prefix}.available_amount") %>
+          </th>
+          <% end %>
           <th class="govuk-table__header">
             <%= t("#{translation_prefix}.action") %>
           </th>
@@ -44,6 +54,11 @@
             <td class="govuk-table__cell govuk-table__cell--numeric">
               <%= payment.payment_amount %>
             </td>
+            <% if show_available_amount %>
+            <td class="govuk-table__cell govuk-table__cell--numeric">
+              <%= payment.available_refund_amount %>
+            </td>
+            <% end %>
             <td class="govuk-table__cell">
               <%= yield payment %>
             </td>

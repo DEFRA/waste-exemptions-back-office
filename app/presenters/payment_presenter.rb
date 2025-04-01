@@ -19,6 +19,10 @@ class PaymentPresenter < BasePresenter
     display_pence_as_pounds_sterling_and_pence(pence: super)
   end
 
+  def available_refund_amount
+    display_pence_as_pounds_sterling_and_pence(pence: super)
+  end
+
   def created_at
     format_date(super)
   end

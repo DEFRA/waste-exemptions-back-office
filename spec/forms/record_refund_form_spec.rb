@@ -76,13 +76,13 @@ RSpec.describe RecordRefundForm do
       it "returns false when amount is negative" do
         params = { amount: "-10.00", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
-        expect(form.errors[:amount]).to include("Enter a valid price - there’s a mistake in that one")
+        expect(form.errors[:amount]).to include("Enter a valid price - there's a mistake in that one")
       end
 
       it "returns false when amount is too high precision" do
         params = { amount: "20.000", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
-        expect(form.errors[:amount]).to include("Enter a valid price - there’s a mistake in that one")
+        expect(form.errors[:amount]).to include("Enter a valid price - there's a mistake in that one")
       end
 
       it "returns false when amount is blank" do
@@ -95,6 +95,27 @@ RSpec.describe RecordRefundForm do
         params = { amount: "35.00", comments: "Refund", payment_id: payment.id }
         expect(form.submit(params)).to be false
         expect(form.errors[:amount]).to include("Refund amount must not exceed the maximum refund amount")
+      end
+
+      context "when there are previous refunds" do
+        before do
+          create(:payment,
+                 payment_type: WasteExemptionsEngine::Payment::PAYMENT_TYPE_REFUND,
+                 payment_amount: -1000,
+                 associated_payment_id: payment.id)
+        end
+
+        it "returns false if amount exceeds the available refund amount" do
+          params = { amount: "25.00", comments: "Refund", payment_id: payment.id }
+          expect(form.submit(params)).to be false
+          expect(form.errors[:amount]).to include("Refund amount must not exceed the maximum refund amount")
+        end
+
+        it "returns true if amount is within the available refund amount" do
+          allow(RecordRefundService).to receive(:run)
+          params = { amount: "15.00", comments: "Refund", payment_id: payment.id }
+          expect(form.submit(params)).to be true
+        end
       end
     end
 

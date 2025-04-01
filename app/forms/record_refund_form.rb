@@ -20,7 +20,6 @@ class RecordRefundForm
     return false unless check_payment_exists?
 
     @payment = WasteExemptionsEngine::Payment.find_by(id: payment_id)
-
     @balance = payment.account.balance
 
     return false unless valid?
@@ -46,7 +45,7 @@ class RecordRefundForm
   def amount_within_limits
     return if amount.blank? || !amount.to_f.positive?
 
-    errors.add(:amount, :exceeds_payment_amount) if amount_in_pence > payment.payment_amount.to_f
+    errors.add(:amount, :exceeds_payment_amount) if amount_in_pence > payment&.available_refund_amount
 
     return unless amount_in_pence > balance
 
@@ -54,6 +53,8 @@ class RecordRefundForm
   end
 
   def amount_in_pence
+    return 0 if amount.blank?
+
     WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(amount.to_f)
   end
 end

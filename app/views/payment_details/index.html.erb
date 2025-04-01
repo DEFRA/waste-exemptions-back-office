@@ -129,6 +129,8 @@
           <th class="govuk-table__header"><%= t(".details_section.payments.headers.reference") %></th>
           <th class="govuk-table__header"><%= t(".details_section.payments.headers.type") %></th>
           <th class="govuk-table__header govuk-!-text-align-right"><%= t(".details_section.payments.headers.amount") %></th>
+          <th class="govuk-table__header govuk-!-text-align-right"><%= t(".details_section.payments.headers.refunded") %></th>
+          <th class="govuk-table__header govuk-!-text-align-right"><%= t(".details_section.payments.headers.available") %></th>
         </tr>
       </thead>
       <tbody>
@@ -141,6 +143,12 @@
             </td>
             <td class="govuk-table__cell govuk-!-text-align-right">
               <%= payment.payment_amount %>
+            </td>
+            <td class="govuk-table__cell govuk-!-text-align-right">
+              <%= display_pence_as_pounds_sterling_and_pence(pence: payment.total_refunded_amount) %>
+            </td>
+            <td class="govuk-table__cell govuk-!-text-align-right">
+              <%= payment.available_refund_amount %>
             </td>
           </tr>
         <% end %>
