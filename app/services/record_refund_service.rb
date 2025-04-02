@@ -29,7 +29,7 @@ class RecordRefundService < WasteExemptionsEngine::BaseService
       reference: "#{payment.reference}/REFUND",
       payment_uuid: SecureRandom.uuid,
       comments: comments,
-      associated_payment_id: payment.id
+      associated_payment: payment
     )
   end
 end

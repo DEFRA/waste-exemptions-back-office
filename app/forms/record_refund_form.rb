@@ -29,8 +29,6 @@ class RecordRefundForm
       payment: payment,
       amount_in_pence: amount_in_pence
     )
-
-    true
   end
 
   private
@@ -55,8 +53,6 @@ class RecordRefundForm
   end
 
   def amount_in_pence
-    return 0 if amount.blank?
-
     WasteExemptionsEngine::CurrencyConversionService.convert_pounds_to_pence(amount.to_f)
   end
 end

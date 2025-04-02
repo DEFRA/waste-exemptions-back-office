@@ -112,7 +112,6 @@ RSpec.describe RecordRefundForm do
         end
 
         it "returns true if amount is within the available refund amount" do
-          allow(RecordRefundService).to receive(:run)
           params = { amount: "15.00", comments: "Refund", payment_id: payment.id }
           expect(form.submit(params)).to be true
         end
