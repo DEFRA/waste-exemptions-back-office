@@ -18,7 +18,7 @@ module Analytics
       let(:created_at) { start_date + 1.day }
 
       # Set a fixed time value from which to start measuring page times
-      let(:start_time) { 1.week.ago }
+      let(:start_time) { 1.day.ago }
 
       include_context "with user journeys with timed page views"
 
