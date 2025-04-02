@@ -98,7 +98,7 @@ RSpec.describe RegistrationChangeHistoryService do
       expect(service_response.last[:changed_by]).to eq("System")
     end
 
-    it "displays Changed By corretly when whodunnit is email address" do
+    it "displays Changed By correctly when whodunnit is email address" do
       PaperTrail.request.whodunnit = "developer@wex.gov.uk"
       registration.update(contact_first_name: "Jane")
 
