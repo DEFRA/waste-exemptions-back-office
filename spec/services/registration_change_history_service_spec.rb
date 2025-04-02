@@ -91,7 +91,7 @@ RSpec.describe RegistrationChangeHistoryService do
       expect(service_response.last[:changed_by]).to eq("developer@wex.gov.uk")
     end
 
-    it "displays Changed By corretly when whodunnit is nil" do
+    it "displays Changed By correctly when whodunnit is nil" do
       PaperTrail.request.whodunnit = nil
       registration.update(contact_first_name: "Jane")
 
