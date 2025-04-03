@@ -1,6 +1,7 @@
 <%= render "shared/payments_table",
            payments: @payments,
            resource: @resource,
+           show_available_amount: true,
            translation_prefix: "record_refunds.index" do |payment| %>
   <%= link_to new_registration_record_refund_path(reference: @resource.reference, payment_id: payment.id) do %>
     <%= t("record_refunds.index.refund_payment") %>

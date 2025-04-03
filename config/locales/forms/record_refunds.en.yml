@@ -7,8 +7,10 @@ en:
       reference: Reference
       payment_type: Payment type
       amount: Amount in £
+      available_amount: Available for refund in £
       action: Action
       refund_payment: Record refund
+      no_refund_available: No refund available
       submit: Continue
       payment_types:
         bank_transfer: "Via bank transfer"

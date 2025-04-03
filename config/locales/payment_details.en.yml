@@ -32,6 +32,8 @@ en:
             reference: Reference
             type: Payment type
             amount: Amount
+            refunded: Refunded amount
+            available: Available for refund
 
         refunds:
           heading: Refunds and reversals

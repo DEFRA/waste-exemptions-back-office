@@ -633,14 +633,17 @@ RSpec.describe ActionLinksHelper do
     end
 
     context "with an overpayment" do
-      let(:registration) { build(:registration, account: build(:account, :with_payment)) }
+      let(:registration) { create(:registration, account: build(:account)) }
+
+      before do
+        registration.account.payments << build(:payment, :bank_transfer)
+      end
 
       it { expect(helper.can_display_refund_link?(registration)).to be true }
     end
   end
 
   describe "#can_display_reversal_link?" do
-
     context "with an overpayment" do
       let(:registration) { create(:registration, account: build(:account)) }
 

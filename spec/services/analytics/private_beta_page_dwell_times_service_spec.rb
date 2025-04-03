@@ -34,12 +34,13 @@ module Analytics
       end
 
       it do
-        expect(result["location"]).to eq(
+        # Allow a margin of error for daylight saving time changes (1 hour = 3600 seconds)
+        expect(result["location"]).to be_within(3600).of(
           (
             (time_diff(3.minutes, 1.hour) +
-            time_diff(18.minutes, 4.days)
+             time_diff(18.minutes, 4.days)
             ) / 2.0)
-           .round
+              .round
         )
       end
 

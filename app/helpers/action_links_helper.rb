@@ -121,7 +121,7 @@ module ActionLinksHelper
   end
 
   def can_display_refund_link?(resource)
-    resource.account.overpaid?
+    resource.account.overpaid? && resource.account.payments.refundable.any?
   end
 
   def can_display_reversal_link?(resource)
