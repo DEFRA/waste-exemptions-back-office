@@ -72,6 +72,12 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
     return "System" unless version.whodunnit
     return "Public user" if version.whodunnit == "public user"
 
-    User.find(version.whodunnit).email
+    identifier?(version.whodunnit) ? User.find(version.whodunnit).email : version.whodunnit
+  end
+
+  def identifier?(whodunnit)
+    true if Integer(whodunnit)
+  rescue StandardError
+    false
   end
 end
