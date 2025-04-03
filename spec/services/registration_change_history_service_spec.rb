@@ -91,11 +91,25 @@ RSpec.describe RegistrationChangeHistoryService do
       expect(service_response.last[:changed_by]).to eq("developer@wex.gov.uk")
     end
 
-    it "handles system changes when whodunnit is nil" do
+    it "displays Changed By correctly when whodunnit is nil" do
       PaperTrail.request.whodunnit = nil
       registration.update(contact_first_name: "Jane")
 
       expect(service_response.last[:changed_by]).to eq("System")
+    end
+
+    it "displays Changed By correctly when whodunnit is email address" do
+      PaperTrail.request.whodunnit = "developer@wex.gov.uk"
+      registration.update(contact_first_name: "Jane")
+
+      expect(service_response.last[:changed_by]).to eq("developer@wex.gov.uk")
+    end
+
+    it "displays Changed By correctly when whodunnit is user id" do
+      PaperTrail.request.whodunnit = user.id
+      registration.update(contact_first_name: "Jane")
+
+      expect(service_response.last[:changed_by]).to eq("developer@wex.gov.uk")
     end
 
     it "excludes updated_at and reason_for_change from the changesets" do
