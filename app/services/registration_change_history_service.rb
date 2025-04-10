@@ -65,7 +65,7 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   end
 
   def reason_for_change(version)
-    version.changeset[:reason_for_change]&.last || nil
+    (version.next.present? ? version.next.reify.reason_for_change : version.item.reason_for_change) || nil
   end
 
   def changed_by(version)

@@ -14,7 +14,7 @@ RSpec.describe RegistrationChangeHistoryService do
       # Create versions with changes
 
       # 2nd version
-      registration.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager")
+      registration.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
       # 3rd version
       registration.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
     end
@@ -85,6 +85,11 @@ RSpec.describe RegistrationChangeHistoryService do
 
     it "includes the correct reason_for_change value" do
       expect(service_response.last[:reason_for_change]).to eq("Fixing the typo in name")
+    end
+
+    it "includes the correct reason_for_change value for each version even reason text hasn't changed" do
+      expect(service_response[2][:reason_for_change]).to eq("Fixing the typo in name")
+      expect(service_response[3][:reason_for_change]).to eq("Fixing the typo in name")
     end
 
     it "includes the correct changed_by value" do
