@@ -18,5 +18,5 @@ updates:
   # Dependabot is currently failing to pull gems hosted outside of RubyGems
   # We need to ignore these gems for now so that dependabot does proceed with updating the other gems
   ignore:
-  - dependency-name: "dibble"
-  - dependency-name: "pafs_core"
+  - dependency-name: "waste_exemptions_engine"
+
