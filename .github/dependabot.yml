@@ -9,6 +9,7 @@ updates:
 - package-ecosystem: bundler
   directory: "/"
   insecure-external-code-execution: allow
+  target-branch: main
   registries:
   - wex-github
   schedule:
@@ -19,4 +20,14 @@ updates:
   # We need to ignore these gems for now so that dependabot does proceed with updating the other gems
   ignore:
   - dependency-name: "waste_exemptions_engine"
+- package-ecosystem: bundler
+  directory: "/"
+  insecure-external-code-execution: allow
+  target-branch: dependabot-test
+  registries:
+  - wex-github
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  versioning-strategy: lockfile-only
 
