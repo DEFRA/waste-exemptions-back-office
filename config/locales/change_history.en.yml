@@ -10,7 +10,7 @@ en:
       changed_by: "Changed by"
       view_registration: "View registration"
     
-    change_history_row:
+    section_row:
       labels:
         reference: Reference
         location: Location
@@ -28,3 +28,7 @@ en:
         contact_email: Contact email
         on_a_farm: On a farm
         is_a_farmer: Is a farmer
+        addresses:
+          contact: "Contact address"
+          site: "Site address"
+          operator: "Operator address"

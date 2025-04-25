@@ -1,0 +1,18 @@
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell">
+    <%= version[:date].strftime("%d %B %Y") %>
+  </td>
+  <td class="govuk-table__cell" colspan="2">
+    <table width="100%" class="govuk-table">
+      <% version[:changed].each do |change_row| %>
+        <%= render "section_row", change_row: change_row %>
+      <% end %>
+    </table>
+  </td>
+  <td class="govuk-table__cell">
+    <%= version[:reason_for_change] %>
+  </td>
+  <td class="govuk-table__cell">
+    <%= version[:changed_by] %>
+  </td>
+</tr>
