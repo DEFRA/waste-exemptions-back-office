@@ -6,8 +6,6 @@ module WasteExemptionsEngine
   class RegistrationExemption < WasteExemptionsEngine::ApplicationRecord
     self.table_name = "registration_exemptions"
 
-    has_paper_trail if: proc { |re| re.persist_version? }
-
     include CanDeactivateExemption
 
     scope :data_for_month, lambda { |first_day_of_the_month|
