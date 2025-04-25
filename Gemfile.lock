@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: aaf90eb92af04db4b7ef57ba1250889fb60a5ce1
+  revision: 29297c4bec708830a592368b7623665bc31708f9
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -204,7 +204,7 @@ GEM
       devise (>= 4.9)
       rails
       sprockets-rails
-    defra_ruby_govpay (0.2.6)
+    defra_ruby_govpay (0.2.5)
       rest-client (~> 2.1)
     defra_ruby_style (0.4.0)
       rubocop (>= 1.0, < 2.0)
@@ -333,7 +333,7 @@ GEM
     mime-types (3.6.2)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0422)
+    mime-types-data (3.2025.0408)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.5)
@@ -369,13 +369,12 @@ GEM
     parser (3.3.8.0)
       ast (~> 2.4.1)
       racc
-    passenger (6.0.27)
-      rack (>= 1.6.13)
-      rackup (>= 1.0.1)
-      rake (>= 12.3.3)
+    passenger (6.0.22)
+      rack
+      rake (>= 0.8.1)
     pg (1.5.9)
     pgreset (0.4)
-    phonelib (0.10.8)
+    phonelib (0.10.7)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -540,9 +539,8 @@ GEM
     spring (4.3.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
-    sprockets (4.2.2)
+    sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
-      logger
       rack (>= 2.2.4, < 4)
     sprockets-rails (3.5.2)
       actionpack (>= 6.1)
