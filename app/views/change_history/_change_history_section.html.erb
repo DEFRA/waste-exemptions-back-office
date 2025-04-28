@@ -1,7 +1,7 @@
 <% first = true%>
 <% version[:changed].each do |change_row| %>
   <tr class="govuk-table__row">
-    <td class="govuk-table__cell--no-border" valign="top">
+    <td class="govuk-table__cell--no-border">
       <% if first %>
         <%= version[:date].strftime("%d %B %Y") %>
       <% end %>
