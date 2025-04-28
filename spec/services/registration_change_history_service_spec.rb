@@ -30,8 +30,12 @@ RSpec.describe RegistrationChangeHistoryService do
     it "returns an array of changes for each version" do
       aggregate_failures do
         expect(service_response).to be_an(Array)
-        expect(service_response.length).to eq(4)
+        expect(service_response.length).to be > 0
       end
+    end
+
+    it "does not include create events" do
+      expect(service_response.length).to eq(3)
     end
 
     context "when several versions" do
@@ -49,7 +53,7 @@ RSpec.describe RegistrationChangeHistoryService do
       end
 
       it "returns correct changes for the previous version" do
-        second = service_response[2]
+        second = service_response[1]
 
         aggregate_failures do
           expect(second[:date]).to be_present
@@ -62,7 +66,7 @@ RSpec.describe RegistrationChangeHistoryService do
       end
 
       it "returns correct changes for the oldest version" do
-        first = service_response[1]
+        first = service_response[0]
 
         aggregate_failures do
           expect(first[:date]).to be_present
@@ -86,8 +90,8 @@ RSpec.describe RegistrationChangeHistoryService do
     end
 
     it "includes the correct reason_for_change value for each version even reason text hasn't changed" do
+      expect(service_response[1][:reason_for_change]).to eq("Fixing the typo in name")
       expect(service_response[2][:reason_for_change]).to eq("Fixing the typo in name")
-      expect(service_response[3][:reason_for_change]).to eq("Fixing the typo in name")
     end
 
     it "includes the correct changed_by value" do

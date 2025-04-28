@@ -37,7 +37,7 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   ].freeze
 
   def run(registration)
-    registration.versions.includes(:item).map do |version|
+    registration.versions.where.not(event: "create").includes(:item).map do |version|
       version_changes(version)
     end.compact
   end
@@ -67,8 +67,6 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   def build_change_details(version, changes)
     {
       date: version.created_at,
-      changed_to: changes.map { |c| { "#{c[1]}": c[3] } },
-      changed_from: changes.map { |c| { "#{c[1]}": c[2] } },
       changed: changes,
       reason_for_change: reason_for_change(version),
       changed_by: changed_by(version)
