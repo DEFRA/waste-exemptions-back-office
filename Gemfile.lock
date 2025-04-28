@@ -620,6 +620,7 @@ DEPENDENCIES
   faraday-retry
   github_changelog_generator
   govuk_design_system_formbuilder
+  hashdiff
   jquery-rails
   kaminari (~> 1.2)
   matrix
