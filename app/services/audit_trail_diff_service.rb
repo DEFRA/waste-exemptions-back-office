@@ -94,7 +94,7 @@ class AuditTrailDiffService < WasteExemptionsEngine::BaseService
                                   ["", data]
                                 when "-"
                                   [data, ""]
-                                when "~"
+                                else
                                   [data, additional]
                                 end
 
