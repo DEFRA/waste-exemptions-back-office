@@ -94,8 +94,11 @@ class AuditTrailDiffService < WasteExemptionsEngine::BaseService
                                   ["", data]
                                 when "-"
                                   [data, ""]
-                                else
+                                when "~"
                                   [data, additional]
+                                else
+                                  Rails.logger.error("Unknown change type: #{change_type}")
+                                  Airbrake.notify "Unknown change type", { change_type: change_type }
                                 end
 
     generate_update_row(identifier, previous_value, new_value)
