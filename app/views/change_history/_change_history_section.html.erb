@@ -1,18 +1,42 @@
-<tr class="govuk-table__row">
-  <td class="govuk-table__cell">
-    <%= version[:date].strftime("%d %B %Y") %>
-  </td>
-  <td class="govuk-table__cell" colspan="2">
-    <table width="100%" class="govuk-table">
-      <% version[:changed].each do |change_row| %>
-        <%= render "section_row", change_row: change_row %>
+<% first = true%>
+<% version[:changed].each do |change_row| %>
+  <tr class="govuk-table__row">
+    <td valign="top">
+      <% if first %>
+        <div class="govuk-!-padding-2">
+          <%= version[:date].strftime("%d %B %Y") %>
+        </div>
       <% end %>
-    </table>
-  </td>
-  <td class="govuk-table__cell">
-    <%= version[:reason_for_change] %>
-  </td>
-  <td class="govuk-table__cell">
-    <%= version[:changed_by] %>
-  </td>
+    </td>
+    <td valign="top">
+      <div class="govuk-!-padding-2">
+        <strong><%= t(".labels.#{change_row[1]}") %>:</strong><br/>
+        <%= change_row[3].to_s.gsub("\n", "<br/>").html_safe %>
+      </div>
+    </td>
+    <td valign="top">
+      <div class="govuk-!-padding-2">
+        <strong><%= t(".labels.#{change_row[1]}") %>:</strong><br/>
+        <%= change_row[2].to_s.gsub("\n", "<br/>").html_safe %>
+      </div>
+    </td>
+    <td valign="top">
+      <% if first %>
+        <div class="govuk-!-padding-2">
+          <%= version[:reason_for_change] %>
+        </div>
+      <% end %>
+    </td>
+    <td valign="top">
+      <% if first %>
+        <div class="govuk-!-padding-2">
+          <%= version[:changed_by] %>
+        </div>
+      <% end %>
+    </td>
+  </tr>
+  <% first = false%>
+<% end %>
+<tr>
+  <td class="govuk-table__cell" colspan="5"></td>
 </tr>

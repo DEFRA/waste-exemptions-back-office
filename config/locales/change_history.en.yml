@@ -10,7 +10,7 @@ en:
       changed_by: "Changed by"
       view_registration: "View registration"
     
-    section_row:
+    change_history_section:
       labels:
         reference: Reference
         location: Location
