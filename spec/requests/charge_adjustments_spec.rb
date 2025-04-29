@@ -36,7 +36,7 @@ RSpec.describe "Charge Adjustments" do
 
         expect(response).to render_template(:new)
         expect(response).to have_http_status(:ok)
-        expect(response.body).to include("Decrease the charge")
+        expect(response.body).to include("Reduce the charge")
       end
 
       it "redirects when no adjustment type" do
