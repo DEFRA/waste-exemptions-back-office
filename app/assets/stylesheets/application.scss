@@ -21,3 +21,8 @@
 .checkbox_cell {
   padding-left: 3.8%;
 }
+
+.govuk-table__cell--no-border {
+  @extend .govuk-table__cell;
+  border: none;
+}

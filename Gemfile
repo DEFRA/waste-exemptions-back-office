@@ -86,6 +86,9 @@ gem "factory_bot_rails"
 # The Retry middleware automatically retries requests that fail
 gem "faraday-retry"
 
+# Compare two hashes and return diff
+gem "hashdiff"
+
 group :production do
   # Web application server that replaces webrick. It handles HTTP requests,
   # manages processes and resources, and enables administration, monitoring

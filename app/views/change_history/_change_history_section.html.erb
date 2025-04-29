@@ -1,0 +1,32 @@
+<% first = true%>
+<% version[:changed].each do |change_row| %>
+  <tr class="govuk-table__row">
+    <td class="govuk-table__cell--no-border">
+      <% if first %>
+        <%= version[:date].strftime("%d %B %Y") %>
+      <% end %>
+    </td>
+    <td class="govuk-table__cell--no-border">
+      <strong><%= t(".labels.#{change_row[1]}") %>:</strong><br/>
+      <%= change_row[3].to_s.gsub("\n", "<br/>").html_safe %>
+    </td>
+    <td class="govuk-table__cell--no-border">
+      <strong><%= t(".labels.#{change_row[1]}") %>:</strong><br/>
+      <%= change_row[2].to_s.gsub("\n", "<br/>").html_safe %>
+    </td>
+    <td class="govuk-table__cell--no-border">
+      <% if first %>
+        <%= version[:reason_for_change] %>
+      <% end %>
+    </td>
+    <td class="govuk-table__cell--no-border">
+      <% if first %>
+        <%= version[:changed_by] %>
+      <% end %>
+    </td>
+  </tr>
+  <% first = false%>
+<% end %>
+<tr>
+  <td class="govuk-table__cell" colspan="5"></td>
+</tr>

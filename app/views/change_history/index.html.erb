@@ -19,7 +19,7 @@
         </thead>
         <tbody class="govuk-table__body">
           <% @change_history.each do |version| %>
-            <%= render "change_history_row", version: version %>
+            <%= render "change_history_section", version: version %>
           <% end %>
         </tbody>
       </table>

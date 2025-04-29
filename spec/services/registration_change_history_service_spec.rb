@@ -30,8 +30,12 @@ RSpec.describe RegistrationChangeHistoryService do
     it "returns an array of changes for each version" do
       aggregate_failures do
         expect(service_response).to be_an(Array)
-        expect(service_response.length).to eq(4)
+        expect(service_response.length).to be > 0
       end
+    end
+
+    it "does not include create events" do
+      expect(service_response.length).to eq(3)
     end
 
     context "when several versions" do
@@ -40,33 +44,33 @@ RSpec.describe RegistrationChangeHistoryService do
 
         aggregate_failures do
           expect(last[:date]).to be_present
-          expect(last[:changed_to]).to include(
-            { contact_first_name: "John" },
-            { contact_last_name: "Smith" },
-            { contact_position: "Senior Manager" }
+          expect(last[:changed]).to include(
+            ["~", "contact_first_name", "Johnny", "John"],
+            ["~", "contact_last_name", "Smiths", "Smith"],
+            ["~", "contact_position", "Manager", "Senior Manager"]
           )
         end
       end
 
       it "returns correct changes for the previous version" do
-        second = service_response[2]
+        second = service_response[1]
 
         aggregate_failures do
           expect(second[:date]).to be_present
-          expect(second[:changed_to]).to include(
-            { contact_first_name: "Johnny" },
-            { contact_last_name: "Smiths" },
-            { contact_position: "Manager" }
+          expect(second[:changed]).to include(
+            ["~", "contact_first_name", a_string_matching(/^Firstcontact\d+$/), "Johnny"],
+            ["~", "contact_last_name", a_string_matching(/^Lastcontact\d+$/), "Smiths"],
+            ["+", "contact_position", "", "Manager"]
           )
         end
       end
 
       it "returns correct changes for the oldest version" do
-        first = service_response[1]
+        first = service_response[0]
 
         aggregate_failures do
           expect(first[:date]).to be_present
-          expect(first[:changed_to][0]).to include(:reference)
+          expect(first[:changed][0]).to include("reference")
         end
       end
     end
@@ -75,12 +79,10 @@ RSpec.describe RegistrationChangeHistoryService do
       expect(service_response.last[:date]).to eq(registration.versions.last.created_at)
     end
 
-    it "includes the correct changed_to values" do
-      expect(service_response.last[:changed_to]).to include({ contact_first_name: "John" }, { contact_last_name: "Smith" }, { contact_position: "Senior Manager" })
-    end
-
-    it "includes the correct changed_from values" do
-      expect(service_response.last[:changed_from]).to include({ contact_first_name: "Johnny" }, { contact_last_name: "Smiths" }, { contact_position: "Manager" })
+    it "includes the correct changed values" do
+      expect(service_response.last[:changed]).to include(["~", "contact_first_name", "Johnny", "John"])
+      expect(service_response.last[:changed]).to include(["~", "contact_last_name", "Smiths", "Smith"])
+      expect(service_response.last[:changed]).to include(["~", "contact_position", "Manager", "Senior Manager"])
     end
 
     it "includes the correct reason_for_change value" do
@@ -88,8 +90,8 @@ RSpec.describe RegistrationChangeHistoryService do
     end
 
     it "includes the correct reason_for_change value for each version even reason text hasn't changed" do
+      expect(service_response[1][:reason_for_change]).to eq("Fixing the typo in name")
       expect(service_response[2][:reason_for_change]).to eq("Fixing the typo in name")
-      expect(service_response[3][:reason_for_change]).to eq("Fixing the typo in name")
     end
 
     it "includes the correct changed_by value" do
@@ -118,8 +120,7 @@ RSpec.describe RegistrationChangeHistoryService do
     end
 
     it "excludes updated_at and reason_for_change from the changesets" do
-      expect(service_response.first[:changed_to]).not_to include(:updated_at, :reason_for_change)
-      expect(service_response.first[:changed_from]).not_to include(:updated_at, :reason_for_change)
+      expect(service_response.first[:changed].map { |c| c[1] }).not_to include("updated_at", "reason_for_change")
     end
 
     it "returns an empty array when there are no versions" do
