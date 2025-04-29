@@ -5,10 +5,15 @@ require "rails_helper"
 RSpec.describe AuditTrailDiffService do
   let(:service) { described_class }
   let(:version_four) { File.read("./spec/fixtures/files/versions/registration/v1_4.json") }
+  # version 5: operator address changed, applicant name changed, contact position changed
   let(:version_five) { File.read("./spec/fixtures/files/versions/registration/v1_5.json") }
+  # version 6: site address changed, contact position removed
   let(:version_six) { File.read("./spec/fixtures/files/versions/registration/v1_6.json") }
+  # version 7: contact name changed, contact position added
   let(:version_seven) { File.read("./spec/fixtures/files/versions/registration/v1_7.json") }
+  # version 8: contact address removed, site grid reference added, applicant first name changed
   let(:version_eight) { File.read("./spec/fixtures/files/versions/registration/v1_8.json") }
+  # version 9: contact address added
   let(:version_nine) { File.read("./spec/fixtures/files/versions/registration/v1_9.json") }
 
   describe "#run" do

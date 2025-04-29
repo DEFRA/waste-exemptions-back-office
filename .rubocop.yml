@@ -29,7 +29,7 @@ Metrics/ClassLength:
   # this serializer anyway once we have more charge and payment data in the system.
     - app/models/reports/finance_data_report/data_serializer.rb
 
-  # Temporary inlcudes some excessive logging, which makes the class longer than it needs to be
+  # keeping it as a single class, as that makes it much easier to maintain, modify, and extend.
     - app/services/audit_trail_diff_service.rb
 
 RSpec/DescribeClass:
