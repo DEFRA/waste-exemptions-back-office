@@ -52,5 +52,5 @@ en:
         links:
           record_refund: Record a refund
           reverse_payment: Reverse a payment
-          charge_adjustment: Increase or decrease a charge
+          charge_adjustment: Increase or reduce a charge
         add_payment: Record a payment
