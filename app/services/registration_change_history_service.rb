@@ -5,15 +5,10 @@
 # [
 #   {
 #     :date=>Fri, 21 Mar 2025 15:57:04.005744000 GMT +00:00,
-#     :changed_to=>[
-#       {:contact_first_name=>"John"},
-#       {:contact_last_name=>"Smith"},
-#       {:contact_position=>"Senior Manager"}
-#     ],
-#     :changed_from=>[
-#       {:contact_first_name=>"Johnny"},
-#       {:contact_last_name=>"Smiths"},
-#       {:contact_position=>"Manager"}
+#     :changed=>[
+#       ['~', 'contact_first_name', 'Johnny', 'John'],
+#       ['-', 'contact_last_name', 'Smiths', ''],
+#       ['+', 'contact_position', '', 'Senior Manager']
 #     ],
 #     :reason_for_change=>"Fixing the typo in name",
 #     :changed_by=>"developer@wex.gov.uk"
@@ -42,7 +37,7 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   ].freeze
 
   def run(registration)
-    registration.versions.includes(:item).map do |version|
+    registration.versions.where.not(event: "create").includes(:item).map do |version|
       version_changes(version)
     end.compact
   end
@@ -52,13 +47,27 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   def version_changes(version)
     return if version.changeset.nil?
 
-    changes = version.changeset.slice(*REGISTRATION_ATTRIBUTES)
+    changes = filtered_changes(version)
     return if changes.empty?
 
+    build_change_details(version, changes)
+  end
+
+  def filtered_changes(version)
+    older_version_json = version.previous&.json
+    newer_version_json = version.json
+    changes = AuditTrailDiffService.run(older_version_json:, newer_version_json:)
+    changes.select { |c| relevant_change?(c) }
+  end
+
+  def relevant_change?(change)
+    REGISTRATION_ATTRIBUTES.include?(change[1].to_sym) || change[1].include?("addresses.")
+  end
+
+  def build_change_details(version, changes)
     {
       date: version.created_at,
-      changed_to: changes.map { |key, changeset| { "#{key}": changeset[1] } },
-      changed_from: changes.map { |key, changeset| { "#{key}": changeset[0] } },
+      changed: changes,
       reason_for_change: reason_for_change(version),
       changed_by: changed_by(version)
     }
