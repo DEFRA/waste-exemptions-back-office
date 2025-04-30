@@ -33,7 +33,7 @@
         <% @presenter.sorted_orders.each do |order| %>
           <tr class="govuk-table__row">
             <td rowspan="4" class="govuk-table__cell">
-              <%= order.created_at.strftime("%Y-%m-%d") %>
+              <%= format_date(order.created_at) %>
             </td>
             <td class="govuk-!-padding-top-2">
               <% if order.exemption_codes_excluding_bucket.present? %>

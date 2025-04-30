@@ -21,7 +21,7 @@
       <%= f.govuk_text_field :amount,
           width: 10,
           prefix_text: "£",
-          label: { text: t(".amount_label"), size: "m" },
+          label: { text: t(".amount_label.#{@charge_adjustment_form.adjustment_type}"), size: "m" },
           hint: { text: t(".amount_hint") } %>
 
       <%= f.govuk_text_area :reason,
