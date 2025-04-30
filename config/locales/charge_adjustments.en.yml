@@ -19,6 +19,7 @@ en:
       amount_label:
         increase: "Increase charge by"
         decrease: "Reduce charge by"
+      balance_label: "Current balance"
       amount_hint: "For example 120.50"
       reason_label: "Reason"
       submit: "Continue"
