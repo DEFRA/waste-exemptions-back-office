@@ -12,9 +12,9 @@
       <%= t(".heading.#{@charge_adjustment_form.adjustment_type}", reference: @resource.reference) %>
     </h1>
 
-    <h2 class="govuk-heading-m">
+    <h2 class="govuk-heading-m govuk-!-padding-bottom-2">
       <%= t(".balance_label") %>
-      <span class="govuk-!-font-weight-regular govuk-!-padding-left-3"><%= @presenter.balance %></span>
+      <span class="govuk-!-font-weight-regular govuk-!-padding-left-2"><%= @presenter.balance %></span>
     </h2>
 
     <%= form_for @charge_adjustment_form,
