@@ -12,11 +12,13 @@ en:
     new:
       title:
         increase: "Increase the charge for %{reference}"
-        decrease: "Decrease the charge for %{reference}"
+        decrease: "Reduce the charge for %{reference}"
       heading:
         increase: "Increase the charge for %{reference}"
-        decrease: "Decrease the charge for %{reference}"
-      amount_label: "Amount"
+        decrease: "Reduce the charge for %{reference}"
+      amount_label:
+        increase: "Increase charge by"
+        decrease: "Reduce charge by"
       amount_hint: "For example 120.50"
       reason_label: "Reason"
       submit: "Continue"
