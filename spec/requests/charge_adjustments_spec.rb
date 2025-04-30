@@ -47,6 +47,15 @@ RSpec.describe "Charge Adjustments" do
         expect(response).to redirect_to(new_registration_adjustment_type_path)
       end
 
+      it "includes the current balance in the form" do
+        get new_registration_charge_adjustment_path(
+          registration_reference: registration.reference,
+          adjustment_type: "increase"
+        )
+        expect(response.body).to include("Current balance")
+        expect(response.body).to include("£0.00")
+      end
+
       context "when the user does not have permission to access the page" do
         let(:user) { create(:user, :data_viewer) }
 

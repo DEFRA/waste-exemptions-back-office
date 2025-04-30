@@ -12,6 +12,11 @@
       <%= t(".heading.#{@charge_adjustment_form.adjustment_type}", reference: @resource.reference) %>
     </h1>
 
+    <h2 class="govuk-heading-m">
+      <%= t(".balance_label") %>
+      <span class="govuk-!-font-weight-regular govuk-!-padding-left-3"><%= @presenter.balance %></span>
+    </h2>
+
     <%= form_for @charge_adjustment_form,
                  url: registration_charge_adjustments_path(registration_reference: @resource.reference),
                  builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>

@@ -35,6 +35,7 @@ class ChargeAdjustmentsController < ApplicationController
 
   def setup_form
     find_resource(params[:registration_reference])
+    @presenter = AccountPresenter.new(@resource.account)
     @charge_adjustment_form = ChargeAdjustmentForm.new(
       adjustment_type: params[:adjustment_type],
       account: @resource.account
