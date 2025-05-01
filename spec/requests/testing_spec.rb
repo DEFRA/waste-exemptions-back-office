@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Testing" do
   let(:user) { create(:user) }
+  let(:registration) { WasteExemptionsEngine::Registration.last }
 
   before { sign_in(user) }
 
@@ -22,10 +23,15 @@ RSpec.describe "Testing" do
         expect { get "/testing/create_registration/#{expiry_date}" }.to change(WasteExemptionsEngine::Registration, :count).by(1)
       end
 
+      it "responds with HTTP success" do
+        get "/testing/create_registration/#{expiry_date}"
+
+        expect(response).to have_http_status(:success)
+      end
+
       it "creates a registration with default exemptions when no exemptions are specified" do
         get "/testing/create_registration/#{expiry_date}"
-        expect(response).to have_http_status(:success)
-        registration = WasteExemptionsEngine::Registration.last
+
         expect(registration.registration_exemptions.count).to eq(3)
       end
 
@@ -39,8 +45,6 @@ RSpec.describe "Testing" do
           get "/testing/create_registration/#{expiry_date}", params: { exemptions: exemption_codes }
         end.not_to change(WasteExemptionsEngine::Exemption, :count)
 
-        expect(response).to have_http_status(:success)
-        registration = WasteExemptionsEngine::Registration.last
         expect(registration.registration_exemptions.count).to eq(2)
         expect(registration.registration_exemptions.map { |re| re.exemption.code }).to contain_exactly(existing_exemption1.code, existing_exemption2.code)
         expect(WasteExemptionsEngine::Exemption.find_by(code: non_existing_code)).to be_nil
@@ -49,24 +53,33 @@ RSpec.describe "Testing" do
       it "creates a registration with specified exemptions" do
         exemption_codes = [create(:exemption, code: "U1"), create(:exemption, code: "U2"), create(:exemption, code: "U3")].map(&:code)
         get "/testing/create_registration/#{expiry_date}", params: { exemptions: exemption_codes }
-        expect(response).to have_http_status(:success)
-        registration = WasteExemptionsEngine::Registration.last
+
         expect(registration.registration_exemptions.count).to eq(3)
         expect(registration.registration_exemptions.map { |re| re.exemption.code }).to match_array(exemption_codes)
       end
 
       it "sets the expiry date correctly" do
         get "/testing/create_registration/#{expiry_date}"
-        expect(response).to have_http_status(:success)
-        registration = WasteExemptionsEngine::Registration.last
+
         expect(registration.registration_exemptions.first.expires_on).to eq(Date.parse(expiry_date))
       end
 
       it "populates the edit_token_created_at" do
         get "/testing/create_registration/#{expiry_date}"
-        expect(response).to have_http_status(:success)
-        registration = WasteExemptionsEngine::Registration.last
+
         expect(registration.edit_token_created_at).to be_present
+      end
+
+      it "creates an order" do
+        get "/testing/create_registration/#{expiry_date}"
+
+        expect(registration.account.orders.length).to eq 1
+      end
+
+      it "calculates the account balance" do
+        get "/testing/create_registration/#{expiry_date}"
+
+        expect(registration.account.balance).to be_negative
       end
     end
 
