@@ -95,7 +95,7 @@ group :production do
   # and problem diagnosis. It is used in production because it gives us an ability
   # to scale by creating additional processes, and will automatically restart any
   # that fail. We don't use it when running tests for speed's sake.
-  gem "passenger", "~> 6.0", "!= 6.0.23", require: "phusion_passenger/rack_handler"
+  gem "passenger", "~> 6.0", "!= 6.0.23", "!= 6.0.27", require: "phusion_passenger/rack_handler"
 end
 
 group :development, :test do
