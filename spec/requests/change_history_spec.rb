@@ -13,6 +13,10 @@ RSpec.describe "Change History" do
   describe "GET /bo/registrations/:reference/change_history/", :versioning do
     context "when change history is present" do
       before do
+        # Initial registration settings that will be ignored
+        registration.update(placeholder: true)
+        registration.update(reference: "WEX123", placeholder: false)
+        # Registration change
         registration.update(contact_first_name: "Johnny", contact_last_name: "Smith", contact_position: "Manager")
       end
 
@@ -37,7 +41,7 @@ RSpec.describe "Change History" do
         expect(response).to render_template(:index)
         expect(response).to have_http_status(:ok)
         expect(response.body).to include("Change history")
-        expect(response.body).to include("System")
+        expect(response.body).not_to include("System")
       end
     end
 
