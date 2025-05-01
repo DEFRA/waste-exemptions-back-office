@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "factory_bot_rails"
+require "faker"
 
 class TestingController < ApplicationController
 
@@ -24,6 +25,11 @@ class TestingController < ApplicationController
 
     # Ensure edit_token_created_at is populated
     registration.regenerate_and_timestamp_edit_token
+
+    # Add an order
+    order = FactoryBot.create(:order, :with_charge_detail)
+    registration.account.orders << order
+    registration_exemptions.map { |re| order.order_exemptions.create(exemption: re.exemption) }
 
     render :show, locals: { registration: registration }
   end
