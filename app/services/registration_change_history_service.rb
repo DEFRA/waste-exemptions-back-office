@@ -37,7 +37,9 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   ].freeze
 
   def run(registration)
-    registration.versions.where.not(event: "create").includes(:item).map do |version|
+    # exclude first 3 versions as they are the initial create events
+    versions_ids_to_exclude = registration.versions.first(3).map(&:id)
+    registration.versions.where.not(id: versions_ids_to_exclude).includes(:item).map do |version|
       version_changes(version)
     end.compact
   end

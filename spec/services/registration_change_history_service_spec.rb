@@ -12,7 +12,11 @@ RSpec.describe RegistrationChangeHistoryService do
       PaperTrail.request.whodunnit = user.id
 
       # Create versions with changes
-
+      #
+      # Initial registration settings
+      registration.update(placeholder: true)
+      # 1st version
+      registration.update(reference: "WEX123", placeholder: false)
       # 2nd version
       registration.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
       # 3rd version
