@@ -89,6 +89,10 @@ gem "faraday-retry"
 # Compare two hashes and return diff
 gem "hashdiff"
 
+# Generate test data. Also used by the create_registration test helper,
+# so it needs to be loaded in production.
+gem "faker"
+
 group :production do
   # Web application server that replaces webrick. It handles HTTP requests,
   # manages processes and resources, and enables administration, monitoring
@@ -131,8 +135,6 @@ end
 group :test do
   # Database Cleaner is a set of strategies for cleaning your database in Ruby.
   gem "database_cleaner"
-  # Generate test data
-  gem "faker"
   # Generates a test coverage report on every `bundle exec rspec` call. We use
   # the output to feed CodeClimate's stats and analysis
   gem "simplecov", "~> 0.22.0", require: false
