@@ -57,7 +57,7 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
 
   def find_placeholder_change_version(registration)
     registration.versions.find do |v|
-      v.object_changes.include?("placeholder") &&
+      v.object_changes&.include?("placeholder") &&
         v.object_changes["placeholder"][0] == true &&
         v.object_changes["placeholder"][1] == false
     end
