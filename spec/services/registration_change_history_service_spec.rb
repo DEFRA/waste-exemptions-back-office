@@ -12,11 +12,9 @@ RSpec.describe RegistrationChangeHistoryService do
       # 2nd version
       # the reference gets set automatically by the system
       # fter the registration is created
-      # 3rd version
-      reg.update(applicant_first_name: "Firstcontact1", placeholder: false)
-      # 4th version
+      # 3th version
       reg.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
-      # 5th version
+      # 4th version
       reg.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
       reg
     end
@@ -57,8 +55,6 @@ RSpec.describe RegistrationChangeHistoryService do
         # 2nd version
         # the reference gets set automatically by the system
         # fter the registration is created
-        # 3nd version
-        reg.update(reference: "WEX123")
         # 4th version
         reg.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
         # 5th version
@@ -66,7 +62,7 @@ RSpec.describe RegistrationChangeHistoryService do
         reg
       end
 
-      it "excludes first 3 versions" do
+      it "excludes first 2 versions" do
         changeset = service_response
         expect(service_response.length).to eq(2)
         expect(changeset[0][:changed][0][1]).to eq("contact_first_name")
