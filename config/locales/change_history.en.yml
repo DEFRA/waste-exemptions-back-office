@@ -5,7 +5,7 @@ en:
       heading: "Change history"
       date: "Date"
       changed_to: "Updated details"
-      changed_from: "Changed from"
+      changed_from: "Previous details"
       reason_for_change: "Reason for change"
       changed_by: "Changed by"
       view_registration: "View registration"

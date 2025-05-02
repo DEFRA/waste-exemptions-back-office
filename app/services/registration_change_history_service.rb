@@ -37,12 +37,31 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   ].freeze
 
   def run(registration)
-    registration.versions.where.not(event: "create").includes(:item).map do |version|
+    # exclude all versions up until placeholder value gets changed from true to false
+    # but no more than 3 versions
+    ids_to_exclude = version_ids_to_exclude(registration)
+    registration.versions.where.not(id: ids_to_exclude).includes(:item).map do |version|
       version_changes(version)
     end.compact
   end
 
   private
+
+  def version_ids_to_exclude(registration)
+    placeholder_change_version = find_placeholder_change_version(registration)
+    # return first 3 versions if placeholder_change_version is nil
+    return registration.versions.first(3).map(&:id) unless placeholder_change_version
+
+    registration.versions.select { |v| v.id <= placeholder_change_version.id }.map(&:id)
+  end
+
+  def find_placeholder_change_version(registration)
+    registration.versions.find do |v|
+      v.object_changes&.include?("placeholder") &&
+        v.object_changes["placeholder"][0] == true &&
+        v.object_changes["placeholder"][1] == false
+    end
+  end
 
   def version_changes(version)
     return if version.changeset.nil?

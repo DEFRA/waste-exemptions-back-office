@@ -5,19 +5,22 @@ require "rails_helper"
 RSpec.describe RegistrationChangeHistoryService do
   describe ".run", :versioning do
     let(:user) { create(:user, email: "developer@wex.gov.uk") }
-    let(:registration) { create(:registration) }
-    let(:service_response) { described_class.run(registration) }
-
-    before do
-      PaperTrail.request.whodunnit = user.id
-
-      # Create versions with changes
-
+    let(:registration) do
+      reg = build(:registration, placeholder: true)
+      # 1st version
+      reg.save(validate: false)
       # 2nd version
-      registration.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
+      # the reference gets set automatically by the system
+      # fter the registration is created
       # 3rd version
-      registration.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
+      reg.update(applicant_first_name: "Firstcontact1", placeholder: false)
+      # 4th version
+      reg.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
+      # 5th version
+      reg.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
+      reg
     end
+    let(:service_response) { described_class.run(registration) }
 
     it "has PaperTrail" do
       expect(PaperTrail).to be_enabled
@@ -34,8 +37,40 @@ RSpec.describe RegistrationChangeHistoryService do
       end
     end
 
-    it "does not include create events" do
-      expect(service_response.length).to eq(3)
+    context "when placeholder is present (newer registrations)" do
+      it "excludes versions before the placeholder change" do
+        expect(service_response.length).to eq(2)
+        expect(service_response[0][:changed][0][1]).not_to eq(%w[reference applicant_first_name])
+        expect(service_response[1][:changed][0][1]).not_to eq(%w[reference applicant_first_name])
+      end
+
+      it "excludes versions with placeholder change" do
+        expect(service_response.map { |v| v[:changed] }).not_to include(["~", "placeholder", true, false])
+      end
+    end
+
+    context "when placeholder is not present (older registrations)" do
+      let(:registration) do
+        reg = build(:registration, placeholder: nil)
+        # 1st version
+        reg.save(validate: false)
+        # 2nd version
+        # the reference gets set automatically by the system
+        # fter the registration is created
+        # 3nd version
+        reg.update(reference: "WEX123")
+        # 4th version
+        reg.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
+        # 5th version
+        reg.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
+        reg
+      end
+
+      it "excludes first 3 versions" do
+        changeset = service_response
+        expect(service_response.length).to eq(2)
+        expect(changeset[0][:changed][0][1]).to eq("contact_first_name")
+      end
     end
 
     context "when several versions" do
@@ -53,24 +88,15 @@ RSpec.describe RegistrationChangeHistoryService do
       end
 
       it "returns correct changes for the previous version" do
-        second = service_response[1]
-
-        aggregate_failures do
-          expect(second[:date]).to be_present
-          expect(second[:changed]).to include(
-            ["~", "contact_first_name", a_string_matching(/^Firstcontact\d+$/), "Johnny"],
-            ["~", "contact_last_name", a_string_matching(/^Lastcontact\d+$/), "Smiths"],
-            ["+", "contact_position", "", "Manager"]
-          )
-        end
-      end
-
-      it "returns correct changes for the oldest version" do
         first = service_response[0]
 
         aggregate_failures do
           expect(first[:date]).to be_present
-          expect(first[:changed][0]).to include("reference")
+          expect(first[:changed]).to include(
+            ["~", "contact_first_name", a_string_matching(/^Firstcontact\d+$/), "Johnny"],
+            ["~", "contact_last_name", a_string_matching(/^Lastcontact\d+$/), "Smiths"],
+            ["+", "contact_position", "", "Manager"]
+          )
         end
       end
     end
@@ -90,17 +116,17 @@ RSpec.describe RegistrationChangeHistoryService do
     end
 
     it "includes the correct reason_for_change value for each version even reason text hasn't changed" do
+      expect(service_response[0][:reason_for_change]).to eq("Fixing the typo in name")
       expect(service_response[1][:reason_for_change]).to eq("Fixing the typo in name")
-      expect(service_response[2][:reason_for_change]).to eq("Fixing the typo in name")
     end
 
     it "includes the correct changed_by value" do
-      expect(service_response.last[:changed_by]).to eq("developer@wex.gov.uk")
+      expect(service_response.last[:changed_by]).to eq("System")
     end
 
     it "displays Changed By correctly when whodunnit is nil" do
       PaperTrail.request.whodunnit = nil
-      registration.update(contact_first_name: "Jane")
+      registration.update(contact_first_name: "Jane", reason_for_change: "Updating contact_first_name")
 
       expect(service_response.last[:changed_by]).to eq("System")
     end
