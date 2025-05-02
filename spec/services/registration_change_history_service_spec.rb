@@ -12,7 +12,7 @@ RSpec.describe RegistrationChangeHistoryService do
       # 2nd version
       # the reference gets set automatically by the system
       # fter the registration is created
-      # 3th version
+      # 3rd version
       reg.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
       # 4th version
       reg.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
@@ -55,7 +55,7 @@ RSpec.describe RegistrationChangeHistoryService do
         # 2nd version
         # the reference gets set automatically by the system
         # fter the registration is created
-        # 43h version
+        # 3rd version
         reg.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
         # 4th version
         reg.update(contact_first_name: "John", contact_last_name: "Smith", contact_position: "Senior Manager", reason_for_change: "Fixing the typo in name")
