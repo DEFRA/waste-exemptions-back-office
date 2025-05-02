@@ -38,7 +38,7 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
 
   def run(registration)
     # exclude all versions up until placeholder value gets changed from true to false
-    # but no more than 3 versions
+    # but no more than 2 versions
     ids_to_exclude = version_ids_to_exclude(registration)
     registration.versions.where.not(id: ids_to_exclude).includes(:item).map do |version|
       version_changes(version)
@@ -49,8 +49,8 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
 
   def version_ids_to_exclude(registration)
     placeholder_change_version = find_placeholder_change_version(registration)
-    # return first 3 versions if placeholder_change_version is nil
-    return registration.versions.first(3).map(&:id) unless placeholder_change_version
+    # return first 2 versions if placeholder_change_version is nil
+    return registration.versions.first(2).map(&:id) unless placeholder_change_version
 
     registration.versions.select { |v| v.id <= placeholder_change_version.id }.map(&:id)
   end
