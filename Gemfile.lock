@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: e27afe1c0bb63f558ce14e587ce520c0d2b7f8bf
+  revision: 73e58bb3541add32cc46c386f73cdef56fa55c36
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -204,7 +204,7 @@ GEM
       devise (>= 4.9)
       rails
       sprockets-rails
-    defra_ruby_govpay (0.2.7)
+    defra_ruby_govpay (1.0.0)
       rest-client (~> 2.1)
     defra_ruby_style (0.4.0)
       rubocop (>= 1.0, < 2.0)
@@ -333,7 +333,7 @@ GEM
     mime-types (3.6.2)
       logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2025.0422)
+    mime-types-data (3.2025.0429)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.5)
@@ -392,7 +392,7 @@ GEM
     pry-byebug (3.11.0)
       byebug (~> 12.0)
       pry (>= 0.13, < 0.16)
-    psych (5.2.3)
+    psych (5.2.4)
       date
       stringio
     public_suffix (6.0.1)
