@@ -17,6 +17,7 @@ class TestingController < ApplicationController
                               else
                                 create_registration_exemptions_by_count(3)
                               end
+
     # https://github.com/thoughtbot/factory_bot/blob/ca810767e70ccd85c7cb63f775bc16f653a97dc8/GETTING_STARTED.md#rails-preloaders-and-rspec
     FactoryBot.reload
 
@@ -27,9 +28,16 @@ class TestingController < ApplicationController
     registration.regenerate_and_timestamp_edit_token
 
     # Add an order
-    order = FactoryBot.create(:order, :with_charge_detail)
+    order = FactoryBot.create(:order)
     registration.account.orders << order
-    registration_exemptions.map { |re| order.order_exemptions.create(exemption: re.exemption) }
+    registration_exemptions.map { |re| order.order_exemptions.create!(exemption: re.exemption) }
+
+    # force creation of charge_detail and calculation of balance
+    calc = WasteExemptionsEngine::OrderCalculator.new(
+      order:,
+      strategy_type: WasteExemptionsEngine::RegularChargingStrategy
+    )
+    calc.charge_detail
 
     render :show, locals: { registration: registration }
   end

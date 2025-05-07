@@ -14,6 +14,8 @@ RSpec.describe "Testing" do
   end
 
   describe "/create_registration" do
+    include_context "with bands and charges"
+
     let(:expiry_date) { 2.days.from_now.strftime("%Y-%m-%d") }
 
     context "when in a non-production environment" do
@@ -77,7 +79,12 @@ RSpec.describe "Testing" do
       end
 
       it "calculates the account balance" do
-        get "/testing/create_registration/#{expiry_date}"
+        exemption_codes = [
+          create(:exemption, code: "U1", band: band_1),
+          create(:exemption, code: "U2", band: band_2),
+          create(:exemption, code: "U3", band: band_3)
+        ].map(&:code)
+        get "/testing/create_registration/#{expiry_date}", params: { exemptions: exemption_codes }
 
         expect(registration.account.balance).to be_negative
       end
