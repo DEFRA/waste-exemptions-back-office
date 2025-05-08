@@ -91,10 +91,10 @@ module WasteExemptionsBackOffice
 
     # Govpay
     config.govpay_url = if ENV["WEX_MOCK_ENABLED"].to_s.downcase == "true"
-      ENV.fetch("WEX_MOCK_BO_GOVPAY_URL", nil)
-    else
-      ENV["WEX_GOVPAY_URL"] || "https://publicapi.payments.service.gov.uk/v1"
-    end
+                          ENV.fetch("WEX_MOCK_BO_GOVPAY_URL", nil)
+                        else
+                          ENV["WEX_GOVPAY_URL"] || "https://publicapi.payments.service.gov.uk/v1"
+                        end
     config.govpay_front_office_api_token = ENV.fetch("WEX_GOVPAY_FRONT_OFFICE_API_TOKEN", nil)
     config.govpay_back_office_api_token = ENV.fetch("WEX_GOVPAY_BACK_OFFICE_API_TOKEN", nil)
 
