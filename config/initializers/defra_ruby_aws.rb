@@ -54,12 +54,23 @@ DefraRuby::Aws.configure do |c|
     encrypt_with_kms: ENV.fetch("AWS_BOXI_ENCRYPT_WITH_KMS", nil)
   }
 
+  govpay_mocks_bucket = {
+    name: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_BUCKET"),
+    region: ENV.fetch("AWS_REGION", "eu-west-1"),
+    credentials: {
+      access_key_id: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_ACCESS_KEY_ID"),
+      secret_access_key: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_SECRET_ACCESS_KEY")
+    },
+    encrypt_with_kms: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_ENCRYPT_WITH_KMS", false)
+  }
+
   c.buckets = [
     bulk_bucket,
     finance_data_bucket,
     epr_bucket,
     boxi_export_bucket,
-    deregistration_email_export_bucket
+    deregistration_email_export_bucket,
+    govpay_mocks_bucket
   ]
 end
 # rubocop:enable Metrics/BlockLength
