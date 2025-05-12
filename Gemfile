@@ -67,8 +67,11 @@ gem "sucker_punch", "~> 3.2"
 
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
-    git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "main"
+  path: "../waste-exemptions-engine"
+
+# for handling EA Areas GeoJSON data
+gem "rgeo-geojson"
+gem "rubyzip"
 
 # Use the Defra Ruby Features gem to allow users with the correct permissions to
 # manage feature toggle (create / update / delete) from the back-office.
