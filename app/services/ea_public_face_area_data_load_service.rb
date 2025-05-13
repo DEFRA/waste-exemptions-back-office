@@ -34,9 +34,9 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
   def read_areas_file
     Zip::File.open(zipfile_path) do |zip_file|
       zip_file.glob(areas_filename)
-        .first
-        .get_input_stream
-        .read
+              .first
+              .get_input_stream
+              .read
     end
   end
 

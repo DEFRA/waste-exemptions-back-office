@@ -322,6 +322,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_06_171200) do
     t.datetime "view_certificate_token_created_at"
     t.boolean "placeholder", default: false
     t.string "reason_for_change", limit: 500
+    t.string "edit_link_requested_by"
     t.index ["created_at"], name: "index_registrations_on_created_at"
     t.index ["deregistration_email_sent_at"], name: "index_registrations_on_deregistration_email_sent_at"
     t.index ["edit_token"], name: "index_registrations_on_edit_token", unique: true
