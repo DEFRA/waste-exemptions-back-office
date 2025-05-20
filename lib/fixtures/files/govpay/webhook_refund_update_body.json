@@ -1,0 +1,9 @@
+{
+    "_comment": "This file in this path is required by the defra_ruby_mocks refund webhook test helper API.",
+    "refund_id": "345",
+    "created_date": "2022-01-26T16:52:41.178Z",
+    "amount": 2000,
+    "status": "success",
+    "settlement_summary": {},
+    "payment_id": "789"
+}
