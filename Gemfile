@@ -73,6 +73,9 @@ gem "waste_exemptions_engine",
 # for handling EA Areas GeoJSON data
 gem "rgeo-geojson"
 
+# Use the mocks for testing govpay  functionality
+gem "defra_ruby_mocks"
+
 # Use the Defra Ruby Features gem to allow users with the correct permissions to
 # manage feature toggle (create / update / delete) from the back-office.
 gem "defra_ruby_features", "~> 0.2"
