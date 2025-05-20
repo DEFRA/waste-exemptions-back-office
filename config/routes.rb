@@ -152,5 +152,8 @@ Rails.application.routes.draw do
 
   # Defra ruby features engine
   mount DefraRubyFeatures::Engine => "/features", as: "features_engine"
+
+  # Defra ruby mocks (for govpay)
+  mount DefraRubyMocks::Engine => "/bo/mocks"
 end
 # rubocop:enable Metrics/BlockLength
