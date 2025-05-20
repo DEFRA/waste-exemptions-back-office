@@ -19,7 +19,11 @@
 				  <span class="govuk-error-message" id="modify-expiry-date-form-expiry-date-field-error"><%= expiry_date_errors.join(". ") %></span>
 				<% end %>
 
-        <span class="govuk-hint"> <%= t(".date_hint") %> </span>
+        <p>
+          <span class="govuk-hint"> <%= t(".date_hint") %> </span>
+        </p>
+
+        <label for="modify-expiry-date-form-date-day-field" class="govuk-label govuk-label--s"><%= t(".date_label") %></label>
 
         <div class="govuk-date-input__item">
           <%= f.govuk_number_field :date_day, width: 2, label: { text: t(".date_day") } %>
@@ -31,6 +35,15 @@
           <%= f.govuk_number_field :date_year, width: 4, label: { text: t(".date_year") } %>
         </div>
       </div>
+
+      <%= f.govuk_text_area :reason_for_change,
+        label: {
+          text: t(".reason_label"),
+          size: "s"
+        },
+        max_chars: 500,
+        "aria-label": t(".reason_label")
+      %>
 
       <br>
       <%= f.govuk_submit t(".submit") %>

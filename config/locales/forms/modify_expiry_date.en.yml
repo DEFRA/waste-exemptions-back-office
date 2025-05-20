@@ -4,9 +4,11 @@ en:
       title: Set a new expiry date
       heading: Set a new expiry date
       date_hint: The new date must be in the future and cannot be after the current expiry date
+      date_label: Date
       date_year: Year
       date_month: Month
       date_day: Day
+      reason_label: Reason
       submit: Continue
     errors:
       invalid: Enter a valid date
