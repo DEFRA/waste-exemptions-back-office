@@ -80,20 +80,28 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   end
 
   def relevant_change?(change)
-    REGISTRATION_ATTRIBUTES.include?(change[1].to_sym) || change[1].include?("addresses.")
+    REGISTRATION_ATTRIBUTES.include?(change[1].to_sym) || change[1].include?("addresses.") || change[1].include?("registration_exemptions.")
   end
 
   def build_change_details(version, changes)
     {
       date: version.created_at,
       changed: changes,
-      reason_for_change: reason_for_change(version),
+      reason_for_change: reason_for_change(version, changes),
       changed_by: changed_by(version)
     }
   end
 
-  def reason_for_change(version)
+  def reason_for_change(version, changes)
+    if changes.any? { |change| change[1].include?("registration_exemptions.") }
+      return registration_exemption_reason(version)
+    end
+
     (version.next.present? ? version.next.reify.reason_for_change : version.item.reason_for_change) || nil
+  end
+
+  def registration_exemption_reason(version)
+    JSON.parse(version.json)["registration_exemptions"].first["reason_for_change"] || nil
   end
 
   def changed_by(version)
