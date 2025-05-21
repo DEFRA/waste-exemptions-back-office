@@ -80,7 +80,9 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
   end
 
   def relevant_change?(change)
-    REGISTRATION_ATTRIBUTES.include?(change[1].to_sym) || change[1].include?("addresses.") || change[1].include?("registration_exemptions.")
+    REGISTRATION_ATTRIBUTES.include?(change[1].to_sym) ||
+      change[1].include?("addresses.") ||
+      change[1].include?("registration_exemptions.")
   end
 
   def build_change_details(version, changes)
