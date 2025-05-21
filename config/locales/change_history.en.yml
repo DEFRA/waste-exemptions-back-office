@@ -32,3 +32,6 @@ en:
           contact: "Contact address"
           site: "Site address"
           operator: "Operator address"
+        registration_exemptions:
+          expires_on: "Expires on"
+          exemption: "Exemption"
