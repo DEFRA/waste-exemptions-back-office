@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_27_113034) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_20_123419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "tsm_system_rows"
@@ -270,6 +270,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_113034) do
     t.datetime "updated_at", precision: nil, null: false
     t.text "deregistration_message"
     t.date "deregistered_at"
+    t.string "reason_for_change", limit: 500
     t.index ["exemption_id"], name: "index_registration_exemptions_on_exemption_id"
     t.index ["registration_id"], name: "index_active_registration_ids_on_registration_exemptions", where: "((state)::text = 'active'::text)"
     t.index ["registration_id"], name: "index_registration_exemptions_on_registration_id"
@@ -309,6 +310,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_113034) do
     t.datetime "view_certificate_token_created_at"
     t.boolean "placeholder", default: false
     t.string "reason_for_change", limit: 500
+    t.string "edit_link_requested_by"
     t.index ["created_at"], name: "index_registrations_on_created_at"
     t.index ["deregistration_email_sent_at"], name: "index_registrations_on_deregistration_email_sent_at"
     t.index ["edit_token"], name: "index_registrations_on_edit_token", unique: true
@@ -433,8 +435,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_113034) do
     t.text "temp_exemptions", default: [], array: true
     t.boolean "temp_confirm_exemptions"
     t.boolean "temp_add_additional_non_bucket_exemptions"
-    t.string "temp_govpay_next_url"
     t.string "reason_for_change", limit: 500
+    t.string "temp_govpay_next_url"
     t.index ["created_at"], name: "index_transient_registrations_on_created_at"
     t.index ["token"], name: "index_transient_registrations_on_token", unique: true
   end
