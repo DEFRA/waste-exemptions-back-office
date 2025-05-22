@@ -186,7 +186,7 @@ RSpec.describe RegistrationChangeHistoryService do
       end
 
       it_behaves_like "includes the correct changes", [
-        ["~", "registration_exemptions.expires_on", "2028-05-21", "2029-05-21"]
+        ["~", "registration_exemptions.expires_on", 3.years.from_now.to_date.to_fs(:year_month_day), 4.years.from_now.to_date.to_fs(:year_month_day)]
       ], "Extending expiry date", "developer@wex.gov.uk"
     end
   end
