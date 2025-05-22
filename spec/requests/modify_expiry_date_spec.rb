@@ -67,7 +67,8 @@ RSpec.describe "Modify Registration Date Forms" do
           { modify_expiry_date_form: {
             date_day: new_expiry_date.day,
             date_month: new_expiry_date.month,
-            date_year: new_expiry_date.year
+            date_year: new_expiry_date.year,
+            reason_for_change: "extending expiry date"
           } }
         end
 

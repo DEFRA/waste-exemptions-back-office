@@ -74,6 +74,8 @@ class AuditTrailDiffService < WasteExemptionsEngine::BaseService
 
     if identifier.include?("addresses.")
       process_address_change(identifier)
+    elsif identifier.include?("registration_exemptions")
+      process_registration_exemptions_change(identifier)
     else
       process_generic_change(change_type, identifier, data, additional)
     end
@@ -86,6 +88,22 @@ class AuditTrailDiffService < WasteExemptionsEngine::BaseService
 
     column_identifier = identifier.split(".").first(2).join(".")
     generate_update_row(column_identifier, older_address_text, newer_address_text)
+  end
+
+  def process_registration_exemptions_change(identifier)
+    parts = identifier.split(".")
+    field_name = parts[1]
+    index = parts[0].scan(/\d+/).first.to_i
+
+    column_identifier = if field_name == "expires_on"
+                          "registration_exemptions.expires_on"
+                        else
+                          identifier
+                        end
+
+    older_value = @older_version.dig("registration_exemptions", index, field_name)
+    newer_value = @newer_version.dig("registration_exemptions", index, field_name)
+    generate_update_row(column_identifier, older_value, newer_value)
   end
 
   def process_generic_change(change_type, identifier, data, additional)

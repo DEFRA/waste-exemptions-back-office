@@ -4,21 +4,18 @@ require "rails_helper"
 
 RSpec.describe AuditTrailDiffService do
   let(:service) { described_class }
-  let(:version_four) { File.read("./spec/fixtures/files/versions/registration/v1_4.json") }
-  # version 5: operator address changed, applicant name changed, contact position changed
-  let(:version_five) { File.read("./spec/fixtures/files/versions/registration/v1_5.json") }
-  # version 6: site address changed, contact position removed
-  let(:version_six) { File.read("./spec/fixtures/files/versions/registration/v1_6.json") }
-  # version 7: contact name changed, contact position added
-  let(:version_seven) { File.read("./spec/fixtures/files/versions/registration/v1_7.json") }
-  # version 8: contact address removed, site grid reference added, applicant first name changed
-  let(:version_eight) { File.read("./spec/fixtures/files/versions/registration/v1_8.json") }
-  # version 9: contact address added
-  let(:version_nine) { File.read("./spec/fixtures/files/versions/registration/v1_9.json") }
 
   describe "#run" do
     context "when it processes the diff between the two versions" do
       context "with registration field changes" do
+        let(:version_four) { File.read("./spec/fixtures/files/versions/registration/v1_4.json") }
+        # version 5: operator address changed, applicant name changed, contact position changed
+        let(:version_five) { File.read("./spec/fixtures/files/versions/registration/v1_5.json") }
+        # version 6: site address changed, contact position removed
+        let(:version_six) { File.read("./spec/fixtures/files/versions/registration/v1_6.json") }
+        # version 7: contact name changed, contact position added
+        let(:version_seven) { File.read("./spec/fixtures/files/versions/registration/v1_7.json") }
+
         it "contains updates" do
           expected_output = [
             ["~", "addresses.operator", "ENVIRONMENT AGENCY\nHORIZON HOUSE\nDEANERY ROAD\nBRISTOL\nBS1 5AH", "THRIVE RENEWABLES PLC\nDEANERY ROAD\nBRISTOL\nBS1 5AH"],
@@ -48,6 +45,18 @@ RSpec.describe AuditTrailDiffService do
       end
 
       context "with registration address changes" do
+        let(:version_four) { File.read("./spec/fixtures/files/versions/registration/v1_4.json") }
+        # version 5: operator address changed, applicant name changed, contact position changed
+        let(:version_five) { File.read("./spec/fixtures/files/versions/registration/v1_5.json") }
+        # version 6: site address changed, contact position removed
+        let(:version_six) { File.read("./spec/fixtures/files/versions/registration/v1_6.json") }
+        # version 7: contact name changed, contact position added
+        let(:version_seven) { File.read("./spec/fixtures/files/versions/registration/v1_7.json") }
+        # version 8: contact address removed, site grid reference added, applicant first name changed
+        let(:version_eight) { File.read("./spec/fixtures/files/versions/registration/v1_8.json") }
+        # version 9: contact address added
+        let(:version_nine) { File.read("./spec/fixtures/files/versions/registration/v1_9.json") }
+
         it "contains updates" do
           expected_output = [
             ["~", "addresses.operator", "ENVIRONMENT AGENCY\nHORIZON HOUSE\nDEANERY ROAD\nBRISTOL\nBS1 5AH", "THRIVE RENEWABLES PLC\nDEANERY ROAD\nBRISTOL\nBS1 5AH"],
@@ -72,6 +81,19 @@ RSpec.describe AuditTrailDiffService do
             ["+", "addresses.contact", "", "ENVIRONMENT AGENCY\nHORIZON HOUSE\nBRISTOL\nBS1 5AH"]
           ]
           expect(service.run(older_version_json: version_eight, newer_version_json: version_nine)).to eq(expected_output)
+        end
+      end
+
+      context "with registration exemption changes" do
+        let(:version_one) { File.read("./spec/fixtures/files/versions/registration/v2_1.json") }
+        # version 2.1: registration exemption expires_on date changed
+        let(:version_two) { File.read("./spec/fixtures/files/versions/registration/v2_2.json") }
+
+        it "contains updates" do
+          expected_output = [
+            ["~", "registration_exemptions.expires_on", "2028-05-19", "2028-04-19"]
+          ]
+          expect(service.run(older_version_json: version_one, newer_version_json: version_two)).to eq(expected_output)
         end
       end
     end
