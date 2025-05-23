@@ -13,3 +13,10 @@ en:
     errors:
       invalid: Enter a valid date
       not_future: The new date must be in the future
+  activemodel:
+    errors:
+      models:
+        modify_expiry_date_form:
+          attributes:
+            reason_for_change:
+              blank: You must enter a reason
