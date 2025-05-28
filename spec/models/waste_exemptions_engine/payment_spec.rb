@@ -236,11 +236,12 @@ module WasteExemptionsEngine
         let!(:refund) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REFUND) }
         let!(:fully_refunded_payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
         let!(:reversed_payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
-        let!(:reversal) { create(:payment, :success, payment_amount: -100, payment_type: Payment::PAYMENT_TYPE_REVERSAL, associated_payment_id: reversed_payment.id) }
 
         before do
           # refund the "fully_refunded_payment" so that it has no available refund amount
           create(:payment, :success, payment_amount: -100, payment_type: Payment::PAYMENT_TYPE_REFUND, associated_payment_id: fully_refunded_payment.id)
+          # reverse the "reversed_payment" so that it has no available refund amount
+          create(:payment, :success, payment_amount: -100, payment_type: Payment::PAYMENT_TYPE_REVERSAL, associated_payment_id: reversed_payment.id)
           # Make fully_refunded_payment have no available refund amount
           allow(bank_transfer).to receive(:available_refund_amount).and_return(100)
           allow(govpay).to receive(:available_refund_amount).and_return(100)
