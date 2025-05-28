@@ -27,10 +27,14 @@ module WasteExemptionsEngine
       Payment.where(associated_payment_id: id, payment_type: PAYMENT_TYPE_REFUND).sum(:payment_amount).abs
     end
 
+    def total_reversed_amount
+      Payment.where(associated_payment_id: id, payment_type: PAYMENT_TYPE_REVERSAL).sum(:payment_amount).abs
+    end
+
     def available_refund_amount
       return 0 unless REFUNDABLE_PAYMENT_TYPES.include?(payment_type)
 
-      remaining_payment_amount = payment_amount - total_refunded_amount
+      remaining_payment_amount = payment_amount - total_refunded_amount - total_reversed_amount
       [remaining_payment_amount, account.balance].min
     end
 

@@ -31,6 +31,29 @@ module WasteExemptionsEngine
       end
     end
 
+    describe "#total_reversed_amount" do
+      let(:payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+
+      context "when there are no reversals for the payment" do
+        it "returns 0" do
+          expect(payment.total_reversed_amount).to eq(0)
+        end
+      end
+
+      context "when there are reversals for the payment" do
+        before do
+          create(:payment,
+                 payment_type: Payment::PAYMENT_TYPE_REVERSAL,
+                 payment_amount: -100,
+                 associated_payment_id: payment.id)
+        end
+
+        it "returns the total reversed amount" do
+          expect(payment.total_reversed_amount).to eq(100)
+        end
+      end
+    end
+
     describe "#available_refund_amount" do
       let(:payment_amount) { 100 }
       let(:payment) { create(:payment, :success, payment_amount:, payment_type:) }
@@ -108,6 +131,19 @@ module WasteExemptionsEngine
             it "returns 0" do
               expect(payment.available_refund_amount).to eq(0)
             end
+          end
+        end
+
+        context "when there is an existing reversal" do
+          before do
+            create(:payment,
+                   payment_type: Payment::PAYMENT_TYPE_REVERSAL,
+                   payment_amount: -100,
+                   associated_payment_id: payment.id)
+          end
+
+          it "returns 0" do
+            expect(payment.available_refund_amount).to eq(0)
           end
         end
       end
@@ -199,6 +235,8 @@ module WasteExemptionsEngine
         let!(:govpay) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_GOVPAY) }
         let!(:refund) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REFUND) }
         let!(:fully_refunded_payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+        let!(:reversed_payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+        let!(:reversal) { create(:payment, :success, payment_amount: -100, payment_type: Payment::PAYMENT_TYPE_REVERSAL, associated_payment_id: reversed_payment.id) }
 
         before do
           # refund the "fully_refunded_payment" so that it has no available refund amount
@@ -212,7 +250,7 @@ module WasteExemptionsEngine
           result = described_class.refundable
 
           expect(result).to include(bank_transfer, govpay)
-          expect(result).not_to include(refund, fully_refunded_payment)
+          expect(result).not_to include(refund, fully_refunded_payment, reversed_payment)
         end
       end
 
