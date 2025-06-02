@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rgeo"
 
 # Make the default factory skip strict ring checks
