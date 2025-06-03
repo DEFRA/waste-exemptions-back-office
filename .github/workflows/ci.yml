@@ -66,7 +66,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install xvfb -y
           sudo apt-get install -y wkhtmltopdf libgeos-dev libproj-dev
-          bundle pristine rgeo
 
       # We don't have to specify the ruby version, or grab it from .ruby-verion. This action supports reading the
       # version from .ruby-version itself
@@ -76,6 +75,9 @@ jobs:
           BUNDLE_GITHUB__COM: ${{ secrets.ENGINE_REPO_TOKEN }}:x-oauth-basic
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Rebuild rgeo gem with GEOS support
+        run: bundle pristine rgeo
 
       - name: Database migrations
         run: |
