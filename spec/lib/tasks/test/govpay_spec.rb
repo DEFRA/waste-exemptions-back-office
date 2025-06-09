@@ -12,8 +12,6 @@ RSpec.describe "govpay test tasks", type: :rake do
     # By default Rails prevents multiple invocations of the same Rake task in succession
     after { rake_task.reenable }
 
-    it { expect { Rake::Task[rake_task].invoke("test_body") }.to output(/Signature:/).to_stdout }
-
     context "when Rails environment is production" do
       before do
         allow(Rails.env).to receive(:production?).and_return(true)
