@@ -37,10 +37,6 @@ RSpec.describe "govpay test tasks", type: :rake do
         let(:body) { '{"refund_id":"ref88888","created_date":"2025-06-09T16:52:41.178Z","amount":"2000","status":"success","settlement_summary":{},"payment_id":"8mj0ov91v18apmgjf3jurfuc8d"}' }
         let(:expected_signature) { "ab05f80fb1cc6dc26eeb309b9c82da1517942df5ab81d921190d0284febe8e35" }
 
-        it "runs without error" do
-          expect { Rake::Task[rake_task].invoke(body) }.to output(/Signature:/).to_stdout
-        end
-
         it "calls DefraRubyGovpay::WebhookSignatureService with the correct body" do
           allow(DefraRubyGovpay::WebhookSignatureService).to receive(:run)
           expect { Rake::Task[rake_task].invoke(body) }.to output(/Signature:/).to_stdout
