@@ -69,7 +69,3 @@ Metrics/ModuleLength:
   Exclude:
     # these files a simple and easy to read, splitting them into smaller modules would increase complexity for no benefit
     - app/helpers/action_links_helper.rb
-
-RSpec/ExpectOutput:
-  Exclude:
-    - spec/lib/tasks/test/govpay_spec.rb
