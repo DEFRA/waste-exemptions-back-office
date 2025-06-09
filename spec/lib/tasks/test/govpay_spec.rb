@@ -6,16 +6,13 @@ RSpec.describe "govpay test tasks", type: :rake do
   include_context "rake"
 
   describe "test:govpay:signature" do
-
-    subject(:run_rake_task) { rake_task.invoke("test_body") }
-
     let(:rake_task) { Rake::Task["test:govpay:signature"] }
     let(:user) { create(:user) }
 
     # By default Rails prevents multiple invocations of the same Rake task in succession
     after { rake_task.reenable }
 
-    it { expect { run_rake_task }.to output(/Signature:/).to_stdout }
+    it { expect { Rake::Task[rake_task].invoke("test_body") }.to output(/Signature:/).to_stdout }
 
     context "when Rails environment is production" do
       before do
