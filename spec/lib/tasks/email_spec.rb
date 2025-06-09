@@ -8,7 +8,6 @@ RSpec.describe "Email task", type: :rake do
 
   describe "email:test" do
     it "runs without error" do
-      skip "this test is currently failing on github ci, disabling till the issue is resolved"
       expect { subject.invoke }.to output(/From: Waste Exemptions Service/).to_stdout
     end
   end
