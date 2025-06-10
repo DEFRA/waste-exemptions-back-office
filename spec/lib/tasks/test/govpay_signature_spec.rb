@@ -5,8 +5,8 @@ require "rails_helper"
 RSpec.describe "govpay test tasks", type: :rake do
   include_context "rake"
 
-  describe "test:govpay:signature" do
-    let(:rake_task) { Rake::Task["test:govpay:signature"] }
+  describe "test:govpay_signature" do
+    let(:rake_task) { Rake::Task["test:govpay_signature"] }
     let(:user) { create(:user) }
 
     # By default Rails prevents multiple invocations of the same Rake task in succession
