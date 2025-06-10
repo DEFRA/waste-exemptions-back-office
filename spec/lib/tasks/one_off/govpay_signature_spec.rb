@@ -17,5 +17,5 @@ RSpec.describe "one_off:govpay_signature", type: :rake do
     allow(DefraRubyGovpay.configuration).to receive_messages(front_office_webhook_signing_secret: "foo", back_office_webhook_signing_secret: "foo")
   end
 
-  it { expect { run_rake_task }.not_to raise_error }
+  it { expect { run_rake_task }.to output(/Signature:/).to_stdout }
 end
