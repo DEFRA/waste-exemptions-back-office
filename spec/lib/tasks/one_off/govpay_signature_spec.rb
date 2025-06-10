@@ -13,6 +13,10 @@ RSpec.describe "one_off:govpay_signature", type: :rake do
   # By default Rails prevents multiple invocations of the same Rake task in succession
   after { rake_task.reenable }
 
+  before do
+    allow(DefraRubyGovpay.configuration).to receive_messages(front_office_webhook_signing_secret: "foo", back_office_webhook_signing_secret: "foo")
+  end
+
   it { expect { run_rake_task }.not_to raise_error }
 
   context "when Rails environment is production" do
