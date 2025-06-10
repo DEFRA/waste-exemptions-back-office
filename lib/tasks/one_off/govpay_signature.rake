@@ -11,6 +11,7 @@ namespace :one_off do
     body = args[:body]
     abort "missing body argument" if body.blank?
 
+    body = body.to_s unless body.is_a? String
     signature = DefraRubyGovpay::WebhookSignatureService.run(body: body)
 
     puts "=" * 80
