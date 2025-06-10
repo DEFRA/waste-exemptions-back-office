@@ -25,8 +25,9 @@ RSpec.describe "one_off:govpay_signature", type: :rake do
     end
 
     it "aborts with production mode error" do
-      expect { run_rake_task }.to raise_error("The Rails environment is running in production mode!")
-      # expect { run_rake_task }.to output("/The Rails environment is running in production mode!/").to_stderr
+      expect do
+        run_rake_task
+      end.to raise_error(SystemExit).and output("The Rails environment is running in production mode!\n").to_stderr
     end
   end
 end
