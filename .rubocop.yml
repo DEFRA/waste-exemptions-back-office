@@ -17,6 +17,7 @@ Metrics/BlockLength:
   Exclude:
   # Not worthwhile refacting now as the offense is marginal and search may be refactored in the near future.
     - app/models/concerns/can_be_searched_like_registration.rb
+    - lib/tasks/email.rake
 
 Metrics/AbcSize:
   Exclude:

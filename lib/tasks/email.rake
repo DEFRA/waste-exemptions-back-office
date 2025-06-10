@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 # rubocop:disable Rails/SkipsModelValidations
 namespace :email do
+  desc "Send a test email to confirm setup is correct"
+  task test: :environment do
+    puts TestMailer.test_email.deliver_now
+  end
+
   desc "Set all email domain addresses to given address or default one. " \
        "Usage: `rake anonymise_emails ANONYMISE_EMAIL=test@testmedefra.gov.uk`"
   task anonymise: :environment do
@@ -35,4 +39,3 @@ namespace :email do
   end
 end
 # rubocop:enable Rails/SkipsModelValidations
-# rubocop:enable Metrics/BlockLength
