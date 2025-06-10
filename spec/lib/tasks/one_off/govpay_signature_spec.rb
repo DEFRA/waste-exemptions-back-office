@@ -13,7 +13,7 @@ RSpec.describe "one_off:govpay_signature", type: :rake do
   # By default Rails prevents multiple invocations of the same Rake task in succession
   after { rake_task.reenable }
 
-  it { expect { Rake::Task[rake_task].invoke(body) }.to output(/Signature:/).to_stdout }
+  it { expect { run_rake_task }.to output(/Signature:/).to_stdout }
 
   context "when Rails environment is production" do
     before do
@@ -21,7 +21,7 @@ RSpec.describe "one_off:govpay_signature", type: :rake do
     end
 
     it "aborts with production mode error" do
-      expect { Rake::Task[rake_task].invoke(body) }.to output("/The Rails environment is running in production mode!/").to_stderr
+      expect { run_rake_task }.to output("/The Rails environment is running in production mode!/").to_stderr
     end
   end
 
