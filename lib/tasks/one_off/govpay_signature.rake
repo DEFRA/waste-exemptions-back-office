@@ -6,8 +6,6 @@ namespace :one_off do
   # Note: The body argument should not contan any un-escaped commas
   desc "Generate GovPay signature for a given request body"
   task :govpay_signature, %i[body] => [:environment] do |_t, args|
-    abort "The Rails environment is running in production mode!" if Rails.env.production?
-
     body = args[:body]
     abort "missing body argument" if body.blank?
 
