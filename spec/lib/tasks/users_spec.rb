@@ -16,8 +16,30 @@ RSpec.describe "users:deactivate_inactive_users", type: :rake do
 
     before { active_user.update(last_sign_in_at: 3.months.ago) }
 
-    it "deactivates the user" do
-      expect { rake_task.invoke }.to change { active_user.reload.active }.to(false)
+    context "when the user has no last logged in timestamp" do
+      before do
+        active_user.update(last_sign_in_at: nil)
+      end
+
+      it "deactivates the user if the user has been invited more than 3 moths ago" do
+        active_user.update(invitation_sent_at: 1.year.ago)
+        expect { rake_task.invoke }.to change { active_user.reload.active }.to(false)
+      end
+
+      it "does not deactivate the user if the user has been invited less than 3 moths ago" do
+        active_user.update(invitation_sent_at: 1.day.ago)
+        expect { rake_task.invoke }.not_to change { active_user.reload.active }
+      end
+    end
+
+    context "when the user has last logged in timestamp" do
+      before do
+        active_user.update(last_sign_in_at: 1.year.ago)
+      end
+
+      it "deactivates the user" do
+        expect { rake_task.invoke }.to change { active_user.reload.active }.to(false)
+      end
     end
 
     context "when the user is a data_viewer" do
