@@ -181,14 +181,14 @@ module Reports
       end
     end
 
-    describe "#is_a_farmer?" do
+    describe "#a_farmer?" do
       let(:registration) { create(:registration, is_a_farmer: is_a_farmer) }
 
       context "when is_a_farmer attribute is true" do
         let(:is_a_farmer) { true }
 
         it "return 'yes'" do
-          expect(exemption_bulk_report_presenter.is_a_farmer?).to eq("yes")
+          expect(exemption_bulk_report_presenter.a_farmer?).to eq("yes")
         end
       end
 
@@ -196,7 +196,7 @@ module Reports
         let(:is_a_farmer) { false }
 
         it "returns 'no'" do
-          expect(exemption_bulk_report_presenter.is_a_farmer?).to eq("no")
+          expect(exemption_bulk_report_presenter.a_farmer?).to eq("no")
         end
       end
     end
