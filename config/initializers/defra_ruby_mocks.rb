@@ -10,5 +10,10 @@ DefraRubyMocks.configure do |configuration|
 
   # Govpay API mock details. Note FO application point to BO mocks and vice-versa by defafult
   # so they don't block in a single-process application (e.g. local vagrant).
-  configuration.govpay_domain = ENV["WEX_MOCK_BO_GOVPAY_URL"] || "http://localhost:3000/fo/mocks/govpay/v1"
+  configuration.govpay_mocks_external_root_url = ENV.fetch("WEX_MOCK_BO_GOVPAY_URL", "http://localhost:3000/fo/mocks/govpay/v1")
+  configuration.govpay_mocks_external_root_url_other = ENV.fetch("WEX_MOCK_FO_GOVPAY_URL", "http://localhost:8000/bo/mocks/govpay/v1")
+
+  # On our hosted environments, the FO/BOmocks are accessible to each other via different URLs:
+  configuration.govpay_mocks_internal_root_url = ENV.fetch("WEX_MOCK_BO_GOVPAY_URL_INTERNAL", "http://localhost:3000/fo/mocks/govpay/v1")
+  configuration.govpay_mocks_internal_root_url_other = ENV.fetch("WEX_MOCK_FO_GOVPAY_URL_INTERNAL", "http://localhost:8000/bo/mocks/govpay/v1")
 end

@@ -38,7 +38,7 @@ module Analytics
         sorted_page_views = uj.page_views.sort_by(&:time)
 
         # Exclude the last page_view as we don't have page dwell information for it
-        (0..sorted_page_views.length - 2).each do |page_view_index|
+        (0..(sorted_page_views.length - 2)).each do |page_view_index|
           timed_page_view = sorted_page_views[page_view_index]
           next_page_view = sorted_page_views[page_view_index + 1]
 

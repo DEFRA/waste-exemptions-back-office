@@ -46,7 +46,7 @@ class TestingController < ApplicationController
 
   def create_registration_exemptions_by_count(count)
     selected_exemptions = WasteExemptionsEngine::Exemption.first(count)
-    (0..count - 1).map do |n|
+    (0..(count - 1)).map do |n|
       FactoryBot.build(:registration_exemption,
                        expires_on: @expiry_date,
                        exemption: selected_exemptions[n] || FactoryBot.create(:exemption))

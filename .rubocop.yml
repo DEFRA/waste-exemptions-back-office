@@ -32,6 +32,10 @@ Metrics/ClassLength:
   # keeping it as a single class, as that makes it much easier to maintain, modify, and extend.
     - app/services/audit_trail_diff_service.rb
 
+# Bad cop: Not every method which returns a boolean is a predicate. Some are directives.
+Naming/PredicateMethod:
+ Enabled: false
+
 RSpec/DescribeClass:
   Exclude:
   # This cop is n/a for rake tasks
@@ -51,6 +55,7 @@ RSpec/ContextWording:
     - for
   Exclude:
     - spec/support/shared_examples/rake.rb
+
 RSpec/NamedSubject:
   Exclude:
     - spec/lib/tasks/*
@@ -60,7 +65,7 @@ RSpec/SpecFilePathSuffix:
     # This isn't really a spec, it uses some rspec-related gems
     - 'spec/manual_benchmarks/bulk_seed_registrations.rb'
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Exclude:
     # Presenter column names are driven by the registration field names and can't be changed
     - 'app/presenters/reports/finance_data_report/base_registration_row_presenter.rb'
