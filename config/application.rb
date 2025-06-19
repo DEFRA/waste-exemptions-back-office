@@ -91,7 +91,7 @@ module WasteExemptionsBackOffice
 
     # Govpay
     config.govpay_url = if ENV["WEX_MOCK_ENABLED"].to_s.downcase == "true"
-                          ENV.fetch("WEX_MOCK_BO_GOVPAY_URL")
+                          ENV.fetch("WEX_MOCK_BO_GOVPAY_URL_INTERNAL")
                         else
                           ENV["WEX_GOVPAY_URL"] || "https://publicapi.payments.service.gov.uk/v1"
                         end
