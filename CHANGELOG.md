@@ -1,8 +1,16 @@
 # Changelog
 
-## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
+## [v2.20.4](https://github.com/defra/waste-exemptions-back-office/tree/v2.20.4) (2025-03-26)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.1...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.3...v2.20.4)
+
+## [v2.20.3](https://github.com/defra/waste-exemptions-back-office/tree/v2.20.3) (2025-03-14)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.2...v2.20.3)
+
+## [v2.20.2](https://github.com/defra/waste-exemptions-back-office/tree/v2.20.2) (2025-02-27)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.1...v2.20.2)
 
 **Implemented enhancements:**
 
@@ -15,6 +23,7 @@
 
 **Merged pull requests:**
 
+- Update CHANGELOG [\#1679](https://github.com/DEFRA/waste-exemptions-back-office/pull/1679) ([brujeo](https://github.com/brujeo))
 - Chore/ruby 3655 epr export error handling [\#1678](https://github.com/DEFRA/waste-exemptions-back-office/pull/1678) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Bump waste\_exemptions\_engine from `c6cc0ec` to `06b7d88` [\#1677](https://github.com/DEFRA/waste-exemptions-back-office/pull/1677) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `658bc16` to `c6cc0ec` [\#1670](https://github.com/DEFRA/waste-exemptions-back-office/pull/1670) ([dependabot[bot]](https://github.com/apps/dependabot))
