@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: be86ce59a87fd16aa7eb19e247b507a05b4df1c5
-  branch: RUBY-3764-wex-charging-implement-geospatial-ea-area-lookup
+  revision: 2cb04ddc6a9c24ded37ee784ec3a4755150c3417
+  branch: main
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -30,7 +30,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.5.0)
+    aasm (5.5.1)
       concurrent-ruby (~> 1.0)
     actioncable (7.2.2.1)
       actionpack (= 7.2.2.1)
@@ -374,7 +374,7 @@ GEM
       sawyer (~> 0.9)
     orm_adapter (0.5.0)
     os_map_ref (0.5.0)
-    ostruct (0.6.1)
+    ostruct (0.6.2)
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -387,7 +387,7 @@ GEM
       rake (>= 0.8.1)
     pg (1.5.9)
     pgreset (0.4)
-    phonelib (0.10.9)
+    phonelib (0.10.10)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
