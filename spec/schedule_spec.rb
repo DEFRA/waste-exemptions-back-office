@@ -15,7 +15,7 @@ RSpec.describe "Whenever::Test::Schedule" do
 
   it "makes sure 'rake_and_format' statements exist" do
     rake_jobs = schedule.jobs[:rake_and_format]
-    expect(rake_jobs.count).to eq(14)
+    expect(rake_jobs.count).to eq(15)
 
     epr_jobs = rake_jobs.select { |j| j[:task] == "reports:export:epr" }
     bulk_jobs = rake_jobs.select { |j| j[:task] == "reports:export:bulk" }
@@ -135,5 +135,12 @@ RSpec.describe "Whenever::Test::Schedule" do
       expect(stderr.read).to be_empty
       expect(wait_thr.value.success?).to be(true)
     end
+  end
+
+  it "picks up the users:deactivate_inactive_users run frequency and time" do
+    job_details = schedule.jobs[:rake_and_format].find { |h| h[:task] == "users:deactivate_inactive_users" }
+
+    expect(job_details[:every][0]).to eq(:day)
+    expect(job_details[:every][1][:at]).to eq("05:00")
   end
 end

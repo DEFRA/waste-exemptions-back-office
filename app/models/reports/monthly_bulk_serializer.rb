@@ -17,7 +17,7 @@ module Reports
       correspondance_contact_address
       correspondance_contact_email_address
       on_a_farm?
-      is_a_farmer?
+      a_farmer?
       site_location_address
       site_location_grid_reference
       site_location_description

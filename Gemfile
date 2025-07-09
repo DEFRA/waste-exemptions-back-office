@@ -15,7 +15,7 @@ ruby "3.2.2"
 gem "github_changelog_generator", require: false
 
 # GOV.UK design system styling
-gem "defra_ruby_template", "~> 5.0"
+gem "defra_ruby_template", "~> 5.11"
 # GOV.UK design system forms
 gem "govuk_design_system_formbuilder"
 # GOV.UK Notify gem. Allows us to send email via the Notify web API

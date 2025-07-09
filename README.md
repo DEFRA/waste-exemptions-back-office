@@ -66,6 +66,50 @@ Simply start the app using `bundle exec rails s`. If you are in an environment w
 
 If that's the case use `bundle exec rails s -p 8000` swapping `8000` for whatever port you want to use.
 
+## Govpay Mocks
+
+The `defra_ruby_mocks` gem allows us to simulate the production GOV.UK Pay API, which behaves differently to the GOV.UK sandbox API. Refer to the mocks gem README for details.
+
+In order to use the govpay mock you'll need to provide applicaton-specific configuration details:
+- The root Govpay mock URLs for both front- and back-office. Both are required because the mocks for front-office point at back-office and vice-versa, and the mock gem needs to know both values for the two hosting applications.
+- The external URL for both applications. These are required because the mock gem needs to map from internal-EC2 only URLs to externally accessible URLs.
+
+For example, with the front-office and back-office mocks are mounted on `/fo/mocks` and `/bo/mocks` respectively:
+
+```ruby
+config/initializers/defra_ruby_mocks.rb
+require "defra_ruby_mocks"
+
+DefraRubyMocks.configure do |config|
+  configuration.govpay_mocks_external_root_url = ENV.fetch("WEX_MOCK_BO_GOVPAY_URL", "http://localhost:3000/fo/mocks/govpay/v1")
+  configuration.govpay_mocks_external_root_url_other = ENV.fetch("WEX_MOCK_FO_GOVPAY_URL", "http://localhost:8000/bo/mocks/govpay/v1")
+
+  # On our hosted environments, the FO/BO mocks are accessible to each other via different URLs:
+  configuration.govpay_mocks_internal_root_url = ENV.fetch("WEX_MOCK_BO_GOVPAY_URL_INTERNAL", "http://localhost:3000/fo/mocks/govpay/v1")
+  configuration.govpay_mocks_internal_root_url_other = ENV.fetch("WEX_MOCK_FO_GOVPAY_URL_INTERNAL", "http://localhost:8000/bo/mocks/govpay/v1")
+end
+```
+
+You'll also need to provide AWS configuration details for the mocks, for example:
+
+```ruby
+require "defra_ruby/aws"
+
+DefraRuby::Aws.configure do |c|
+  govpay_mocks_bucket = {
+    name: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_BUCKET"),
+    region: ENV.fetch("AWS_REGION", "eu-west-1"),
+    credentials: {
+      access_key_id: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_ACCESS_KEY_ID"),
+      secret_access_key: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_SECRET_ACCESS_KEY")
+    },
+    encrypt_with_kms: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_ENCRYPT_WITH_KMS", false)
+  }
+
+  c.buckets = [govpay_mocks_bucket]
+end
+```
+
 ## Testing the app
 
 The test suite is written in RSpec.

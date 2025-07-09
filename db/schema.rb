@@ -448,8 +448,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_20_123419) do
     t.text "temp_exemptions", default: [], array: true
     t.boolean "temp_confirm_exemptions"
     t.boolean "temp_add_additional_non_bucket_exemptions"
-    t.string "temp_govpay_next_url"
     t.string "reason_for_change", limit: 500
+    t.string "temp_govpay_next_url"
     t.index ["created_at"], name: "index_transient_registrations_on_created_at"
     t.index ["token"], name: "index_transient_registrations_on_token", unique: true
   end

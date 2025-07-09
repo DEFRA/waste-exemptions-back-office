@@ -63,11 +63,9 @@ module Reports
       registration.on_a_farm? ? "yes" : "no"
     end
 
-    # rubocop:disable Naming/PredicateName
-    def is_a_farmer?
+    def a_farmer?
       registration.is_a_farmer? ? "yes" : "no"
     end
-    # rubocop:enable Naming/PredicateName
 
     def site_location_address
       return if site_address&.located_by_grid_reference?

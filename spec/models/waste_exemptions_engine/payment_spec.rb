@@ -31,20 +31,43 @@ module WasteExemptionsEngine
       end
     end
 
+    describe "#total_reversed_amount" do
+      let(:original_payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+
+      context "when there are no reversals for the payment" do
+        it "returns 0" do
+          expect(original_payment.total_reversed_amount).to eq(0)
+        end
+      end
+
+      context "when there are reversals for the payment" do
+        before do
+          create(:payment,
+                 payment_type: Payment::PAYMENT_TYPE_REVERSAL,
+                 payment_amount: -100,
+                 associated_payment_id: original_payment.id)
+        end
+
+        it "returns the total reversed amount" do
+          expect(original_payment.total_reversed_amount).to eq(100)
+        end
+      end
+    end
+
     describe "#available_refund_amount" do
       let(:payment_amount) { 100 }
-      let(:payment) { create(:payment, :success, payment_amount:, payment_type:) }
+      let(:original_payment) { create(:payment, :success, payment_amount:, payment_type:) }
 
       context "when payment type is not refundable" do
         let(:payment_type) { Payment::PAYMENT_TYPE_REVERSAL }
 
         it "returns 0" do
-          expect(payment.available_refund_amount).to eq(0)
+          expect(original_payment.available_refund_amount).to eq(0)
         end
       end
 
       context "when payment type is refundable" do
-        let(:account) { payment.account }
+        let(:account) { original_payment.account }
         let(:payment_type) { Payment::PAYMENT_TYPE_BANK_TRANSFER }
 
         context "when there are no previous refunds" do
@@ -54,7 +77,7 @@ module WasteExemptionsEngine
             end
 
             it "returns the payment amount" do
-              expect(payment.available_refund_amount).to eq(payment_amount)
+              expect(original_payment.available_refund_amount).to eq(payment_amount)
             end
           end
 
@@ -64,7 +87,7 @@ module WasteExemptionsEngine
             end
 
             it "returns the account balance" do
-              expect(payment.available_refund_amount).to eq(50)
+              expect(original_payment.available_refund_amount).to eq(50)
             end
           end
         end
@@ -74,7 +97,7 @@ module WasteExemptionsEngine
             create(:payment,
                    payment_type: Payment::PAYMENT_TYPE_REFUND,
                    payment_amount: -30,
-                   associated_payment_id: payment.id)
+                   associated_payment_id: original_payment.id)
           end
 
           context "when remaining payment amount is less than account balance" do
@@ -83,7 +106,7 @@ module WasteExemptionsEngine
             end
 
             it "returns the remaining payment amount" do
-              expect(payment.available_refund_amount).to eq(70)
+              expect(original_payment.available_refund_amount).to eq(70)
             end
           end
 
@@ -93,7 +116,7 @@ module WasteExemptionsEngine
             end
 
             it "returns the account balance" do
-              expect(payment.available_refund_amount).to eq(40)
+              expect(original_payment.available_refund_amount).to eq(40)
             end
           end
 
@@ -102,12 +125,25 @@ module WasteExemptionsEngine
               create(:payment,
                      payment_type: Payment::PAYMENT_TYPE_REFUND,
                      payment_amount: -70,
-                     associated_payment_id: payment.id)
+                     associated_payment_id: original_payment.id)
             end
 
             it "returns 0" do
-              expect(payment.available_refund_amount).to eq(0)
+              expect(original_payment.available_refund_amount).to eq(0)
             end
+          end
+        end
+
+        context "when there is an existing reversal" do
+          before do
+            create(:payment,
+                   payment_type: Payment::PAYMENT_TYPE_REVERSAL,
+                   payment_amount: -100,
+                   associated_payment_id: original_payment.id)
+          end
+
+          it "returns 0" do
+            expect(original_payment.available_refund_amount).to eq(0)
           end
         end
       end
@@ -115,18 +151,18 @@ module WasteExemptionsEngine
 
     describe "#available_for_refund?" do
       let(:payment_amount) { 100 }
-      let(:payment) { create(:payment, :success, payment_amount:, payment_type:) }
+      let(:original_payment) { create(:payment, :success, payment_amount:, payment_type:) }
 
       context "when payment type is not refundable" do
         let(:payment_type) { Payment::PAYMENT_TYPE_REVERSAL }
 
         it "returns false" do
-          expect(payment.available_for_refund?).to be false
+          expect(original_payment.available_for_refund?).to be false
         end
       end
 
       context "when payment type is refundable" do
-        let(:account) { payment.account }
+        let(:account) { original_payment.account }
         let(:payment_type) { Payment::PAYMENT_TYPE_BANK_TRANSFER }
 
         context "when there is available refund amount" do
@@ -135,7 +171,7 @@ module WasteExemptionsEngine
           end
 
           it "returns true" do
-            expect(payment.available_for_refund?).to be true
+            expect(original_payment.available_for_refund?).to be true
           end
         end
 
@@ -144,11 +180,11 @@ module WasteExemptionsEngine
             create(:payment,
                    payment_type: Payment::PAYMENT_TYPE_REFUND,
                    payment_amount: -100,
-                   associated_payment_id: payment.id)
+                   associated_payment_id: original_payment.id)
           end
 
           it "returns false" do
-            expect(payment.available_for_refund?).to be false
+            expect(original_payment.available_for_refund?).to be false
           end
         end
       end
@@ -199,10 +235,13 @@ module WasteExemptionsEngine
         let!(:govpay) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_GOVPAY) }
         let!(:refund) { create(:payment, :success, payment_type: Payment::PAYMENT_TYPE_REFUND) }
         let!(:fully_refunded_payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
+        let!(:reversed_payment) { create(:payment, :success, payment_amount: 100, payment_type: Payment::PAYMENT_TYPE_BANK_TRANSFER) }
 
         before do
           # refund the "fully_refunded_payment" so that it has no available refund amount
           create(:payment, :success, payment_amount: -100, payment_type: Payment::PAYMENT_TYPE_REFUND, associated_payment_id: fully_refunded_payment.id)
+          # reverse the "reversed_payment" so that it has no available refund amount
+          create(:payment, :success, payment_amount: -100, payment_type: Payment::PAYMENT_TYPE_REVERSAL, associated_payment_id: reversed_payment.id)
           # Make fully_refunded_payment have no available refund amount
           allow(bank_transfer).to receive(:available_refund_amount).and_return(100)
           allow(govpay).to receive(:available_refund_amount).and_return(100)
@@ -212,7 +251,7 @@ module WasteExemptionsEngine
           result = described_class.refundable
 
           expect(result).to include(bank_transfer, govpay)
-          expect(result).not_to include(refund, fully_refunded_payment)
+          expect(result).not_to include(refund, fully_refunded_payment, reversed_payment)
         end
       end
 
