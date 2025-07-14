@@ -70,6 +70,9 @@ gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
     branch: "main"
 
+# for handling EA Areas GeoJSON data
+gem "rgeo-geojson"
+
 # Use the mocks for testing govpay  functionality
 gem "defra_ruby_mocks"
 
