@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 2cb04ddc6a9c24ded37ee784ec3a4755150c3417
+  revision: f7c7c9b2a6caaec3feabde932bc4640bcc94626a
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -252,7 +252,7 @@ GEM
       dotenv (= 3.1.8)
       railties (>= 6.1)
     drb (2.2.3)
-    erb (5.0.1)
+    erb (5.0.2)
     erubi (1.13.1)
     factory_bot (6.5.4)
       activesupport (>= 6.1.0)
@@ -301,7 +301,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    io-console (0.8.0)
+    io-console (0.8.1)
     io-endpoint (0.13.1)
     io-event (1.6.5)
     io-stream (0.4.1)
@@ -347,7 +347,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0701)
+    mime-types-data (3.2025.0715)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
@@ -375,7 +375,7 @@ GEM
       sawyer (~> 0.9)
     orm_adapter (0.5.0)
     os_map_ref (0.5.0)
-    ostruct (0.6.2)
+    ostruct (0.6.3)
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
