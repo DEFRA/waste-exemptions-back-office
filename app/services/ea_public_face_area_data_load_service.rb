@@ -10,19 +10,21 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
     ActiveRecord::Base.transaction do
 
       features.each do |feature|
+        next if feature.properties["seaward"] == "Yes"
+
         attributes = {
           name: feature.properties["long_name"],
           area_id: feature.properties["identifier"],
           area: feature.geometry
         }
 
-        area = WasteExemptionsEngine::EaPublicFaceArea.where(code: feature["code"]).first
+        area = WasteExemptionsEngine::EaPublicFaceArea.where(code: feature.properties["code"]).first
 
         if area.present?
           area.update(attributes)
           puts "Updated EA Public Face Area \"#{area.code}\" (#{area.name})" unless Rails.env.test? # rubocop:disable Rails/Output
         else
-          area = WasteExemptionsEngine::EaPublicFaceArea.create(attributes.merge(code: feature["code"]))
+          area = WasteExemptionsEngine::EaPublicFaceArea.create(attributes.merge(code: feature.properties["code"]))
           puts "Created EA Public Face Area \"#{area.code}\" (#{area.name})" unless Rails.env.test? # rubocop:disable Rails/Output
         end
       end

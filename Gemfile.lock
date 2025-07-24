@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 9d15140bfa68c312d0862034cce2f9d05cefe0e8
-  branch: main
+  revision: 3e9ab1d58844b441cfd27bd2406a3189217428c0
+  branch: RUBY-3764-wex-charging-implement-geospatial-ea-area-lookup
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -13,6 +13,7 @@ GIT
       defra_ruby_email
       defra_ruby_govpay
       defra_ruby_validators (~> 3.0)
+      ffi-geos (~> 1.2.0)
       high_voltage (~> 3.1)
       notifications-ruby-client
       os_map_ref (~> 0.5)
@@ -272,6 +273,8 @@ GEM
     faraday-retry (2.3.2)
       faraday (~> 2.0)
     ffi (1.17.0)
+    ffi-geos (1.2.2)
+      ffi (>= 1.0.0)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
       fiber-storage
