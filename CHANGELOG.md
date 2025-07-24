@@ -1,5 +1,19 @@
 # Changelog
 
+## [v3.0.2](https://github.com/defra/waste-exemptions-back-office/tree/v3.0.2) (2025-07-24)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v3.0.1...v3.0.2)
+
+## [v3.0.1](https://github.com/defra/waste-exemptions-back-office/tree/v3.0.1) (2025-07-02)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v3.0.0...v3.0.1)
+
+**Merged pull requests:**
+
+- Version 3.0.1 [\#1829](https://github.com/DEFRA/waste-exemptions-back-office/pull/1829) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump engine version [\#1828](https://github.com/DEFRA/waste-exemptions-back-office/pull/1828) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Update waste-exemptions-engine gem revision to a9ad3ca9819180778a55a90e2bed2b30c647877a in Gemfile.lock [\#1825](https://github.com/DEFRA/waste-exemptions-back-office/pull/1825) ([jjromeo](https://github.com/jjromeo))
+
 ## [v3.0.0](https://github.com/defra/waste-exemptions-back-office/tree/v3.0.0) (2025-06-25)
 
 [Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v2.20.4...v3.0.0)
