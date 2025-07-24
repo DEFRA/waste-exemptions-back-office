@@ -68,7 +68,8 @@ gem "sucker_punch", "~> 3.2"
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "main"
+    # temporarily use the engine hotfix branch:
+    branch: "chore/changelog_20250702"
 
 # Use the mocks for testing govpay  functionality
 gem "defra_ruby_mocks"
