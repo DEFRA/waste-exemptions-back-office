@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 3e9ab1d58844b441cfd27bd2406a3189217428c0
+  revision: 663940308db2a2ba764c7a071d8941c8898fed5c
   branch: RUBY-3764-wex-charging-implement-geospatial-ea-area-lookup
   specs:
     waste_exemptions_engine (0.1.0)
