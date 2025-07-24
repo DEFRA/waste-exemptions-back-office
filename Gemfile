@@ -71,6 +71,9 @@ gem "waste_exemptions_engine",
     # This is to pick up engine hotfix changes. TBD: Revert to main when postGIS changes are ready.
     branch: "chore/changelog_20250702"
 
+# for handling EA Areas GeoJSON data
+gem "rgeo-geojson"
+
 # Use the mocks for testing govpay  functionality
 gem "defra_ruby_mocks"
 
