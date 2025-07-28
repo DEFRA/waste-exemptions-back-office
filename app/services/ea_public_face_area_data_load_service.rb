@@ -6,15 +6,18 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
   def run
     geo_json = read_areas_file
     features = RGeo::GeoJSON.decode(geo_json)
+    results = []
 
     ActiveRecord::Base.transaction do
-      features.each { |feature| process_feature(feature) }
+      features.each { |feature| process_feature(feature, results) }
     end
+
+    results
   end
 
   private
 
-  def process_feature(feature)
+  def process_feature(feature, results)
     return if feature.properties["seaward"] == "Yes"
 
     attributes = {
@@ -27,10 +30,10 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
 
     if area.present?
       area.update(attributes)
-      puts "Updated EA Public Face Area \"#{area.code}\" (#{area.name})" unless Rails.env.test? # rubocop:disable Rails/Output
+      results << { action: "updated", code: area.code, name: area.name }
     else
       area = WasteExemptionsEngine::EaPublicFaceArea.create(attributes.merge(code: feature.properties["code"]))
-      puts "Created EA Public Face Area \"#{area.code}\" (#{area.name})" unless Rails.env.test? # rubocop:disable Rails/Output
+      results << { action: "created", code: area.code, name: area.name }
     end
   end
 
