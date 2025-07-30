@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: b0ca1d59410294efd85ad4e68249dd114d2fee8a
+  revision: b62189d732c1223315ebeb868e0bb1d1e3efdb72
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -272,7 +272,7 @@ GEM
       net-http (>= 0.5.0)
     faraday-retry (2.3.2)
       faraday (~> 2.0)
-    ffi (1.17.0)
+    ffi (1.17.2)
     ffi-geos (1.2.2)
       ffi (>= 1.0.0)
     fiber-annotation (0.2.0)
@@ -350,7 +350,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0722)
+    mime-types-data (3.2025.0729)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
