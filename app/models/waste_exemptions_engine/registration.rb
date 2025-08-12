@@ -35,6 +35,10 @@ module WasteExemptionsEngine
 
     scope :opted_in_to_renewal_emails, -> { where(reminder_opt_in: true) }
 
+    scope :search_registration_and_relations, lambda { |term|
+      base_search_registration_and_relations(term).where(placeholder: false)
+    }
+
     def active?
       state == "active"
     end
