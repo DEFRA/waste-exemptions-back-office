@@ -2,7 +2,7 @@
 
 module RenewalReminders
 
-  class RenewalReminderEmailServiceSwitcher
+  class RenewalReminderEmailServiceSelector
     def self.first_reminder_service
       if renewals_enabled?
         FirstRenewalReminderService

@@ -24,7 +24,7 @@ namespace :email do
         return unless WasteExemptionsEngine::FeatureToggle.active?(:send_first_email_reminder)
 
         # Use the switcher to determine which service to use based on feature toggle
-        RenewalReminders::RenewalReminderEmailServiceSwitcher.first_reminder_service.run
+        RenewalReminders::RenewalReminderEmailServiceSelector.first_reminder_service.run
       end
     end
 
@@ -34,7 +34,7 @@ namespace :email do
         return unless WasteExemptionsEngine::FeatureToggle.active?(:send_second_email_reminder)
 
         # Use the switcher to determine which service to use based on feature toggle
-        RenewalReminders::RenewalReminderEmailServiceSwitcher.second_reminder_service.run
+        RenewalReminders::RenewalReminderEmailServiceSelector.second_reminder_service.run
       end
     end
   end

@@ -4,7 +4,7 @@ require "rails_helper"
 
 module RenewalReminders
 
-  RSpec.describe RenewalReminderEmailServiceSwitcher do
+  RSpec.describe RenewalReminderEmailServiceSelector do
     describe ".first_reminder_service" do
       context "when enable_renewals feature is active" do
         before do
