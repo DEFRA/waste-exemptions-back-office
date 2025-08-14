@@ -120,7 +120,7 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
           report_content = CSV.read(report_path)
           change_rows = report_content.select { |row| row.last == "CHANGE" }
 
-          expect(change_rows.map { |row| row[1] }).to include("11111111")
+          expect(change_rows.pluck(1)).to include("11111111")
           expect(change_rows.all? { |row| row[4].to_f >= CompaniesHouseNameMatching::ProcessRegistrations::SIMILARITY_THRESHOLD }).to be true
         end
       end
