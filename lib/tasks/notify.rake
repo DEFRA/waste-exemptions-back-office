@@ -10,7 +10,7 @@ namespace :notify do
                                                          .days.from_now
                                                          .to_date
 
-      registrations = BulkNotifyRenewalLettersService.run(expires_on)
+      registrations = RenewalReminders::BulkNotifyRenewalLettersService.run(expires_on)
 
       if registrations&.any?
         Rails.logger.info "Notify AD renewal letters sent for #{registrations.map(&:reference).join(', ')}"
@@ -25,14 +25,14 @@ namespace :notify do
     task first_renewal_reminder: :environment do
       registration = WasteExemptionsEngine::Registration.last
 
-      FirstRenewalReminderEmailService.run(registration: registration)
+      RenewalReminders::FirstRenewalReminderEmailService.run(registration: registration)
     end
 
     desc "Send a test second renewal reminder email to the newest registration in the DB"
     task second_renewal_reminder: :environment do
       registration = WasteExemptionsEngine::Registration.last
 
-      SecondRenewalReminderEmailService.run(registration: registration)
+      RenewalReminders::SecondRenewalReminderEmailService.run(registration: registration)
     end
 
     desc "Send a test confirmation letter to the newest registration in the DB"
@@ -46,7 +46,7 @@ namespace :notify do
     task ad_renewal_letter: :environment do
       registration = WasteExemptionsEngine::Registration.last
 
-      NotifyRenewalLetterService.run(registration: registration)
+      RenewalReminders::NotifyRenewalLetterService.run(registration: registration)
     end
   end
 end

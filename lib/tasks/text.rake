@@ -7,7 +7,7 @@ namespace :text do
       task send: :environment do
         return unless WasteExemptionsEngine::FeatureToggle.active?(:send_final_text_reminder)
 
-        FinalRenewalReminderService.run
+        RenewalReminders::FinalRenewalReminderService.run
       end
     end
   end
