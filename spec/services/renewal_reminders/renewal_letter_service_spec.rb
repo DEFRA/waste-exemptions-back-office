@@ -4,7 +4,7 @@ require "rails_helper"
 
 module RenewalReminders
 
-  RSpec.describe NotifyRenewalLetterService do
+  RSpec.describe RenewalLetterService do
     describe ".run" do
       subject(:response) { described_class.run(registration: registration) }
 

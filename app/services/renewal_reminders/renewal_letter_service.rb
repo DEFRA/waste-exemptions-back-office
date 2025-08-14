@@ -4,7 +4,7 @@ require "notifications/client"
 
 module RenewalReminders
 
-  class NotifyRenewalLetterService < WasteExemptionsEngine::BaseService
+  class RenewalLetterService < WasteExemptionsEngine::BaseService
     # So we can use displayable_address()
     include WasteExemptionsEngine::ApplicationHelper
     include WasteExemptionsEngine::CanHaveCommunicationLog

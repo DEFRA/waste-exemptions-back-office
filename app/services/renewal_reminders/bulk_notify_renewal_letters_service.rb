@@ -16,7 +16,7 @@ module RenewalReminders
     private
 
     def send_letter(registration)
-      NotifyRenewalLetterService.run(registration: registration)
+      RenewalLetterService.run(registration: registration)
     rescue StandardError => e
       Airbrake.notify e
       Rails.logger.error "Bulk renewal letters error:\n#{e}"

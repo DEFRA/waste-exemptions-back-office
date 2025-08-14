@@ -46,7 +46,7 @@ namespace :notify do
     task ad_renewal_letter: :environment do
       registration = WasteExemptionsEngine::Registration.last
 
-      RenewalReminders::NotifyRenewalLetterService.run(registration: registration)
+      RenewalReminders::RenewalLetterService.run(registration: registration)
     end
   end
 end
