@@ -2,7 +2,7 @@
 
 module RenewalReminders
 
-  class RenewalReminderTextServiceBase < RenewalReminderServiceBase
+  class RenewalReminderTextServiceBase < RenewalReminderEmailServiceBase
     def run
       expiring_registrations.each do |registration|
         send_text(registration) if registration.valid_mobile_phone_number?

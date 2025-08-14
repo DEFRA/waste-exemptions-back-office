@@ -2,7 +2,7 @@
 
 module RenewalReminders
 
-  class RenewalReminderServiceBase < WasteExemptionsEngine::BaseService
+  class RenewalReminderEmailServiceBase < WasteExemptionsEngine::BaseService
     def run
       expiring_registrations.each do |registration|
         send_email(registration)

@@ -2,7 +2,7 @@
 
 module RenewalReminders
 
-  class TemporaryFirstRenewalReminderService < RenewalReminderServiceBase
+  class TemporaryFirstRenewalReminderService < RenewalReminderEmailServiceBase
     private
 
     def send_email(registration)
