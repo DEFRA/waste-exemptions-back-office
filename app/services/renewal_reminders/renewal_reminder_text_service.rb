@@ -4,7 +4,7 @@ require "notifications/client"
 
 module RenewalReminders
 
-  class RenewalReminderTextService < RenewalReminderService
+  class RenewalReminderTextService < RenewalReminderServiceBase
     include WasteExemptionsEngine::CanHaveCommunicationLog
 
     def run(registration:)
