@@ -1,27 +1,48 @@
 # frozen_string_literal: true
 
+require "notifications/client"
+
 module RenewalReminders
 
   class RenewalReminderEmailServiceBase < RenewalReminderServiceBase
-    def run
-      expiring_registrations.each do |registration|
-        send_email(registration)
-      rescue StandardError => e
-        Airbrake.notify e, registration: registration.reference
-        Rails.logger.error "Failed to send first renewal email for registration #{registration.reference}"
+    # So we can use displayable_address()
+    include WasteExemptionsEngine::ApplicationHelper
+    include WasteExemptionsEngine::CanHaveCommunicationLog
+
+    def run(registration:, skip_opted_out_check: false)
+      if registration.reminder_opt_in? || skip_opted_out_check
+        @registration = registration
+        client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
+
+        notify_result = client.send_email(email_address: @registration.contact_email,
+                                          template_id: template,
+                                          personalisation: personalisation)
+
+        create_log(registration:)
+
+        notify_result
+      else
+        create_opted_out_log(registration:)
       end
+    end
+
+    def create_opted_out_log(registration:)
+      registration.communication_logs.create(
+        message_type: "email",
+        template_id: nil,
+        template_label: "User is opted out - No renewal reminder email sent",
+        sent_to: registration.contact_email
+      )
     end
 
     private
 
-    def send_email
-      raise(NotImplementedError)
+    def message_type
+      "email"
     end
 
-    def expiring_registrations
-      default_scope.where(
-        id: all_active_exemptions_registration_ids
-      ).contact_email_present.site_address_is_not_nccc
+    def sent_to_method
+      :contact_email
     end
   end
 end

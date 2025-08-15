@@ -2,7 +2,7 @@
 
 module RenewalReminders
 
-  class SecondRenewalReminderService < RenewalReminderEmailServiceBase
+  class SecondRenewalReminderService < BulkRenewalRemindersEmailService
     private
 
     def send_email(registration)

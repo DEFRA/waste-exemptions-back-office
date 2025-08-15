@@ -7,10 +7,6 @@ module RenewalReminders
 
     private
 
-    def template
-      raise NotImplementedError
-    end
-
     def personalisation
       {
         contact_name: contact_name,
@@ -72,14 +68,6 @@ module RenewalReminders
         .all_active_exemptions
         .where(expires_on: expires_in_days.days.from_now.to_date)
         .pluck(:registration_id)
-    end
-
-    def default_scope
-      WasteExemptionsEngine::Registration
-    end
-
-    def expires_in_days
-      raise(NotImplementedError)
     end
   end
 end

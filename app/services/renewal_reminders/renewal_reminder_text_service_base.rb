@@ -1,27 +1,46 @@
 # frozen_string_literal: true
 
+require "notifications/client"
+
 module RenewalReminders
 
   class RenewalReminderTextServiceBase < RenewalReminderServiceBase
-    def run
-      expiring_registrations.each do |registration|
-        send_text(registration) if registration.valid_mobile_phone_number?
-      rescue StandardError => e
-        Airbrake.notify e, registration: registration.reference
-        Rails.logger.error "Failed to send renewal reminder text for registration #{registration.reference}"
-      end
+    include WasteExemptionsEngine::CanHaveCommunicationLog
+
+    def run(registration:)
+      return unless registration.valid_mobile_phone_number?
+
+      @registration = registration
+
+      client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
+
+      client.send_sms(
+        phone_number: @registration.contact_phone,
+        template_id: template,
+        personalisation: personalisation
+      )
+
+      create_log(registration:)
+    end
+
+    # For CanHaveCommunicationLog
+    def communications_log_params
+      {
+        message_type: message_type,
+        template_id: template,
+        template_label: template_label,
+        sent_to: @registration.send(sent_to_method)
+      }
     end
 
     private
 
-    def send_text
-      raise(NotImplementedError)
+    def message_type
+      "text"
     end
 
-    def expiring_registrations
-      default_scope.where(
-        id: all_active_exemptions_registration_ids
-      ).contact_phone_present.site_address_is_not_nccc
+    def sent_to_method
+      :contact_phone
     end
   end
 end

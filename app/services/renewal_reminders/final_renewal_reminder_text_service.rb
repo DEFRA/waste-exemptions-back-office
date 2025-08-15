@@ -4,7 +4,7 @@ require "notifications/client"
 
 module RenewalReminders
 
-  class FinalRenewalReminderTextService < RenewalReminderTextService
+  class FinalRenewalReminderTextService < RenewalReminderTextServiceBase
     private
 
     def template_label

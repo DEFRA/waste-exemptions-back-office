@@ -4,7 +4,7 @@ require "notifications/client"
 
 module RenewalReminders
 
-  class TemporaryRenewalReminderEmailService < RenewalReminderEmailService
+  class TemporaryRenewalReminderEmailService < RenewalReminderEmailServiceBase
     # For CanHaveCommunicationLog
     def communications_log_params
       {
