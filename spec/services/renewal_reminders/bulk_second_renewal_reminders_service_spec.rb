@@ -4,7 +4,7 @@ require "rails_helper"
 
 module RenewalReminders
 
-  RSpec.describe SecondRenewalReminderService do
+  RSpec.describe BulkSecondRenewalRemindersService do
     before do
       allow(SecondRenewalReminderEmailService).to receive(:run)
       allow(WasteExemptionsBackOffice::Application.config).to receive(:second_renewal_email_reminder_days).and_return("14")

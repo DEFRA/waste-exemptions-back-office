@@ -2,11 +2,11 @@
 
 module RenewalReminders
 
-  class FirstRenewalReminderService < BulkRenewalRemindersEmailService
+  class BulkTemporaryFirstRenewalRemindersService < BulkRenewalRemindersEmailService
     private
 
     def send_email(registration)
-      FirstRenewalReminderEmailService.run(registration: registration)
+      TemporaryFirstRenewalReminderEmailService.run(registration: registration)
     end
 
     def expires_in_days

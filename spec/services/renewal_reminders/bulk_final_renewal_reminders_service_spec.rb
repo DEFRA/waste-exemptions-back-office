@@ -4,7 +4,7 @@ require "rails_helper"
 
 module RenewalReminders
 
-  RSpec.describe FinalRenewalReminderService do
+  RSpec.describe BulkFinalRenewalRemindersService do
     before do
       allow(FinalRenewalReminderTextService).to receive(:run)
       allow(WasteExemptionsBackOffice::Application.config).to receive(:final_renewal_text_reminder_days).and_return("7")

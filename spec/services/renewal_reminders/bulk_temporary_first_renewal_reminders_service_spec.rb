@@ -4,7 +4,7 @@ require "rails_helper"
 
 module RenewalReminders
 
-  RSpec.describe TemporaryFirstRenewalReminderService do
+  RSpec.describe BulkTemporaryFirstRenewalRemindersService do
     before do
       allow(WasteExemptionsEngine.configuration).to receive(:renewal_window_before_expiry_in_days).and_return("28")
     end

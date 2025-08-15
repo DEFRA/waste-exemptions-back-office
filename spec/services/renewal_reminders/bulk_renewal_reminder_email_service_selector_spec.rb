@@ -4,15 +4,15 @@ require "rails_helper"
 
 module RenewalReminders
 
-  RSpec.describe RenewalReminderEmailServiceSelector do
+  RSpec.describe BulkRenewalReminderEmailServiceSelector do
     describe ".first_reminder_service" do
       context "when enable_renewals feature is active" do
         before do
           allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(true)
         end
 
-        it "returns FirstRenewalReminderService" do
-          expect(described_class.first_reminder_service).to eq(FirstRenewalReminderService)
+        it "returns BulkFirstRenewalRemindersService" do
+          expect(described_class.first_reminder_service).to eq(BulkFirstRenewalRemindersService)
         end
       end
 
@@ -21,8 +21,8 @@ module RenewalReminders
           allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(false)
         end
 
-        it "returns TemporaryFirstRenewalReminderService" do
-          expect(described_class.first_reminder_service).to eq(TemporaryFirstRenewalReminderService)
+        it "returns BulkTemporaryFirstRenewalRemindersService" do
+          expect(described_class.first_reminder_service).to eq(BulkTemporaryFirstRenewalRemindersService)
         end
       end
     end
@@ -33,8 +33,8 @@ module RenewalReminders
           allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(true)
         end
 
-        it "returns SecondRenewalReminderService" do
-          expect(described_class.second_reminder_service).to eq(SecondRenewalReminderService)
+        it "returns BulkSecondRenewalRemindersService" do
+          expect(described_class.second_reminder_service).to eq(BulkSecondRenewalRemindersService)
         end
       end
 
@@ -43,8 +43,8 @@ module RenewalReminders
           allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(false)
         end
 
-        it "returns TemporarySecondRenewalReminderService" do
-          expect(described_class.second_reminder_service).to eq(TemporarySecondRenewalReminderService)
+        it "returns BulkTemporarySecondRenewalRemindersService" do
+          expect(described_class.second_reminder_service).to eq(BulkTemporarySecondRenewalRemindersService)
         end
       end
     end

@@ -2,7 +2,7 @@
 
 module RenewalReminders
 
-  class FinalRenewalReminderService < BulkRenewalRemindersTextService
+  class BulkFinalRenewalRemindersService < BulkRenewalRemindersTextService
     private
 
     def send_text(registration)

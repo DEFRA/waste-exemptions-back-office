@@ -2,20 +2,20 @@
 
 module RenewalReminders
 
-  class RenewalReminderEmailServiceSelector
+  class BulkRenewalReminderEmailServiceSelector
     def self.first_reminder_service
       if renewals_enabled?
-        FirstRenewalReminderService
+        BulkFirstRenewalRemindersService
       else
-        TemporaryFirstRenewalReminderService
+        BulkTemporaryFirstRenewalRemindersService
       end
     end
 
     def self.second_reminder_service
       if renewals_enabled?
-        SecondRenewalReminderService
+        BulkSecondRenewalRemindersService
       else
-        TemporarySecondRenewalReminderService
+        BulkTemporarySecondRenewalRemindersService
       end
     end
 

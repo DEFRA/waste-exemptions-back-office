@@ -53,7 +53,7 @@
 - Load faker gem in production for test helper [\#1773](https://github.com/DEFRA/waste-exemptions-back-office/pull/1773) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 - Fix/ruby 3712 wex finance export refunds are missing refund type [\#1740](https://github.com/DEFRA/waste-exemptions-back-office/pull/1740) ([brujeo](https://github.com/brujeo))
 - Prevent finance users from exporting data [\#1731](https://github.com/DEFRA/waste-exemptions-back-office/pull/1731) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
-- \[RUBY-3675\] Update renewal email to use `TemporaryFirstRenewalReminderService` [\#1710](https://github.com/DEFRA/waste-exemptions-back-office/pull/1710) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-3675\] Update renewal email to use `BulkTemporaryFirstRenewalRemindersService` [\#1710](https://github.com/DEFRA/waste-exemptions-back-office/pull/1710) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-3658\] Fix balance calculation in finance data report presenters [\#1706](https://github.com/DEFRA/waste-exemptions-back-office/pull/1706) ([brujeo](https://github.com/brujeo))
 - Show exemptions summaries, not descriptions, in charge catalogue [\#1685](https://github.com/DEFRA/waste-exemptions-back-office/pull/1685) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
 
