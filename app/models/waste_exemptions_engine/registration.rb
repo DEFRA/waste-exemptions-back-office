@@ -35,6 +35,14 @@ module WasteExemptionsEngine
 
     scope :opted_in_to_renewal_emails, -> { where(reminder_opt_in: true) }
 
+    # Override the base search scope to exclude placeholder registrations
+    # (which don't exist for transient registrations)
+    # Placeholder registrations are empty shells created for govpay reference purposes
+    # and should not appear in search results
+    scope :search_registration_and_relations, lambda { |term|
+      base_search_registration_and_relations(term).where(placeholder: false)
+    }
+
     def active?
       state == "active"
     end
