@@ -2,7 +2,7 @@
 
 module RenewalReminders
 
-  class BulkNotifyRenewalLettersService < WasteExemptionsEngine::BaseService
+  class BulkRenewalLettersService < WasteExemptionsEngine::BaseService
     def run(expires_on)
       @expires_on = expires_on
 

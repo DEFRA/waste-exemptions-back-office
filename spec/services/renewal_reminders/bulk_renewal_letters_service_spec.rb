@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module RenewalReminders
-  RSpec.describe BulkNotifyRenewalLettersService do
+  RSpec.describe BulkRenewalLettersService do
     describe ".run" do
       before do
         allow(RenewalLetterService).to receive(:run)
