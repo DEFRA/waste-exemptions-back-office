@@ -331,6 +331,15 @@ RSpec.describe WasteExemptionsEngine::Registration do
         expect(scope).not_to include(non_matching_registration)
       end
     end
+
+    context "when a registration is a placeholder" do
+      let(:placeholder_registration) { create(:registration, placeholder: true) }
+      let(:term) { placeholder_registration.reference }
+
+      it "does not return placeholder registrations" do
+        expect(scope).not_to include(placeholder_registration)
+      end
+    end
   end
 
   describe "#active?" do

@@ -59,6 +59,14 @@ module WasteExemptionsEngine
       business_type == "charity" || exemptions.exists?(code: "T28")
     end
 
+    # Override the base search scope to exclude placeholder registrations
+    # (which don't exist for transient registrations)
+    # Placeholder registrations are empty shells created for govpay reference purposes
+    # and should not appear in search results
+    scope :search_registration_and_relations, lambda { |term|
+      base_search_registration_and_relations(term).where(placeholder: false)
+    }
+
     def active?
       state == "active"
     end
