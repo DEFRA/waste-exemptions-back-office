@@ -497,4 +497,14 @@ RSpec.describe WasteExemptionsEngine::Registration do
     it { expect(described_class.not_eligible_for_free_renewal).to include(non_charity_registration) }
     it { expect(described_class.not_eligible_for_free_renewal).to include(non_t28_registration) }
   end
+
+  describe ".eligible_for_free_renewal?" do
+    include_context "for free renewals"
+
+    it { expect(charity_registration.eligible_for_free_renewal?).to be true }
+    it { expect(t28_only_registration.eligible_for_free_renewal?).to be true }
+    it { expect(t28_plus_registration.eligible_for_free_renewal?).to be true }
+    it { expect(non_charity_registration.eligible_for_free_renewal?).to be false }
+    it { expect(non_t28_registration.eligible_for_free_renewal?).to be false }
+  end
 end

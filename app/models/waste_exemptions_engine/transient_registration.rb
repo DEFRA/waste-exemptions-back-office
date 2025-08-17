@@ -30,5 +30,9 @@ module WasteExemptionsEngine
     scope :search_for_person_name, lambda { |term|
       joins(:transient_people).merge(TransientPerson.search_for_name(term))
     }
+
+    def eligible_for_free_renewal?
+      false
+    end
   end
 end

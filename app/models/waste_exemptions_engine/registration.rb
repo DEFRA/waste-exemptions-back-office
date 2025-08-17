@@ -54,6 +54,11 @@ module WasteExemptionsEngine
         .distinct
     }
 
+    # We need this logic on individual registrations as well as a scope
+    def eligible_for_free_renewal?
+      business_type == "charity" || exemptions.exists?(code: "T28")
+    end
+
     def active?
       state == "active"
     end
