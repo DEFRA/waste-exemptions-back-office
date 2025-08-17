@@ -31,7 +31,7 @@ module RenewalReminders
         end
       end
 
-      it "send a final renewal text to all active registrations due to expire in 1 week" do
+      it "sends a final renewal text to all active registrations due to expire in 1 week" do
         active_expiring_registration = create(
           :registration,
           :with_valid_mobile_phone_number,
@@ -61,12 +61,12 @@ module RenewalReminders
 
         described_class.run
 
-        expect(FinalRenewalReminderTextService).to have_received(:run).with(registration: active_expiring_registration)
+        expect(FinalRenewalReminderTextService).to have_received(:run).with(registration: active_expiring_registration).at_least(:once)
         expect(FinalRenewalReminderTextService).not_to have_received(:run).with(registration: expiring_non_active_registration)
         expect(FinalRenewalReminderTextService).not_to have_received(:run).with(registration: non_expiring_non_active_registration)
       end
 
-      it "do not send texts if a registration have already been renewed" do
+      it "does not send texts if a registration has already been renewed" do
         registration = create(
           :registration,
           :with_valid_mobile_phone_number,
@@ -82,7 +82,7 @@ module RenewalReminders
         expect(FinalRenewalReminderTextService).not_to have_received(:run)
       end
 
-      it "do not send texts to blank/non-mobile phone numbers" do
+      it "does not send texts to blank/non-mobile phone numbers" do
         create(
           :registration,
           contact_phone: nil,
@@ -112,6 +112,8 @@ module RenewalReminders
 
         expect(FinalRenewalReminderTextService).not_to have_received(:run)
       end
+
+      it_behaves_like "excludes free renewals", described_class, FinalRenewalReminderTextService, 1.week.from_now.to_date
     end
   end
 end

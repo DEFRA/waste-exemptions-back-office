@@ -62,12 +62,5 @@ module RenewalReminders
     def message_type
       raise NotImplementedError
     end
-
-    def all_active_exemptions_registration_ids
-      WasteExemptionsEngine::RegistrationExemption
-        .all_active_exemptions
-        .where(expires_on: expires_in_days.days.from_now.to_date)
-        .pluck(:registration_id)
-    end
   end
 end

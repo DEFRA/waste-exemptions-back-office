@@ -35,7 +35,7 @@ module RenewalReminders
         end
       end
 
-      it "send a second renewal email to all active registrations due to expire in 2 weeks" do
+      it "sends a second renewal email to all active registrations due to expire in 2 weeks" do
         active_expiring_registration = create(
           :registration,
           registration_exemptions: [
@@ -62,7 +62,7 @@ module RenewalReminders
 
         described_class.run
 
-        expect(TemporarySecondRenewalReminderEmailService).to have_received(:run).with(registration: active_expiring_registration)
+        expect(TemporarySecondRenewalReminderEmailService).to have_received(:run).with(registration: active_expiring_registration).at_least(:once)
         expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run).with(registration: expiring_non_active_registration)
         expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run).with(registration: non_expiring_non_active_registration)
       end
@@ -123,6 +123,8 @@ module RenewalReminders
 
         expect(TemporarySecondRenewalReminderEmailService).not_to have_received(:run)
       end
+
+      it_behaves_like "excludes free renewals", described_class, TemporarySecondRenewalReminderEmailService, 2.weeks.from_now.to_date
     end
   end
 end

@@ -29,6 +29,15 @@ module RenewalReminders
         create(:registration, :has_no_email,
                registration_exemptions: build_list(:registration_exemption, 3, expires_on: expires_on + 1.day))
       end
+      let!(:expires_30_days_registration_charity) do
+        create(:registration, :has_no_email,
+               business_type: "charity",
+               registration_exemptions: build_list(:registration_exemption, 3, expires_on: expires_on))
+      end
+      let!(:expires_30_days_registration_t28) do
+        create(:registration, :has_no_email,
+               registration_exemptions: build_list(:registration_exemption, 1, exemption: build(:exemption, code: "T28"), expires_on: expires_on))
+      end
 
       it "sends the relevant registrations to the RenewalLetterService" do
         described_class.run(expires_on)
@@ -41,6 +50,8 @@ module RenewalReminders
         expect(RenewalLetterService).not_to have_received(:run).with(registration: registration_with_email)
         expect(RenewalLetterService).not_to have_received(:run).with(registration: non_matching_date_registration)
         expect(RenewalLetterService).not_to have_received(:run).with(registration: inactive_registration)
+        expect(RenewalLetterService).not_to have_received(:run).with(registration: expires_30_days_registration_charity)
+        expect(RenewalLetterService).not_to have_received(:run).with(registration: expires_30_days_registration_t28)
       end
 
       it "sends only registrations which expire in exactly 30 days" do

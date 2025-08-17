@@ -22,6 +22,7 @@ module RenewalReminders
       default_scope.where(
         id: all_active_exemptions_registration_ids
       ).contact_email_present.site_address_is_not_nccc
+                   .not_eligible_for_free_renewal
     end
   end
 end

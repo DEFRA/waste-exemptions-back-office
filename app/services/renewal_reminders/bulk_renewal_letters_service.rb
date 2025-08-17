@@ -33,6 +33,7 @@ module RenewalReminders
                   .where(expires_on: @expires_on)
                   .select(:registration_id)
           )
+          .not_eligible_for_free_renewal
       end.call
     end
   end

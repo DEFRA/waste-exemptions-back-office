@@ -15,6 +15,7 @@ module RenewalReminders
 
     def default_scope
       super.where.not(id: recent_renewals_ids)
+           .not_eligible_for_free_renewal
     end
 
     def recent_renewals_ids

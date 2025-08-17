@@ -10,7 +10,7 @@ namespace :notify do
                                                          .days.from_now
                                                          .to_date
 
-      registrations = RenewalReminders::BulkNotifyRenewalLettersService.run(expires_on)
+      registrations = RenewalReminders::BulkRenewalLettersService.run(expires_on)
 
       if registrations&.any?
         Rails.logger.info "Notify AD renewal letters sent for #{registrations.map(&:reference).join(', ')}"
