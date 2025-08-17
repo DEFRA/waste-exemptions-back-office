@@ -38,11 +38,20 @@ module WasteExemptionsEngine
     scope :charity, -> { where(business_type: "charity") }
 
     scope :with_exemption, lambda { |exemption_code|
-      joins(:exemptions).where(exemptions: { code: exemption_code }) 
+      joins(:exemptions).where(exemptions: { code: exemption_code })
     }
 
     scope :eligible_for_free_renewal, lambda {
-      with_exemption("T28").or(charity)
+      with_exemption("T28")
+        .or(charity)
+        .distinct
+    }
+
+    scope :not_eligible_for_free_renewal, lambda {
+      joins(:exemptions)
+        .where.not(id: joins(:exemptions).where(exemptions: { code: "T28" }).select(:id))
+        .where.not(business_type: "charity")
+        .distinct
     }
 
     def active?

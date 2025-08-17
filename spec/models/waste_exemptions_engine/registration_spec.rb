@@ -437,39 +437,41 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
   end
 
-  shared_context "free renewals" do
+  # rubocop:disable RSpec/LetSetup
+  shared_context "for free renewals" do
     let!(:t28_exemption) { create(:exemption, code: "T28") }
 
     let!(:charity_registration) { create(:registration, :charity) }
     let!(:non_charity_registration) { create(:registration, :partnership) }
-    
+
     let!(:t28_only_registration) do
       create(:registration, registration_exemptions: [
-        build(:registration_exemption, exemption: t28_exemption)
-      ])
+               build(:registration_exemption, exemption: t28_exemption)
+             ])
     end
     let!(:t28_plus_registration) do
       create(:registration, registration_exemptions: [
-        build(:registration_exemption, exemption: t28_exemption),
-        build(:registration_exemption)
-      ])
+               build(:registration_exemption, exemption: t28_exemption),
+               build(:registration_exemption)
+             ])
     end
     let!(:non_t28_registration) do
       create(:registration, registration_exemptions: [
-        build(:registration_exemption)
-      ])
+               build(:registration_exemption)
+             ])
     end
   end
+  # rubocop:enable RSpec/LetSetup
 
   describe "#charity" do
-    include_context "free renewals"
+    include_context "for free renewals"
 
     it { expect(described_class.charity).to include(charity_registration) }
     it { expect(described_class.charity).not_to include(non_charity_registration) }
   end
 
   describe "#with_exemption" do
-    include_context "free renewals"
+    include_context "for free renewals"
 
     it { expect(described_class.with_exemption("T28")).to include(t28_only_registration) }
     it { expect(described_class.with_exemption("T28")).to include(t28_plus_registration) }
@@ -477,12 +479,22 @@ RSpec.describe WasteExemptionsEngine::Registration do
   end
 
   describe "#eligible_for_free_renewal" do
-    include_context "free renewals"
+    include_context "for free renewals"
 
     it { expect(described_class.eligible_for_free_renewal).to include(charity_registration) }
     it { expect(described_class.eligible_for_free_renewal).to include(t28_only_registration) }
     it { expect(described_class.eligible_for_free_renewal).to include(t28_plus_registration) }
     it { expect(described_class.eligible_for_free_renewal).not_to include(non_charity_registration) }
     it { expect(described_class.eligible_for_free_renewal).not_to include(non_t28_registration) }
+  end
+
+  describe "#not_eligible_for_free_renewal" do
+    include_context "for free renewals"
+
+    it { expect(described_class.not_eligible_for_free_renewal).not_to include(charity_registration) }
+    it { expect(described_class.not_eligible_for_free_renewal).not_to include(t28_only_registration) }
+    it { expect(described_class.not_eligible_for_free_renewal).not_to include(t28_plus_registration) }
+    it { expect(described_class.not_eligible_for_free_renewal).to include(non_charity_registration) }
+    it { expect(described_class.not_eligible_for_free_renewal).to include(non_t28_registration) }
   end
 end
