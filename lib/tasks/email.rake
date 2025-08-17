@@ -37,6 +37,13 @@ namespace :email do
         RenewalReminders::BulkRenewalReminderEmailServiceSelector.second_reminder_service.run
       end
     end
+
+    namespace :free_renewals do
+      desc "Send free renewal reminder to all qualifying registrations"
+      task send: :environment do
+        RenewalReminders::BulkFreeRenewalRemindersService.run
+      end
+    end
   end
 end
 # rubocop:enable Rails/SkipsModelValidations

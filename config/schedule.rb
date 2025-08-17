@@ -53,6 +53,29 @@ every :day, at: ENV["NOTIFY_AD_RENEWAL_LETTERS_TIME"] || "02:35", roles: [:db] d
   rake_and_format "notify:letters:ad_renewals"
 end
 
+# This is the first renewal email reminder job. For each registration expiring
+# in 30 days time, it will generate and send the first email reminder
+every :day, at: ENV["FIRST_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "02:30", roles: [:db] do
+  rake_and_format "email:renew_reminder:first:send"
+end
+
+# This is the second renewal email reminder job. For each registration expiring
+# in 14 days time, it will generate and send the second email reminder
+every :day, at: ENV["SECOND_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "04:05", roles: [:db] do
+  rake_and_format "email:renew_reminder:second:send"
+end
+
+# This is the final renewal text reminder job. For each registration expiring
+# in 7 days time, it will generate and send the final text reminder
+every :day, at: ENV["FINAL_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "10:00", roles: [:db] do
+  rake_and_format "text:renew_reminder:final:send"
+end
+
+# This is the free renewal text reminder job.
+every :day, at: ENV["FREE_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "06:00", roles: [:db] do
+  rake_and_format "text:renew_reminder:free_renewals:send"
+end
+
 # This is the area update job. When run it will update the area field for all
 # site addresses where it is nil, as long as they have a populated x & y
 # (easting and northing)
@@ -74,12 +97,6 @@ every :day, at: ENV["EXPORT_SERVICE_FINANCE_DATA_EXPORT_TIME"] || "02:25", roles
   rake_and_format "reports:export:finance_data"
 end
 
-# This is the first renewal email reminder job. For each registration expiring
-# in 30 days time, it will generate and send the first email reminder
-every :day, at: ENV["FIRST_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "02:30", roles: [:db] do
-  rake_and_format "email:renew_reminder:first:send"
-end
-
 # This is the BOXI export job. When run this will generate a zip file of CSV's,
 # each of which contains the data from the WEX database table e.g. registrations
 # to registrations.csv, addresses to addresses.csv. This is then uploaded to AWS
@@ -87,12 +104,6 @@ end
 # universe
 every :day, at: ENV["EXPORT_SERVICE_BOXI_EXPORT_TIME"] || "03:05", roles: [:db] do
   rake_and_format "reports:export:boxi"
-end
-
-# This is the second renewal email reminder job. For each registration expiring
-# in 14 days time, it will generate and send the second email reminder
-every :day, at: ENV["SECOND_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "04:05", roles: [:db] do
-  rake_and_format "email:renew_reminder:second:send"
 end
 
 # This is the transient registration cleanup job which will delete all records
@@ -105,12 +116,6 @@ end
 # registrations which still have status "placeholder" 30 days after last update.
 every :day, at: ENV["CLEANUP_PLACEHOLDER_REGISTRATIONS_RUN_TIME"] || "05:30", roles: [:db] do
   rake_and_format "cleanup:placeholder_registrations"
-end
-
-# This is the final renewal text reminder job. For each registration expiring
-# in 7 days time, it will generate and send the final text reminder
-every :day, at: ENV["FINAL_RENEWAL_TEXT_REMINDER_DAILY_RUN_TIME"] || "10:00", roles: [:db] do
-  rake_and_format "text:renew_reminder:final:send"
 end
 
 # This job deactivates users who haven’t logged in for the past three months

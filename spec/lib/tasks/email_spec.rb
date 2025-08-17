@@ -38,5 +38,10 @@ RSpec.describe "Email task", type: :rake do
     end
   end
 
+  describe "email:renew_reminder:free_renewals:send" do
+    it "runs without error" do
+      expect { subject.invoke }.not_to raise_error
+    end
+  end
 end
 # rubocop:enable RSpec/RepeatedExampleGroupBody
