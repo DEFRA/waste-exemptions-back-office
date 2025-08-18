@@ -29,7 +29,7 @@ module Reports
 
           registrations_scope.find_in_batches(batch_size: batch_size) do |batch|
             batch.each do |registration|
-              next if registration&.account.blank? || registration.account.orders.count.zero?
+              next if registration&.account.blank? || registration.account.orders.none?
 
               # support multiple orders per registration
               registration.account.orders.each do |order|
