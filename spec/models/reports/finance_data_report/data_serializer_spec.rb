@@ -235,6 +235,31 @@ module Reports
           it_behaves_like "a valid payment row", 17
         end
 
+        context "when CSV output is generated - registration has both successful and failed payments" do
+          let(:account) { create(:account) }
+          let(:order) { create(:order, :with_exemptions, :with_charge_detail, order_owner: account) }
+          let(:successful_payment) { create(:payment, account: account, payment_status: "success") }
+          let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+          before do
+            order
+            registration
+            # Explicitly create payments with different statuses
+            successful_payment
+            create(:payment, account: account, payment_status: "failed")
+            create(:payment, account: account, payment_status: "cancelled")
+            create(:payment, account: account, payment_status: "error")
+          end
+
+          it "only includes successful payments in the export" do
+            payment_rows = csv.select { |row| row["payment_type"].present? }
+
+            expect(payment_rows.count).to eq(1)
+
+            expect(payment_rows.first["reference"]).to eq(successful_payment.reference)
+          end
+        end
+
         context "when CSV output is generated - registration has farmer exemptions" do
           let(:bucket) { create(:bucket, :farmer_exemptions) }
           let(:order) { create(:order, :with_exemptions, :with_charge_detail, order_owner: account, bucket: bucket) }

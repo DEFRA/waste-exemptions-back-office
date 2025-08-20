@@ -1,5 +1,9 @@
 # Changelog
 
+## [v3.0.1.1](https://github.com/defra/waste-exemptions-back-office/tree/v3.0.1.1) (2025-07-24)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v3.0.1...v3.0.1.1)
+
 ## [v3.0.1](https://github.com/defra/waste-exemptions-back-office/tree/v3.0.1) (2025-07-02)
 
 [Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v3.0.0...v3.0.1)

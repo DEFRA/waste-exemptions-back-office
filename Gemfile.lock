@@ -5,6 +5,7 @@ GIT
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
+      activerecord-postgis-adapter (~> 10.0.0)
       defra_ruby_address
       defra_ruby_alert
       defra_ruby_area (~> 2.2)
@@ -12,6 +13,7 @@ GIT
       defra_ruby_email
       defra_ruby_govpay
       defra_ruby_validators (~> 3.0)
+      ffi-geos (~> 1.2.0)
       high_voltage (~> 3.1)
       notifications-ruby-client
       os_map_ref (~> 0.5)
@@ -20,6 +22,7 @@ GIT
       phonelib
       rails (~> 7.2.2.1)
       rest-client (~> 2.1)
+      rgeo
       sprockets
       uk_postcode
       validates_email_format_of
@@ -255,19 +258,21 @@ GEM
     factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faker (3.5.1)
+    faker (3.5.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.13.0)
+    faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
     faraday-http-cache (2.5.1)
       faraday (>= 0.8)
-    faraday-net_http (3.4.0)
+    faraday-net_http (3.4.1)
       net-http (>= 0.5.0)
-    faraday-retry (2.3.1)
+    faraday-retry (2.3.2)
       faraday (~> 2.0)
-    ffi (1.17.0)
+    ffi (1.17.2)
+    ffi-geos (1.2.2)
+      ffi (>= 1.0.0)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
       fiber-storage
@@ -283,7 +288,7 @@ GEM
       rake (>= 10.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    govuk_design_system_formbuilder (5.10.1)
+    govuk_design_system_formbuilder (5.11.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -384,7 +389,7 @@ GEM
       rake (>= 0.8.1)
     pg (1.6.1)
     pgreset (0.4)
-    phonelib (0.10.10)
+    phonelib (0.10.11)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -647,6 +652,7 @@ DEPENDENCIES
   pry-byebug
   rack (~> 2)
   rails-controller-testing
+  rgeo-geojson
   rspec-rails
   rubocop-capybara
   rubocop-rails
