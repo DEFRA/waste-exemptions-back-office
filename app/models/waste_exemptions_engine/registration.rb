@@ -44,7 +44,9 @@ module WasteExemptionsEngine
     end
 
     def eligible_for_free_renewal?
-      business_type == "charity" || registration_exemptions.includes([:exemption]).any? { |re| re.exemption.code == "T28" }
+      business_type == "charity" || registration_exemptions.includes([:exemption]).any? do |re|
+        re.exemption.code == "T28"
+      end
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity

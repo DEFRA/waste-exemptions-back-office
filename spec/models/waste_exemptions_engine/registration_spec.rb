@@ -446,18 +446,18 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
     let(:non_charity_non_t28_registration) do
       create(:registration, business_type: "soleTrader",
-                           registration_exemptions: [build(:registration_exemption, exemption: u3_exemption)])
+                            registration_exemptions: [build(:registration_exemption, exemption: u3_exemption)])
     end
     let!(:t28_only_registration) do
       create(:registration, registration_exemptions: [
-              build(:registration_exemption, exemption: t28_exemption)
-            ])
+               build(:registration_exemption, exemption: t28_exemption)
+             ])
     end
     let!(:t28_plus_registration) do
       create(:registration, registration_exemptions: [
-              build(:registration_exemption, exemption: t28_exemption),
-              build(:registration_exemption, exemption: u3_exemption)
-            ])
+               build(:registration_exemption, exemption: t28_exemption),
+               build(:registration_exemption, exemption: u3_exemption)
+             ])
     end
 
     it { expect(charity_registration.eligible_for_free_renewal?).to be true }
