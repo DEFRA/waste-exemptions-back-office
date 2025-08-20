@@ -5,13 +5,13 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"contact1@example.com","template_id":"80585fc6-9c65-4909-8cb4-6888fa4427c8","personalisation":{"contact_name":"Firstcontact1
-        Lastcontact1","exemptions":["F1 Use of spam in cooking","F2 Use of spam in
-        cooking","F3 Use of spam in cooking"],"expiry_date":"28 August 2023","magic_link_url":"http://localhost:3000/renew/JmYcxkA7ndKpjxBfZRb3NpyA","reference":"WEX000001","site_location":"premises_3,
-        street_address_3, locality_3, city_3, BS3AA"}}'
+      string: '{"email_address":"contact232@example.com","template_id":"f308a8a9-0358-41e1-b633-ea4044ad9580","personalisation":{"contact_name":"Firstcontact236
+        Lastcontact236","exemptions":["F626 Use of spam in cooking","F627 Use of spam
+        in cooking","F628 Use of spam in cooking"],"expiry_date":"20 August 2028","magic_link_url":"http://localhost:3000/renew/CudrdARPCMZeuiSVhUPuJanj","reference":"WEX000276","site_location":"premises_473,
+        street_address_473, locality_473, city_473, BS473473AA","unsubscribe_link":"http://localhost:3000/registrations/unsubscribe/5HcF3CdWedaGm71hCdEgNVNn"}}'
     headers:
       User-Agent:
-      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      - NOTIFY-API-RUBY-CLIENT/6.2.0
       Content-Type:
       - application/json
       Authorization:
@@ -23,48 +23,51 @@ http_interactions:
   response:
     status:
       code: 201
-      message: Created
+      message: CREATED
     headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1655'
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 20 Aug 2025 18:48:49 GMT
+      X-B3-Spanid:
+      - self-e8106b36b0d1f938
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
       - GET,PUT,POST,DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Content-Type:
-      - application/json
-      Date:
-      - Fri, 28 Aug 2020 16:14:35 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains
-      X-B3-Spanid:
-      - 047e895954b36989
       X-B3-Traceid:
-      - 047e895954b36989
-      X-Vcap-Request-Id:
-      - 35c59d21-12ca-4472-4b71-2df58a1947c0
-      Content-Length:
-      - '1607'
-      Connection:
-      - keep-alive
+      - QZnUkvDZg5VpDrQzKZ24mjQDQnOE5Ibf_8OdZzp1Dj12WEp3at7S0g==
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 543bd78e28d38334d97d31a1d7aded16.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - QZnUkvDZg5VpDrQzKZ24mjQDQnOE5Ibf_8OdZzp1Dj12WEp3at7S0g==
     body:
       encoding: UTF-8
-      string: '{"content":{"body":"Dear Firstcontact1 Lastcontact1,\r\n\r\n# Renew
-        your waste exemptions by 28 August 2023\r\n\r\nIf you\u2019ve already renewed
-        your exemptions, you can ignore this reminder.\r\n\r\nYou can renew online
-        in a few minutes. Renewal is free.\r\n\r\nRenew online at:\r\n\r\nhttp://localhost:3000/renew/JmYcxkA7ndKpjxBfZRb3NpyA\r\n\r\nSite
-        location: premises_3, street_address_3, locality_3, city_3, BS3AA\r\nRegistration
-        number: WEX000001\r\n\r\nThese waste exemptions will expire on 28 August 2023:\r\n\r\n\n\n*
-        F1 Use of spam in cooking\n* F2 Use of spam in cooking\n* F3 Use of spam in
-        cooking\r\n\r\nWaste exemption rules and guidance:\r\nhttps://www.gov.uk/guidance/register-your-waste-exemptions-environmental-permits\r\n\r\nIf
-        you no longer carry out these waste operations, you can ignore any reminders.
-        Your waste exemptions will be removed from the public register when they expire.\r\n\r\nEnvironment
+      string: '{"content":{"body":"Dear Firstcontact236 Lastcontact236,\r\n\r\n# Renew
+        your waste exemptions by 20 August 2028\r\n\r\nThis is your final reminder
+        to renew exemptions online. You can ignore it if you\u2019ve already renewed
+        or no longer need them. \r\n\r\nRenew at:\r\n\r\nhttp://localhost:3000/renew/CudrdARPCMZeuiSVhUPuJanj\r\n\r\n\r\nSite
+        location: premises_473, street_address_473, locality_473, city_473, BS473473AA\r\nRegistration
+        number: WEX000276\r\n\r\nExemptions:\r\n\r\n\n\n* F626 Use of spam in cooking\n*
+        F627 Use of spam in cooking\n* F628 Use of spam in cooking\r\n\r\n\r\nRead
+        the updated waste exemptions guidance:\r\nhttps://www.gov.uk/government/publications/waste-exemptions-how-to-choose-register-and-pay/registration-rules-and-guidance\r\n\r\nTo
+        unsubscribe from email reminders\r\n[Unsubscribe](http://localhost:3000/registrations/unsubscribe/5HcF3CdWedaGm71hCdEgNVNn)\r\n\r\nEnvironment
         Agency Helpline\r\n03708 506 506 (Monday to Friday, 8am to 6pm)\r\nenquiries@environment-agency.gov.uk\r\n\r\n----\r\n\r\nThis
-        is an automated email, please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","subject":"Renew
-        your waste exemptions online now"},"id":"fd746446-1061-4bba-8209-b7a6f45ef7fc","reference":null,"scheduled_for":null,"template":{"id":"80585fc6-9c65-4909-8cb4-6888fa4427c8","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/80585fc6-9c65-4909-8cb4-6888fa4427c8","version":1},"uri":"https://api.notifications.service.gov.uk/v2/notifications/fd746446-1061-4bba-8209-b7a6f45ef7fc"}
+        is an automated email, please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Waste
+        exemptions expire on 20 August 2028, final reminder to renew"},"id":"4901894a-5cd5-4705-bb4a-4a78ab5e6921","reference":null,"scheduled_for":null,"template":{"id":"f308a8a9-0358-41e1-b633-ea4044ad9580","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/f308a8a9-0358-41e1-b633-ea4044ad9580","version":11},"uri":"https://api.notifications.service.gov.uk/v2/notifications/4901894a-5cd5-4705-bb4a-4a78ab5e6921"}
 
-'
-  recorded_at: Fri, 28 Aug 2020 16:14:35 GMT
-recorded_with: VCR 6.0.0
+        '
+  recorded_at: Wed, 20 Aug 2025 18:48:48 GMT
+recorded_with: VCR 6.3.1

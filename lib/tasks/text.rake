@@ -5,9 +5,7 @@ namespace :text do
     namespace :final do
       desc "Send final text reminder to all registrations expiring in X days (default is 7)"
       task send: :environment do
-        return unless WasteExemptionsEngine::FeatureToggle.active?(:send_final_text_reminder)
-
-        FinalRenewalReminderService.run
+        RenewalReminders::BulkFinalRenewalReminderService.run
       end
     end
   end

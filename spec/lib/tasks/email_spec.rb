@@ -2,9 +2,10 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/RepeatedExampleGroupBody
 RSpec.describe "Email task", type: :rake do
   include_context "rake"
+
+  before { allow(RenewalReminders::BulkRenewalRemindersEmailService).to receive(:run) }
 
   # We have this test declared here as a way of recording a decision. The
   # test requires that the env var EMAIL_TEST_ADDRESS is specified, which
@@ -27,16 +28,15 @@ RSpec.describe "Email task", type: :rake do
   end
 
   describe "email:renew_reminder:first:send" do
-    it "runs without error" do
-      expect { subject.invoke }.not_to raise_error
-    end
+    before { subject.invoke }
+
+    it { expect(RenewalReminders::BulkRenewalRemindersEmailService).to have_received(:run).with(:first) }
   end
 
   describe "email:renew_reminder:second:send" do
-    it "runs without error" do
-      expect { subject.invoke }.not_to raise_error
-    end
+    before { subject.invoke }
+
+    it { expect(RenewalReminders::BulkRenewalRemindersEmailService).to have_received(:run).with(:second) }
   end
 
 end
-# rubocop:enable RSpec/RepeatedExampleGroupBody

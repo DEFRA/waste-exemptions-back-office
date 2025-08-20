@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"contact1034@example.com","template_id":"f308a8a9-0358-41e1-b633-ea4044ad9580","personalisation":{"contact_name":"Firstcontact1085
+        Lastcontact1085","exemptions":["F3555 Use of spam in cooking","F3556 Use of
+        spam in cooking","F3557 Use of spam in cooking"],"expiry_date":"20 August
+        2028","magic_link_url":"http://localhost:3000/renew/NhkDcCHEtqFr5xT4PmVtsss6","reference":"WEX001313","site_location":"premises_2079,
+        street_address_2079, locality_2084, city_2079, BS20722072AA","unsubscribe_link":"http://localhost:3000/registrations/unsubscribe/v84iQLYKMEjAZPErkmCLrsRr"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/6.2.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1666'
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 20 Aug 2025 18:44:11 GMT
+      X-B3-Spanid:
+      - self-c8cdd5f29c5c5e61
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      X-B3-Traceid:
+      - Ko1Lt4TbkKoLF6TqOa4ibTXJ-nNQVJn-ZGw1UL2f0sILX6Qo2U_FQw==
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 6fa2f2520e1a521d933565337b2b81de.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - Ko1Lt4TbkKoLF6TqOa4ibTXJ-nNQVJn-ZGw1UL2f0sILX6Qo2U_FQw==
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"Dear Firstcontact1085 Lastcontact1085,\r\n\r\n#
+        Renew your waste exemptions by 20 August 2028\r\n\r\nThis is your final reminder
+        to renew exemptions online. You can ignore it if you\u2019ve already renewed
+        or no longer need them. \r\n\r\nRenew at:\r\n\r\nhttp://localhost:3000/renew/NhkDcCHEtqFr5xT4PmVtsss6\r\n\r\n\r\nSite
+        location: premises_2079, street_address_2079, locality_2084, city_2079, BS20722072AA\r\nRegistration
+        number: WEX001313\r\n\r\nExemptions:\r\n\r\n\n\n* F3555 Use of spam in cooking\n*
+        F3556 Use of spam in cooking\n* F3557 Use of spam in cooking\r\n\r\n\r\nRead
+        the updated waste exemptions guidance:\r\nhttps://www.gov.uk/government/publications/waste-exemptions-how-to-choose-register-and-pay/registration-rules-and-guidance\r\n\r\nTo
+        unsubscribe from email reminders\r\n[Unsubscribe](http://localhost:3000/registrations/unsubscribe/v84iQLYKMEjAZPErkmCLrsRr)\r\n\r\nEnvironment
+        Agency Helpline\r\n03708 506 506 (Monday to Friday, 8am to 6pm)\r\nenquiries@environment-agency.gov.uk\r\n\r\n----\r\n\r\nThis
+        is an automated email, please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Waste
+        exemptions expire on 20 August 2028, final reminder to renew"},"id":"f4c80114-e739-4644-9636-d993ee474c7d","reference":null,"scheduled_for":null,"template":{"id":"f308a8a9-0358-41e1-b633-ea4044ad9580","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/f308a8a9-0358-41e1-b633-ea4044ad9580","version":11},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f4c80114-e739-4644-9636-d993ee474c7d"}
+
+        '
+  recorded_at: Wed, 20 Aug 2025 18:44:11 GMT
+recorded_with: VCR 6.3.1
