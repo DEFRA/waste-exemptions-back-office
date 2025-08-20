@@ -5,7 +5,7 @@ namespace :text do
     namespace :final do
       desc "Send final text reminder to all registrations expiring in X days (default is 7)"
       task send: :environment do
-        RenewalReminders::BulkFinalRenewalReminderService.run
+        RenewalReminders::BulkFinalRenewalRemindersTextService.run
       end
     end
   end
