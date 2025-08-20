@@ -442,19 +442,19 @@ RSpec.describe WasteExemptionsEngine::Registration do
     let(:u3_exemption) { create(:exemption, code: "U3") }
 
     let(:charity_registration) do
-      build(:registration, business_type: "charity")
+      create(:registration, business_type: "charity")
     end
     let(:non_charity_non_t28_registration) do
-      build(:registration, business_type: "soleTrader",
+      create(:registration, business_type: "soleTrader",
                            registration_exemptions: [build(:registration_exemption, exemption: u3_exemption)])
     end
     let!(:t28_only_registration) do
-      build(:registration, registration_exemptions: [
+      create(:registration, registration_exemptions: [
               build(:registration_exemption, exemption: t28_exemption)
             ])
     end
     let!(:t28_plus_registration) do
-      build(:registration, registration_exemptions: [
+      create(:registration, registration_exemptions: [
               build(:registration_exemption, exemption: t28_exemption),
               build(:registration_exemption, exemption: u3_exemption)
             ])
