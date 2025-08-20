@@ -377,6 +377,8 @@ RSpec.describe ActionLinksHelper do
 
   describe "display_renew_links_for?" do
     context "when the resource is a registration" do
+      before { allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(true) }
+
       let(:resource) { create(:registration) }
 
       context "when the resource is in the renewal window" do
@@ -464,6 +466,33 @@ RSpec.describe ActionLinksHelper do
           it { expect(helper.display_renew_links_for?(resource)).to be(false) }
         end
       end
+    end
+
+    context "when the resource is a charity" do
+      before do
+        allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(false)
+        allow(helper).to receive(:can?).with(:renew, resource).and_return(true)
+      end
+
+      let(:resource) { create(:registration, :expires_tomorrow, business_type: "charity") }
+
+      it { expect(helper.display_renew_links_for?(resource)).to be(true) }
+    end
+
+    context "when the resource has a T28 exemption" do
+      before do
+        allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(false)
+        allow(helper).to receive(:can?).with(:renew, resource).and_return(true)
+      end
+
+      let(:t28_exemption) { create(:exemption, code: "T28") }
+      let(:resource) do
+        create(:registration, registration_exemptions: [
+                 build(:registration_exemption, exemption: t28_exemption, expires_on: 1.day.from_now)
+               ])
+      end
+
+      it { expect(helper.display_renew_links_for?(resource)).to be(true) }
     end
 
     context "when the resource is not a registration" do
