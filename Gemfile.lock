@@ -651,7 +651,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
-  rubyzip
+  rubyzip (< 3.0)
   sassc-rails
   secure_headers (~> 6.5)
   selenium-webdriver
