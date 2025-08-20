@@ -43,6 +43,10 @@ module WasteExemptionsEngine
       state == "expired"
     end
 
+    def eligible_for_free_renewal?
+      business_type == "charity" || registration_exemptions.any? { |re| re.exemption.code == "T28" }
+    end
+
     # rubocop:disable Metrics/CyclomaticComplexity
     def state
       raise "A Registration must have at least one RegistrationExemption." if registration_exemptions.empty?
