@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
 # rubocop:disable Rails/SkipsModelValidations
 namespace :email do
   desc "Send a test email to confirm setup is correct"
@@ -21,23 +20,16 @@ namespace :email do
     namespace :first do
       desc "Send first email reminder to all registrations expiring in X days (default is 28)"
       task send: :environment do
-        return unless WasteExemptionsEngine::FeatureToggle.active?(:send_first_email_reminder)
-
-        # Use the switcher to determine which service to use based on feature toggle
-        RenewalReminders::BulkRenewalReminderEmailServiceSelector.first_reminder_service.run
+        RenewalReminders::BulkRenewalRemindersEmailService.run(:first)
       end
     end
 
     namespace :second do
       desc "Send second email reminder to all registrations expiring in X days (default is 14)"
       task send: :environment do
-        return unless WasteExemptionsEngine::FeatureToggle.active?(:send_second_email_reminder)
-
-        # Use the switcher to determine which service to use based on feature toggle
-        RenewalReminders::BulkRenewalReminderEmailServiceSelector.second_reminder_service.run
+        RenewalReminders::BulkRenewalRemindersEmailService.run(:second)
       end
     end
   end
 end
 # rubocop:enable Rails/SkipsModelValidations
-# rubocop:enable Metrics/BlockLength
