@@ -11,7 +11,7 @@ module RenewalReminders
       {
         message_type: "email",
         template_id: template,
-        template_label: "First free renewal reminder email",
+        template_label: "First non-chargeable renewal reminder email",
         sent_to: @registration.contact_email
       }
     end
