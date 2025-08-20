@@ -4,17 +4,17 @@ require "rails_helper"
 
 module RenewalReminders
 
-  RSpec.describe SecondRenewalReminderEmailService do
+  RSpec.describe FreeFirstRenewalReminderEmailService do
     describe "run" do
 
       subject(:run_service) { described_class.run(registration: registration) }
 
-      let(:registration) { create(:registration, :site_uses_address) }
+      let(:registration) { create(:registration) }
 
       it "sends an email" do
-        VCR.use_cassette("second_renewal_reminder_email") do
+        VCR.use_cassette("first_free_renewal_reminder_email") do
           expect(run_service).to be_a(Notifications::Client::ResponseNotification)
-          expect(run_service.template["id"]).to eq("f308a8a9-0358-41e1-b633-ea4044ad9580")
+          expect(run_service.template["id"]).to eq("b1c9cda2-b502-4667-b22c-63e8725f7a27")
           # No point checking the registration's renew_token value as VCR caches a random one
           expect(run_service.content["body"]).to match(%r{http://localhost:\d+/renew/})
         end

@@ -7,14 +7,6 @@ module RenewalReminders
 
     private
 
-    def template
-      raise NotImplementedError
-    end
-
-    def message_type
-      raise NotImplementedError
-    end
-
     def all_active_exemptions_registration_ids
       WasteExemptionsEngine::RegistrationExemption
         .all_active_exemptions

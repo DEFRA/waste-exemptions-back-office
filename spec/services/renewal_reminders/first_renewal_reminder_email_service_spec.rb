@@ -14,8 +14,9 @@ module RenewalReminders
       it "sends an email" do
         VCR.use_cassette("first_renewal_reminder_email") do
           expect(run_service).to be_a(Notifications::Client::ResponseNotification)
-          expect(run_service.template["id"]).to eq("1ef273a9-b5e5-4a48-a343-cf6c774b8211")
-          expect(run_service.content["subject"]).to include("renew online now")
+          expect(run_service.template["id"]).to eq("b1c9cda2-b502-4667-b22c-63e8725f7a27")
+          # No point checking the registration's renew_token value as VCR caches a random one
+          expect(run_service.content["body"]).to match(%r{http://localhost:\d+/renew/})
         end
       end
 
