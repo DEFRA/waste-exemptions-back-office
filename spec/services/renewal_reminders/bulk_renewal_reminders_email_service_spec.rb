@@ -6,7 +6,6 @@ module RenewalReminders
 
   RSpec.describe BulkRenewalRemindersEmailService do
 
-    # rubocop:disable RSpec/MultipleMemoizedHelpers -- Best to define the registrations once for use across all contexts.
     describe ".run" do
       subject(:run_bulk_service) { described_class.run(reminder_sequence) }
 
@@ -214,5 +213,4 @@ module RenewalReminders
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

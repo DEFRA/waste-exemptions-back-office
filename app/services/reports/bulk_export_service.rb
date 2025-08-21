@@ -3,7 +3,7 @@
 module Reports
   class BulkExportService < WasteExemptionsEngine::BaseService
     def run
-      return if WasteExemptionsEngine::Registration.count.zero?
+      return if WasteExemptionsEngine::Registration.none?
 
       GeneratedReport.bulk.delete_all
 
