@@ -24,6 +24,8 @@ module RenewalReminders
         RenewalReminderEmailServiceSelector.first_reminder_email_service(registration).run(registration:)
       when :second
         RenewalReminderEmailServiceSelector.second_reminder_email_service(registration).run(registration:)
+      else
+        # SonarCloud wants an else clause
       end
     end
 
@@ -33,6 +35,8 @@ module RenewalReminders
         WasteExemptionsEngine.configuration.renewal_window_before_expiry_in_days.to_i
       when :second
         WasteExemptionsBackOffice::Application.config.second_renewal_email_reminder_days.to_i
+      else
+        # SonarCloud wants an else clause
       end
     end
 
