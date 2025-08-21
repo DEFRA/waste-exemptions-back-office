@@ -445,4 +445,33 @@ RSpec.describe WasteExemptionsEngine::Registration do
       end
     end
   end
+
+  describe ".eligible_for_free_renewal?" do
+    let(:t28_exemption) { create(:exemption, code: "T28") }
+    let(:u3_exemption) { create(:exemption, code: "U3") }
+
+    let(:charity_registration) do
+      create(:registration, business_type: "charity")
+    end
+    let(:non_charity_non_t28_registration) do
+      create(:registration, business_type: "soleTrader",
+                            registration_exemptions: [build(:registration_exemption, exemption: u3_exemption)])
+    end
+    let!(:t28_only_registration) do
+      create(:registration, registration_exemptions: [
+               build(:registration_exemption, exemption: t28_exemption)
+             ])
+    end
+    let!(:t28_plus_registration) do
+      create(:registration, registration_exemptions: [
+               build(:registration_exemption, exemption: t28_exemption),
+               build(:registration_exemption, exemption: u3_exemption)
+             ])
+    end
+
+    it { expect(charity_registration.eligible_for_free_renewal?).to be true }
+    it { expect(t28_only_registration.eligible_for_free_renewal?).to be true }
+    it { expect(t28_plus_registration.eligible_for_free_renewal?).to be true }
+    it { expect(non_charity_non_t28_registration.eligible_for_free_renewal?).to be false }
+  end
 end

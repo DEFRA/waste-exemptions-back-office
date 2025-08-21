@@ -5,13 +5,13 @@ http_interactions:
     uri: https://api.notifications.service.gov.uk/v2/notifications/email
     body:
       encoding: UTF-8
-      string: '{"email_address":"contact1@example.com","template_id":"1ef273a9-b5e5-4a48-a343-cf6c774b8211","personalisation":{"contact_name":"Firstcontact1
-        Lastcontact1","exemptions":["F1 Use of spam in cooking","F2 Use of spam in
-        cooking","F3 Use of spam in cooking"],"expiry_date":"28 August 2023","magic_link_url":"http://localhost:3000/renew/eRGsu7FWJ2wJKMJKNYJckAUW","reference":"WEX000001","site_location":"ST
-        58337 72855"}}'
+      string: '{"email_address":"contact38@example.com","template_id":"b1c9cda2-b502-4667-b22c-63e8725f7a27","personalisation":{"contact_name":"Firstcontact38
+        Lastcontact38","exemptions":["F72 Use of spam in cooking","F73 Use of spam
+        in cooking","F74 Use of spam in cooking"],"expiry_date":"21 August 2028","magic_link_url":"http://localhost:3000/renew/dhKcUmnWjYXBepYPDJxVT2LD","reference":"WEX000038","site_location":"ST
+        58337 72855","unsubscribe_link":"http://localhost:3000/registrations/unsubscribe/Nak67sS8bjvouWLbN5Gc8jum"}}'
     headers:
       User-Agent:
-      - NOTIFY-API-RUBY-CLIENT/5.3.0
+      - NOTIFY-API-RUBY-CLIENT/6.2.0
       Content-Type:
       - application/json
       Authorization:
@@ -23,47 +23,51 @@ http_interactions:
   response:
     status:
       code: 201
-      message: Created
+      message: CREATED
     headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1616'
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 21 Aug 2025 14:12:29 GMT
+      X-B3-Spanid:
+      - self-eec558dca5975634
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
       Access-Control-Allow-Headers:
       - Content-Type,Authorization
       Access-Control-Allow-Methods:
       - GET,PUT,POST,DELETE
-      Access-Control-Allow-Origin:
-      - "*"
-      Content-Type:
-      - application/json
-      Date:
-      - Fri, 28 Aug 2020 15:45:59 GMT
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubdomains
-      X-B3-Spanid:
-      - c61abf71167ebdc9
       X-B3-Traceid:
-      - c61abf71167ebdc9
-      X-Vcap-Request-Id:
-      - 1c881f88-fe0a-4bbc-68b8-81139df637db
-      Content-Length:
-      - '1502'
-      Connection:
-      - keep-alive
+      - GFBWhHvl7JcKKGkffct2eJv7nbJuY_-xi5wO-gUykBVjWU3pnCt9CQ==
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 398a51ec785027c0cfb5003d3a46ab0a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - GFBWhHvl7JcKKGkffct2eJv7nbJuY_-xi5wO-gUykBVjWU3pnCt9CQ==
     body:
       encoding: UTF-8
-      string: '{"content":{"body":"Dear Firstcontact1 Lastcontact1,\r\n\r\n# Renew
-        your waste exemptions by 28 August 2023\r\n\r\nYou can renew online in a few
-        minutes. Renewal is free.\r\n\r\nRenew online at:\r\n\r\nhttp://localhost:3000/renew/eRGsu7FWJ2wJKMJKNYJckAUW\r\n\r\nSite
-        location: ST 58337 72855\r\nRegistration number: WEX000001\r\n\r\nThese waste
-        exemptions will expire on 28 August 2023:\r\n\r\n\n\n* F1 Use of spam in cooking\n*
-        F2 Use of spam in cooking\n* F3 Use of spam in cooking\r\n\r\nWaste exemption
-        rules and guidance:\r\nhttps://www.gov.uk/guidance/register-your-waste-exemptions-environmental-permits\r\n\r\nIf
-        you no longer carry out these waste operations, you can ignore any reminders.
-        Your waste exemptions will be removed from the public register when they expire.\r\n\r\nEnvironment
+      string: '{"content":{"body":"Dear Firstcontact38 Lastcontact38,\r\n\r\n# Renew
+        your waste exemptions by 21 August 2028\r\n\r\nYou can renew online in a few
+        minutes.\r\n\r\nRenew at:\r\n\r\nhttp://localhost:3000/renew/dhKcUmnWjYXBepYPDJxVT2LD\r\n\r\n\r\nSite
+        location: ST 58337 72855\r\nRegistration number: WEX000038\r\n\r\nExemptions:\r\n\r\n\n\n*
+        F72 Use of spam in cooking\n* F73 Use of spam in cooking\n* F74 Use of spam
+        in cooking\r\n\r\n\r\nIf you no longer need them, you don\u2019t need to do
+        anything. They will be removed from the public register.\r\n\r\nRead the updated
+        waste exemptions guidance:\r\nhttps://www.gov.uk/government/publications/waste-exemptions-how-to-choose-register-and-pay/registration-rules-and-guidance\r\n\r\nTo
+        unsubscribe from email reminders\r\n[Unsubscribe](http://localhost:3000/registrations/unsubscribe/Nak67sS8bjvouWLbN5Gc8jum)\r\n\r\nEnvironment
         Agency Helpline\r\n03708 506 506 (Monday to Friday, 8am to 6pm)\r\nenquiries@environment-agency.gov.uk\r\n\r\n----\r\n\r\nThis
-        is an automated email, please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","subject":"Waste
-        exemptions expire on 28 August 2023, renew online now"},"id":"5113767f-b3e9-439e-b477-327c55914b20","reference":null,"scheduled_for":null,"template":{"id":"1ef273a9-b5e5-4a48-a343-cf6c774b8211","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/1ef273a9-b5e5-4a48-a343-cf6c774b8211","version":3},"uri":"https://api.notifications.service.gov.uk/v2/notifications/5113767f-b3e9-439e-b477-327c55914b20"}
+        is an automated email, please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Waste
+        exemptions expire on 21 August 2028, renew online now"},"id":"5f1c43c6-ee2c-4ed4-8664-7636cdbc9971","reference":null,"scheduled_for":null,"template":{"id":"b1c9cda2-b502-4667-b22c-63e8725f7a27","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/b1c9cda2-b502-4667-b22c-63e8725f7a27","version":10},"uri":"https://api.notifications.service.gov.uk/v2/notifications/5f1c43c6-ee2c-4ed4-8664-7636cdbc9971"}
 
-'
-  recorded_at: Fri, 28 Aug 2020 15:45:59 GMT
-recorded_with: VCR 6.0.0
+        '
+  recorded_at: Thu, 21 Aug 2025 14:12:29 GMT
+recorded_with: VCR 6.3.1
