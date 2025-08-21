@@ -21,7 +21,7 @@ class SendRegistrationConfirmationWhenBalanceFullyPaidJob < ApplicationJob
   end
 
   def registration_confirmation_email_already_sent?(registration)
-    registration.communication_logs.where(template_id: REGISTRATION_COMPLETION_EMAIL_TEMPLATE_ID).count.positive?
+    registration.communication_logs.where(template_id: REGISTRATION_COMPLETION_EMAIL_TEMPLATE_ID).any?
   end
 
   def send_registration_confirmation_email(registration)

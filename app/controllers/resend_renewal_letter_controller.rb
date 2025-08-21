@@ -13,7 +13,7 @@ class ResendRenewalLetterController < ApplicationController
     authorize
 
     begin
-      NotifyRenewalLetterService.run(registration: registration)
+      RenewalReminders::RenewalLetterService.run(registration: registration)
 
       flash_success I18n.t("resend_renewal_letter.messages.success", reference: registration.reference)
     rescue StandardError => e
