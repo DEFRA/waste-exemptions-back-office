@@ -25,7 +25,7 @@ module RenewalReminders
       when :second
         RenewalReminderEmailServiceSelector.second_reminder_email_service(registration).run(registration:)
       else
-        # SonarCloud wants an else clause
+        Rails.logger.warn "Unsupported reminder email sequence: \"#{@reminder_sequence}\""
       end
     end
 
@@ -36,7 +36,7 @@ module RenewalReminders
       when :second
         WasteExemptionsBackOffice::Application.config.second_renewal_email_reminder_days.to_i
       else
-        # SonarCloud wants an else clause
+        Rails.logger.warn "Unsupported reminder email sequence: \"#{@reminder_sequence}\""
       end
     end
 
