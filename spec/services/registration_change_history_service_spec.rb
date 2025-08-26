@@ -25,7 +25,7 @@ RSpec.describe RegistrationChangeHistoryService do
     end
 
     it "excludes updated_at and reason_for_change from the changesets" do
-      expect(service_response.last[:changed].map { |c| c[1] }).not_to include("updated_at", "reason_for_change")
+      expect(service_response.last[:changed].pluck(1)).not_to include("updated_at", "reason_for_change")
     end
   end
 
@@ -69,7 +69,7 @@ RSpec.describe RegistrationChangeHistoryService do
       end
 
       it "excludes versions with placeholder change" do
-        expect(service_response.map { |v| v[:changed] }).not_to include(["~", "placeholder", true, false])
+        expect(service_response.pluck(:changed)).not_to include(["~", "placeholder", true, false])
       end
     end
 

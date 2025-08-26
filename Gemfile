@@ -84,7 +84,7 @@ gem "defra_ruby_features", "~> 0.2"
 gem "defra_ruby_aws", "~> 0.5"
 
 # Manage, create and open zip files https://github.com/rubyzip/rubyzip
-gem "rubyzip"
+gem "rubyzip", "< 3.0"
 
 # Load this in all environments, not just test, to support the /testing helper:
 gem "factory_bot_rails"
