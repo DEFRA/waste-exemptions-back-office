@@ -8,8 +8,6 @@ namespace :one_off do
 end
 
 class BackfillSiteAddressSuffixes
-  include WasteExemptionsEngine::ApplicationHelper
-
   DEFAULT_SUFFIX = "00001"
 
   def initialize

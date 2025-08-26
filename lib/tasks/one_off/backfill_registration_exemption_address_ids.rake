@@ -8,8 +8,6 @@ namespace :one_off do
 end
 
 class BackfillRegistrationExemptionAddressIds
-  include WasteExemptionsEngine::ApplicationHelper
-
   def initialize
     @total_updated = 0
     @errors = {}
