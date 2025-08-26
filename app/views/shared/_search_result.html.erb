@@ -112,7 +112,7 @@
         <%= t(".actions.renew.already_renewed") %>
       </p>
 
-    <% elsif display_renew_links_for?(result) && WasteExemptionsEngine::FeatureToggle.active?(:enable_renewals) %>
+    <% elsif display_renew_links_for?(result) %>
       <p class="govuk-body">
         <%= link_to ad_privacy_policy_path(renew_registration: result.reference), id: "renew_#{result.reference}" do %>
           <%= t(".actions.renew.link_text") %>
