@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 449b30b14e74fb6c58d7e85a8cdd3bb8c16a959b
+  revision: 92338287c9f7357b5b5d01f09b9762963fb7be4e
   branch: RUBY-3941-wex-multiple-site-registrations-data-model-update
   specs:
     waste_exemptions_engine (0.1.0)
