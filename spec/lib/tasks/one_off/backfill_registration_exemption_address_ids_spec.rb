@@ -52,6 +52,7 @@ RSpec.describe "one_off:backfill_registration_exemption_address_ids", type: :rak
     let!(:registration_exemption_without_site) { create(:registration_exemption, registration: registration_without_site) }
 
     before do
+      WasteExemptionsEngine::RegistrationExemption.where.not(id: registration_exemption_without_site.id).destroy_all
       registration_exemption_without_site.update!(address_id: nil)
 
       allow($stdout).to receive(:puts)

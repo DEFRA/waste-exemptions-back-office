@@ -32,12 +32,12 @@ class BackfillRegistrationExemptionAddressIds
 
   def process_registration_exemptions(registration_exemptions)
     registration_exemptions.find_each.with_index do |registration_exemption, index|
-      process_single_exemption(registration_exemption)
+      process_single_registration_exemption(registration_exemption)
       output_progress(index) if ((index + 1) % 100).zero?
     end
   end
 
-  def process_single_exemption(registration_exemption)
+  def process_single_registration_exemption(registration_exemption)
     registration = registration_exemption.registration
     site_address = registration.site_address
 
