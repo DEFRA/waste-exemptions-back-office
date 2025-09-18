@@ -390,7 +390,7 @@ GEM
     passenger (6.0.22)
       rack
       rake (>= 0.8.1)
-    pg (1.6.1)
+    pg (1.6.2)
     pgreset (0.4)
     phonelib (0.10.11)
     pp (0.6.2)
