@@ -1,0 +1,22 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key"></dt>
+  <dd class="govuk-summary-list__value">
+      <% if defined?(on_a_farm) %>
+        <p class="govuk-body govuk-!-font-weight-bold">
+          <%= t(".labels.on_a_farm") %>
+        </p>
+        <p class="govuk-body">
+          <%= t(".values.on_a_farm.#{on_a_farm}") %>
+        </p>
+      <% end %>
+
+      <% if defined?(is_a_farmer) %>
+        <p class="govuk-body govuk-!-font-weight-bold">
+          <%= t(".labels.is_a_farmer") %>
+        </p>
+        <p class="govuk-body">
+          <%= t(".values.is_a_farmer.#{is_a_farmer}") %>
+        </p>
+      <% end %>
+  </dd>
+</div>

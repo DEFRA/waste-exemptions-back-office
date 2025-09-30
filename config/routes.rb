@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     get "payments", to: "payments#new", as: :add_payment_form
     post "payments", to: "payments#create", as: :add_payment
     get "payment_details", to: "payment_details#index", as: :payment_details
+    get "sites", to: "registration_sites#index", as: :registration_sites
 
     resources :record_refunds,
               only: %i[index new create],
