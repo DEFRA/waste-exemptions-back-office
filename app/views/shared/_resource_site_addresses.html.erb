@@ -16,6 +16,8 @@
       &nbsp;
     </p>
 
-    <%= link_to t('.labels.see_sites'), registration_registration_sites_path(registration_reference: resource.reference), class: "govuk-link" %>
+    <% if resource.reference.present? %>
+      <%= link_to t('.labels.see_sites'), registration_registration_sites_path(registration_reference: resource.reference), class: "govuk-link" %>
+    <% end %>
   </dd>
 </div>
