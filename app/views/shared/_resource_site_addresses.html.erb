@@ -1,0 +1,23 @@
+<div class="govuk-summary-list__row">
+  <dt class="govuk-summary-list__key">
+    <%= t('.heading') %>
+  </dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body govuk-!-font-weight-bold">
+      <%= t('.labels.sites') %>
+    </p>
+
+    <p class="govuk-body">
+      <%= resource.site_addresses.count %>
+    </p>
+  </dd>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body govuk-!-font-weight-bold">
+      &nbsp;
+    </p>
+
+    <% if resource.reference.present? %>
+      <%= link_to t('.labels.see_sites'), registration_registration_sites_path(registration_reference: resource.reference), class: "govuk-link" %>
+    <% end %>
+  </dd>
+</div>

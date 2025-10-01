@@ -1,0 +1,7 @@
+en:
+  shared:
+    resource_site_addresses:
+      heading: Site location(s)
+      labels:
+        sites: Sites
+        see_sites: See sites

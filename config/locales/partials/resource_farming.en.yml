@@ -1,0 +1,13 @@
+en:
+  shared:
+    resource_farming:
+      labels:
+        on_a_farm: On a farm?
+        is_a_farmer: Is a farmer?
+      values:
+        on_a_farm:
+          "true": "Yes"
+          "false": "No"
+        is_a_farmer:
+          "true": "Yes"
+          "false": "No"

@@ -142,6 +142,12 @@
 </div>
 
 <dl class="govuk-summary-list">
+  <% if resource.site_addresses.any? %>
+    <%= render("shared/resource_site_addresses", resource: resource) %>
+  <% end %>
+
+  <%= render("shared/resource_farming", is_a_farmer: resource.is_a_farmer?, on_a_farm: resource.on_a_farm?) %>
+
   <% if resource.contact_address.present? %>
     <%= render("shared/resource_address", address: resource.contact_address) %>
   <% end %>
@@ -176,12 +182,6 @@
 
   <% if resource.operator_address.present? %>
     <%= render("shared/resource_address", address: resource.operator_address) %>
-  <% end %>
-
-  <% if resource.site_address.present? %>
-    <%= render("shared/resource_address", address: resource.site_address,
-                                          on_a_farm: resource.on_a_farm?,
-                                          is_a_farmer: resource.is_a_farmer?) %>
   <% end %>
 
   <div class="govuk-summary-list__row">
