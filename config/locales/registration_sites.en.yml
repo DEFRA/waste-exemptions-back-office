@@ -1,0 +1,16 @@
+en:
+  registration_sites:
+    index:
+      title: "Waste operation sites"
+      heading: "Waste operation sites"
+      labels:
+        reference: "WEX reference"
+        location: "Location"
+        details: "Details"
+        ea_area: "EA area"
+        status: "Site status"
+        ceased_or_revoked: "Ceased/revoked exemptions"
+        actions: "Actions"
+      actions:
+        exemptions: "Exemptions"
+        deregister: "Deregister"
