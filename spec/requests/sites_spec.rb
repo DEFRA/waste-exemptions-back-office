@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Registration Sites" do
+RSpec.describe "Sites" do
   let(:user) { create(:user, role: :customer_service_adviser) }
 
   before { sign_in(user) }

@@ -78,4 +78,4 @@ Metrics/ModuleLength:
 FactoryBot/ExcessiveCreateList:
   Exclude:
     # testing pagination with a large number of records
-    - spec/requests/registration_sites_spec.rb
+    - spec/requests/sites_spec.rb

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RegistrationSitesController < ApplicationController
+class SitesController < ApplicationController
   helper ActionLinksHelper
 
   def index
