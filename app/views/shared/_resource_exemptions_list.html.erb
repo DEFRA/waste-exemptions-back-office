@@ -1,5 +1,7 @@
 <table class="govuk-table">
+  <% unless defined?(hide_caption) && hide_caption %>
   <caption class="govuk-table__caption"><%= t(".caption") %></caption>
+  <% end %>
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th class="govuk-table__header" scope="col"><%= t(".table_headings.name") %></th>

@@ -1,0 +1,35 @@
+<%= render("waste_exemptions_engine/shared/back", back_path: registration_sites_path(reference: @resource.reference)) %>
+
+<h1 class="govuk-heading-l">
+  <%= t(".heading", grid_reference_or_address: @site.located_by_grid_reference? ? @site.grid_reference : displayable_address(@site).join(", ")) %>
+</h1>
+
+<% if @site_registration_exemptions.count.positive? %>
+  <%= 
+    render("shared/resource_exemptions_list", 
+      resource_exemptions: @site_registration_exemptions,
+      hide_caption: true
+    ) 
+  %>
+<% else %>
+  <p class="govuk-body"><%= t(".no_exemptions") %></p>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table" aria-label="<%= t(".location") %>">
+      <tbody class="govuk-table__body">
+        <tr>
+          <td class="govuk-table__cell"></td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+        <tr>
+          <th class="govuk-table__header" scope="col"><%= t(".location") %></th>
+          <td class="govuk-table__cell" colspan="5">
+            <%= @site.located_by_grid_reference? ? @site.grid_reference : displayable_address(@site).join(", ") %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

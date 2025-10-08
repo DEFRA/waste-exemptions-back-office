@@ -47,7 +47,7 @@
                 <%= site_address.ceased_or_revoked_exemptions %>
               </td>
               <td class="govuk-table__cell">
-                <%= link_to t('.actions.exemptions'), '#', class: "govuk-link" %>
+                <%= link_to t('.actions.exemptions'), registration_site_exemptions_path(reference: @resource.reference, site_id: site_address.id), class: "govuk-link" %>
                 <%= link_to t('.actions.deregister'), '#', class: "govuk-link" %>
               </td>
             </tr>

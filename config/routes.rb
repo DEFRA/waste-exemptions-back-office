@@ -40,7 +40,7 @@ Rails.application.routes.draw do
     get "payments", to: "payments#new", as: :add_payment_form
     post "payments", to: "payments#create", as: :add_payment
     get "payment_details", to: "payment_details#index", as: :payment_details
-    
+
     resources :record_refunds,
               only: %i[index new create],
               path: "record-refund",
@@ -59,8 +59,8 @@ Rails.application.routes.draw do
               only: %i[new create],
               path: "charge-adjustment"
 
-    resources :sites, only: :index  do
-      resources :site_exemptions, only: %i[index]
+    resources :sites, only: :index do
+      resources :exemptions, only: %i[index], controller: "site_exemptions"
     end
   end
 
