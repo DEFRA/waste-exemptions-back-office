@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby "3.2.2"
+ruby "3.4.6"
 
 # Allows us to automatically generate the change log from the tags, issues,
 # labels and pull requests on GitHub. Added as a dependency so all dev's have
@@ -23,6 +23,8 @@ gem "notifications-ruby-client"
 # Use jquery as the JavaScript library
 gem "jquery-rails"
 # Use postgresql as the database for Active Record
+
+gem "csv"
 
 gem "matrix"
 
@@ -81,7 +83,7 @@ gem "defra_ruby_mocks"
 gem "defra_ruby_features", "~> 0.2"
 
 # Use the Defra Ruby Aws gem for loading files to AWS buckets
-gem "defra_ruby_aws", "~> 0.5"
+gem "defra_ruby_aws"
 
 # Manage, create and open zip files https://github.com/rubyzip/rubyzip
 gem "rubyzip", "< 3.0"
@@ -126,7 +128,9 @@ end
 
 group :development do
   gem "rubocop-capybara"
+  gem "rubocop-factory_bot"
   gem "rubocop-rails"
+  gem "rubocop-rake"
   gem "rubocop-rspec"
   gem "rubocop-rspec_rails"
 

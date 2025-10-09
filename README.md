@@ -15,7 +15,7 @@ This project is the back office application which internal staff use to register
 
 ## Prequisites
 
-You'll need [Ruby 3.2.2](https://www.ruby-lang.org/en/) installed plus the [Bundler](http://bundler.io/) gem.
+You'll need [Ruby 3.4.6](https://www.ruby-lang.org/en/) installed plus the [Bundler](http://bundler.io/) gem.
 
 ## Installation
 
