@@ -31,6 +31,39 @@ module Reports
         it "returns exemption code(s)" do
           expect(presenter.exemption).to be_present
         end
+
+        # Work around a production data issue
+        context "when no bucket is present" do
+          before do
+            order.update(bucket: nil)
+
+            allow(Rails.logger).to receive(:warn)
+            allow(Rails.logger).to receive(:error)
+            allow(Airbrake).to receive(:notify)
+          end
+
+          it "does not raise an exception" do
+            expect { presenter.exemption }.not_to raise_error
+          end
+
+          it "does not log an error" do
+            presenter.exemption
+
+            expect(Rails.logger).not_to have_received(:error)
+          end
+
+          it "logs registration details in the Rails log" do
+            presenter.exemption
+
+            expect(Rails.logger).to have_received(:warn).with(a_string_matching(registration.reference))
+          end
+
+          it "logs registration details to Errbit" do
+            presenter.exemption
+
+            expect(Airbrake).to have_received(:notify).with(a_string_matching(registration.reference))
+          end
+        end
       end
 
       describe "#balance" do
