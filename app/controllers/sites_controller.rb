@@ -6,7 +6,7 @@ class SitesController < ApplicationController
   def index
     find_resource(params[:registration_reference])
 
-    @site_addresses = if @resource.is_multisite_registration
+    @site_addresses = if @resource.multisite?
                         # eager loading of registration_exemptions
                         @resource.site_addresses.includes([:registration_exemptions])
                                  .page(params[:page]).order(:id).per(20)

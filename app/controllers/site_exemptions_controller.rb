@@ -14,6 +14,9 @@ class SiteExemptionsController < ApplicationController
   end
 
   def load_records
-    @site_registration_exemptions = @site.registration_exemptions.includes(:registration).includes(:exemption).order_by_state_then_exemption_id
+    @site_registration_exemptions = @site.registration_exemptions
+                                         .includes(:registration)
+                                         .includes(:exemption)
+                                         .order_by_state_then_exemption_id
   end
 end
