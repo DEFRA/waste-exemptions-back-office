@@ -7,7 +7,8 @@ RSpec.describe Ability do
   subject(:ability) { described_class.new(user) }
 
   let(:registration) { build(:registration) }
-  let(:registration_exemption) { build(:registration_exemption) }
+  let(:site) { build(:address, registration: registration) }
+  let(:registration_exemption) { build(:registration_exemption, address: site) }
   let(:new_registration) { build(:new_registration) }
 
   RSpec.shared_examples "can use back office" do
@@ -47,8 +48,9 @@ RSpec.describe Ability do
     it_behaves_like "cannot reverse payments"
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
+    it_behaves_like "cannot deregister registrations"
+    it_behaves_like "cannot deregister sites"
 
-    it { expect(ability).not_to be_able_to(:deregister, registration) }
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::GeneratedReport) }
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
@@ -70,6 +72,8 @@ RSpec.describe Ability do
     it_behaves_like "cannot reverse payments"
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
+    it_behaves_like "cannot deregister registrations"
+    it_behaves_like "cannot deregister sites"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
@@ -86,6 +90,8 @@ RSpec.describe Ability do
     it_behaves_like "can reverse payments"
     it_behaves_like "can refund payments"
     it_behaves_like "can write-off payments"
+    it_behaves_like "can deregister registrations"
+    it_behaves_like "can deregister sites"
 
     it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
@@ -101,6 +107,8 @@ RSpec.describe Ability do
     it_behaves_like "can manage users"
     it_behaves_like "can manage registrations"
     it_behaves_like "can manage charges and bands"
+    it_behaves_like "can deregister registrations"
+    it_behaves_like "can deregister sites"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
@@ -123,6 +131,8 @@ RSpec.describe Ability do
     it_behaves_like "can reverse payments"
     it_behaves_like "can refund payments"
     it_behaves_like "can write-off payments"
+    it_behaves_like "can deregister registrations"
+    it_behaves_like "can deregister sites"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
@@ -150,6 +160,8 @@ RSpec.describe Ability do
     it_behaves_like "cannot reverse payments"
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
+    it_behaves_like "cannot deregister registrations"
+    it_behaves_like "cannot deregister sites"
   end
 
   context "when the user role is finance_user" do
@@ -165,6 +177,8 @@ RSpec.describe Ability do
     it_behaves_like "cannot manage registrations"
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot add charge adjustments"
+    it_behaves_like "cannot deregister registrations"
+    it_behaves_like "cannot deregister sites"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::Download) }
