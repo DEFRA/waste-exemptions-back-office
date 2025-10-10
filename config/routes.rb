@@ -61,6 +61,8 @@ Rails.application.routes.draw do
 
     resources :sites, only: :index do
       resources :exemptions, only: %i[index], controller: "site_exemptions"
+      get :deregister, on: :member, to: "deregister_sites#new"
+      post :deregister, on: :member, to: "deregister_sites#update"
     end
   end
 

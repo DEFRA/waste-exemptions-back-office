@@ -48,7 +48,9 @@
               </td>
               <td class="govuk-table__cell">
                 <%= link_to t('.actions.exemptions'), registration_site_exemptions_path(reference: @resource.reference, site_id: site_address.id), class: "govuk-link" %>
-                <%= link_to t('.actions.deregister'), '#', class: "govuk-link" %>
+                <% if can? :deregister, site_address %>
+                  <%= link_to t('.actions.deregister'), deregister_registration_site_path(reference: @resource.reference, id: site_address.id), class: "govuk-link" %>
+                <% end %>
               </td>
             </tr>
           <% end %>
