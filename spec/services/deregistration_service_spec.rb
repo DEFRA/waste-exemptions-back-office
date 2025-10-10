@@ -184,6 +184,143 @@ RSpec.describe DeregistrationService do
       end
     end
 
+    context "when the resource is a site (Address)" do
+      context "when the site is active" do
+        subject(:dereg_service) { described_class.new(admin_team_user, site) }
+
+        let(:registration) { create(:registration, :multi_site, registration_exemptions: []) }
+        let(:site) do
+          site = registration.site_addresses.first
+          site.registration_exemptions << create(:registration_exemption, state: "active")
+          site.registration_exemptions << create(:registration_exemption, state: "active")
+          site
+        end
+
+        context "when the user has sufficient permissions" do
+          context "when all of site registration_exemptions are active" do
+            it "changes the state of the site" do
+              expect { dereg_service.deregister!(:revoke, deregistration_message) }
+                .to change(site, :site_status)
+                .from("active")
+                .to("deregistered")
+            end
+
+            it "changes the state of all of the registration_exemptions" do
+              site.registration_exemptions.each do |re|
+                expect(re.state).to eq("active")
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              site.registration_exemptions.each do |re|
+                re.reload
+                expect(re.state).to eq("revoked")
+              end
+            end
+
+            it "sets the deregistration_message for all of the registration_exemptions" do
+              site.registration_exemptions.each do |re|
+                expect(re.deregistration_message).to be_nil
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              site.registration_exemptions.each do |re|
+                re.reload
+                expect(re.deregistration_message).to eq(deregistration_message)
+              end
+            end
+
+            it "creates a version for all of the registration_exemptions", :versioning do
+              site.registration_exemptions.each do |re|
+                expect(re.versions.size).to eq(0)
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              site.registration_exemptions.each do |re|
+                expect(re.versions.size).to eq(1)
+                expect(re.versions.first.whodunnit).to eq(admin_team_user.email)
+              end
+            end
+          end
+
+          context "when only some of site registration_exemptions are active" do
+            subject(:dereg_service) { described_class.new(admin_team_user, site) }
+
+            let(:ceased_message) { "This exemption is ceased!" }
+            let(:active_registration_exemptions) { site.registration_exemptions.select(&:active?) }
+            let(:inactive_registration_exemptions) { site.registration_exemptions.select(&:ceased?) }
+
+            before do
+              site.registration_exemptions.first.update(state: "ceased", deregistration_message: ceased_message, deregistered_at: 1.day.ago)
+            end
+
+            it "changes the state of the site" do
+              expect { dereg_service.deregister!(:revoke, deregistration_message) }
+                .to change(site, :site_status)
+                .from("active")
+                .to("deregistered")
+            end
+
+            it "changes the state of all of the active site registration_exemptions" do
+              active_registration_exemptions.each do |re|
+                expect(re.state).to eq("active")
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              active_registration_exemptions.each do |re|
+                re.reload
+                expect(re.state).to eq("revoked")
+              end
+            end
+
+            it "sets the deregistration_message for all of the active site registration_exemptions" do
+              active_registration_exemptions.each do |re|
+                expect(re.deregistration_message).to be_nil
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              active_registration_exemptions.each do |re|
+                re.reload
+                expect(re.deregistration_message).to eq(deregistration_message)
+              end
+            end
+
+            it "does not change the state of the inactive site registration_exemptions" do
+              inactive_registration_exemptions.each do |re|
+                expect(re.state).to eq("ceased")
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              inactive_registration_exemptions.each do |re|
+                re.reload
+                expect(re.state).to eq("ceased")
+              end
+            end
+
+            it "does not set the deregistration_message for all of the inactive site registration_exemptions" do
+              inactive_registration_exemptions.each do |re|
+                expect(re.deregistration_message).to eq(ceased_message)
+              end
+              dereg_service.deregister!(:revoke, deregistration_message)
+              inactive_registration_exemptions.each do |re|
+                re.reload
+                expect(re.deregistration_message).to eq(ceased_message)
+              end
+            end
+          end
+
+          context "when the new state is 'pending'" do
+            it "raises an error" do
+              expect { dereg_service.deregister!(:pending, deregistration_message) }.to raise_error(NoMethodError)
+            end
+          end
+        end
+
+        context "when the user has insufficient permissions" do
+          subject(:dereg_service) { described_class.new(data_viewer_user, site) }
+
+          it "does not change the state of the registration or any of its registration_exemptions" do
+            expect { dereg_service.deregister!(:revoke, deregistration_message) }
+              .not_to change(site, :site_status)
+              .from("active")
+          end
+        end
+      end
+    end
+
     context "when the resource is a RegistrationExemption" do
       let(:active_registration_exemption) do
         reg_exemption = create(:registration).registration_exemptions.first
