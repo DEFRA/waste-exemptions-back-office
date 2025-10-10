@@ -160,7 +160,7 @@ FactoryBot.define do
       end
     end
 
-    trait :multi_site do
+    trait :multisite do
       is_multisite_registration { true }
     end
   end

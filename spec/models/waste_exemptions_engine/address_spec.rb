@@ -115,7 +115,7 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is multi-site" do
-      let(:registration) { build(:registration, :multi_site) }
+      let(:registration) { build(:registration, :multisite) }
 
       context "when site_suffix is nil or empty" do
         it_behaves_like "returns the registration reference"
@@ -154,7 +154,7 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is multi-site" do
-      let(:registration) { build(:registration, :multi_site, registration_exemptions: []) }
+      let(:registration) { build(:registration, :multisite, registration_exemptions: []) }
       let(:registration_exemption) { build(:registration_exemption, :active) }
 
       before do
@@ -199,7 +199,7 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is multi-site" do
-      let(:registration) { create(:registration, :multi_site, registration_exemptions: []) }
+      let(:registration) { create(:registration, :multisite, registration_exemptions: []) }
 
       context "when registration has ceased exemptions" do
         let(:registration_exemption) { create(:registration_exemption, :ceased) }

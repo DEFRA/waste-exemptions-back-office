@@ -36,7 +36,7 @@ RSpec.describe "Sites" do
     end
 
     context "when registration is multi-site" do
-      let(:registration) { create(:registration, :multi_site) }
+      let(:registration) { create(:registration, :multisite) }
       let(:site_address) { create(:address, :site, registration: registration) }
       let(:site_address_two) { create(:address, :site, registration: registration) }
 
@@ -44,7 +44,7 @@ RSpec.describe "Sites" do
       it_behaves_like "includes the correct content"
 
       it "paginates the results" do
-        registration = create(:registration, :multi_site, addresses: [])
+        registration = create(:registration, :multisite, addresses: [])
         create_list(:address, 25, :site, registration: registration)
 
         get "/registrations/#{registration.reference}/sites"

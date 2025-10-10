@@ -188,7 +188,7 @@ RSpec.describe DeregistrationService do
       context "when the site is active" do
         subject(:dereg_service) { described_class.new(admin_team_user, site) }
 
-        let(:registration) { create(:registration, :multi_site, registration_exemptions: []) }
+        let(:registration) { create(:registration, :multisite, registration_exemptions: []) }
         let(:site) do
           site = registration.site_addresses.first
           site.registration_exemptions << create(:registration_exemption, state: "active")

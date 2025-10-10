@@ -17,7 +17,7 @@ module WasteExemptionsEngine
     end
 
     def site_status
-      if registration.is_multisite_registration
+      if registration.multisite?
         registration_exemptions.map(&:state).include?("active") ? "active" : "deregistered"
       else
         registration.registration_exemptions.map(&:state).include?("active") ? "active" : "deregistered"
@@ -25,7 +25,7 @@ module WasteExemptionsEngine
     end
 
     def ceased_or_revoked_exemptions
-      if registration.is_multisite_registration
+      if registration.multisite?
         registration_exemptions.where(state: %w[ceased revoked]).map(&:exemption).map(&:code).join(", ")
       else
         registration.registration_exemptions.where(state: %w[ceased revoked]).map(&:exemption).map(&:code).join(", ")
