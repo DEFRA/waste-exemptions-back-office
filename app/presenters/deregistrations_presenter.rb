@@ -56,12 +56,14 @@ class DeregistrationsPresenter
   end
 
   def successful_redirect_path(resource)
-    if site?
+    if registration?
+      Rails.application.routes.url_helpers.registration_path(reference: resource.reference)
+    elsif site?
       Rails.application.routes.url_helpers.registration_sites_path(
         registration_reference: resource.registration.reference
       )
     else
-      Rails.application.routes.url_helpers.registration_path(reference: resource.reference)
+      Rails.application.routes.url_helpers.registration_path(reference: resource.registration.reference)
     end
   end
 end

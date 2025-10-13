@@ -52,14 +52,14 @@ RSpec.describe "Sites" do
         expect(response.body).to include("Waste operation sites")
         expect(response.body).to include("Showing 1 &ndash; 20 of 25 results")
         expect(response.body).to include("Next")
-        expect(response.body).not_to include("Previous")
+        expect(response.body).not_to include("Prev")
 
         get "/registrations/#{registration.reference}/sites?page=2"
 
         expect(response.body).to include("Waste operation sites")
         expect(response.body).to include("Showing 21 &ndash; 25 of 25 results")
         expect(response.body).not_to include("Next")
-        expect(response.body).to include("Previous")
+        expect(response.body).to include("Prev")
       end
     end
   end
