@@ -13,7 +13,19 @@ module Reports
       end
 
       def exemption
-        order_bucket_exemptions = @secondary_object.order.exemptions & @secondary_object.order.bucket.exemptions
+        order = @secondary_object.order
+        order_bucket = order.bucket
+
+        unless order.present? && order_bucket.present?
+          message = "Invalid farm compliance charge row for registration #{registration_no}: " \
+                    "order present: #{order.present?}, order bucket present: #{order_bucket.present?}"
+          Rails.logger.warn message
+          Airbrake.notify message
+
+          return
+        end
+
+        order_bucket_exemptions = order.exemptions & order_bucket.exemptions
         order_bucket_exemptions.map(&:code).sort.join(", ")
       end
 
