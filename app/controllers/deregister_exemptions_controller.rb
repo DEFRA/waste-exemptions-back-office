@@ -11,7 +11,7 @@ class DeregisterExemptionsController < ApplicationController
 
     if @deregister_exemptions_form.submit(params[:deregister_exemptions_form], deregistration_service)
       successful_redirection = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE
-      redirect_to @deregistrations.redirect_path, status: successful_redirection
+      redirect_to successful_redirect_path, status: successful_redirection
     else
       render :new
       false
@@ -29,5 +29,16 @@ class DeregisterExemptionsController < ApplicationController
 
   def find_resource(id)
     @resource = WasteExemptionsEngine::RegistrationExemption.find(id)
+  end
+
+  def successful_redirect_path
+    case @resource.class.to_s.split("::").last
+    when "Registration"
+      registration_path(reference: @resource.reference)
+    when "Address"
+      registration_sites_path(registration_reference: @resource.registration.reference)
+    else
+      registration_path(reference: @resource.registration.reference)
+    end
   end
 end

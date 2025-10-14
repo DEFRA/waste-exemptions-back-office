@@ -10,7 +10,6 @@ class DeregistrationsPresenter
     @submit_button = submit_button_text
     @heading = heading_text(resource)
     @form_path = lookup_form_path(resource)
-    @redirect_path = successful_redirect_path(resource)
   end
 
   private
@@ -52,18 +51,6 @@ class DeregistrationsPresenter
       )
     else
       Rails.application.routes.url_helpers.deregister_exemptions_path(resource.id)
-    end
-  end
-
-  def successful_redirect_path(resource)
-    if registration?
-      Rails.application.routes.url_helpers.registration_path(reference: resource.reference)
-    elsif site?
-      Rails.application.routes.url_helpers.registration_sites_path(
-        registration_reference: resource.registration.reference
-      )
-    else
-      Rails.application.routes.url_helpers.registration_path(reference: resource.registration.reference)
     end
   end
 end
