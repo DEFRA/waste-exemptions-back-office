@@ -23,7 +23,7 @@ if !Rails.env.production? || ENV["ALLOW_SEED"]
   seed_users
 
   # Load additional seed files from db/seeds/ directory
-  load 'db/seeds/exemptions.rb'
-  load 'db/seeds/waste_activities.rb'
-  load 'db/seeds/charging_schemes.rb'
+  load "db/seeds/exemptions.rb"
+  load "db/seeds/waste_activities.rb"
+  load "db/seeds/charging_schemes.rb"
 end
