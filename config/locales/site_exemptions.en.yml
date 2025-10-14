@@ -1,0 +1,8 @@
+en:
+  site_exemptions:
+    index:
+      title: "Exemption details for site"
+      heading: "Exemption details for %{grid_reference_or_address}"
+      location: "Site location"
+      no_exemptions: "There are no exemptions for this site."
+      

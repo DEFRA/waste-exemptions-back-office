@@ -11,6 +11,7 @@ class Ability
                               [WasteExemptionsEngine::NewRegistration, WasteExemptionsEngine::NewChargedRegistration]],
     deregister_exemption: [:deregister, WasteExemptionsEngine::Registration, { active?: true }],
     deregister_registration_exemption: [:deregister, WasteExemptionsEngine::RegistrationExemption, { active?: true }],
+    deregister_site: [:deregister, WasteExemptionsEngine::Address, { site_status: "active" }],
     invite_user: [:invite, User],
     manage_charges: %i[manage_charges all],
     manage_feature_toggles: [:manage, WasteExemptionsEngine::FeatureToggle],

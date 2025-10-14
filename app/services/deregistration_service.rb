@@ -12,7 +12,7 @@ class DeregistrationService
   def deregister!(state_transition, deregistration_message)
     return unless current_user.can?(:deregister, resource)
 
-    if resource.is_a?(WasteExemptionsEngine::Registration)
+    if resource.is_a?(WasteExemptionsEngine::Registration) || resource.is_a?(WasteExemptionsEngine::Address)
       resource.registration_exemptions.each do |re|
         DeregistrationService.new(current_user, re).deregister!(state_transition, deregistration_message)
       end

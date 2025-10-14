@@ -159,5 +159,9 @@ FactoryBot.define do
          build(:address, :site_address, :manual, :postal)]
       end
     end
+
+    trait :multisite do
+      is_multisite_registration { true }
+    end
   end
 end

@@ -2,7 +2,7 @@
 
 class DeregistrationsPresenter
 
-  attr_reader :registration_reference, :heading, :submit_button, :form_path
+  attr_reader :registration_reference, :heading, :submit_button, :form_path, :redirect_path
 
   def initialize(resource)
     @type = resource.class.to_s.split("::").last
@@ -18,14 +18,21 @@ class DeregistrationsPresenter
     @type == "Registration"
   end
 
+  def site?
+    @type == "Address"
+  end
+
   def submit_button_text
-    button_type = registration? ? @type : "Exemption"
+    button_type = registration? || site? ? @type : "Exemption"
     I18n.t("deregister_exemptions.new.approve_button", type: button_type)
   end
 
   def heading_text(resource)
     if registration?
       I18n.t("deregister_exemptions.new.registration_heading", registration_reference: registration_reference)
+    elsif site?
+      I18n.t("deregister_exemptions.new.site_heading", site_location: resource.grid_reference,
+                                                       registration_reference: registration_reference)
     else
       I18n.t(
         "deregister_exemptions.new.exemptions_heading",
@@ -38,6 +45,10 @@ class DeregistrationsPresenter
   def lookup_form_path(resource)
     if registration?
       Rails.application.routes.url_helpers.deregister_registrations_path(resource.id)
+    elsif site?
+      Rails.application.routes.url_helpers.deregister_registration_site_path(
+        registration_reference: resource.registration.reference, id: resource.id
+      )
     else
       Rails.application.routes.url_helpers.deregister_exemptions_path(resource.id)
     end
