@@ -19,4 +19,11 @@ def seed_users
 end
 
 # Only seed if not running in production or we specifically require it, eg. for Heroku
-seed_users if !Rails.env.production? || ENV["ALLOW_SEED"]
+if !Rails.env.production? || ENV["ALLOW_SEED"]
+  seed_users
+
+  # Load additional seed files from db/seeds/ directory
+  load "db/seeds/exemptions.rb"
+  load "db/seeds/waste_activities.rb"
+  load "db/seeds/charging_schemes.rb"
+end
