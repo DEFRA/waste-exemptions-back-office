@@ -26,3 +26,16 @@
   @extend .govuk-table__cell;
   border: none;
 }
+
+.button-link {
+  border: none;
+  color: #005ea5;
+  font-size: 1.1875rem;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.button-link.clear-background {
+  background-color: #ffffff;
+}
