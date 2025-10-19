@@ -54,9 +54,9 @@ FactoryBot.define do
     end
 
     addresses do
-      [build(:address, :operator),
-       build(:address, :contact),
-       build(:address, :site)]
+      [build(:address, :operator_address),
+       build(:address, :contact_address),
+       build(:address, :site_address)]
     end
 
     trait :limited_company do
@@ -90,9 +90,9 @@ FactoryBot.define do
 
     trait :site_uses_address do
       addresses do
-        [build(:address, :operator),
-         build(:address, :contact),
-         build(:address, :site_uses_address)]
+        [build(:address, :operator_address),
+         build(:address, :contact_address),
+         build(:address, :site_address)]
       end
     end
 
@@ -126,9 +126,9 @@ FactoryBot.define do
 
     trait :with_short_site_description do
       addresses do
-        [build(:address, :operator),
-         build(:address, :contact),
-         build(:address, :site, :short_description)]
+        [build(:address, :operator_address),
+         build(:address, :contact_address),
+         build(:address, :site_address, :short_description)]
       end
     end
 
@@ -138,9 +138,9 @@ FactoryBot.define do
 
     trait :with_long_site_description do
       addresses do
-        [build(:address, :operator),
-         build(:address, :contact),
-         build(:address, :site, :long_description)]
+        [build(:address, :operator_address),
+         build(:address, :contact_address),
+         build(:address, :site_address, :long_description)]
       end
     end
 

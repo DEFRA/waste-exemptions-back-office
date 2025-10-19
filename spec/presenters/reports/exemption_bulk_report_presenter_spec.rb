@@ -85,7 +85,7 @@ module Reports
       let(:organisation_address) do
         build(
           :address,
-          :operator,
+          :operator_address,
           premises: "Westland",
           street_address: "45 way",
           locality: "away",
@@ -129,7 +129,7 @@ module Reports
       let(:contact_address) do
         build(
           :address,
-          :contact,
+          :contact_address,
           premises: "Westland",
           street_address: "45 way",
           locality: "away",
@@ -205,18 +205,19 @@ module Reports
       let(:site_location_address) do
         build(
           :address,
-          :site_uses_address,
+          :site_address,
           premises: "Westland",
           street_address: "45 way",
           locality: "away",
           city: "Erabor",
-          postcode: "HD5 JFS"
+          postcode: "HD5 JFS",
+          mode: "lookup"
         )
       end
 
       let(:registration) { create(:registration, addresses: [site_location_address]) }
 
-      it "returns the contact's address" do
+      it "returns the site location address" do
         expect(exemption_bulk_report_presenter.site_location_address).to eq("Westland, 45 way, away, Erabor, HD5 JFS")
       end
 
@@ -224,7 +225,7 @@ module Reports
         let(:site_location_address) do
           build(
             :address,
-            :site,
+            :site_address,
             mode: :auto
           )
         end
@@ -247,7 +248,7 @@ module Reports
       let(:site_location_grid_reference) do
         build(
           :address,
-          :site,
+          :site_address,
           grid_reference: "ST12345678"
         )
       end
@@ -271,7 +272,7 @@ module Reports
       let(:site_address) do
         build(
           :address,
-          :site,
+          :site_address,
           description: "Next to the big green tree."
         )
       end
@@ -295,7 +296,7 @@ module Reports
       let(:site_address) do
         build(
           :address,
-          :site,
+          :site_address,
           area: "Site address area"
         )
       end

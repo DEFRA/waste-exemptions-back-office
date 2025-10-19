@@ -39,9 +39,9 @@ FactoryBot.define do
     end
 
     transient_addresses do
-      [build(:transient_address, :operator),
-       build(:transient_address, :contact),
-       build(:transient_address, :site)]
+      [build(:transient_address, :operator_address),
+       build(:transient_address, :contact_address),
+       build(:transient_address, :site_address)]
     end
 
     exemptions { build_list(:exemption, 5) }

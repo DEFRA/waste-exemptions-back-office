@@ -33,7 +33,7 @@ module Reports
     end
 
     describe "#organisation_premises" do
-      let(:operator_address) { create(:address, :operator, premises: "123 ABC") }
+      let(:operator_address) { create(:address, :operator_address, premises: "123 ABC") }
       let(:registration) { create(:registration, addresses: [operator_address]) }
 
       it "returns the operator address premises" do
@@ -50,7 +50,7 @@ module Reports
     end
 
     describe "#organisation_street_address" do
-      let(:operator_address) { create(:address, :operator, street_address: "32 Foo St") }
+      let(:operator_address) { create(:address, :operator_address, street_address: "32 Foo St") }
       let(:registration) { create(:registration, addresses: [operator_address]) }
 
       it "returns the operator street address" do
@@ -67,7 +67,7 @@ module Reports
     end
 
     describe "#organisation_locality" do
-      let(:operator_address) { create(:address, :operator, locality: "Avon") }
+      let(:operator_address) { create(:address, :operator_address, locality: "Avon") }
       let(:registration) { create(:registration, addresses: [operator_address]) }
 
       it "returns the operator address locality" do
@@ -84,7 +84,7 @@ module Reports
     end
 
     describe "#organisation_city" do
-      let(:operator_address) { create(:address, :operator, city: "Bristol") }
+      let(:operator_address) { create(:address, :operator_address, city: "Bristol") }
       let(:registration) { create(:registration, addresses: [operator_address]) }
 
       it "returns the operator address city" do
@@ -101,7 +101,7 @@ module Reports
     end
 
     describe "#organisation_postcode" do
-      let(:operator_address) { create(:address, :operator, postcode: "BS1 4RE") }
+      let(:operator_address) { create(:address, :operator_address, postcode: "BS1 4RE") }
       let(:registration) { create(:registration, addresses: [operator_address]) }
 
       it "returns the operator address postcode" do
@@ -110,7 +110,7 @@ module Reports
     end
 
     describe "#site_premises" do
-      let(:site_address) { create(:address, :site, premises: "Bar 123") }
+      let(:site_address) { create(:address, :site_address, premises: "Bar 123") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address premises" do
@@ -127,7 +127,7 @@ module Reports
     end
 
     describe "#site_street_address" do
-      let(:site_address) { create(:address, :site, street_address: "12 Baz road") }
+      let(:site_address) { create(:address, :site_address, street_address: "12 Baz road") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address street" do
@@ -144,7 +144,7 @@ module Reports
     end
 
     describe "#site_locality" do
-      let(:site_address) { create(:address, :site, locality: "Avon") }
+      let(:site_address) { create(:address, :site_address, locality: "Avon") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address locality" do
@@ -161,7 +161,7 @@ module Reports
     end
 
     describe "#site_city" do
-      let(:site_address) { create(:address, :site, city: "Bristol") }
+      let(:site_address) { create(:address, :site_address, city: "Bristol") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address locality" do
@@ -178,7 +178,7 @@ module Reports
     end
 
     describe "#site_postcode" do
-      let(:site_address) { create(:address, :site, postcode: "BS2 34G") }
+      let(:site_address) { create(:address, :site_address, postcode: "BS2 34G") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address postcode" do
@@ -195,7 +195,7 @@ module Reports
     end
 
     describe "#site_country" do
-      let(:site_address) { create(:address, :site, country_iso: "GB") }
+      let(:site_address) { create(:address, :site_address, country_iso: "GB") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address country" do
@@ -224,7 +224,7 @@ module Reports
       end
 
       context "when the site address has a postcode" do
-        let(:site_address) { create(:address, :site, grid_reference: "SB1234", postcode: "AB12 3CD") }
+        let(:site_address) { create(:address, :site_address, grid_reference: "SB1234", postcode: "AB12 3CD") }
         let(:registration) { create(:registration, addresses: [site_address]) }
 
         it "returns nil" do
@@ -233,7 +233,7 @@ module Reports
       end
 
       context "when the site address does not have a postcode" do
-        let(:site_address) { create(:address, :site, grid_reference: "SB1234", postcode: nil) }
+        let(:site_address) { create(:address, :site_address, grid_reference: "SB1234", postcode: nil) }
         let(:registration) { create(:registration, addresses: [site_address]) }
 
         it "returns the grid reference" do
@@ -243,7 +243,7 @@ module Reports
     end
 
     describe "#site_easting" do
-      let(:site_address) { create(:address, :site, x: "123.45") }
+      let(:site_address) { create(:address, :site_address, x: "123.45") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address x coordinates" do
@@ -260,7 +260,7 @@ module Reports
     end
 
     describe "#site_northing" do
-      let(:site_address) { create(:address, :site, y: "123.45") }
+      let(:site_address) { create(:address, :site_address, y: "123.45") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the operator address y coordinates" do
@@ -277,7 +277,7 @@ module Reports
     end
 
     describe "#ea_area_location" do
-      let(:site_address) { create(:address, :site, area: "Foo") }
+      let(:site_address) { create(:address, :site_address, area: "Foo") }
       let(:registration) { create(:registration, addresses: [site_address]) }
 
       it "returns the area name" do

@@ -3,22 +3,22 @@
 require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::Address do
-  let(:matching_address_site) { create(:address, :site_uses_address) }
-  let(:matching_address_contact) { create(:address, :contact_uses_address) }
-  let(:matching_address_operator) { create(:address, :operator_uses_address) }
+  let(:matching_address_site) { create(:address, :site_address) }
+  let(:matching_address_contact) { create(:address, :contact_address) }
+  let(:matching_address_operator) { create(:address, :operator_address) }
   let(:non_matching_address) { create(:address) }
-  let(:nccc_address) { create(:address, :contact, postcode: "S9 4WF") }
-  let(:non_nccc_address) { create(:address, :contact, postcode: "AA1 1AA") }
+  let(:nccc_address) { create(:address, :contact_address, postcode: "S9 4WF") }
+  let(:non_nccc_address) { create(:address, :contact_address, postcode: "AA1 1AA") }
 
   describe "#search_for_postcode" do
     let(:term) { nil }
     let(:scope) { described_class.search_for_postcode(term) }
 
     context "when the search term is a postcode" do
-      let(:term) { matching_address_site.postcode }
+      let(:term) { matching_address_operator.postcode }
 
       it "returns addresses with a matching postcode" do
-        expect(scope).to include(matching_address_site)
+        expect(scope).to include(matching_address_operator)
       end
 
       it "does not return others" do
@@ -88,7 +88,7 @@ RSpec.describe WasteExemptionsEngine::Address do
   end
 
   describe "#reference" do
-    let(:address) { build(:address, :site, registration:) }
+    let(:address) { build(:address, :site_address, registration:) }
 
     shared_examples "returns the registration reference" do
       before { address.update(site_suffix: nil) }
@@ -128,7 +128,7 @@ RSpec.describe WasteExemptionsEngine::Address do
   end
 
   describe "#site_status" do
-    let(:address) { build(:address, :site, registration:) }
+    let(:address) { build(:address, :site_address, registration:) }
 
     shared_examples "returns deregistered" do
       it { expect(address.site_status).to eq("deregistered") }
@@ -180,7 +180,7 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is single-site" do
-      let(:address) { create(:address, :site, registration:) }
+      let(:address) { create(:address, :site_address, registration:) }
 
       context "when registration has ceased exemptions" do
         let(:registration) { create(:registration, :with_ceased_exemptions) }
@@ -203,7 +203,7 @@ RSpec.describe WasteExemptionsEngine::Address do
 
       context "when registration has ceased exemptions" do
         let(:registration_exemption) { create(:registration_exemption, :ceased) }
-        let(:address) { create(:address, :site, registration:, registration_exemptions: [registration_exemption]) }
+        let(:address) { create(:address, :site_address, registration:, registration_exemptions: [registration_exemption]) }
 
         it "returns a comma-separated list of ceased or revoked exemption codes" do
           expect(address.ceased_or_revoked_exemptions).to eq(registration_exemption.exemption.code)
@@ -212,7 +212,7 @@ RSpec.describe WasteExemptionsEngine::Address do
 
       context "when registration has no ceased exemptions" do
         let(:registration_exemption) { create(:registration_exemption, :active) }
-        let(:address) { create(:address, :site, registration:, registration_exemptions: [registration_exemption]) }
+        let(:address) { create(:address, :site_address, registration:, registration_exemptions: [registration_exemption]) }
 
         it_behaves_like "returns an empty sring"
       end

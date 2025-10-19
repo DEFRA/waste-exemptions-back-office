@@ -29,7 +29,7 @@ RSpec.describe "Sites" do
   describe "GET /bo/registrations/:reference/sites/" do
     context "when registration is single-site" do
       let(:registration) { create(:registration) }
-      let(:site_address) { create(:address, :site, registration: registration) }
+      let(:site_address) { create(:address, :site_address, registration: registration) }
 
       it_behaves_like "renders the index template and returns a 200 response"
       it_behaves_like "includes the correct content"
@@ -37,15 +37,15 @@ RSpec.describe "Sites" do
 
     context "when registration is multi-site" do
       let(:registration) { create(:registration, :multisite) }
-      let(:site_address) { create(:address, :site, registration: registration) }
-      let(:site_address_two) { create(:address, :site, registration: registration) }
+      let(:site_address) { create(:address, :site_address, registration: registration) }
+      let(:site_address_two) { create(:address, :site_address, registration: registration) }
 
       it_behaves_like "renders the index template and returns a 200 response"
       it_behaves_like "includes the correct content"
 
       it "paginates the results" do
         registration = create(:registration, :multisite, addresses: [])
-        create_list(:address, 25, :site, registration: registration)
+        create_list(:address, 25, :site_address, registration: registration)
 
         get "/registrations/#{registration.reference}/sites"
 

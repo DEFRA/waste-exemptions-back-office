@@ -78,7 +78,8 @@ RSpec.describe NotifyRenewalLetterPresenter do
           address.street_address,
           address.locality,
           address.city,
-          address.postcode
+          address.postcode,
+          address.grid_reference
         ].compact_blank.join(", ")
       end
 
@@ -89,7 +90,8 @@ RSpec.describe NotifyRenewalLetterPresenter do
           expected_array = [
             "Type of business: Individual or sole trader",
             "Carrying out the waste operation: #{registration.operator_name}",
-            "Location of waste operation: #{address_text}"
+            "Location of waste operation: #{address_text}",
+            address.description
           ]
 
           expect(presenter.business_details_section).to eq(expected_array)
@@ -106,7 +108,8 @@ RSpec.describe NotifyRenewalLetterPresenter do
           expected_array = [
             "Type of business: Partnership",
             "Partners: #{first_partner}, #{second_partner}",
-            "Location of waste operation: #{address_text}"
+            "Location of waste operation: #{address_text}",
+            address.description
           ]
 
           expect(presenter.business_details_section).to eq(expected_array)
@@ -121,7 +124,8 @@ RSpec.describe NotifyRenewalLetterPresenter do
             "Type of business: Limited company",
             "Company name: #{registration.operator_name}",
             "Company registration number: #{registration.company_no}",
-            "Location of waste operation: #{address_text}"
+            "Location of waste operation: #{address_text}",
+            address.description
           ]
 
           expect(presenter.business_details_section).to eq(expected_array)

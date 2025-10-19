@@ -11,15 +11,15 @@ plugins:
   - rubocop-rspec_rails
   - rubocop-capybara
 
-Metrics/BlockLength:
-  Exclude:
-  # Not worthwhile refacting now as the offense is marginal and search may be refactored in the near future.
-    - app/models/concerns/can_be_searched_like_registration.rb
-
 Metrics/AbcSize:
   Exclude:
   # Number of assigments is high but the method is simple and clear
     - app/models/reports/finance_data_report/data_serializer.rb
+
+Metrics/BlockLength:
+  Exclude:
+    # Not worthwhile refacting now as the offense is marginal and search may be refactored in the near future.
+    - app/models/concerns/can_be_searched_like_registration.rb
 
 Metrics/ClassLength:
   Exclude:
@@ -29,6 +29,13 @@ Metrics/ClassLength:
 
   # keeping it as a single class, as that makes it much easier to maintain, modify, and extend.
     - app/services/audit_trail_diff_service.rb
+
+Metrics/ModuleLength:
+  Exclude:
+    # these files are simple and easy to read, splitting them into smaller modules would increase complexity for no benefit
+    - app/helpers/action_links_helper.rb
+    # These specs involve a lot of data so need to be lengthy
+    - spec/presenters/reports/exemption_bulk_report_presenter_spec.rb
 
 # Bad cop: Not every method which returns a boolean is a predicate. Some are directives.
 Naming/PredicateMethod:
@@ -67,11 +74,6 @@ Naming/PredicatePrefix:
   Exclude:
     # Presenter column names are driven by the registration field names and can't be changed
     - 'app/presenters/reports/finance_data_report/base_registration_row_presenter.rb'
-
-Metrics/ModuleLength:
-  Exclude:
-    # these files a simple and easy to read, splitting them into smaller modules would increase complexity for no benefit
-    - app/helpers/action_links_helper.rb
 
 FactoryBot/ExcessiveCreateList:
   Exclude:
