@@ -6,17 +6,6 @@ en:
 
       details_section:
 
-        charges:
-          heading: Charges
-          headers:
-            date: Date
-            breakdown: Charge breakdown
-            amount: Amount
-          registration_charge_label: Registration charge
-          total_charge_label: Total charge
-          bucket_exemptions_label:
-            farmer: Farming exemptions
-
         charge_adjustments:
           heading: Charge adjustments
           headers:
@@ -54,3 +43,29 @@ en:
           reverse_payment: Reverse a payment
           charge_adjustment: Increase or reduce a charge
         add_payment: Record a payment
+
+    charge_breakdown_singlesite:
+      details_section:
+        charges:
+          heading: Charges
+          headers:
+            date: Date
+            breakdown: Charge breakdown
+            amount: Amount
+          registration_charge_label: Registration charge
+          total_charge_label: Total charge
+          bucket_exemptions_label:
+            farmer: Farming exemptions
+
+    charge_breakdown_multisite:
+      details_section:
+        charges:
+          heading: Charges
+          headers:
+            date: Date
+            breakdown: Charge breakdown
+            amount: Amount
+          registration_charge_label: Registration charge
+          total_charge_label: Total charge
+          bucket_exemptions_label:
+            farmer: Farming exemptions

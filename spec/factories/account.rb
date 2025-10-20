@@ -6,8 +6,8 @@ FactoryBot.define do
 
     trait :with_order do
       after(:build) do |acc|
-        bands = WasteExemptionsEngine::Band.first(3) || build_list(:band, 3)
-        exemptions = WasteExemptionsEngine::Exemption.first(3) || [
+        bands = WasteExemptionsEngine::Band.first(3).presence || build_list(:band, 3)
+        exemptions = WasteExemptionsEngine::Exemption.first(3).presence || [
           build(:exemption, band: bands[0]),
           build(:exemption, band: bands[1]),
           build(:exemption, band: bands[2])
