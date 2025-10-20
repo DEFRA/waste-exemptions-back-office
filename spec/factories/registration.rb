@@ -163,5 +163,17 @@ FactoryBot.define do
     trait :multisite do
       is_multisite_registration { true }
     end
+
+    trait :multisite_full do
+      is_multisite_registration { true }
+
+      after(:build) do |registration|
+        registration.site_addresses = (1..30).map do |_i|
+          site_address = build(:address, :site_address)
+          site_address.registration_exemptions << build_list(:registration_exemption, 3, :ceased)
+          site_address
+        end
+      end
+    end
   end
 end

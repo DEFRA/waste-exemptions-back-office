@@ -3,6 +3,78 @@
 require "rails_helper"
 
 RSpec.describe "Payment details" do
+
+  shared_examples "a correct charges table headers" do
+    it { expect(response).to have_http_status(:ok) }
+
+    it { expect(response.body).to include I18n.t("#{i18n_page}.heading", reference: registration.reference) }
+
+    # charges
+    it { expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.heading") }
+  end
+
+  shared_examples "a correct charge breakdown headers" do
+    it "includes the expected charges table headers" do
+      aggregate_failures do
+        expect(response.body).to include I18n.t(".#{i18n_charge_breakdown_section}.headers.date")
+        expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.breakdown")
+        expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.amount")
+      end
+    end
+
+    it { expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.registration_charge_label") }
+    it { expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.total_charge_label") }
+  end
+
+  shared_examples "a correct charge adjustment section details" do
+    it { expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.heading") }
+
+    it "includes the expected charge adjustments table headers" do
+      aggregate_failures do
+        expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.date")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.type")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.comments")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.amount")
+      end
+    end
+  end
+
+  shared_examples "a correct payment section details" do
+    it { expect(response.body).to include I18n.t("#{i18n_details_section}.payments.heading") }
+
+    it "includes the expected payments table headers" do
+      aggregate_failures do
+        expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.date")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.reference")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.type")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.amount")
+      end
+    end
+
+    it "includes payment details" do
+      expect(response.body).to include account.payments.success.first.reference
+    end
+  end
+
+  shared_examples "a correct refunds section details" do
+    it { expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.heading") }
+
+    it "includes the expected refund table headers" do
+      aggregate_failures do
+        expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.date")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.reference")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.comments")
+        expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.amount")
+      end
+    end
+  end
+
+  shared_examples "a correct balance section details" do
+    it { expect(response.body).to include I18n.t("#{i18n_details_section}.balance.heading") }
+    it { expect(response.body).to include I18n.t("#{i18n_details_section}.balance.amount") }
+    it { expect(response.body).to include (registration.account.balance / 100).round(2).to_s }
+  end
+
   describe "GET /registrations/:reference/payment_details" do
     let(:registration) { create(:registration, account: build(:account, :with_order, :with_payment)) }
     let(:account) { registration.account }
@@ -36,76 +108,61 @@ RSpec.describe "Payment details" do
         expect(response.body).to include(registration.reference)
       end
 
-      context "for the details section" do
+      context "for the details section when registration is single-site" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
-
-        it { expect(response).to have_http_status(:ok) }
-
-        it { expect(response.body).to include I18n.t("#{i18n_page}.heading", reference: registration.reference) }
+        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_singlesite.details_section.charges" }
 
         # charges
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.charges.heading") }
+        it_behaves_like "a correct charges table headers"
 
-        it "includes the expected charges table headers" do
-          aggregate_failures do
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charges.headers.date")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charges.headers.breakdown")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charges.headers.amount")
-          end
-        end
+        # charge breakdown
+        it_behaves_like "a correct charge breakdown headers"
 
         it "includes charge details" do
           expected_exemption_codes = order.exemptions.pluck(:code).sort
-          expect(response.body).to include expected_exemption_codes.join(",")
+          expect(response.body).to include expected_exemption_codes.join(", ")
         end
-
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.charges.registration_charge_label") }
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.charges.total_charge_label") }
 
         # charge adjustments
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.heading") }
-
-        it "includes the expected charge adjustments table headers" do
-          aggregate_failures do
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.date")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.type")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.comments")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.charge_adjustments.headers.amount")
-          end
-        end
+        it_behaves_like "a correct charge adjustment section details"
 
         # payments
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.payments.heading") }
-
-        it "includes the expected payments table headers" do
-          aggregate_failures do
-            expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.date")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.reference")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.type")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.payments.headers.amount")
-          end
-        end
-
-        it "includes payment details" do
-          expect(response.body).to include account.payments.success.first.reference
-        end
+        it_behaves_like "a correct payment section details"
 
         # refunds
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.heading") }
-
-        it "includes the expected refund table headers" do
-          aggregate_failures do
-            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.date")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.reference")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.comments")
-            expect(response.body).to include I18n.t("#{i18n_details_section}.refunds.headers.amount")
-          end
-        end
+        it_behaves_like "a correct refunds section details"
 
         # balance
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.balance.heading") }
-        it { expect(response.body).to include I18n.t("#{i18n_details_section}.balance.amount") }
-        it { expect(response.body).to include (registration.account.balance / 100).round(2).to_s }
+        it_behaves_like "a correct balance section details"
+      end
+
+      context "for the details section when registration is multi-site" do
+        let(:i18n_details_section) { "#{i18n_page}.details_section" }
+        let(:registration) { create(:registration, :multisite_full, account: build(:account, :with_order, :with_payment)) }
+        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_multisite.details_section.charges" }
+
+        # charges
+        it_behaves_like "a correct charges table headers"
+
+        # charge breakdown
+        it_behaves_like "a correct charge breakdown headers"
+
+        it "includes charge details with number of sites" do
+          expected_exemption_codes = order.exemptions.pluck(:code).sort
+          expect(response.body).to include "#{expected_exemption_codes.join(', ')} x [#{registration.site_addresses.count}]"
+        end
+
+        # charge adjustments
+        it_behaves_like "a correct charge adjustment section details"
+
+        # payments
+        it_behaves_like "a correct payment section details"
+
+        # refunds
+        it_behaves_like "a correct refunds section details"
+
+        # balance
+        it_behaves_like "a correct balance section details"
       end
 
       it { expect(response.body).to include I18n.t("#{i18n_actions_section}.heading", reference: registration.reference) }
