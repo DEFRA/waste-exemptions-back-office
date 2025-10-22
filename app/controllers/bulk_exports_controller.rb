@@ -4,6 +4,7 @@ class BulkExportsController < ApplicationController
   def show
     authorize! :read, Reports::GeneratedReport
 
+    @boxi_exports = BoxiExportsPresenter.new
     @finance_data_exports = FinanceDataExportsPresenter.new
   end
 
@@ -41,6 +42,8 @@ class BulkExportsController < ApplicationController
       WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
     when "finance_data"
       WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
+    when "boxi"
+      WasteExemptionsBackOffice::Application.config.boxi_exports_bucket_name
     else
       raise "Unknown report type: #{generated_report.report_type}"
     end
