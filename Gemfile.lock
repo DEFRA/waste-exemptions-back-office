@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: b05dfe622a5674ab3dfa5f7378d7e660395ebdd7
+  revision: f56b3a4852006914eaaec81b9f606ee60c18adf1
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -32,7 +32,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    aasm (5.5.1)
+    aasm (5.5.2)
       concurrent-ruby (~> 1.0)
     actioncable (7.2.2.2)
       actionpack (= 7.2.2.2)
@@ -156,7 +156,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
     bcrypt (3.1.20)
-    benchmark (0.4.1)
+    benchmark (0.5.0)
     bigdecimal (3.3.1)
     bindex (0.8.1)
     builder (3.3.0)
