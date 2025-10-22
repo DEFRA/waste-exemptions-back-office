@@ -3,49 +3,14 @@
     <%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
 
     <h1 class="govuk-heading-l">
-      <%= t(".heading") %>
-    </h1>
-
-    <% if can?(:read, Reports::Download) %>
-    <p class="govuk-body">
-      <%= link_to t(".download_history"), bulk_export_download_history_path(format: :csv) %>
-    </p>
-    <% end %>
-
-    <p class="govuk-body">
-      <%= @bulk_exports.exported_at_message %>
-    </p>
-  </div>
-</div>
-
-<% if @bulk_exports.links.any? %>
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <ul class="govuk-list">
-        <% @bulk_exports.links.each do |link_data| %>
-        <li>
-          <%= link_to link_data[:text], bulk_export_download_path(link_data[:id]) %>
-        </li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-<% end %>
-
-<% if can?(:read_finance_data, Reports::GeneratedReport) %>
-
-<br/>
-<br/>
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">
       <%= t(".finance_data.heading") %>
     </h1>
+
   </div>
 </div>
 
-<div class="govuk-grid-row">
+<% if can?(:read_finance_data, Reports::GeneratedReport) %>
+  <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
     <% if @finance_data_exports.links.any? %>
@@ -68,5 +33,4 @@
 
     </div>
   </div>
-
-  <% end %>
+<% end %>
