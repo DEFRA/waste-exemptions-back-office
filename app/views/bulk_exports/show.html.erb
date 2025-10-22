@@ -3,34 +3,86 @@
     <%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
 
     <h1 class="govuk-heading-l">
-      <%= t(".finance_data.heading") %>
+      <%= t(".heading") %>
     </h1>
 
+    <% if can?(:read, Reports::Download) %>
+    <p class="govuk-body">
+      <%= link_to t(".download_history"), bulk_export_download_history_path(format: :csv) %>
+    </p>
+    <% end %>
   </div>
 </div>
 
-<% if can?(:read_finance_data, Reports::GeneratedReport) %>
+
+<% if can?(:read, Reports::GeneratedReport) %>
+  <br/>
+  <br/>
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
-    <% if @finance_data_exports.links.any? %>
-      <p class="govuk-body">
-        <b><%= t(".finance_data.latest_file") %></b>
-      </p>
-
-      <ul class="govuk-list">
-        <% @finance_data_exports.links.each do |link_data| %>
-        <li>
-          <%= link_to link_data[:text], bulk_export_download_path(link_data[:id]) %>
-        </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p class="govuk-body">
-        <%= t(".finance_data.no_reports_found") %>
-      </p>
-    <% end %>
-
+      <h2 class="govuk-heading-m">
+        <%= t(".boxi.heading") %>
+      </h2>
     </div>
   </div>
+
+  <% if @boxi_exports.links.any? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body">
+          <%= @boxi_exports.exported_at_message %>
+        </p>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <ul class="govuk-list">
+          <% @boxi_exports.links.each do |link_data| %>
+          <li>
+            <%= link_to link_data[:text], bulk_export_download_path(link_data[:id]) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<% if can?(:read_finance_data, Reports::GeneratedReport) %>
+  <br/>
+  <br/>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m">
+        <%= t(".finance_data.heading") %>
+      </h2>
+    </div>
+  </div>
+
+  <% if @finance_data_exports.links.any? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body">
+          <%= @finance_data_exports.exported_at_message %>
+        </p>
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+
+        <ul class="govuk-list">
+        <% @finance_data_exports.links.each do |link_data| %>
+          <li>
+            <%= link_to link_data[:text], bulk_export_download_path(link_data[:id]) %>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
 <% end %>
