@@ -15,7 +15,7 @@ RSpec.describe "Whenever::Test::Schedule" do
 
   it "makes sure 'rake_and_format' statements exist" do
     rake_jobs = schedule.jobs[:rake_and_format]
-    expect(rake_jobs.count).to eq(15)
+    expect(rake_jobs.count).to eq(14)
 
     epr_jobs = rake_jobs.select { |j| j[:task] == "reports:export:epr" }
     expect(epr_jobs.count).to eq(1)
