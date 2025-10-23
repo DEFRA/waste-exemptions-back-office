@@ -5,74 +5,85 @@ module Reports
 
     delegate :code, to: :exemption, prefix: true
 
+    # The presenter operates at the registration_exemption level but uses many attributes of the owning registration.
+    # Multisite registration_exemptions have an indirect association with the registration.
+    def owning_registration
+      @owning_registration ||= multisite? ? address.registration : registration
+    end
+
     def registration_number
-      registration.reference
+      # if registration_exemption.multisite?
+      if multisite?
+        "#{owning_registration.reference}/#{address.site_suffix}"
+      else
+        owning_registration.reference
+      end
     end
 
     def organisation_name
-      registration.operator_name
+      owning_registration.operator_name
     end
 
     def organisation_premises
-      registration.operator_address&.premises
+      owning_registration.operator_address&.premises
     end
 
     def organisation_street_address
-      registration.operator_address&.street_address
+      owning_registration.operator_address&.street_address
     end
 
     def organisation_locality
-      registration.operator_address&.locality
+      owning_registration.operator_address&.locality
     end
 
     def organisation_city
-      registration.operator_address&.city
+      owning_registration.operator_address&.city
     end
 
     def organisation_postcode
-      registration.operator_address&.postcode
+      owning_registration.operator_address&.postcode
     end
 
     def site_premises
-      registration.site_address&.premises
+      owning_registration.site_address&.premises
     end
 
     def site_street_address
-      registration.site_address&.street_address
+      owning_registration.site_address&.street_address
     end
 
     def site_locality
-      registration.site_address&.locality
+      owning_registration.site_address&.locality
     end
 
     def site_city
-      registration.site_address&.city
+      owning_registration.site_address&.city
     end
 
     def site_postcode
-      registration.site_address&.postcode
+      owning_registration.site_address&.postcode
     end
 
     def site_country
-      registration.site_address&.country_iso
+      owning_registration.site_address&.country_iso
     end
 
     def site_ngr
-      return nil if registration.site_address&.postcode.present?
+      return nil if owning_registration.site_address&.postcode.present?
 
-      registration.site_address&.grid_reference
+      owning_registration.site_address&.grid_reference
     end
 
     def site_easting
-      registration.site_address&.x
+      owning_registration.site_address&.x
     end
 
     def site_northing
-      registration.site_address&.y
+      owning_registration.site_address&.y
     end
 
     def ea_area_location
-      registration.site_address&.area
+      owning_registration.site_address&.area
     end
 
     def exemption_registration_date
@@ -84,11 +95,11 @@ module Reports
     end
 
     def site_is_on_a_farm
-      registration.on_a_farm ? "yes" : "no"
+      owning_registration.on_a_farm ? "yes" : "no"
     end
 
     def user_is_a_farmer
-      registration.is_a_farmer ? "yes" : "no"
+      owning_registration.is_a_farmer ? "yes" : "no"
     end
   end
 end

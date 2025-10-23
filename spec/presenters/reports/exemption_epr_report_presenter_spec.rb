@@ -17,10 +17,28 @@ module Reports
     subject(:presenter) { described_class.new(registration_exemption) }
 
     describe "#registration_number" do
-      let(:registration) { create(:registration) }
+      context "with a single-site registration" do
+        let(:registration) { create(:registration) }
 
-      it "returns the registration reference" do
-        expect(presenter.registration_number).to eq(registration.reference)
+        it "returns the registration reference" do
+          expect(presenter.registration_number).to eq(registration.reference)
+        end
+      end
+
+      context "with a multi-site registration" do
+        let(:multisite_registration) { create(:registration, :multisite_complete) }
+        let(:site_address) { multisite_registration.site_addresses.last }
+        let(:registration_exemption) { site_address.registration_exemptions.last }
+
+        it "includes the site suffix" do
+          expect(presenter.registration_number).to eq("#{multisite_registration.reference}/#{site_address.site_suffix}")
+        end
+
+        # A multisite registration_exemption has an indirect association to the owning registration.
+        # Confirm that the registration is reachable outside the specialised registration_number method:
+        it "does not raise an exception" do
+          expect { presenter.organisation_name }.not_to raise_error
+        end
       end
     end
 
