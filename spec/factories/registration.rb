@@ -164,13 +164,15 @@ FactoryBot.define do
       is_multisite_registration { true }
     end
 
-    trait :multisite_full do
+    trait :multisite_complete do
       is_multisite_registration { true }
 
       after(:build) do |registration|
-        registration.site_addresses = (1..30).map do |_i|
+        registration.registration_exemptions = []
+        registration.site_addresses = (1..30).map do |i|
           site_address = build(:address, :site_address)
-          site_address.registration_exemptions << build_list(:registration_exemption, 3, :ceased)
+          site_address.registration_exemptions << build_list(:registration_exemption, 3, :active)
+          site_address.site_suffix = format("%05d", i)
           site_address
         end
       end

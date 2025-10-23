@@ -36,9 +36,8 @@ RSpec.describe "Sites" do
     end
 
     context "when registration is multi-site" do
-      let(:registration) { create(:registration, :multisite) }
-      let(:site_address) { create(:address, :site_address, registration: registration) }
-      let(:site_address_two) { create(:address, :site_address, registration: registration) }
+      let(:registration) { create(:registration, :multisite_complete) }
+      let(:site_address) { registration.site_addresses.first }
 
       it_behaves_like "renders the index template and returns a 200 response"
       it_behaves_like "includes the correct content"
