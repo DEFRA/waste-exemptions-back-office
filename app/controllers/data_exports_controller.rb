@@ -43,7 +43,7 @@ class DataExportsController < ApplicationController
     when "boxi"
       WasteExemptionsBackOffice::Application.config.boxi_exports_bucket_name
     else
-      raise "Unknown report type: #{generated_report.report_type}"
+      raise StandardError, "Unknown report type: #{generated_report.report_type}"
     end
   end
 end
