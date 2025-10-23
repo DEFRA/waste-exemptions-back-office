@@ -31,13 +31,7 @@ FactoryBot.define do
 
     address_type { 0 }
 
-    trait :operator do
-      address_type { 1 }
-    end
-
-    trait :contact do
-      address_type { 2 }
-    end
+    mode { :lookup }
 
     trait :with_grid_reference do
       grid_reference { "ST 58337 72855" }
@@ -51,10 +45,6 @@ FactoryBot.define do
 
     trait :contact_address do
       address_type { address_types[:contact] }
-    end
-
-    trait :site_address do
-      address_type { address_types[:site] }
     end
 
     trait :postal do
@@ -75,8 +65,8 @@ FactoryBot.define do
       mode { modes[:manual] }
     end
 
-    trait :site do
-      address_type { 3 }
+    trait :site_address do
+      address_type { address_types[:site] }
       mode { :auto }
       description { "The waste is stored in an out-building next to the barn." }
       grid_reference { "ST 58337 72855" }
@@ -96,21 +86,6 @@ FactoryBot.define do
       city { nil }
       postcode { nil }
       country_iso { nil }
-    end
-
-    trait :site_uses_address do
-      address_type { 3 }
-      mode { :lookup }
-    end
-
-    trait :operator_uses_address do
-      address_type { 1 }
-      mode { :lookup }
-    end
-
-    trait :contact_uses_address do
-      address_type { 2 }
-      mode { :lookup }
     end
 
     trait :short_description do

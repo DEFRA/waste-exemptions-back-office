@@ -138,7 +138,7 @@ RSpec.describe "Payment details" do
 
       context "for the details section when registration is multi-site" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
-        let(:registration) { create(:registration, :multisite_full, account: build(:account, :with_order, :with_payment)) }
+        let(:registration) { create(:registration, :multisite_complete, account: build(:account, :with_order, :with_payment)) }
         let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_multisite.details_section.charges" }
 
         # charges

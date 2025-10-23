@@ -44,9 +44,22 @@ module Reports
         expect(rows.first).to eq(expected_columns.join(","))
       end
 
-      it "writes a header row and a row for each registration exemption" do
-        # The registration factory currently creates 3 registration_exemptions per registration
-        expect(rows.length).to eq(1 + (registrations_count * 3))
+      context "with single-site registrations" do
+        it "writes a header row and a row for each registration exemption" do
+          # The registration factory currently creates 3 registration_exemptions per registration
+          expect(rows.length).to eq(1 + (registrations_count * 3))
+        end
+      end
+
+      context "with multi-site registrations" do
+        let!(:multisite_reg) { create(:registration, :multisite_complete) }
+
+        it "writes a header row and a row for each (site + registration_exemption)" do
+          single_site_row_count = registrations_count * 3
+          multisite_row_count = multisite_reg.site_addresses.sum { |address| address.registration_exemptions.length }
+
+          expect(rows.length).to eq(1 + single_site_row_count + multisite_row_count)
+        end
       end
 
       it "writes exemption details as a string in CSV format" do

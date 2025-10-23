@@ -22,7 +22,7 @@ module Reports
 
         context "when the address description contains new lines" do
           it "generates a csv file without new lines" do
-            create(:address, :site, description: "sadfsa\r\nfafdafaf\r\nfdfdaf")
+            create(:address, :site_address, description: "sadfsa\r\nfafdafaf\r\nfdfdaf")
 
             expect(addresses_serializer.to_csv).not_to include("\r\n")
             expect(addresses_serializer.to_csv).to include("sadfsa fafdafaf fdfdaf")
