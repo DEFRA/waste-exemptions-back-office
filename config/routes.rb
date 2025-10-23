@@ -27,10 +27,10 @@ Rails.application.routes.draw do
   # Renewal Letter
   get "/renewal-letter/:id", to: "renewal_letter#show", as: :renewal_letter
 
-  # Bulk Exports
-  get "/data-exports", to: "bulk_exports#show", as: :bulk_exports
-  get "/data-exports/history", to: "bulk_exports#download_history", as: :bulk_export_download_history
-  get "/data-exports/:id", to: "bulk_exports#download", as: :bulk_export_download
+  # Data Exports
+  get "/data-exports", to: "data_exports#show", as: :data_exports
+  get "/data-exports/history", to: "data_exports#download_history", as: :data_export_download_history
+  get "/data-exports/:id", to: "data_exports#download", as: :data_export_download
 
   # Registration management
   resources :registrations, only: %i[show index], param: :reference do

@@ -29,7 +29,7 @@ module Reports
 
     def report_name(report_type)
       type = report_type.gsub(/([a-z])([A-Z])/, '\1_\2').downcase.gsub("::", ".")
-      I18n.t("bulk_exports.#{type}")
+      I18n.t("data_exports.#{type}")
     end
 
     def present_row(download)

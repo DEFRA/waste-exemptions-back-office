@@ -18,6 +18,8 @@ module Reports
         zip_export_files(dir_path)
 
         load_file_to_aws_bucket
+
+        save_metadata_to_db
       end
     rescue StandardError => e
       Airbrake.notify e
@@ -39,12 +41,25 @@ module Reports
       end
     end
 
+    def file_name
+      "waste_exemptions_rep_daily_full.zip"
+    end
+
     def file_path
-      @file_path ||= Rails.root.join("tmp/waste_exemptions_rep_daily_full.zip")
+      @file_path ||= Rails.root.join("tmp/#{file_name}")
     end
 
     def bucket_name
       WasteExemptionsBackOffice::Application.config.boxi_exports_bucket_name
+    end
+
+    def save_metadata_to_db
+      report = GeneratedReport.find_or_create_by!(report_type: GeneratedReport::REPORT_TYPE_BOXI)
+      report.file_name = file_name
+      report.data_from_date = "2018-01-01"
+      report.data_to_date = Time.zone.today
+
+      report.save! if report.changed?
     end
   end
 end

@@ -33,7 +33,7 @@
         <% if can?(:read, Reports::GeneratedReport) %>
           <li class="govuk-header__navigation-item">
             <%= link_to t("layouts.application.menu.exports"),
-                        main_app.bulk_exports_path,
+                        main_app.data_exports_path,
                         class: "govuk-header__link" %>
           </li>
         <% end %>

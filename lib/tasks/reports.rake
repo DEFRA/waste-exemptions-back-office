@@ -2,11 +2,6 @@
 
 namespace :reports do
   namespace :export do
-    desc "Generate the bulk montly reports and upload them to S3."
-    task bulk: :environment do
-      Reports::BulkExportService.run
-    end
-
     desc "Generate the finance data reports and upload them to S3."
     task finance_data: :environment do
       Reports::GeneratedReport.finance_data.delete_all

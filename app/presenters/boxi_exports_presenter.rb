@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BulkExportsPresenter
+class BoxiExportsPresenter
 
   def links
     @_links ||= generated_reports_scope.map do |generated_report|
@@ -9,10 +9,10 @@ class BulkExportsPresenter
   end
 
   def exported_at_message
-    return I18n.t("bulk_exports.show.not_yet_exported") if export_executed_at.blank?
+    return I18n.t("data_exports.show.boxi.not_yet_exported") if export_executed_at.blank?
 
     export_executed_at_string = export_executed_at.to_fs(:time_on_day_month_year)
-    I18n.t("bulk_exports.show.exported_at", export_executed_at: export_executed_at_string)
+    I18n.t("data_exports.show.boxi.exported_at", export_executed_at: export_executed_at_string)
   end
 
   private
@@ -21,16 +21,16 @@ class BulkExportsPresenter
     {
       id: generated_report.id,
       url: bucket.presigned_url(generated_report.file_name),
-      text: generated_report.data_from_date.to_fs(:month_year)
+      text: generated_report.file_name
     }
   end
 
   def export_executed_at
-    @_export_executed_at ||= generated_reports_scope.first&.created_at
+    @_export_executed_at ||= generated_reports_scope.first&.updated_at
   end
 
   def generated_reports_scope
-    Reports::GeneratedReport.bulk.order(:created_at)
+    Reports::GeneratedReport.boxi.order(:updated_at)
   end
 
   def bucket
@@ -38,6 +38,6 @@ class BulkExportsPresenter
   end
 
   def bucket_name
-    WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
+    WasteExemptionsBackOffice::Application.config.boxi_exports_bucket_name
   end
 end
