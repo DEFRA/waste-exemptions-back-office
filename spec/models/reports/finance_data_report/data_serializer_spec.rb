@@ -8,7 +8,7 @@ module Reports
       let(:account) { create(:account, :with_payment) }
       let(:order) { create(:order, :with_exemptions, :with_charge_detail, order_owner: account) }
       let(:charge_adjustment) { create(:charge_adjustment, account: account) }
-      let(:site_address) { create(:address, :site, premises: "Bar 123", area: "Wessex") }
+      let(:site_address) { create(:address, :site_address, premises: "Bar 123", area: "Wessex") }
       let(:registration) { create(:registration, account: account, addresses: [site_address]) }
 
       let(:serializer) { described_class.new }

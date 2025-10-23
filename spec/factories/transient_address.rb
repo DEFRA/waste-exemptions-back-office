@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  address_types = WasteExemptionsEngine::Address.address_types
+
   factory :transient_address, class: "WasteExemptionsEngine::TransientAddress" do
     sequence :postcode do |n|
       "BS#{n}AA"
@@ -8,16 +10,16 @@ FactoryBot.define do
 
     address_type { 0 }
 
-    trait :operator do
-      address_type { 1 }
+    trait :operator_address do
+      address_type { address_types[:operator] }
     end
 
-    trait :contact do
-      address_type { 2 }
+    trait :contact_address do
+      address_type { address_types[:contact] }
     end
 
-    trait :site do
-      address_type { 3 }
+    trait :site_address do
+      address_type { address_types[:site] }
     end
   end
 end

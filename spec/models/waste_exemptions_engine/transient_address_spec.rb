@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe WasteExemptionsEngine::TransientAddress do
-  let(:matching_address) { create(:transient_address, :site) }
-  let(:non_matching_address) { create(:transient_address, :contact) }
+  let(:matching_address) { create(:transient_address, :site_address) }
+  let(:non_matching_address) { create(:transient_address, :contact_address) }
 
   describe "#search_for_postcode" do
     let(:term) { nil }

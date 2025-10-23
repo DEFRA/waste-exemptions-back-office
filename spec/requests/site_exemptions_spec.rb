@@ -14,7 +14,7 @@ RSpec.describe "Site Exemptions" do
 
     let(:registration) { create(:registration, registration_exemptions: []) }
     let(:site) do
-      registration.site_addresses.first || create(:address, :site, registration: registration)
+      registration.site_addresses.first || create(:address, :site_address, registration: registration)
     end
 
     shared_examples "renders the index template with a 200 response" do
@@ -51,7 +51,7 @@ RSpec.describe "Site Exemptions" do
           )
         ]
       end
-      let!(:other_site) { create(:address, :site, registration: registration) }
+      let!(:other_site) { create(:address, :site_address, registration: registration) }
       let!(:other_registration_exemption) do
         create(:registration_exemption, :revoked, registration: registration, address: other_site)
       end

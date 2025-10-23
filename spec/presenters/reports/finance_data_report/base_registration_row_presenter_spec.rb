@@ -5,7 +5,7 @@ require "rails_helper"
 module Reports
   module FinanceDataReport
     RSpec.describe BaseRegistrationRowPresenter do
-      let(:site_address) { create(:address, :site, premises: "Bar 123", area: "Wessex") }
+      let(:site_address) { create(:address, :site_address, premises: "Bar 123", area: "Wessex") }
       let(:registration) { create(:registration, addresses: [site_address]) }
       let(:presenter) { described_class.new(registration: registration) }
 

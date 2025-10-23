@@ -37,7 +37,7 @@ RSpec.describe RegistrationChangeHistoryService do
       reg.save(validate: false)
       # 2nd version
       # the reference gets set automatically by the system
-      # fter the registration is created
+      # after the registration is created
       # 3rd version
       reg.update(contact_first_name: "Johnny", contact_last_name: "Smiths", contact_position: "Manager", reason_for_change: "Fixing the typo in name")
       # 4th version
@@ -160,8 +160,14 @@ RSpec.describe RegistrationChangeHistoryService do
     end
 
     context "when adjusting registration addresses" do
+      # Override the factory default to create a registration without an operator address
+      # so we can test that the addition of a new address is tracked correctly
+      let(:registration) do
+        create(:registration, addresses: [build(:address, :contact_address), build(:address, :site_address)])
+      end
+
       before do
-        # 5rd version - setting up operator address
+        # 5th version - setting up operator address
         PaperTrail.request.whodunnit = "developer@wex.gov.uk"
         new_operator_address = create(:address, address_type: "operator", mode: "manual", premises: "Flat 12", street_address: "12 Malden road", city: "London", postcode: "BS1 2DF")
         registration.addresses = [new_operator_address, registration.site_address, registration.contact_address]
@@ -176,7 +182,7 @@ RSpec.describe RegistrationChangeHistoryService do
 
     context "when adjusting registration exemptions" do
       before do
-        # 6rd version - extending expiry date
+        # 6th version - extending expiry date
         PaperTrail.request.whodunnit = "developer@wex.gov.uk"
         registration.registration_exemptions.each do |re|
           re.update(expires_on: 4.years.from_now, reason_for_change: "Extending expiry date")

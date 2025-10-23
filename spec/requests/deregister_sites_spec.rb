@@ -6,7 +6,7 @@ RSpec.describe "Deregister Sites" do
   let(:user) { create(:user, :admin_team_lead) }
 
   let(:registration) { create(:registration, :multisite, site_addresses: [], registration_exemptions: []) }
-  let(:site) { create(:address, :site, registration: registration, registration_exemptions: [registration_exemption_one, registration_exemption_two]) }
+  let(:site) { create(:address, :site_address, registration: registration, registration_exemptions: [registration_exemption_one, registration_exemption_two]) }
 
   let(:registration_exemption_one) { create(:registration_exemption, state: "active", registration:) }
   let(:registration_exemption_two) { create(:registration_exemption, state: "active", registration:) }
