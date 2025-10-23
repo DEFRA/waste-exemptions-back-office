@@ -22,6 +22,20 @@ RSpec.describe "Bulk Exports" do
   end
 
   describe "GET /data-exports" do
+    context "when user has no permission to access reports" do
+      let(:user) { create(:user, :finance_user) }
+
+      it "responds with a 302 status code" do
+        get bulk_exports_path
+        expect(response).to have_http_status(:found)
+      end
+
+      it "redirects to the permission page" do
+        get bulk_exports_path
+        expect(response).to redirect_to("/pages/permission")
+      end
+    end
+
     context "when boxi data report is present" do
       before do
         create(:generated_report, :boxi, file_name: "boxi_report.csv")
@@ -35,16 +49,6 @@ RSpec.describe "Bulk Exports" do
         it "contains boxi report link" do
           get bulk_exports_path
           expect(response.body).to include("boxi_report.csv")
-        end
-      end
-
-      context "when user has no permission to download boxi report" do
-
-        it_behaves_like "renders the correct template and returns correct status"
-
-        it "does not contain boxi report link" do
-          get bulk_exports_path
-          expect(response.body).not_to include("boxi_report.csv")
         end
       end
     end
