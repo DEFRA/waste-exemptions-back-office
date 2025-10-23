@@ -8,7 +8,7 @@
 
     <% if can?(:read, Reports::Download) %>
     <p class="govuk-body">
-      <%= link_to t(".download_history"), bulk_export_download_history_path(format: :csv) %>
+      <%= link_to t(".download_history"), data_export_download_history_path(format: :csv) %>
     </p>
     <% end %>
   </div>
@@ -41,7 +41,7 @@
         <ul class="govuk-list">
           <% @boxi_exports.links.each do |link_data| %>
           <li>
-            <%= link_to link_data[:text], bulk_export_download_path(link_data[:id]) %>
+            <%= link_to link_data[:text], data_export_download_path(link_data[:id]) %>
           </li>
           <% end %>
         </ul>
@@ -77,7 +77,7 @@
         <ul class="govuk-list">
         <% @finance_data_exports.links.each do |link_data| %>
           <li>
-            <%= link_to link_data[:text], bulk_export_download_path(link_data[:id]) %>
+            <%= link_to link_data[:text], data_export_download_path(link_data[:id]) %>
           </li>
         <% end %>
         </ul>

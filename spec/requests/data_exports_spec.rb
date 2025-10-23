@@ -11,12 +11,12 @@ RSpec.describe "Bulk Exports" do
 
   shared_examples "renders the correct template and returns correct status" do
     it "renders the correct template" do
-      get bulk_exports_path
-      expect(response).to render_template("bulk_exports/show")
+      get data_exports_path
+      expect(response).to render_template("data_exports/show")
     end
 
     it "responds with a 200 status code" do
-      get bulk_exports_path
+      get data_exports_path
       expect(response).to have_http_status(:ok)
     end
   end
@@ -26,12 +26,12 @@ RSpec.describe "Bulk Exports" do
       let(:user) { create(:user, :finance_user) }
 
       it "responds with a 302 status code" do
-        get bulk_exports_path
+        get data_exports_path
         expect(response).to have_http_status(:found)
       end
 
       it "redirects to the permission page" do
-        get bulk_exports_path
+        get data_exports_path
         expect(response).to redirect_to("/pages/permission")
       end
     end
@@ -47,7 +47,7 @@ RSpec.describe "Bulk Exports" do
         it_behaves_like "renders the correct template and returns correct status"
 
         it "contains boxi report link" do
-          get bulk_exports_path
+          get data_exports_path
           expect(response.body).to include("boxi_report.csv")
         end
       end
@@ -64,7 +64,7 @@ RSpec.describe "Bulk Exports" do
         it_behaves_like "renders the correct template and returns correct status"
 
         it "contains finance_data report link" do
-          get bulk_exports_path
+          get data_exports_path
           expect(response.body).to include("finance_data_report.csv")
         end
       end
@@ -74,7 +74,7 @@ RSpec.describe "Bulk Exports" do
         it_behaves_like "renders the correct template and returns correct status"
 
         it "does not contain finance_data report link" do
-          get bulk_exports_path
+          get data_exports_path
           expect(response.body).not_to include("finance_data_report.csv")
         end
       end
@@ -83,14 +83,14 @@ RSpec.describe "Bulk Exports" do
 
   describe "GET /data-exports/:id" do
     let(:generated_report) { create(:generated_report) }
-    let(:bucket_name) { WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name }
+    let(:bucket_name) { WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name }
     let(:download_link) do
       bucket = DefraRuby::Aws.get_bucket(bucket_name)
       bucket.presigned_url(generated_report.file_name)
     end
 
     it "redirects to the correct URL and responds with a 302 status code" do
-      get bulk_export_download_path(generated_report)
+      get data_export_download_path(generated_report)
 
       expect(response).to redirect_to(download_link)
       expect(response).to have_http_status(:found)
@@ -106,18 +106,18 @@ RSpec.describe "Bulk Exports" do
     end
 
     it "responds with success" do
-      get bulk_export_download_history_path, params: { format: :csv }
+      get data_export_download_history_path, params: { format: :csv }
       expect(response).to have_http_status(:success)
     end
 
     it "calls the DownloadHistoryExportService" do
-      get bulk_export_download_history_path, params: { format: :csv }
+      get data_export_download_history_path, params: { format: :csv }
       expect(Reports::DownloadHistoryExportService).to have_received(:new)
       expect(service).to have_received(:run)
     end
 
     it "returns the correct CSV content" do
-      get bulk_export_download_history_path, params: { format: :csv }
+      get data_export_download_history_path, params: { format: :csv }
       expect(response.body).to eq(csv_content)
       expect(response.header["Content-Type"]).to include("text/csv")
     end

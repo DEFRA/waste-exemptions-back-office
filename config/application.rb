@@ -66,7 +66,6 @@ module WasteExemptionsBackOffice
     config.companies_house_api_key = ENV.fetch("COMPANIES_HOUSE_API_KEY", nil)
 
     # Data export config
-    config.bulk_reports_bucket_name = ENV.fetch("AWS_BULK_EXPORT_BUCKET", nil)
     config.finance_data_reports_bucket_name = ENV.fetch("AWS_FINANCE_DATA_EXPORT_BUCKET", nil)
     config.epr_reports_bucket_name = ENV.fetch("AWS_DAILY_EXPORT_BUCKET", nil)
     config.deregistration_email_bucket_name = ENV.fetch("AWS_DEREGISTRATION_EMAIL_EXPORT_BUCKET", nil)

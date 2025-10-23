@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :generated_report, class: "Reports::GeneratedReport" do
     file_name { "20190601-20190630.csv" }
-    report_type { "bulk" }
+    report_type { "finance_data" }
 
     trait :finance_data do
       report_type { "finance_data" }
