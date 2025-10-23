@@ -9,7 +9,7 @@ class BoxiExportsPresenter
   end
 
   def exported_at_message
-    return I18n.t("boxi_exports.show.boxi.not_yet_exported") if export_executed_at.blank?
+    return I18n.t("bulk_exports.show.boxi.not_yet_exported") if export_executed_at.blank?
 
     export_executed_at_string = export_executed_at.to_fs(:time_on_day_month_year)
     I18n.t("bulk_exports.show.boxi.exported_at", export_executed_at: export_executed_at_string)
@@ -26,11 +26,11 @@ class BoxiExportsPresenter
   end
 
   def export_executed_at
-    @_export_executed_at ||= generated_reports_scope.first&.created_at
+    @_export_executed_at ||= generated_reports_scope.first&.updated_at
   end
 
   def generated_reports_scope
-    Reports::GeneratedReport.boxi.order(:created_at)
+    Reports::GeneratedReport.boxi.order(:updated_at)
   end
 
   def bucket

@@ -10,7 +10,7 @@ FactoryBot.define do
     end
 
     trait :boxi do
-      report_type { "finance_data" }
+      report_type { "boxi" }
     end
   end
 end
