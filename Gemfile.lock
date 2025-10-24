@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: f56b3a4852006914eaaec81b9f606ee60c18adf1
+  revision: c426be35466a84a6b20c7274ddc98ac2c575fc6c
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -160,7 +160,7 @@ GEM
     bigdecimal (3.3.1)
     bindex (0.8.1)
     builder (3.3.0)
-    bullet (8.0.8)
+    bullet (8.1.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     byebug (12.0.0)
@@ -379,8 +379,8 @@ GEM
     orm_adapter (0.5.0)
     os_map_ref (0.5.0)
     ostruct (0.6.3)
-    paper_trail (16.0.0)
-      activerecord (>= 6.1)
+    paper_trail (17.0.0)
+      activerecord (>= 7.1)
       request_store (~> 1.4)
     parallel (1.27.0)
     parser (3.3.9.0)
@@ -594,7 +594,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
-    uniform_notifier (1.17.0)
+    uniform_notifier (1.18.0)
     uri (1.0.3)
     useragent (0.16.11)
     validates_email_format_of (1.8.2)
