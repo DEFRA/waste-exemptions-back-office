@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class BulkExportsController < ApplicationController
+class DataExportsController < ApplicationController
   def show
     authorize! :read, Reports::GeneratedReport
 
-    @bulk_exports = BulkExportsPresenter.new
+    @boxi_exports = BoxiExportsPresenter.new
     @finance_data_exports = FinanceDataExportsPresenter.new
   end
 
@@ -38,12 +38,12 @@ class BulkExportsController < ApplicationController
 
   def bucket_name_for_report(generated_report)
     case generated_report.report_type
-    when "bulk"
-      WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
     when "finance_data"
       WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
+    when "boxi"
+      WasteExemptionsBackOffice::Application.config.boxi_exports_bucket_name
     else
-      raise "Unknown report type: #{generated_report.report_type}"
+      raise StandardError, "Unknown report type: #{generated_report.report_type}"
     end
   end
 end

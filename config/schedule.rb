@@ -60,14 +60,6 @@ every :day, at: ENV["AREA_LOOKUP"] || "01:05", roles: [:db] do
   rake_and_format "lookups:update:missing_area"
 end
 
-# This is the bulk export job. When run this will create a series of CSV files
-# containing details on all registered exemptions regardless of status. The
-# files are batched by month, so there will be one for each month the service
-# has been live
-every :day, at: ENV["EXPORT_SERVICE_BULK_EXPORT_TIME"] || "02:05", roles: [:db] do
-  rake_and_format "reports:export:bulk"
-end
-
 # This is the finance data export job. When run, it will delete old finance reports and
 # generate a CSV file containing finance details for all registrations.
 every :day, at: ENV["EXPORT_SERVICE_FINANCE_DATA_EXPORT_TIME"] || "02:25", roles: [:db] do

@@ -2,11 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe FinanceDataExportsPresenter do
+RSpec.describe BoxiExportsPresenter do
 
   subject(:presenter) { described_class.new }
 
-  let(:generated_report) { create(:generated_report, :finance_data, file_name: "finance_data_report.csv") }
+  let(:generated_report) { create(:generated_report, :boxi, file_name: "boxi_report.csv") }
 
   describe "#links" do
     before do
@@ -18,7 +18,7 @@ RSpec.describe FinanceDataExportsPresenter do
       presenter.links.each do |link|
         expect(link[:id]).to eq(generated_report.id)
         expect(link[:text]).to eq(generated_report.file_name)
-        expect(link[:url]).to include("finance_data_report.csv")
+        expect(link[:url]).to include("boxi_report.csv")
       end
     end
   end
@@ -31,10 +31,10 @@ RSpec.describe FinanceDataExportsPresenter do
     end
 
     context "when there is a generated report" do
-      let(:created_at) { Time.zone.parse("2024-01-15 14:30:45") }
+      let(:updated_at) { Time.zone.parse("2024-01-15 14:30:45") }
 
       before do
-        create(:generated_report, :finance_data, created_at: created_at)
+        create(:generated_report, :boxi, updated_at: updated_at)
       end
 
       it "returns the exported at message with formatted timestamp" do

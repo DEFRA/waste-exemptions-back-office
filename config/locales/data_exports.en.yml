@@ -1,0 +1,16 @@
+en:
+  data_exports:
+    show:
+      title: "Data Exports"
+      heading: "Data Exports"
+      download_history: "Export download history to CSV"
+      boxi:
+        heading: "BOXI export"
+        not_yet_exported: "The file has not yet been generated"
+        exported_at:  "This file was created at %{export_executed_at}."
+      finance_data: 
+        heading: "Daily finance data export"
+        exported_at:  "This file was created at %{export_executed_at}."
+        not_yet_exported: "The file has not yet been generated"
+    reports:
+      generated_report: "Registration Data Export"
