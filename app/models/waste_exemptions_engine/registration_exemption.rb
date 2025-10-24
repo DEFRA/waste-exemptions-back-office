@@ -57,10 +57,10 @@ module WasteExemptionsEngine
       # For a multisite registration, registration_exemptions belong to the site address,
       # not to the registration.
       # We use this to establish whether this is a multi-site registration_exemption.
-      return false unless address.present?
+      return false if address.blank?
 
       # Check for edge cases where an address has a single registration_exemption
-      address.registration_exemptions.count > 1
+      address.registration_exemptions.many?
     end
   end
 end
