@@ -140,7 +140,8 @@ module ActionLinksHelper
 
     return false unless resource.is_a?(WasteExemptionsEngine::Registration) &&
                         can?(:mark_as_legacy_bulk_or_linear, resource) &&
-                        !resource.is_legacy_bulk
+                        !resource.is_legacy_bulk &&
+                        !resource.is_multisite_registration
 
     true
   end

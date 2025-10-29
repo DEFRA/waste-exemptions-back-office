@@ -807,6 +807,12 @@ RSpec.describe ActionLinksHelper do
           it_behaves_like "returns false"
         end
 
+        context "when the registration is a non-legacy multisite registration" do
+          let(:resource) { create(:registration, :multisite_complete) }
+
+          it_behaves_like "returns false"
+        end
+
         context "when the registration has not yet been marked multisite" do
           before { resource.update(is_legacy_bulk: nil) }
 
