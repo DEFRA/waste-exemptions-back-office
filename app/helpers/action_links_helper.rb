@@ -135,6 +135,26 @@ module ActionLinksHelper
       .reverseable.any?
   end
 
+  def display_mark_as_legacy_bulk_link_for?(resource)
+    return false unless WasteExemptionsEngine::FeatureToggle.active?(:enable_mark_as_legacy_bulk_or_linear)
+
+    return false unless resource.is_a?(WasteExemptionsEngine::Registration) &&
+                        can?(:mark_as_legacy_bulk_or_linear, resource) &&
+                        !resource.is_legacy_bulk
+
+    true
+  end
+
+  def display_mark_as_legacy_linear_link_for?(resource)
+    return false unless WasteExemptionsEngine::FeatureToggle.active?(:enable_mark_as_legacy_bulk_or_linear)
+
+    return false unless resource.is_a?(WasteExemptionsEngine::Registration) &&
+                        can?(:mark_as_legacy_bulk_or_linear, resource) &&
+                        !resource.is_legacy_linear
+
+    true
+  end
+
   private
 
   def new_or_new_charged_registration(resource)

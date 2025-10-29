@@ -31,6 +31,7 @@ RSpec.describe Ability do
 
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot refund payments"
+    it_behaves_like "can mark legacy bulk or linear"
 
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
   end
@@ -50,6 +51,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot write-off payments"
     it_behaves_like "cannot deregister registrations"
     it_behaves_like "cannot deregister sites"
+    it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::GeneratedReport) }
@@ -74,6 +76,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot write-off payments"
     it_behaves_like "cannot deregister registrations"
     it_behaves_like "cannot deregister sites"
+    it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
@@ -98,6 +101,7 @@ RSpec.describe Ability do
     it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
     it_behaves_like "cannot manage users"
+    it_behaves_like "can mark legacy bulk or linear"
   end
 
   context "when the user role is service_manager" do
@@ -109,6 +113,7 @@ RSpec.describe Ability do
     it_behaves_like "can manage charges and bands"
     it_behaves_like "can deregister registrations"
     it_behaves_like "can deregister sites"
+    it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
@@ -141,6 +146,7 @@ RSpec.describe Ability do
 
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot add charge adjustments"
+    it_behaves_like "cannot mark legacy bulk or linear"
   end
 
   context "when the user role is policy_adviser" do
@@ -162,6 +168,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot write-off payments"
     it_behaves_like "cannot deregister registrations"
     it_behaves_like "cannot deregister sites"
+    it_behaves_like "cannot mark legacy bulk or linear"
   end
 
   context "when the user role is finance_user" do
@@ -179,6 +186,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot add charge adjustments"
     it_behaves_like "cannot deregister registrations"
     it_behaves_like "cannot deregister sites"
+    it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::Download) }

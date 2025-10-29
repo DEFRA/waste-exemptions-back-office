@@ -7,9 +7,7 @@ RSpec.describe "Registrations" do
 
   describe "GET /registrations/:reference" do
     context "when a user is signed in" do
-      before do
-        sign_in(create(:user))
-      end
+      before { sign_in(create(:user)) }
 
       it "renders the show template and includes the correct reference" do
         get "/registrations/#{registration.reference}"
@@ -36,6 +34,76 @@ RSpec.describe "Registrations" do
         get "/registrations/#{registration.id}"
 
         expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
+
+  describe "PATCH /registrations/:reference/mark_as_legacy_bulk" do
+    let(:resource) { create(:registration) }
+
+    context "when a valid user is not signed in" do
+      before do
+        sign_out(create(:user))
+        patch "/registrations/#{resource.reference}/mark_as_legacy_bulk"
+      end
+
+      it { expect(response).to redirect_to(new_user_session_path) }
+    end
+
+    context "when a qualified user is signed in" do
+      before { sign_in(create(:user, role: :developer)) }
+
+      it "updates the is_legacy_bulk attribute" do
+        expect { patch "/registrations/#{resource.reference}/mark_as_legacy_bulk" }
+          .to change { resource.reload.is_legacy_bulk }.to true
+      end
+
+      it "returns to the registration details page" do
+        patch "/registrations/#{resource.reference}/mark_as_legacy_bulk"
+
+        expect(response).to redirect_to "/registrations/#{resource.reference}"
+      end
+
+      it "shows a flash message" do
+        patch "/registrations/#{resource.reference}/mark_as_legacy_bulk"
+        follow_redirect!
+
+        expect(response.body).to include I18n.t("registrations.marked_as_legacy_bulk")
+      end
+    end
+  end
+
+  describe "PATCH /registrations/:reference/mark_as_legacy_linear" do
+    let(:resource) { create(:registration) }
+
+    context "when a valid user is not signed in" do
+      before do
+        sign_out(create(:user))
+        patch "/registrations/#{resource.reference}/mark_as_legacy_linear"
+      end
+
+      it { expect(response).to redirect_to(new_user_session_path) }
+    end
+
+    context "when a qualified user is signed in" do
+      before { sign_in(create(:user, role: :developer)) }
+
+      it "updates the is_legacy_linear attribute" do
+        expect { patch "/registrations/#{resource.reference}/mark_as_legacy_linear" }
+          .to change { resource.reload.is_legacy_linear }.to true
+      end
+
+      it "returns to the registration details page" do
+        patch "/registrations/#{resource.reference}/mark_as_legacy_linear"
+
+        expect(response).to redirect_to "/registrations/#{resource.reference}"
+      end
+
+      it "shows a flash message" do
+        patch "/registrations/#{resource.reference}/mark_as_legacy_linear"
+        follow_redirect!
+
+        expect(response.body).to include I18n.t("registrations.marked_as_legacy_linear")
       end
     end
   end
