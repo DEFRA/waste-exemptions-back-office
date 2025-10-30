@@ -121,13 +121,13 @@
     </p>
   <% end %>
 
-  <% if display_mark_as_legacy_bulk_link_for?(resource) %>
+  <% if display_mark_as_legacy_bulk_or_linear_link_for?(resource) %>
     <p class="govuk-body">
       <%= link_to t(".actions.mark_as_legacy_bulk"), registration_mark_as_legacy_bulk_path(resource.reference), method: "patch" %>
     </p>
   <% end %>
 
-  <% if display_mark_as_legacy_linear_link_for?(resource) %>
+  <% if display_mark_as_legacy_bulk_or_linear_link_for?(resource) %>
     <p class="govuk-body">
       <%= link_to t(".actions.mark_as_legacy_linear"), registration_mark_as_legacy_linear_path(resource.reference), method: "patch" %>
     </p>

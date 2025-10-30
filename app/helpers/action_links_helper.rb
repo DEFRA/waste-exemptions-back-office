@@ -135,15 +135,7 @@ module ActionLinksHelper
       .reverseable.any?
   end
 
-  def display_mark_as_legacy_bulk_link_for?(resource)
-    return false unless WasteExemptionsEngine::FeatureToggle.active?(:enable_mark_as_legacy_bulk_or_linear)
-
-    return false unless should_show_legacy_bulk_linear_link_for?(resource)
-
-    true
-  end
-
-  def display_mark_as_legacy_linear_link_for?(resource)
+  def display_mark_as_legacy_bulk_or_linear_link_for?(resource)
     return false unless WasteExemptionsEngine::FeatureToggle.active?(:enable_mark_as_legacy_bulk_or_linear)
 
     return false unless should_show_legacy_bulk_linear_link_for?(resource)
