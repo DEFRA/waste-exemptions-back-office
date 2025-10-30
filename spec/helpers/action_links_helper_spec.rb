@@ -801,6 +801,12 @@ RSpec.describe ActionLinksHelper do
       context "when the user does have permission to view registration" do
         let(:can) { true }
 
+        context "when the registration has been marked legacy linear" do
+          before { resource.update(is_legacy_linear: true) }
+
+          it_behaves_like "returns false"
+        end
+
         context "when the registration has already been marked multisite" do
           before { resource.update(is_legacy_bulk: true) }
 
@@ -862,13 +868,25 @@ RSpec.describe ActionLinksHelper do
       context "when the user does have permission to view registration" do
         let(:can) { true }
 
-        context "when the registration has already been marked multisite" do
+        context "when the registration has been marked legacy bulk" do
+          before { resource.update(is_legacy_bulk: true) }
+
+          it_behaves_like "returns false"
+        end
+
+        context "when the registration has already been marked linear" do
           before { resource.update(is_legacy_linear: true) }
 
           it_behaves_like "returns false"
         end
 
-        context "when the registration has not yet been marked multisite" do
+        context "when the registration is a non-legacy multisite registration" do
+          let(:resource) { create(:registration, :multisite_complete) }
+
+          it_behaves_like "returns false"
+        end
+
+        context "when the registration has not yet been marked linear" do
           before { resource.update(is_legacy_linear: nil) }
 
           it { expect(helper.display_mark_as_legacy_linear_link_for?(resource)).to be(true) }

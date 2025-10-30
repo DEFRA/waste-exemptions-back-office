@@ -7,6 +7,8 @@ module WasteExemptionsEngine
     include CanBeSearchedLikeRegistration
     include CanBeSearchedLikeTelephone
 
+    validates_with LegacyBulkLinearValidator, attributes: %i[is_legacy_bulk is_legacy_linear]
+
     scope :search_for_site_address_postcode, lambda { |term|
       joins(:addresses).merge(Address.search_for_postcode(term).site)
     }
