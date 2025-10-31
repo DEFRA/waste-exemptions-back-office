@@ -18,6 +18,9 @@ module Reports
           aggregate_failures do
             expect(csv[row_number]["registration_no"]).to eq(registration.reference)
             expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
+            expect(csv[row_number]["site"]).to be_nil
             expect(csv[row_number]["charge_type"]).to eq("registration")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -31,6 +34,8 @@ module Reports
             expect(csv[row_number]["is_a_farmer"]).to be_present
             expect(csv[row_number]["ea_admin_area"]).to be_present
             expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
           end
         end
       end
@@ -40,6 +45,8 @@ module Reports
           aggregate_failures do
             expect(csv[row_number]["registration_no"]).to eq(registration.reference)
             expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
             expect(csv[row_number]["charge_type"]).to eq("compliance_initial")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_present
@@ -53,6 +60,8 @@ module Reports
             expect(csv[row_number]["is_a_farmer"]).to be_present
             expect(csv[row_number]["ea_admin_area"]).to be_present
             expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
           end
         end
       end
@@ -62,6 +71,8 @@ module Reports
           aggregate_failures do
             expect(csv[row_number]["registration_no"]).to eq(registration.reference)
             expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
             expect(csv[row_number]["charge_type"]).to eq("compliance_additional")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_present
@@ -75,6 +86,8 @@ module Reports
             expect(csv[row_number]["is_a_farmer"]).to be_present
             expect(csv[row_number]["ea_admin_area"]).to be_present
             expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
           end
         end
       end
@@ -84,6 +97,8 @@ module Reports
           aggregate_failures do
             expect(csv[row_number]["registration_no"]).to eq(registration.reference)
             expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
             expect(csv[row_number]["charge_type"]).to eq("compliance_farm")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -97,6 +112,8 @@ module Reports
             expect(csv[row_number]["is_a_farmer"]).to be_truthy
             expect(csv[row_number]["ea_admin_area"]).to be_present
             expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
           end
         end
       end
@@ -106,6 +123,8 @@ module Reports
           aggregate_failures do
             expect(csv[row_number]["registration_no"]).to eq(registration.reference)
             expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
             expect(csv[row_number]["charge_type"]).to eq("charge_adjust")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -119,6 +138,8 @@ module Reports
             expect(csv[row_number]["is_a_farmer"]).to be_present
             expect(csv[row_number]["ea_admin_area"]).to be_present
             expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
           end
         end
       end
@@ -128,6 +149,8 @@ module Reports
           aggregate_failures do
             expect(csv[row_number]["registration_no"]).to eq(registration.reference)
             expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
             expect(csv[row_number]["charge_type"]).to be_nil
             expect(csv[row_number]["charge_amount"]).to be_nil
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -141,6 +164,8 @@ module Reports
             expect(csv[row_number]["is_a_farmer"]).to be_present
             expect(csv[row_number]["ea_admin_area"]).to be_present
             expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
           end
         end
       end
@@ -159,8 +184,8 @@ module Reports
           end
 
           it "generates correct header" do
-            expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
-                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance])
+            expect(csv.headers).to eq(%w[registration_no date multisite organisation_name site charge_type charge_amount charge_band exemption
+                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance payment_status status])
           end
 
           it_behaves_like "a valid registration charge row", 0
@@ -198,8 +223,8 @@ module Reports
           end
 
           it "generates correct header" do
-            expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
-                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance])
+            expect(csv.headers).to eq(%w[registration_no date multisite organisation_name site charge_type charge_amount charge_band exemption
+                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance payment_status status])
           end
 
           # ORDER 1
@@ -277,8 +302,8 @@ module Reports
           end
 
           it "generates correct header" do
-            expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
-                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance])
+            expect(csv.headers).to eq(%w[registration_no date multisite organisation_name site charge_type charge_amount charge_band exemption
+                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance payment_status status])
           end
 
           it_behaves_like "a valid registration charge row", 0
