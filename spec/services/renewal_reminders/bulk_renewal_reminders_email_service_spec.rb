@@ -11,7 +11,6 @@ module RenewalReminders
 
       let(:reminder_sequence) { :first }
       let(:expires_on) { 4.weeks.from_now.to_date }
-      let(:renewals_enabled) { true }
 
       let(:notify_client) { instance_double(Notifications::Client) }
 
@@ -57,9 +56,6 @@ module RenewalReminders
       before do
         allow(WasteExemptionsEngine.configuration).to receive(:renewal_window_before_expiry_in_days).and_return("28")
         allow(WasteExemptionsBackOffice::Application.config).to receive(:second_renewal_email_reminder_days).and_return("14")
-
-        allow(WasteExemptionsEngine::FeatureToggle).to receive(:active?).with(:enable_renewals).and_return(renewals_enabled)
-
         allow(Notifications::Client).to receive(:new).and_return notify_client
         allow(notify_client).to receive(:send_email)
 
@@ -123,92 +119,42 @@ module RenewalReminders
       context "with the first reminder date" do
         let(:reminder_sequence) { :first }
 
-        context "with the :enable_renewals feature toggle inactive" do
-          let(:renewals_enabled) { false }
-
-          it_behaves_like "first reminder email sent to registration" do
-            let(:registration) { charity_registration }
-            let(:template_id) { first_free_reminder_email_template_id }
-          end
-          it_behaves_like "first reminder email sent to registration" do
-            let(:registration) { t28_registration }
-            let(:template_id) { first_free_reminder_email_template_id }
-          end
-          it_behaves_like "first reminder email sent to registration" do
-            let(:registration) { chargeable_registration }
-            let(:template_id) { temporary_first_reminder_email_template_id }
-          end
-
-          it_behaves_like "does not send to non-qualifying registrations" do
-            let(:expires_on) { 4.weeks.from_now.to_date }
-          end
+        it_behaves_like "first reminder email sent to registration" do
+          let(:registration) { charity_registration }
+          let(:template_id) { first_free_reminder_email_template_id }
+        end
+        it_behaves_like "first reminder email sent to registration" do
+          let(:registration) { t28_registration }
+          let(:template_id) { first_free_reminder_email_template_id }
+        end
+        it_behaves_like "first reminder email sent to registration" do
+          let(:registration) { chargeable_registration }
+          let(:template_id) { first_reminder_email_template_id }
         end
 
-        context "with the :enable_renewals feature toggle active" do
-          let(:renewals_enabled) { true }
-
-          it_behaves_like "first reminder email sent to registration" do
-            let(:registration) { charity_registration }
-            let(:template_id) { first_free_reminder_email_template_id }
-          end
-          it_behaves_like "first reminder email sent to registration" do
-            let(:registration) { t28_registration }
-            let(:template_id) { first_free_reminder_email_template_id }
-          end
-          it_behaves_like "first reminder email sent to registration" do
-            let(:registration) { chargeable_registration }
-            let(:template_id) { first_reminder_email_template_id }
-          end
-
-          it_behaves_like "does not send to non-qualifying registrations" do
-            let(:expires_on) { 4.weeks.from_now.to_date }
-          end
+        it_behaves_like "does not send to non-qualifying registrations" do
+          let(:expires_on) { 4.weeks.from_now.to_date }
         end
       end
 
       context "with the second reminder date" do
         let(:reminder_sequence) { :second }
 
-        context "with the :enable_renewals feature toggle inactive" do
-          let(:renewals_enabled) { false }
-
-          it_behaves_like "second reminder email sent to registration" do
-            let(:registration) { charity_registration }
-            let(:template_id) { second_free_reminder_email_template_id }
-          end
-          it_behaves_like "second reminder email sent to registration" do
-            let(:registration) { t28_registration }
-            let(:template_id) { second_free_reminder_email_template_id }
-          end
-          it_behaves_like "second reminder email sent to registration" do
-            let(:registration) { chargeable_registration }
-            let(:template_id) { temporary_second_reminder_email_template_id }
-          end
-
-          it_behaves_like "does not send to non-qualifying registrations" do
-            let(:expires_on) { 2.weeks.from_now.to_date }
-          end
+        it_behaves_like "second reminder email sent to registration" do
+          let(:registration) { charity_registration }
+          let(:template_id) { second_free_reminder_email_template_id }
+        end
+        it_behaves_like "second reminder email sent to registration" do
+          let(:registration) { t28_registration }
+          let(:template_id) { second_free_reminder_email_template_id }
+        end
+        it_behaves_like "second reminder email sent to registration" do
+          let(:registration) { chargeable_registration }
+          let(:template_id) { second_reminder_email_template_id }
         end
 
-        context "with the :enable_renewals feature toggle active" do
-          let(:renewals_enabled) { true }
-
-          it_behaves_like "second reminder email sent to registration" do
-            let(:registration) { charity_registration }
-            let(:template_id) { second_free_reminder_email_template_id }
-          end
-          it_behaves_like "second reminder email sent to registration" do
-            let(:registration) { t28_registration }
-            let(:template_id) { second_free_reminder_email_template_id }
-          end
-          it_behaves_like "second reminder email sent to registration" do
-            let(:registration) { chargeable_registration }
-            let(:template_id) { second_reminder_email_template_id }
-          end
-
-          it_behaves_like "does not send to non-qualifying registrations" do
-            let(:expires_on) { 2.weeks.from_now.to_date }
-          end
+        it_behaves_like "does not send to non-qualifying registrations" do
+          let(:expires_on) { 2.weeks.from_now.to_date }
         end
       end
     end
