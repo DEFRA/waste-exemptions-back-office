@@ -321,6 +321,44 @@ module Reports
           it_behaves_like "a valid charge adjustment row", 8
           it_behaves_like "a valid payment row", 9
         end
+
+        context "when registration is multisite" do
+          let(:multisite_registration) { create(:registration, :multisite_complete, account: account) }
+          let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+          before do
+            order.update(order_owner: multisite_registration.account)
+            multisite_registration.site_addresses.first.update(area: "Wessex")
+            multisite_registration.site_addresses.second.update(area: "Yorkshire")
+
+            multisite_registration.site_addresses.each do |_site_address|
+              order.exemptions.each { |exemption| create(:registration_exemption, registration: multisite_registration, exemption: exemption) }
+            end
+
+            order.charge_detail.band_charge_details.first.update(band_id: order.exemptions.first.band_id)
+          end
+
+          it "includes multisite flag as TRUE for multisite registrations" do
+            multisite_rows = csv.select { |row| row["registration_no"]&.include?(multisite_registration.reference) }
+
+            multisite_rows.each do |row|
+              expect(row["multisite"]).to eq("TRUE")
+            end
+          end
+
+          it "generates compliance rows with site suffix for multisite registrations" do
+            compliance_rows = csv.select do |row|
+              row["charge_type"]&.start_with?("compliance") &&
+                row["registration_no"]&.include?("/")
+            end
+
+            expect(compliance_rows).not_to be_empty
+            compliance_rows.each do |row|
+              expect(row["registration_no"]).to match(%r{/\d{5}$})
+              expect(row["site"]).to match(/\d{5}/)
+            end
+          end
+        end
       end
     end
   end
