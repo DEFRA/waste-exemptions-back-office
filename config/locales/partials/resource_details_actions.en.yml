@@ -30,3 +30,5 @@ en:
           link_text: View certificate
           visually_hidden_text: "of %{name}"
         payment_details: Payment details
+        mark_as_legacy_bulk: Mark as a multiple site registration
+        mark_as_legacy_linear: Mark as a linear registration

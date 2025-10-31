@@ -4,3 +4,5 @@ en:
       title: Registration details
       heading: "Registration details for %{reference}"
       back_link_label: Back to search results
+    marked_as_legacy_bulk: You have marked this registration as multiple site
+    marked_as_legacy_linear: You have marked this registration as linear

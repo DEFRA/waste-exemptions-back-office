@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     get "payments", to: "payments#new", as: :add_payment_form
     post "payments", to: "payments#create", as: :add_payment
     get "payment_details", to: "payment_details#index", as: :payment_details
+    patch "mark_as_legacy_bulk", to: "registrations#mark_as_legacy_bulk", as: :mark_as_legacy_bulk
+    patch "mark_as_legacy_linear", to: "registrations#mark_as_legacy_linear", as: :mark_as_legacy_linear
 
     resources :record_refunds,
               only: %i[index new create],

@@ -29,3 +29,4 @@ add_payment,                               ,                         ,          
 reverse_payment,                           ,                         ,               Y,         Y,                ,               Y,               ,            Y
 refund_payment,                            ,                         ,                ,         Y,                ,               Y,               ,            Y
 writeoff_payment,                          ,                         ,               Y,         Y,                ,               Y,               ,            Y
+mark_as_legacy_bulk_or_linear,             ,                         ,               Y,         Y,                ,                ,               ,            
