@@ -182,7 +182,7 @@ GEM
       fiber-annotation
       fiber-local (~> 1.1)
       json
-    crack (1.0.0)
+    crack (1.0.1)
       bigdecimal
       rexml
     crass (1.0.6)
@@ -413,7 +413,7 @@ GEM
     psych (5.2.6)
       date
       stringio
-    public_suffix (6.0.1)
+    public_suffix (6.0.2)
     racc (1.8.1)
     rack (2.2.20)
     rack-session (1.0.2)
@@ -609,7 +609,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webmock (3.25.1)
+    webmock (3.26.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
