@@ -186,8 +186,15 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
       it { expect(registration_exemption.multisite?).to be false }
     end
 
+    context "when the registration is single-site with a site address and not a grid reference" do
+      let(:site_address) { build(:address, :manual, address_type: "site") }
+      let(:registration_exemption) { build(:registration_exemption, address: site_address) }
+
+      it { expect(registration_exemption.multisite?).to be false }
+    end
+
     context "when the registration is multi-site" do
-      let(:registration) { build(:registration, :multisite_complete) }
+      let(:registration) { create(:registration, :multisite_complete) }
       let(:registration_exemption) { registration.site_addresses.last.registration_exemptions.last }
 
       it { expect(registration_exemption.multisite?).to be true }
