@@ -6,24 +6,26 @@ module RenewalReminders
 
   RSpec.describe TemporarySecondRenewalReminderEmailService do
     describe ".run" do
+      subject(:run_service) { described_class.run(registration: registration) }
+
       let(:registration) { create(:registration, :with_active_exemptions) }
 
-      it "sends an email with the correct template" do
-        VCR.use_cassette("temporary_second_renewal_reminder_email") do
-          expect(described_class.run(registration: registration)).to be_a(Notifications::Client::ResponseNotification)
+      context "when the registration is not assisted digital" do
+        before { registration.update(is_legacy_bulk: false) }
+
+        it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
+          let(:cassette_name) { "temporary_second_renewal_reminder_email" }
+          let(:template_id) { "5a4f6146-1952-4e62-9824-ab5d0bd9a978" }
         end
       end
 
-      it "creates a communication log" do
-        VCR.use_cassette("temporary_second_renewal_reminder_email") do
-          expect { described_class.run(registration: registration) }
-            .to change { registration.communication_logs.count }.by(1)
-        end
-      end
+      context "when the registration is assisted digital" do
+        before { registration.update(is_legacy_bulk: true) }
 
-      it "uses the correct template ID" do
-        service = described_class.new
-        expect(service.send(:template)).to eq("5a4f6146-1952-4e62-9824-ab5d0bd9a978")
+        it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
+          let(:cassette_name) { "temporary_second_renewal_reminder_email_AD" }
+          let(:template_id) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
+        end
       end
 
       it "includes a registration URL instead of a renewal link" do

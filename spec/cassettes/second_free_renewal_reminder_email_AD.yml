@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"contact1@example.com","template_id":"69a8254e-2bd0-4e09-b27a-ad7e8a29d783","personalisation":{"contact_name":"Firstcontact1
+        Lastcontact1","exemptions":["F1 Use of spam in cooking","F2 Use of spam in
+        cooking","F3 Use of spam in cooking"],"expiry_date":"3 November 2028","magic_link_url":"http://localhost:3000/renew/aVa99h1kSgrFauNwLD76XEmR","reference":"WEX000001","site_location":"ST
+        58337 72855","unsubscribe_link":"http://localhost:3000/registrations/unsubscribe/Pg9JoWZFaeHrvhzTNP1jo68v"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/6.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2311'
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 03 Nov 2025 19:14:20 GMT
+      X-B3-Spanid:
+      - self-701ac749f646c855
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      X-B3-Traceid:
+      - Io-9GAOthllxB6s5HT6er3_YzTYkencNu4HMfk5Pp-e7sn0OrxnD8g==
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 955b5f6b59fedae13d00dcc66f7085f2.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR50-P3
+      X-Amz-Cf-Id:
+      - Io-9GAOthllxB6s5HT6er3_YzTYkencNu4HMfk5Pp-e7sn0OrxnD8g==
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"Dear Firstcontact1 Lastcontact1\r\n\r\n# Renew
+        by 3 November 2028\r\n\r\nYou can now use the digital service to register
+        and renew your waste exemptions on multiple sites.  \r\n\r\nThe first time
+        you register in the service you''ll need to answer all the questions and select
+        the exemptions and sites you need. \r\n\r\nOnce registered in the service,
+        your information will be saved for the next time you renew.\r\n\r\n# Before
+        you start \r\n\r\nRead the guidance on GOV.UK about:\r\n\r\n* how to register
+        multiple sites https://www.gov.uk/government/publications/waste-exemptions-how-to-choose-register-and-pay/multiple-site-and-linear-network-registrations\r\n*
+        waste exemption charges  https://www.gov.uk/government/publications/waste-exemptions-how-to-choose-register-and-pay/waste-exemption-charges\r\n\r\nCharges
+        for waste exemptions came into effect on 1 July 2025.\r\n\r\n# Renew your
+        waste exemptions now\r\n \r\nGo to https://wasteexemptions.service.gov.uk/
+        and click on ''Register your waste exemptions'' to start.\r\n \r\n## Your
+        information\r\n\r\nRegistration number: WEX000001\r\n\r\nThese exemptions
+        will expire on 3 November 2028:\r\n\r\n\n\n* F1 Use of spam in cooking\n*
+        F2 Use of spam in cooking\n* F3 Use of spam in cooking\r\n\r\nIf you no longer
+        need your exemptions, you don\u2019t need to do anything. They will be removed
+        from the public register. \r\n\r\n\r\nTo unsubscribe from email reminders\r\n[Unsubscribe](http://localhost:3000/registrations/unsubscribe/Pg9JoWZFaeHrvhzTNP1jo68v)\r\n\r\nEnvironment
+        Agency Helpline\r\n03708 506 506 (Monday to Friday, 8am to 6pm)\r\nenquiries@environment-agency.gov.uk\r\n\r\n----\r\n\r\nThis
+        is an automated email. Please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Multiple
+        site waste exemptions expire on 3 November 2028: renew in the digital service"},"id":"23a4f73e-d635-47a4-bb0a-1e9c5452a2ac","reference":null,"scheduled_for":null,"template":{"id":"69a8254e-2bd0-4e09-b27a-ad7e8a29d783","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/69a8254e-2bd0-4e09-b27a-ad7e8a29d783","version":6},"uri":"https://api.notifications.service.gov.uk/v2/notifications/23a4f73e-d635-47a4-bb0a-1e9c5452a2ac"}
+
+        '
+  recorded_at: Mon, 03 Nov 2025 19:14:20 GMT
+recorded_with: VCR 6.3.1

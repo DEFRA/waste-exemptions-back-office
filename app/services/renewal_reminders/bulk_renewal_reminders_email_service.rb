@@ -43,7 +43,7 @@ module RenewalReminders
     def expiring_registrations
       default_scope.where(
         id: all_active_exemptions_registration_ids
-      ).contact_email_present.site_address_is_not_nccc
+      ).contact_email_present
     end
   end
 end
