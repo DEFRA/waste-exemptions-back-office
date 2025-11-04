@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: c8168a690393acfa022104c696e8ab5ba9575099
+  revision: e7a643ba4df2b17396838d8e5e6acddebaccf3f3
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -307,7 +307,7 @@ GEM
     io-endpoint (0.13.1)
     io-event (1.6.5)
     io-stream (0.4.1)
-    irb (1.15.2)
+    irb (1.15.3)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
@@ -415,7 +415,7 @@ GEM
       stringio
     public_suffix (6.0.2)
     racc (1.8.1)
-    rack (2.2.20)
+    rack (2.2.21)
     rack-session (1.0.2)
       rack (< 3)
     rack-test (2.2.0)
@@ -459,7 +459,7 @@ GEM
     rainbow (3.1.1)
     rake (13.3.1)
     rbtree3 (0.7.1)
-    rdoc (6.15.0)
+    rdoc (6.15.1)
       erb
       psych (>= 4.0.0)
       tsort
