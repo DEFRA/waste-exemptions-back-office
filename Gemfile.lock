@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 1350bc93a45c69c4d0a9b1de017130fa5c07b8a8
+  revision: e7a643ba4df2b17396838d8e5e6acddebaccf3f3
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -182,7 +182,7 @@ GEM
       fiber-annotation
       fiber-local (~> 1.1)
       json
-    crack (1.0.0)
+    crack (1.0.1)
       bigdecimal
       rexml
     crass (1.0.6)
@@ -307,7 +307,7 @@ GEM
     io-endpoint (0.13.1)
     io-event (1.6.5)
     io-stream (0.4.1)
-    irb (1.15.2)
+    irb (1.15.3)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
@@ -413,9 +413,9 @@ GEM
     psych (5.2.6)
       date
       stringio
-    public_suffix (6.0.1)
+    public_suffix (6.0.2)
     racc (1.8.1)
-    rack (2.2.20)
+    rack (2.2.21)
     rack-session (1.0.2)
       rack (< 3)
     rack-test (2.2.0)
@@ -459,7 +459,7 @@ GEM
     rainbow (3.1.1)
     rake (13.3.1)
     rbtree3 (0.7.1)
-    rdoc (6.15.0)
+    rdoc (6.15.1)
       erb
       psych (>= 4.0.0)
       tsort
@@ -552,7 +552,7 @@ GEM
       faraday (>= 0.17.3, < 3)
     secure_headers (6.7.0)
     securerandom (0.4.1)
-    selenium-webdriver (4.37.0)
+    selenium-webdriver (4.38.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -609,7 +609,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webmock (3.25.1)
+    webmock (3.26.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)

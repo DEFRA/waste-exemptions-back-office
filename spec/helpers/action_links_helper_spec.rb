@@ -802,7 +802,7 @@ RSpec.describe ActionLinksHelper do
         let(:can) { true }
 
         context "when the registration has been marked legacy linear" do
-          before { resource.update(is_legacy_linear: true) }
+          before { resource.update(is_linear: true) }
 
           it_behaves_like "returns false"
         end
