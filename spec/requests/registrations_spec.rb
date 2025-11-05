@@ -88,9 +88,9 @@ RSpec.describe "Registrations" do
     context "when a qualified user is signed in" do
       before { sign_in(create(:user, role: :developer)) }
 
-      it "updates the is_legacy_linear attribute" do
+      it "updates the is_linear attribute" do
         expect { patch "/registrations/#{resource.reference}/mark_as_legacy_linear" }
-          .to change { resource.reload.is_legacy_linear }.to true
+          .to change { resource.reload.is_linear }.to true
       end
 
       it "returns to the registration details page" do
