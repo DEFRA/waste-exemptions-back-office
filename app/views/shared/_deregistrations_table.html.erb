@@ -6,11 +6,11 @@
       <%#align table caption to the left%>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col"><%= t('shared.deregistrations_table.headers.exemption') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('shared.deregistrations_table.headers.deregistered_on') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('shared.deregistrations_table.headers.reason') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('shared.deregistrations_table.headers.status') %></th>
-          <th class="govuk-table__header" scope="col"><%= t('shared.deregistrations_table.headers.deregistered_by') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('deregistrations.deregistrations_table.headers.exemption') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('deregistrations.deregistrations_table.headers.deregistered_on') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('deregistrations.deregistrations_table.headers.reason') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('deregistrations.deregistrations_table.headers.status') %></th>
+          <th class="govuk-table__header" scope="col"><%= t('deregistrations.deregistrations_table.headers.deregistered_by') %></th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
@@ -26,7 +26,7 @@
               <% if re.deregistration_message.present? %>
                 <%= re.deregistration_message %>
               <% else %>
-                <%= t('shared.deregistrations_table.deregistered_via_self_serve_reason') %>
+                <%= t('deregistrations.deregistrations_table.deregistered_via_self_serve_reason') %>
               <% end %>
             </td>
             <td class="govuk-table__cell">
@@ -38,7 +38,7 @@
               <% if re.deregistered_by.present? %>
                 <%= re.deregistered_by %>
               <% else %>
-                <%= t('shared.deregistrations_table.deregistered_by_self') %>
+                <%= t('deregistrations.deregistrations_table.deregistered_by_self') %>
               <% end %>
             </td>
           </tr>
