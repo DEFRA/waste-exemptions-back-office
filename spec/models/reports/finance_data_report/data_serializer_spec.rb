@@ -13,11 +13,29 @@ module Reports
 
       let(:serializer) { described_class.new }
 
-      shared_examples "a valid registration charge row" do |row_number|
-        it "generates correct row" do
+      shared_examples "a valid row with common fields" do |row_number|
+        it "has common fields populated correctly" do
           aggregate_failures do
             expect(csv[row_number]["registration_no"]).to eq(registration.reference)
             expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
+            expect(csv[row_number]["on_a_farm"]).to be_present
+            expect(csv[row_number]["is_a_farmer"]).to be_present
+            expect(csv[row_number]["ea_admin_area"]).to be_present
+            expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
+          end
+        end
+      end
+
+      shared_examples "a valid registration charge row" do |row_number|
+        it_behaves_like "a valid row with common fields", row_number
+
+        it "has registration charge specific fields" do
+          aggregate_failures do
+            expect(csv[row_number]["site"]).to be_nil
             expect(csv[row_number]["charge_type"]).to eq("registration")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -27,19 +45,15 @@ module Reports
             expect(csv[row_number]["reference"]).to be_nil
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_nil
-            expect(csv[row_number]["on_a_farm"]).to be_present
-            expect(csv[row_number]["is_a_farmer"]).to be_present
-            expect(csv[row_number]["ea_admin_area"]).to be_present
-            expect(csv[row_number]["balance"]).to be_present
           end
         end
       end
 
       shared_examples "a valid initial compliance charge row" do |row_number|
-        it "generates correct row" do
+        it_behaves_like "a valid row with common fields", row_number
+
+        it "has initial compliance charge specific fields" do
           aggregate_failures do
-            expect(csv[row_number]["registration_no"]).to eq(registration.reference)
-            expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
             expect(csv[row_number]["charge_type"]).to eq("compliance_initial")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_present
@@ -49,19 +63,15 @@ module Reports
             expect(csv[row_number]["reference"]).to be_nil
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_nil
-            expect(csv[row_number]["on_a_farm"]).to be_present
-            expect(csv[row_number]["is_a_farmer"]).to be_present
-            expect(csv[row_number]["ea_admin_area"]).to be_present
-            expect(csv[row_number]["balance"]).to be_present
           end
         end
       end
 
       shared_examples "a valid additional compliance charge row" do |row_number|
-        it "generates correct row" do
+        it_behaves_like "a valid row with common fields", row_number
+
+        it "has additional compliance charge specific fields" do
           aggregate_failures do
-            expect(csv[row_number]["registration_no"]).to eq(registration.reference)
-            expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
             expect(csv[row_number]["charge_type"]).to eq("compliance_additional")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_present
@@ -71,19 +81,15 @@ module Reports
             expect(csv[row_number]["reference"]).to be_nil
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_nil
-            expect(csv[row_number]["on_a_farm"]).to be_present
-            expect(csv[row_number]["is_a_farmer"]).to be_present
-            expect(csv[row_number]["ea_admin_area"]).to be_present
-            expect(csv[row_number]["balance"]).to be_present
           end
         end
       end
 
       shared_examples "a valid farm compliance charge row" do |row_number|
-        it "generates correct row" do
+        it_behaves_like "a valid row with common fields", row_number
+
+        it "has farm compliance charge specific fields" do
           aggregate_failures do
-            expect(csv[row_number]["registration_no"]).to eq(registration.reference)
-            expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
             expect(csv[row_number]["charge_type"]).to eq("compliance_farm")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -95,17 +101,15 @@ module Reports
             expect(csv[row_number]["payment_amount"]).to be_nil
             expect(csv[row_number]["on_a_farm"]).to be_truthy
             expect(csv[row_number]["is_a_farmer"]).to be_truthy
-            expect(csv[row_number]["ea_admin_area"]).to be_present
-            expect(csv[row_number]["balance"]).to be_present
           end
         end
       end
 
       shared_examples "a valid charge adjustment row" do |row_number|
-        it "generates correct row" do
+        it_behaves_like "a valid row with common fields", row_number
+
+        it "has charge adjustment specific fields" do
           aggregate_failures do
-            expect(csv[row_number]["registration_no"]).to eq(registration.reference)
-            expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
             expect(csv[row_number]["charge_type"]).to eq("charge_adjust")
             expect(csv[row_number]["charge_amount"]).to be_present
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -115,19 +119,15 @@ module Reports
             expect(csv[row_number]["reference"]).to be_nil
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_nil
-            expect(csv[row_number]["on_a_farm"]).to be_present
-            expect(csv[row_number]["is_a_farmer"]).to be_present
-            expect(csv[row_number]["ea_admin_area"]).to be_present
-            expect(csv[row_number]["balance"]).to be_present
           end
         end
       end
 
       shared_examples "a valid payment row" do |row_number|
-        it "generates correct row" do
+        it_behaves_like "a valid row with common fields", row_number
+
+        it "has payment specific fields" do
           aggregate_failures do
-            expect(csv[row_number]["registration_no"]).to eq(registration.reference)
-            expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
             expect(csv[row_number]["charge_type"]).to be_nil
             expect(csv[row_number]["charge_amount"]).to be_nil
             expect(csv[row_number]["charge_band"]).to be_nil
@@ -137,10 +137,6 @@ module Reports
             expect(csv[row_number]["reference"]).to be_present
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_present
-            expect(csv[row_number]["on_a_farm"]).to be_present
-            expect(csv[row_number]["is_a_farmer"]).to be_present
-            expect(csv[row_number]["ea_admin_area"]).to be_present
-            expect(csv[row_number]["balance"]).to be_present
           end
         end
       end
@@ -159,8 +155,8 @@ module Reports
           end
 
           it "generates correct header" do
-            expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
-                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance])
+            expect(csv.headers).to eq(%w[registration_no date multisite organisation_name site charge_type charge_amount charge_band exemption
+                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance payment_status status])
           end
 
           it_behaves_like "a valid registration charge row", 0
@@ -198,8 +194,8 @@ module Reports
           end
 
           it "generates correct header" do
-            expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
-                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance])
+            expect(csv.headers).to eq(%w[registration_no date multisite organisation_name site charge_type charge_amount charge_band exemption
+                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance payment_status status])
           end
 
           # ORDER 1
@@ -277,8 +273,8 @@ module Reports
           end
 
           it "generates correct header" do
-            expect(csv.headers).to eq(%w[registration_no date charge_type charge_amount charge_band exemption
-                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance])
+            expect(csv.headers).to eq(%w[registration_no date multisite organisation_name site charge_type charge_amount charge_band exemption
+                                         payment_type refund_type reference comments payment_amount on_a_farm is_a_farmer ea_admin_area balance payment_status status])
           end
 
           it_behaves_like "a valid registration charge row", 0
@@ -295,6 +291,44 @@ module Reports
 
           it_behaves_like "a valid charge adjustment row", 8
           it_behaves_like "a valid payment row", 9
+        end
+
+        context "when registration is multisite" do
+          let(:multisite_registration) { create(:registration, :multisite_complete, account: account) }
+          let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+          before do
+            order.update(order_owner: multisite_registration.account)
+            multisite_registration.site_addresses.first.update(area: "Wessex")
+            multisite_registration.site_addresses.second.update(area: "Yorkshire")
+
+            multisite_registration.site_addresses.each do |_site_address|
+              order.exemptions.each { |exemption| create(:registration_exemption, registration: multisite_registration, exemption: exemption) }
+            end
+
+            order.charge_detail.band_charge_details.first.update(band_id: order.exemptions.first.band_id)
+          end
+
+          it "includes multisite flag as TRUE for multisite registrations" do
+            multisite_rows = csv.select { |row| row["registration_no"]&.include?(multisite_registration.reference) }
+
+            multisite_rows.each do |row|
+              expect(row["multisite"]).to eq("TRUE")
+            end
+          end
+
+          it "generates compliance rows with site suffix for multisite registrations" do
+            compliance_rows = csv.select do |row|
+              row["charge_type"]&.start_with?("compliance") &&
+                row["registration_no"]&.include?("/")
+            end
+
+            expect(compliance_rows).not_to be_empty
+            compliance_rows.each do |row|
+              expect(row["registration_no"]).to match(%r{/\d{5}$})
+              expect(row["site"]).to match(/\d{5}/)
+            end
+          end
         end
       end
     end
