@@ -11,12 +11,34 @@ module RenewalReminders
 
       let(:registration) { create(:registration) }
 
-      it "sends an email" do
-        VCR.use_cassette("first_renewal_reminder_email") do
-          expect(run_service).to be_a(Notifications::Client::ResponseNotification)
-          expect(run_service.template["id"]).to eq("b1c9cda2-b502-4667-b22c-63e8725f7a27")
-          # No point checking the registration's renew_token value as VCR caches a random one
-          expect(run_service.content["body"]).to match(%r{http://localhost:\d+/renew/})
+      shared_examples "sends an email with the correct template id" do
+        it do
+          VCR.use_cassette(cassette_name) do
+            result = run_service
+
+            expect(result).to be_a(Notifications::Client::ResponseNotification)
+            expect(result.template["id"]).to eq(template_id)
+            # No point checking the registration's renew_token value as VCR caches a random one
+            expect(result.content["body"]).to match(%r{http://localhost:\d+/renew/}) unless registration.is_legacy_bulk
+          end
+        end
+      end
+
+      context "when the registration is not assisted digital" do
+        before { registration.update(is_legacy_bulk: false) }
+
+        it_behaves_like "sends a Notify message with the correct template id and with a renewal link" do
+          let(:cassette_name) { "first_renewal_reminder_email" }
+          let(:template_id) { "b1c9cda2-b502-4667-b22c-63e8725f7a27" }
+        end
+      end
+
+      context "when the registration is assisted digital" do
+        before { registration.update(is_legacy_bulk: true) }
+
+        it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
+          let(:cassette_name) { "first_renewal_reminder_email_AD" }
+          let(:template_id) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
         end
       end
 

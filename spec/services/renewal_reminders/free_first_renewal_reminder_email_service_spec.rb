@@ -6,17 +6,31 @@ module RenewalReminders
 
   RSpec.describe FreeFirstRenewalReminderEmailService do
     describe "run" do
-
       subject(:run_service) { described_class.run(registration: registration) }
 
       let(:registration) { create(:registration) }
 
-      it "sends an email" do
-        VCR.use_cassette("first_free_renewal_reminder_email") do
-          expect(run_service).to be_a(Notifications::Client::ResponseNotification)
-          expect(run_service.template["id"]).to eq("b1c9cda2-b502-4667-b22c-63e8725f7a27")
-          # No point checking the registration's renew_token value as VCR caches a random one
-          expect(run_service.content["body"]).to match(%r{http://localhost:\d+/renew/})
+      context "when the registration is not assisted digital" do
+        before { registration.update(is_legacy_bulk: false) }
+
+        let(:cassette) { "free_first_renewal_reminder_email" }
+        let(:template) { "b1c9cda2-b502-4667-b22c-63e8725f7a27" }
+
+        it_behaves_like "sends a Notify message with the correct template id and with a renewal link" do
+          let(:cassette_name) { cassette }
+          let(:template_id) { template }
+        end
+      end
+
+      context "when the registration is assisted digital" do
+        before { registration.update(is_legacy_bulk: true) }
+
+        let(:cassette) { "free_first_renewal_reminder_email_AD" }
+        let(:template) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
+
+        it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
+          let(:cassette_name) { cassette }
+          let(:template_id) { template }
         end
       end
 

@@ -19,7 +19,7 @@ module RenewalReminders
     private
 
     def template
-      "f308a8a9-0358-41e1-b633-ea4044ad9580"
+      @registration.is_legacy_bulk ? "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" : "f308a8a9-0358-41e1-b633-ea4044ad9580"
     end
   end
 end
