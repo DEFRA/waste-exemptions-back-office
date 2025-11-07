@@ -1,4 +1,0 @@
-en:
-  site_deregistrations:
-    show:
-      title: "Deregistration details for %{site_location}"

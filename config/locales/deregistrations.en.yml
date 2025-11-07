@@ -11,3 +11,7 @@ en:
         deregistered_by: "Deregistered by"
       deregistered_by_self: "Self-serve"
       deregistered_via_self_serve_reason: "Deregistered via self-serve"
+
+  site_deregistrations:
+    show:
+      title: "Deregistration details for %{site_location}"
