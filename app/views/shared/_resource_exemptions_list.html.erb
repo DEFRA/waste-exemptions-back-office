@@ -39,7 +39,14 @@
             </span>
           </a>
         <% elsif %w[ceased revoked].include? re.state %>
-          <a class="govuk-link" href="<%= deregistration_path(re.registration.reference) %>">
+          <% 
+            details_path = if defined?(site_id) && site_id.present?
+              deregistrations_registration_site_path(registration_reference: re.registration.reference, id: site_id)
+            else
+              deregistration_path(re.registration.reference)
+            end
+          %>
+          <a class="govuk-link" href="<%= details_path %>">
             Details
             <span class="govuk-visually-hidden">
               exemption <%= re.exemption.code %> &mdash; <%= re.exemption.summary %>
