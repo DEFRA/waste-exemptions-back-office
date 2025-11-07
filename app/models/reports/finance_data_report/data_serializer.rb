@@ -8,6 +8,9 @@ module Reports
       ATTRIBUTES = %i[
         registration_no
         date
+        multisite
+        organisation_name
+        site
         charge_type
         charge_amount
         charge_band
@@ -21,6 +24,8 @@ module Reports
         is_a_farmer
         ea_admin_area
         balance
+        payment_status
+        status
       ].freeze
 
       def to_csv
@@ -46,35 +51,60 @@ module Reports
       def generate_order_rows(registration, order)
         return [] if order&.charge_detail.blank?
 
-        order_rows = []
         @total = 0
-
-        # registration charge row
         charge_detail = order.charge_detail
-        order_rows.concat(registration_charge_row(registration, charge_detail).compact)
-        # compliance charge rows
-        charge_detail.band_charge_details.each do |band_charge_detail|
-          order_rows.concat(initial_compliance_charge_row(registration, band_charge_detail).compact)
-          order_rows.concat(additional_compliance_charge_row(registration, band_charge_detail).compact)
-        end
-        # farm compliance charge row
-        order_rows.concat(farm_compliance_charge_row(registration, charge_detail).compact)
-        # charge adjustment rows
-        registration.account.charge_adjustments.map do |charge_adjustment|
-          order_rows.concat(charge_adjustment_row(registration, charge_adjustment).compact)
-        end
-        # payment rows - only include successful payments
-        registration.account.payments.success.order(date_time: :asc).map do |payment|
-          order_rows.concat(payment_row(registration, payment).compact)
-        end
+
+        order_rows = []
+        order_rows.concat(registration_charge_row(registration, charge_detail))
+        order_rows.concat(generate_compliance_charge_rows(registration, charge_detail))
+        order_rows.concat(generate_charge_adjustment_rows(registration))
+        order_rows.concat(generate_payment_rows(registration))
         order_rows
       end
 
-      def initial_compliance_charge_row(registration, secondary_object)
+      def generate_compliance_charge_rows(registration, charge_detail)
+        if registration.multisite?
+          generate_multisite_compliance_rows(registration, charge_detail)
+        else
+          generate_site_compliance_rows(registration, charge_detail, nil)
+        end
+      end
+
+      def generate_multisite_compliance_rows(registration, charge_detail)
+        registration.site_addresses.flat_map do |site_address|
+          generate_site_compliance_rows(registration, charge_detail, site_address)
+        end
+      end
+
+      def generate_site_compliance_rows(registration, charge_detail, site_address)
+        rows = []
+
+        charge_detail.band_charge_details.each do |band_charge_detail|
+          rows.concat(initial_compliance_charge_row(registration, band_charge_detail, site_address))
+          rows.concat(additional_compliance_charge_row(registration, band_charge_detail, site_address))
+        end
+
+        rows.concat(farm_compliance_charge_row(registration, charge_detail, site_address))
+        rows
+      end
+
+      def generate_charge_adjustment_rows(registration)
+        registration.account.charge_adjustments.flat_map do |charge_adjustment|
+          charge_adjustment_row(registration, charge_adjustment, nil)
+        end
+      end
+
+      def generate_payment_rows(registration)
+        registration.account.payments.success.order(date_time: :asc).flat_map do |payment|
+          payment_row(registration, payment, nil)
+        end
+      end
+
+      def initial_compliance_charge_row(registration, secondary_object, site_address)
         return [] unless secondary_object.initial_compliance_charge_amount.positive?
 
         presenter = FinanceDataReport::InitialComplianceChargeRowPresenter.new(registration:, secondary_object:,
-                                                                               total: @total)
+                                                                               total: @total, site_address:)
 
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
@@ -83,11 +113,11 @@ module Reports
         [output]
       end
 
-      def additional_compliance_charge_row(registration, secondary_object)
+      def additional_compliance_charge_row(registration, secondary_object, site_address)
         return [] unless secondary_object.additional_compliance_charge_amount.positive?
 
         presenter = FinanceDataReport::AdditionalComplianceChargeRowPresenter.new(registration:, secondary_object:,
-                                                                                  total: @total)
+                                                                                  total: @total, site_address:)
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
@@ -95,11 +125,11 @@ module Reports
         [output]
       end
 
-      def farm_compliance_charge_row(registration, secondary_object)
+      def farm_compliance_charge_row(registration, secondary_object, site_address)
         return [] unless secondary_object.bucket_charge_amount.positive?
 
         presenter = FinanceDataReport::FarmComplianceChargeRowPresenter.new(registration:, secondary_object:,
-                                                                            total: @total)
+                                                                            total: @total, site_address:)
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
@@ -107,9 +137,9 @@ module Reports
         [output]
       end
 
-      def registration_charge_row(registration, secondary_object)
+      def registration_charge_row(registration, secondary_object, site_address = nil)
         presenter = FinanceDataReport::RegistrationChargeRowPresenter.new(registration:, secondary_object:,
-                                                                          total: @total)
+                                                                          total: @total, site_address:)
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
@@ -117,9 +147,9 @@ module Reports
         [output]
       end
 
-      def charge_adjustment_row(registration, secondary_object)
+      def charge_adjustment_row(registration, secondary_object, site_address)
         presenter = FinanceDataReport::ChargeAdjustmentRowPresenter.new(registration:, secondary_object:,
-                                                                        total: @total)
+                                                                        total: @total, site_address:)
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
@@ -127,8 +157,9 @@ module Reports
         [output]
       end
 
-      def payment_row(registration, secondary_object)
-        presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:, total: @total)
+      def payment_row(registration, secondary_object, site_address)
+        presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:, total: @total,
+                                                               site_address:)
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
@@ -137,7 +168,7 @@ module Reports
       end
 
       def registrations_scope
-        WasteExemptionsEngine::Registration.all
+        WasteExemptionsEngine::Registration.where(submitted_at: Date.new(2025, 7, 3)..)
       end
 
       def batch_size
