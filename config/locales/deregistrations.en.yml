@@ -1,8 +1,8 @@
 en:
   deregistrations:
     show:
-      title: "Deregistration details"
-      table_caption: "Deregistration details %{reference}"
+      title: "Deregistration details for %{reference}"
+    deregistrations_table:
       headers:
         exemption: "Exemption"
         deregistered_on: "Deregistered on"
@@ -11,4 +11,7 @@ en:
         deregistered_by: "Deregistered by"
       deregistered_by_self: "Self-serve"
       deregistered_via_self_serve_reason: "Deregistered via self-serve"
-      back_link_label: "Back to main details"
+
+  site_deregistrations:
+    show:
+      title: "Deregistration details for %{site_location}"

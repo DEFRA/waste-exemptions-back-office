@@ -8,7 +8,8 @@
   <%= 
     render("shared/resource_exemptions_list", 
       resource_exemptions: @site_registration_exemptions,
-      hide_caption: true
+      hide_caption: true,
+      site_id: @site.id
     ) 
   %>
 <% else %>

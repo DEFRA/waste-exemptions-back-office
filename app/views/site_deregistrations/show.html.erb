@@ -1,0 +1,6 @@
+<% content_for :title, t('.title', site_location: @site.located_by_grid_reference? ? @site.grid_reference : displayable_address(@site).join(", ")) %>
+
+<%= render "shared/deregistrations_table",
+           back_path: registration_site_exemptions_path(@resource.reference, @site.id),
+           heading: t('.title', site_location: @site.located_by_grid_reference? ? @site.grid_reference : displayable_address(@site).join(", ")),
+           deregistered_exemptions: @site.registration_exemptions.deregistered.includes(:exemption) %>
