@@ -31,5 +31,17 @@ module DashboardsHelper
       t("operator_name", scope: LOCALE)
     end
   end
+
+  def resource_heading_for(resource)
+    registration_type = if resource.is_linear == true
+                          "linear"
+                        elsif resource.is_legacy_bulk == true || resource.is_multisite_registration == true
+                          "multisite"
+                        else
+                          "regular"
+                        end
+
+    t(".heading.#{registration_type}", reference: resource.reference)
+  end
 end
 # rubocop:enable Rails/HelperInstanceVariable

@@ -133,4 +133,47 @@ RSpec.describe DashboardsHelper do
       end
     end
   end
+
+  describe "resource_heading_for" do
+    let(:resource) { build(:registration, reference: "WEX123456") }
+
+    before do
+      allow(helper).to receive(:t).with(".heading.linear", reference: "WEX123456").and_return("Linear heading")
+      allow(helper).to receive(:t).with(".heading.multisite", reference: "WEX123456").and_return("Multisite heading")
+      allow(helper).to receive(:t).with(".heading.regular", reference: "WEX123456").and_return("Regular heading")
+    end
+
+    shared_examples "a resource heading" do |heading_type, expected_heading|
+      it "returns the #{heading_type} heading translation" do
+        expect(helper.resource_heading_for(resource)).to eq(expected_heading)
+      end
+
+      it "calls translation with correct key and parameters" do
+        helper.resource_heading_for(resource)
+        expect(helper).to have_received(:t).with(".heading.#{heading_type}", reference: "WEX123456")
+      end
+    end
+
+    context "when resource is a regular registration" do
+      it_behaves_like "a resource heading", "regular", "Regular heading"
+    end
+
+    context "when resource is linear registration" do
+      before { resource.is_linear = true }
+
+      it_behaves_like "a resource heading", "linear", "Linear heading"
+    end
+
+    context "when resource is legacy bulk registration" do
+      before { resource.is_legacy_bulk = true }
+
+      it_behaves_like "a resource heading", "multisite", "Multisite heading"
+    end
+
+    context "when resource is multisite registration" do
+      before { resource.is_multisite_registration = true }
+
+      it_behaves_like "a resource heading", "multisite", "Multisite heading"
+    end
+  end
 end
