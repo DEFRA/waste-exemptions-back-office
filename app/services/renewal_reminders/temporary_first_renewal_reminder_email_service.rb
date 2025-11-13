@@ -18,7 +18,11 @@ module RenewalReminders
     private
 
     def template
-      @registration.is_legacy_bulk? ? "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" : "5a4f6146-1952-4e62-9824-ab5d0bd9a978"
+      if @registration.legacy_bulk_or_multisite?
+        "69a8254e-2bd0-4e09-b27a-ad7e8a29d783"
+      else
+        "5a4f6146-1952-4e62-9824-ab5d0bd9a978"
+      end
     end
 
     # replace the magic link URL with the registration URL

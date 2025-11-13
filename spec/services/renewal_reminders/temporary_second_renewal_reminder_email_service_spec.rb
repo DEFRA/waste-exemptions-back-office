@@ -10,8 +10,8 @@ module RenewalReminders
 
       let(:registration) { create(:registration, :with_active_exemptions) }
 
-      context "when the registration is not assisted digital" do
-        before { registration.update(is_legacy_bulk: false) }
+      context "when the registration is not legacy_bulk or multi-site" do
+        before { registration.update(is_legacy_bulk: false, is_multisite_registration: false) }
 
         it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
           let(:cassette_name) { "temporary_second_renewal_reminder_email" }
@@ -19,13 +19,9 @@ module RenewalReminders
         end
       end
 
-      context "when the registration is assisted digital" do
-        before { registration.update(is_legacy_bulk: true) }
-
-        it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
-          let(:cassette_name) { "temporary_second_renewal_reminder_email_AD" }
-          let(:template_id) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
-        end
+      it_behaves_like "legacy bulk or multisite reminder" do
+        let(:cassette_name) { "renewal_reminder_email_multisite_enable_renewals_off" }
+        let(:template_id) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
       end
 
       it "includes a registration URL instead of a renewal link" do

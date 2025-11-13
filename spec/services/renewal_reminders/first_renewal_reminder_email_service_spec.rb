@@ -6,26 +6,12 @@ module RenewalReminders
 
   RSpec.describe FirstRenewalReminderEmailService do
     describe "run" do
-
       subject(:run_service) { described_class.run(registration: registration) }
 
       let(:registration) { create(:registration) }
 
-      shared_examples "sends an email with the correct template id" do
-        it do
-          VCR.use_cassette(cassette_name) do
-            result = run_service
-
-            expect(result).to be_a(Notifications::Client::ResponseNotification)
-            expect(result.template["id"]).to eq(template_id)
-            # No point checking the registration's renew_token value as VCR caches a random one
-            expect(result.content["body"]).to match(%r{http://localhost:\d+/renew/}) unless registration.is_legacy_bulk
-          end
-        end
-      end
-
-      context "when the registration is not assisted digital" do
-        before { registration.update(is_legacy_bulk: false) }
+      context "when the registration is not legacy_bulk or multi-site" do
+        before { registration.update(is_legacy_bulk: false, is_multisite_registration: false) }
 
         it_behaves_like "sends a Notify message with the correct template id and with a renewal link" do
           let(:cassette_name) { "first_renewal_reminder_email" }
@@ -33,13 +19,9 @@ module RenewalReminders
         end
       end
 
-      context "when the registration is assisted digital" do
-        before { registration.update(is_legacy_bulk: true) }
-
-        it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
-          let(:cassette_name) { "first_renewal_reminder_email_AD" }
-          let(:template_id) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
-        end
+      it_behaves_like "legacy bulk or multisite reminder" do
+        let(:cassette_name) { "renewal_reminder_email_multisite_enable_renewals_on" }
+        let(:template_id) { "cda801d8-ad08-4e77-ab46-94b0e9689ed7" }
       end
 
       it_behaves_like "opted out of renewal reminder"

@@ -35,6 +35,10 @@ module RenewalReminders
       )
     end
 
+    def renewals_enabled?
+      WasteExemptionsEngine::FeatureToggle.active?(:enable_renewals)
+    end
+
     private
 
     def message_type
