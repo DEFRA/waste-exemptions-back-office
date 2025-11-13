@@ -31,10 +31,6 @@ module WasteExemptionsEngine
 
     scope :contact_phone_present, -> { where.not(contact_phone: nil) }
 
-    scope :site_address_is_not_nccc, lambda {
-      joins(:addresses).merge(Address.site.not_nccc)
-    }
-
     scope :opted_in_to_renewal_emails, -> { where(reminder_opt_in: true) }
 
     # Override the base search scope to exclude placeholder registrations
@@ -55,6 +51,10 @@ module WasteExemptionsEngine
 
     def multisite?
       is_multisite_registration == true
+    end
+
+    def legacy_bulk_or_multisite?
+      multisite? || is_legacy_bulk
     end
 
     def eligible_for_free_renewal?

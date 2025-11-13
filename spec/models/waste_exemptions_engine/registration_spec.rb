@@ -40,26 +40,6 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
   end
 
-  describe ".site_address_is_not_nccc" do
-    let(:registration) { create(:registration, :site_uses_address) }
-
-    it "returns registrations that don't have the NCCC postcode in the site address" do
-      registration.site_address.update(postcode: "AA1 1AA")
-
-      result = described_class.site_address_is_not_nccc
-
-      expect(result).to include(registration)
-    end
-
-    it "does not return registrations that do have the NCCC postcode in the site address" do
-      registration.site_address.update(postcode: "S9 4WF")
-
-      result = described_class.site_address_is_not_nccc
-
-      expect(result).not_to include(registration)
-    end
-  end
-
   describe "#renewable?" do
 
     before do
@@ -473,5 +453,25 @@ RSpec.describe WasteExemptionsEngine::Registration do
     it { expect(t28_only_registration.eligible_for_free_renewal?).to be true }
     it { expect(t28_plus_registration.eligible_for_free_renewal?).to be true }
     it { expect(non_charity_non_t28_registration.eligible_for_free_renewal?).to be false }
+  end
+
+  describe "#legacy_bulk_or_multisite?" do
+    context "when the registration is for a single site" do
+      let(:registration) { build(:registration) }
+
+      it { expect(registration.legacy_bulk_or_multisite?).to be false }
+    end
+
+    context "when the registration has been marked legacy bulk" do
+      let(:registration) { build(:registration, is_legacy_bulk: true) }
+
+      it { expect(registration.legacy_bulk_or_multisite?).to be true }
+    end
+
+    context "when the registration has multiple sites" do
+      let(:registration) { build(:registration, :multisite_complete) }
+
+      it { expect(registration.legacy_bulk_or_multisite?).to be true }
+    end
   end
 end
