@@ -19,11 +19,9 @@ module RenewalReminders
     private
 
     def template
-      if @registration.legacy_bulk_or_multisite?
-        renewals_enabled? ? "cda801d8-ad08-4e77-ab46-94b0e9689ed7" : "69a8254e-2bd0-4e09-b27a-ad7e8a29d783"
-      else
-        "f308a8a9-0358-41e1-b633-ea4044ad9580"
-      end
+      return "f308a8a9-0358-41e1-b633-ea4044ad9580" unless @registration.legacy_bulk_or_multisite?
+
+      renewals_enabled? ? "cda801d8-ad08-4e77-ab46-94b0e9689ed7" : "69a8254e-2bd0-4e09-b27a-ad7e8a29d783"
     end
   end
 end
