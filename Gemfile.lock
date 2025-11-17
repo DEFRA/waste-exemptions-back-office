@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: e2e2df766f023eb1e34c55236c373a111b5a665d
-  branch: main
+  revision: 24de667d964af3e408eb8130be4c53824e262ea2
+  branch: RUBY-4072-wex-store-number-of-sites-in-charge-details-table
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
