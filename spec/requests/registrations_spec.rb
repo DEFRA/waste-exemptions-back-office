@@ -107,4 +107,48 @@ RSpec.describe "Registrations" do
       end
     end
   end
+
+  describe "GET /registrations/linear" do
+    before { registration.update(is_linear: true) }
+
+    context "when a user is signed in" do
+      before { sign_in(create(:user)) }
+
+      it "renders the linear template and includes the correct header" do
+        get "/registrations/linear"
+
+        expect(response).to render_template(:linear)
+        expect(response.body).to include("Linear registrations")
+      end
+
+      it "includes the correct back link" do
+        get "/registrations/linear"
+
+        expect(response.body).to include("Back")
+        expect(response.body).to include(root_path)
+      end
+
+      it "includes linear registrations" do
+        get "/registrations/linear"
+
+        expect(response.body).to include(registration.reference)
+      end
+
+      it "includes pagination controls" do
+        get "/registrations/linear"
+
+        expect(response.body).to include("Pagination")
+      end
+    end
+
+    context "when a valid user is not signed in" do
+      before { sign_out(create(:user)) }
+
+      it "redirects to the sign-in page" do
+        get "/registrations/linear"
+
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+  end
 end

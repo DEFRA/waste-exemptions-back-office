@@ -9,6 +9,12 @@ class RegistrationsController < ApplicationController
     find_resource(params[:reference])
   end
 
+  def linear
+    authorize! :read, WasteExemptionsEngine::Registration.new
+
+    @registrations = WasteExemptionsEngine::Registration.linear.order(:reference).page(params[:page])
+  end
+
   def mark_as_legacy_bulk
     registration_reference = params[:registration_reference]
     find_resource(registration_reference).update(is_legacy_bulk: true)
