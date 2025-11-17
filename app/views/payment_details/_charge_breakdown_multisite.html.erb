@@ -23,7 +23,7 @@
             </td>
             <td class="govuk-!-padding-top-2">
               <% if order.exemption_codes_excluding_bucket.present? %>
-                <%= order.exemption_codes_excluding_bucket %> x [<%= resource.site_addresses.count %>]
+                <%= order.exemption_codes_excluding_bucket %> x [<%= order.site_count %>]
               <% end %>
             </td>
             <td class="govuk-!-text-align-right govuk-!-padding-top-2">
@@ -36,7 +36,7 @@
             <td>
               <% if order.bucket.present? %>
                 <%= t(".details_section.charges.bucket_exemptions_label.#{order.bucket.bucket_type}") %>
-                <%= order.bucket_exemption_codes %> x [<%= resource.site_addresses.count %>]
+                <%= order.bucket_exemption_codes %> x [<%= order.site_count %>]
               <% end %>
             </td>
             <td class="govuk-!-text-align-right">

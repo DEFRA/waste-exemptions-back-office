@@ -15,4 +15,8 @@ class OrderPresenter < BasePresenter
 
     (exemptions & bucket.exemptions).map(&:code).sort.join(", ")
   end
+
+  def site_count
+    charge_detail&.site_count || 1
+  end
 end
