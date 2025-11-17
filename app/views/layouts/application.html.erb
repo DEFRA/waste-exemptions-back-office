@@ -76,6 +76,14 @@
                         class: "govuk-header__link" %>
           </li>
         <% end %>
+
+        <% if can?(:read, WasteExemptionsEngine::Registration) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.linear_registrations"),
+                        main_app.linear_registrations_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
       </ul>
     </nav>
   <% end %>
