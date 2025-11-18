@@ -76,7 +76,7 @@ RSpec.describe "Payment details" do
   end
 
   describe "GET /registrations/:reference/payment_details" do
-    let(:registration) { create(:registration, account: build(:account, :with_order, :with_payment)) }
+    let(:registration) { create(:registration, account: create(:account, :with_order, :with_payment)) }
     let(:account) { registration.account }
     let(:order) { account.orders.first }
     let(:i18n_page) { ".payment_details.index" }
@@ -138,7 +138,7 @@ RSpec.describe "Payment details" do
 
       context "for the details section when registration is multi-site" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
-        let(:registration) { create(:registration, :multisite_complete, account: build(:account, :with_order, :with_payment)) }
+        let(:registration) { create(:registration, :multisite_complete, account: create(:account, :with_order, :with_payment)) }
         let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_multisite.details_section.charges" }
 
         # charges
@@ -149,7 +149,7 @@ RSpec.describe "Payment details" do
 
         it "includes charge details with number of sites" do
           expected_exemption_codes = order.exemptions.pluck(:code).sort
-          expect(response.body).to include "#{expected_exemption_codes.join(', ')} x [#{registration.site_addresses.count}]"
+          expect(response.body).to include "#{expected_exemption_codes.join(', ')} x [#{order.charge_detail.site_count}]"
         end
 
         # charge adjustments

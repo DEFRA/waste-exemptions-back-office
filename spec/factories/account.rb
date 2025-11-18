@@ -12,9 +12,15 @@ FactoryBot.define do
           build(:exemption, band: bands[1]),
           build(:exemption, band: bands[2])
         ]
-        acc.orders << build(:order,
-                            :with_charge_detail,
-                            exemptions:)
+
+        site_count = [acc.registration&.site_addresses&.count.to_i, 1].max
+
+        acc.orders << build(
+          :order,
+          :with_charge_detail,
+          exemptions:,
+          charge_detail: build(:charge_detail, site_count: site_count)
+        )
         acc.payments << build(:payment, :with_order, account: acc)
       end
     end
