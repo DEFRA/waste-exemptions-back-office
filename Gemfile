@@ -70,7 +70,7 @@ gem "sucker_punch", "~> 3.2"
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "RUBY-4072-wex-store-number-of-sites-in-charge-details-table"
+    branch: "main"
 
 # for handling EA Areas GeoJSON data
 gem "rgeo-geojson"
