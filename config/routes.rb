@@ -67,6 +67,8 @@ Rails.application.routes.draw do
       post :deregister, on: :member, to: "deregister_sites#update"
       get :deregistrations, on: :member, to: "site_deregistrations#show"
     end
+
+    get :linear, on: :collection, to: "registrations#linear", as: :linear
   end
 
   resources :deregistrations, only: :show, param: :reference

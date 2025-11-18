@@ -60,6 +60,24 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
   end
 
+  describe ".linear" do
+    let(:registration) { create(:registration) }
+
+    it "returns registrations where is_linear is set to TRUE" do
+      registration.update(is_linear: true)
+
+      result = described_class.linear
+      expect(result).to include(registration)
+    end
+
+    it "does not return registrations where is_linear is not set to TRUE" do
+      registration.update(is_linear: false)
+
+      result = described_class.linear
+      expect(result).not_to include(registration)
+    end
+  end
+
   describe "#renewable?" do
 
     before do

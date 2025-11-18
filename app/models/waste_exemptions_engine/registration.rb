@@ -45,6 +45,8 @@ module WasteExemptionsEngine
       base_search_registration_and_relations(term).where(placeholder: false)
     }
 
+    scope :linear, -> { where(is_linear: true) }
+
     def active?
       state == "active"
     end
