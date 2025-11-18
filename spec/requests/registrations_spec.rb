@@ -139,6 +139,26 @@ RSpec.describe "Registrations" do
 
         expect(response.body).to include("Pagination")
       end
+
+      it "paginates the results" do
+        allow(Kaminari.config).to receive(:default_per_page).and_return(2)
+
+        create_list(:registration, 3, is_linear: true)
+
+        get "/registrations/linear"
+
+        expect(response.body).to include(WasteExemptionsEngine::Registration.first.reference)
+        expect(response.body).to include("Showing 1 &ndash; 2 of 4 results")
+        expect(response.body).to include("Next")
+        expect(response.body).not_to include("Prev")
+
+        get "/registrations/linear?page=2"
+
+        expect(response.body).to include(WasteExemptionsEngine::Registration.last.reference)
+        expect(response.body).to include("Showing 3 &ndash; 4 of 4 results")
+        expect(response.body).not_to include("Next")
+        expect(response.body).to include("Prev")
+      end
     end
 
     context "when a valid user is not signed in" do
