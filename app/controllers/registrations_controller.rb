@@ -5,8 +5,18 @@ class RegistrationsController < ApplicationController
 
   helper ActionLinksHelper
 
+  before_action :authorize
+
   def show
     find_resource(params[:reference])
+  end
+
+  def linear
+    @registrations = WasteExemptionsEngine::Registration
+                     .linear
+                     .includes(:registration_exemptions, :site_address)
+                     .order(:reference)
+                     .page(params[:page])
   end
 
   def mark_as_legacy_bulk
@@ -27,5 +37,9 @@ class RegistrationsController < ApplicationController
 
   def find_resource(reference)
     @resource = WasteExemptionsEngine::Registration.find_by(reference: reference)
+  end
+
+  def authorize
+    authorize! :read, WasteExemptionsEngine::Registration
   end
 end

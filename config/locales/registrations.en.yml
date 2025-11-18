@@ -2,7 +2,24 @@ en:
   registrations:
     show:
       title: Registration details
-      heading: "Registration details for %{reference}"
+      heading: 
+        regular: "Registration details for %{reference}"
+        linear: "Linear registration details for %{reference}"
+        multisite: "Multiple site registration details for %{reference}"
       back_link_label: Back to search results
+    linear:
+      title: "Linear registrations"
+      heading: "Linear registrations"
+      no_results: "No linear registrations found"
+      labels:
+        status: Status
+        name: Registered name
+        reference: Reference number
+        contact: Contact
+        grid_reference: Site grid reference
+        area: EA area
+        actions: Action
+      actions:
+        view: "View"
     marked_as_legacy_bulk: You have marked this registration as multiple site
     marked_as_legacy_linear: You have marked this registration as linear
