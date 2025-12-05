@@ -55,7 +55,8 @@ RSpec.describe "one_off:migrate_legacy_single_site_registrations", type: :rake d
     it "removes the association from the registration to the site_address" do
       run_rake_task
 
-      expect(registration.site_address).to be_nil
+      expect(registration.registration_exemptions.where(address: nil)).to be_empty
+      expect(registration.site_address.registration_exemptions).to match_array(registration.registration_exemptions)
     end
   end
 end
