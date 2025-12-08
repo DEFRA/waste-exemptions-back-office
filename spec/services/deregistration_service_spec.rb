@@ -55,11 +55,7 @@ RSpec.describe DeregistrationService do
             it "sets deregistered_by for all of the registration_exemptions" do
               dereg_service.deregister!(:revoke, deregistration_message)
               registration.registration_exemptions.each do |re|
-                p re.deregistration_message
-                p re.deregistered_by
                 re.reload
-                p re.deregistration_message
-                p re.deregistered_by
                 expect(re.deregistered_by).to eq(admin_team_user.email)
               end
             end
