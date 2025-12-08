@@ -21,7 +21,7 @@ class DeregistrationService
       PaperTrail.request(whodunnit: current_user.email) do
         # Apply the new state via the AASM helper method.
         resource.public_send("#{state_transition}!")
-        resource.update!(deregistration_message: deregistration_message, deregistered_by: current_user.email)
+        resource.update(deregistration_message: deregistration_message, deregistered_by: current_user.email)
       end
     end
   end
