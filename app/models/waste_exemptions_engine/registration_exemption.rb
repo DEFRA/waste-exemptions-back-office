@@ -44,10 +44,11 @@ module WasteExemptionsEngine
     end
 
     def deregistered_by
-      # As versions are only saved when deregistere_at is changed, so we know the
-      # version that exists will have the email of the user who deregistered it
-      deregistration_version = versions.where(event: "update").last
+      # Return the column value if present (new records)
+      # Fall back to version lookup for historical records
+      return self[:deregistered_by] if self[:deregistered_by].present?
 
+      deregistration_version = versions.where(event: "update").last
       return if deregistration_version.blank?
 
       deregistration_version.whodunnit

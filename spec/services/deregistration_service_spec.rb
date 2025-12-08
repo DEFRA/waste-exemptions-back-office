@@ -52,6 +52,14 @@ RSpec.describe DeregistrationService do
               end
             end
 
+            it "sets deregistered_by for all of the registration_exemptions" do
+              dereg_service.deregister!(:revoke, deregistration_message)
+              registration.registration_exemptions.each do |re|
+                re.reload
+                expect(re.deregistered_by).to eq(admin_team_user.email)
+              end
+            end
+
             it "creates a version for all of the registration_exemptions", :versioning do
               registration.registration_exemptions.each do |re|
                 expect(re.versions.size).to eq(0)
@@ -227,6 +235,14 @@ RSpec.describe DeregistrationService do
               end
             end
 
+            it "sets deregistered_by for all of the registration_exemptions" do
+              dereg_service.deregister!(:revoke, deregistration_message)
+              site.registration_exemptions.each do |re|
+                re.reload
+                expect(re.deregistered_by).to eq(admin_team_user.email)
+              end
+            end
+
             it "creates a version for all of the registration_exemptions", :versioning do
               site.registration_exemptions.each do |re|
                 expect(re.versions.size).to eq(0)
@@ -360,6 +376,13 @@ RSpec.describe DeregistrationService do
                   .to change(active_registration_exemption, :deregistration_message)
                   .from(nil)
                   .to(deregistration_message)
+              end
+
+              it "sets deregistered_by" do
+                expect { dereg_service.deregister!(allowed_state, deregistration_message) }
+                  .to change(active_registration_exemption, :deregistered_by)
+                  .from(nil)
+                  .to(admin_team_user.email)
               end
             end
           end
