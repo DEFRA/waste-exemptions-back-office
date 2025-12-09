@@ -11,7 +11,7 @@ namespace :one_off do
     count = (args[:count] || 1_000).to_i
     expiry_date = Date.parse(args[:expiry_date] || "2028-01-01")
 
-    puts "Creating #{count} test registrations with expiry date #{expiry_date}..."
+    puts "Creating #{count} test registrations with expiry date #{expiry_date}..." unless Rails.env.test?
 
     FactoryBot.reload
 
@@ -33,7 +33,7 @@ namespace :one_off do
       puts "Progress: #{i + 1}/#{count}" if ((i + 1) % 100).zero?
     end
 
-    puts "Complete: #{count} registrations created"
+    puts "Complete: #{count} registrations created" unless Rails.env.test?
   end
 end
 
