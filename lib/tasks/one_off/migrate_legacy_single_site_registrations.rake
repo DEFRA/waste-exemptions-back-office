@@ -5,27 +5,27 @@ namespace :one_off do
   task :migrate_legacy_single_site_registrations, [:batch_size] => [:environment] do |_task, args|
     batch_size = (args[:batch_size] || 1_000).to_i
 
-    loop do
+    qualifying_addresses.in_batches(of: batch_size, load: true) do |batch|
       start_time = Time.zone.now
 
-      site_addresses = address_scope(batch_size)
-      break if site_addresses.empty?
+      puts "Migrating batch of #{batch.length} addresses" unless Rails.env.test?
 
-      puts "Batch limit #{batch_size}; migrating #{site_addresses.length} addresses" unless Rails.env.test?
-      site_addresses.each do |site_address|
-        next unless site_address.registration_exemptions.empty?
-        next if site_address.registration.registration_exemptions.empty?
-
-        site_address.update(registration_exemptions: site_address.registration.registration_exemptions)
+      ActiveRecord::Base.transaction do
+        # rubocop:disable Rails/SkipsModelValidations
+        batch.each do |site_address|
+          WasteExemptionsEngine::RegistrationExemption
+            .where(registration_id: site_address.registration_id, address_id: nil)
+            .update_all(address_id: site_address.id)
+        end
+        # rubocop:enable Rails/SkipsModelValidations
       end
 
-      finish_time = Time.zone.now
-      duration = (finish_time - start_time)
-      rate_per_k = (1000 * duration / site_addresses.length).round(1)
-      unless Rails.env.test?
-        puts "Migration complete after #{duration.round(2)} seconds (#{rate_per_k} seconds per thousand); " \
-             "#{qualifying_addresses.length} remaining addresses to migrate."
-      end
+      next if Rails.env.test?
+
+      duration = (Time.zone.now - start_time).round(2)
+      rate_per_k = (1000 * duration / batch.length).round(1)
+      remaining = qualifying_addresses.count
+      puts "Batch complete in #{duration}s (#{rate_per_k}s per 1000); #{remaining} remaining"
     end
   end
 end
@@ -34,16 +34,10 @@ def qualifying_addresses
   registration_ids_with_exemptions = WasteExemptionsEngine::RegistrationExemption
                                      .joins(:registration)
                                      .where(registrations: { is_multisite_registration: [false, nil] })
+                                     .distinct
                                      .pluck(:registration_id)
 
   WasteExemptionsEngine::Address.where(address_type: 3)
                                 .where.missing(:registration_exemptions)
-                                .joins(:registration)
-                                .where(registration: { id: registration_ids_with_exemptions })
-end
-
-def address_scope(batch_size)
-  qualifying_addresses
-    .includes(registration: :registration_exemptions)
-    .limit(batch_size)
+                                .where(registration_id: registration_ids_with_exemptions)
 end
