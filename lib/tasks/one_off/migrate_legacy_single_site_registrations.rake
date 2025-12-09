@@ -34,8 +34,7 @@ def qualifying_addresses
   registration_ids_with_exemptions = WasteExemptionsEngine::RegistrationExemption
                                      .joins(:registration)
                                      .where(registrations: { is_multisite_registration: [false, nil] })
-                                     .distinct
-                                     .pluck(:registration_id)
+                                     .pluck(:registration_id).uniq
 
   WasteExemptionsEngine::Address.where(address_type: 3)
                                 .where.missing(:registration_exemptions)
