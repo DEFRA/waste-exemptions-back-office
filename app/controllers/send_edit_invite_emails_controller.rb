@@ -10,7 +10,7 @@ class SendEditInviteEmailsController < ApplicationController
     if @resource.contact_email.blank?
       flash[:error] = I18n.t(".send_edit_invite_emails.flash.no_contact_email.error")
       flash[:error_details] = I18n.t(".send_edit_invite_emails.flash.no_contact_email.details")
-      redirect_back(fallback_location: root_path) and return
+      redirect_back_or_to(root_path) and return
     end
 
     if WasteExemptionsEngine::RegistrationEditLinkEmailService.run(
@@ -23,6 +23,6 @@ class SendEditInviteEmailsController < ApplicationController
       flash[:error] = I18n.t(".send_edit_invite_emails.flash.failure")
     end
 
-    redirect_back fallback_location: root_path
+    redirect_back_or_to(root_path)
   end
 end

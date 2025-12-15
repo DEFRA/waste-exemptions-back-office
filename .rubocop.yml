@@ -61,6 +61,12 @@ RSpec/ContextWording:
   Exclude:
     - spec/support/shared_examples/rake.rb
 
+# Simply changing these variables to "let" results in many cases in an error because "let"
+# variables are not available on an example group, only in the scope of an example.
+# TODO: Enable this cop and refactor the relevant 137 instances.
+RSpec/LeakyLocalVariable:
+  Enabled: false
+
 RSpec/NamedSubject:
   Exclude:
     - spec/lib/tasks/*
