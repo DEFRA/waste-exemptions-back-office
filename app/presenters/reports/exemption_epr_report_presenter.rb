@@ -12,12 +12,10 @@ module Reports
     end
 
     def registration_number
-      # if registration_exemption.multisite?
-      if multisite?
-        "#{owning_registration.reference}/#{address.site_suffix}"
-      else
-        owning_registration.reference
-      end
+      return owning_registration.reference unless multisite? && address.site_suffix.present?
+
+      separator = ENV.fetch("WEX_SITE_SUFFIX_SEPARATOR", "-")
+      "#{owning_registration.reference}#{separator}#{address.site_suffix}"
     end
 
     def organisation_name
