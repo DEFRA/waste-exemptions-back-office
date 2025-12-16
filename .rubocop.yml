@@ -61,11 +61,18 @@ RSpec/ContextWording:
   Exclude:
     - spec/support/shared_examples/rake.rb
 
-# Simply changing these variables to "let" results in many cases in an error because "let"
-# variables are not available on an example group, only in the scope of an example.
-# TODO: Enable this cop and refactor the relevant 137 instances.
+# TODO: Enable this cop for these files and refactor the relevant instances.
 RSpec/LeakyLocalVariable:
-  Enabled: false
+  Exclude:
+    - spec/models/waste_exemptions_engine/registration_exemption_spec.rb
+    - spec/requests/deregister_exemptions_forms_spec.rb
+    - spec/services/ea_public_face_area_data_load_service_spec.rb
+    - spec/support/shared_examples/validators/length_validator.rb
+    - spec/support/shared_examples/validators/presence_validator.rb
+    - spec/support/shared_examples/validators/selection_validator.rb
+    - spec/support/shared_examples/validators/validator.rb
+    - spec/validators/deregistration_message_validator_spec.rb
+    - spec/validators/deregistration_state_transition_validator_spec.rb
 
 RSpec/NamedSubject:
   Exclude:

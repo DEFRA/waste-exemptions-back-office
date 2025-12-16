@@ -8,7 +8,7 @@ RSpec.describe "Benchmark search task", type: :rake do
   # rubocop:disable RSpec/ExpectOutput
   describe "benchmark_search" do
 
-    original_stdout = $stdout
+    original_stdout = $stdout # rubocop:disable RSpec/LeakyLocalVariable
 
     before do
       # suppress noisy outputs during unit test
