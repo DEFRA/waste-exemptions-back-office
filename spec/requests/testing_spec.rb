@@ -35,6 +35,8 @@ RSpec.describe "Testing" do
         get "/testing/create_registration/#{expiry_date}"
 
         expect(registration.registration_exemptions.count).to eq(3)
+        site_address = registration.site_addresses.find { |a| a.address_type == "site" }
+        expect(site_address.registration_exemptions.count).to eq(3)
       end
 
       it "only creates registration exemptions for existing exemption codes" do
@@ -49,6 +51,9 @@ RSpec.describe "Testing" do
 
         expect(registration.registration_exemptions.count).to eq(2)
         expect(registration.registration_exemptions.map { |re| re.exemption.code }).to contain_exactly(existing_exemption1.code, existing_exemption2.code)
+        site_address = registration.site_addresses.find { |a| a.address_type == "site" }
+        expect(site_address.registration_exemptions.count).to eq(2)
+        expect(site_address.registration_exemptions.map { |re| re.exemption.code }).to contain_exactly(existing_exemption1.code, existing_exemption2.code)
         expect(WasteExemptionsEngine::Exemption.find_by(code: non_existing_code)).to be_nil
       end
 
@@ -58,12 +63,17 @@ RSpec.describe "Testing" do
 
         expect(registration.registration_exemptions.count).to eq(3)
         expect(registration.registration_exemptions.map { |re| re.exemption.code }).to match_array(exemption_codes)
+        site_address = registration.site_addresses.find { |a| a.address_type == "site" }
+        expect(site_address.registration_exemptions.count).to eq(3)
+        expect(site_address.registration_exemptions.map { |re| re.exemption.code }).to match_array(exemption_codes)
       end
 
       it "sets the expiry date correctly" do
         get "/testing/create_registration/#{expiry_date}"
 
         expect(registration.registration_exemptions.first.expires_on).to eq(Date.parse(expiry_date))
+        site_address = registration.site_addresses.find { |a| a.address_type == "site" }
+        expect(site_address.registration_exemptions.first.expires_on).to eq(Date.parse(expiry_date))
       end
 
       it "populates the edit_token_created_at" do
@@ -87,6 +97,60 @@ RSpec.describe "Testing" do
         get "/testing/create_registration/#{expiry_date}", params: { exemptions: exemption_codes }
 
         expect(registration.account.balance).to be_negative
+      end
+
+      context "with multiple sites" do
+        it "creates a multisite registration with the specified number of sites" do
+          get "/testing/create_registration/#{expiry_date}", params: { number_of_sites: 5 }
+
+          expect(registration.is_multisite_registration?).to be true
+          expect(registration.site_addresses.count).to eq(5)
+        end
+
+        it "creates site addresses with exemptions" do
+          exemption_codes = [create(:exemption, code: "U1"), create(:exemption, code: "U2")].map(&:code)
+          get "/testing/create_registration/#{expiry_date}", params: { number_of_sites: 3, exemptions: exemption_codes }
+
+          expect(registration.site_addresses.count).to eq(3)
+          registration.site_addresses.each do |site_address|
+            expect(site_address.registration_exemptions.count).to eq(2)
+            expect(site_address.registration_exemptions.map { |re| re.exemption.code }).to match_array(exemption_codes)
+          end
+        end
+
+        it "creates site addresses with default exemptions when none are specified" do
+          get "/testing/create_registration/#{expiry_date}", params: { number_of_sites: 2 }
+
+          expect(registration.site_addresses.count).to eq(2)
+          registration.site_addresses.each do |site_address|
+            expect(site_address.registration_exemptions.count).to eq(3)
+          end
+        end
+
+        it "assigns unique site suffixes to each site" do
+          get "/testing/create_registration/#{expiry_date}", params: { number_of_sites: 3 }
+
+          site_suffixes = registration.site_addresses.map(&:site_suffix)
+          expect(site_suffixes).to eq(%w[00001 00002 00003])
+        end
+
+        it "creates an order with exemptions from all sites" do
+          get "/testing/create_registration/#{expiry_date}", params: { number_of_sites: 2 }
+
+          order = registration.account.orders.first
+          # 2 sites * 3 exemptions each = 6 order exemptions
+          expect(order.order_exemptions.count).to eq(6)
+        end
+
+        it "calculates the account balance for multisite registration" do
+          exemption_codes = [
+            create(:exemption, code: "U1", band: band_1),
+            create(:exemption, code: "U2", band: band_2)
+          ].map(&:code)
+          get "/testing/create_registration/#{expiry_date}", params: { number_of_sites: 2, exemptions: exemption_codes }
+
+          expect(registration.account.balance).to be_negative
+        end
       end
     end
 
