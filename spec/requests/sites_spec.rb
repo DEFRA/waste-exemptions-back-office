@@ -29,7 +29,7 @@ RSpec.describe "Sites" do
   describe "GET /bo/registrations/:reference/sites/" do
     context "when registration is single-site" do
       let(:registration) { create(:registration) }
-      let(:site_address) { create(:address, :site_address, registration: registration) }
+      let(:site_address) { registration.site_address }
 
       it_behaves_like "renders the index template and returns a 200 response"
       it_behaves_like "includes the correct content"

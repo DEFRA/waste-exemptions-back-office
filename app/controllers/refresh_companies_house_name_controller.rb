@@ -14,7 +14,7 @@ class RefreshCompaniesHouseNameController < ApplicationController
       Rails.logger.error "Failed to refresh: #{e}"
       flash_error(failure_message, failure_desciption)
     end
-    redirect_back(fallback_location: registration_path(reference))
+    redirect_back_or_to(registration_path(reference))
   end
 
   private

@@ -180,13 +180,14 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is single-site" do
-      let(:address) { create(:address, :site_address, registration:) }
+      let(:address) { registration.site_address }
 
       context "when registration has ceased exemptions" do
         let(:registration) { create(:registration, :with_ceased_exemptions) }
 
         it "returns a comma-separated list of ceased or revoked exemption codes" do
           expected_codes = registration.registration_exemptions.map(&:exemption).map(&:code).join(", ")
+
           expect(address.ceased_or_revoked_exemptions).to eq(expected_codes)
         end
       end
