@@ -34,8 +34,8 @@ module Reports
           expect(presenter.registration_number).to eq("#{multisite_registration.reference}-#{site_address.site_suffix}")
         end
 
-        context "when WEX_SITE_SUFFIX_SEPARATOR is set" do
-          before { allow(ENV).to receive(:fetch).with("WEX_SITE_SUFFIX_SEPARATOR", "-").and_return("/") }
+        context "when REPORT_SITE_SUFFIX_SEPARATOR is set" do
+          before { allow(ENV).to receive(:fetch).with("REPORT_SITE_SUFFIX_SEPARATOR", "-").and_return("/") }
           after { allow(ENV).to receive(:fetch).and_call_original }
 
           it "uses the custom separator" do
