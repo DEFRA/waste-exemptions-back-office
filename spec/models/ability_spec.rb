@@ -6,10 +6,14 @@ require "rails_helper"
 RSpec.describe Ability do
   subject(:ability) { described_class.new(user) }
 
-  let(:registration) { build(:registration) }
-  let(:site) { build(:address, registration: registration) }
-  let(:registration_exemption) { build(:registration_exemption, address: site) }
+  let(:site) { build(:address, :site_address) }
+  let(:registration) { build(:registration, site_addresses: [site]) }
+  let(:registration_exemption) { build(:registration_exemption) }
   let(:new_registration) { build(:new_registration) }
+
+  before do
+    site.registration_exemptions << registration_exemption
+  end
 
   RSpec.shared_examples "can use back office" do
     it { expect(subject).to be_able_to(:use_back_office, :all) }

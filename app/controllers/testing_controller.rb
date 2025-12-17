@@ -74,19 +74,19 @@ class TestingController < ApplicationController
   def create_registration_with_sites(number_of_sites, registration_exemptions)
     is_multisite = number_of_sites > 1
 
+    addresses = [
+      FactoryBot.build(:address, :operator_address),
+      FactoryBot.build(:address, :contact_address)
+    ]
+
     FactoryBot.create(:registration, is_multisite_registration: is_multisite,
-                                     registration_exemptions: registration_exemptions).tap do |registration|
-      if is_multisite
-        registration.site_addresses = (1..number_of_sites).map do |i|
-          site_address = FactoryBot.build(:address, :site_address)
-          site_address.registration_exemptions = registration_exemptions.map(&:dup)
-          site_address.site_suffix = format("%05d", i)
-          site_address
-        end
-      else
-        # For single-site, also attach exemptions to the site address
-        site_address = registration.site_addresses.find { |a| a.address_type == "site" }
-        site_address.registration_exemptions = registration_exemptions if site_address
+                                     registration_exemptions: [], addresses: addresses).tap do |registration|
+      registration.site_addresses = (1..number_of_sites).map do |i|
+        site_address = FactoryBot.build(:address, :site_address)
+        site_address.registration_exemptions = registration_exemptions.map(&:dup)
+        registration.registration_exemptions << site_address.registration_exemptions
+        site_address.site_suffix = format("%05d", i)
+        site_address
       end
 
       registration.save!
