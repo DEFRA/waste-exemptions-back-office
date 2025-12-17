@@ -19,28 +19,56 @@
 </dl>
 
 <h2 class="govuk-heading-l">Exemptions</h2>
-<p class="govuk-body">This registration includes the following exemptions:</p>
-<dl class="govuk-summary-list">
-  <% registration.registration_exemptions.each do |registration_exemption| %>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
-        <span class="govuk-!-font-weight-bold"><%= registration_exemption.exemption.code %></span>
-      </dt>
-      <dd class="govuk-summary-list__value">
-        <%= registration_exemption.exemption.summary %>
-      </dd>
-      <% if registration_exemption.exemption.band.present? %>
-        <dd class="govuk-summary-list__actions">
-          <span class="govuk-tag govuk-tag--blue">
-            <%= registration_exemption.exemption.band.name %>
-          </span>
-        </dd>
-      <% else %>
-        <dd class="govuk-summary-list__actions"></dd>
+<% if registration.is_multisite_registration? %>
+  <p class="govuk-body">This is a multisite registration with <%= registration.site_addresses.count %> sites.</p>
+  <% registration.site_addresses.each_with_index do |site_address, index| %>
+    <h3 class="govuk-heading-m">Site <%= index + 1 %><% if site_address.site_suffix.present? %> (<%= site_address.site_suffix %>)<% end %></h3>
+    <dl class="govuk-summary-list">
+      <% site_address.registration_exemptions.each do |registration_exemption| %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+            <span class="govuk-!-font-weight-bold"><%= registration_exemption.exemption.code %></span>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= registration_exemption.exemption.summary %>
+          </dd>
+          <% if registration_exemption.exemption.band.present? %>
+            <dd class="govuk-summary-list__actions">
+              <span class="govuk-tag govuk-tag--blue">
+                <%= registration_exemption.exemption.band.name %>
+              </span>
+            </dd>
+          <% else %>
+            <dd class="govuk-summary-list__actions"></dd>
+          <% end %>
+        </div>
       <% end %>
-    </div>
+    </dl>
   <% end %>
-</dl>
+<% else %>
+  <p class="govuk-body">This registration includes the following exemptions:</p>
+  <dl class="govuk-summary-list">
+    <% registration.registration_exemptions.each do |registration_exemption| %>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key govuk-!-font-weight-regular">
+          <span class="govuk-!-font-weight-bold"><%= registration_exemption.exemption.code %></span>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          <%= registration_exemption.exemption.summary %>
+        </dd>
+        <% if registration_exemption.exemption.band.present? %>
+          <dd class="govuk-summary-list__actions">
+            <span class="govuk-tag govuk-tag--blue">
+              <%= registration_exemption.exemption.band.name %>
+            </span>
+          </dd>
+        <% else %>
+          <dd class="govuk-summary-list__actions"></dd>
+        <% end %>
+      </div>
+    <% end %>
+  </dl>
+<% end %>
 
 <h2 class="govuk-heading-l">Attributes</h2>
 <dl class="govuk-summary-list">
