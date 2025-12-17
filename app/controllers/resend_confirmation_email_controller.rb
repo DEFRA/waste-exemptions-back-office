@@ -17,7 +17,7 @@ class ResendConfirmationEmailController < ApplicationController
       flash_error(failure_message, failure_description)
     end
 
-    redirect_back(fallback_location: root_path)
+    redirect_back_or_to(root_path)
   end
 
   private

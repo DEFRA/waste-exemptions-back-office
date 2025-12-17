@@ -12,7 +12,7 @@ RSpec.describe CompaniesHouseNameMatching::ProcessBatch, type: :service do
   let(:max_requests) { (described_class::RATE_LIMIT * described_class::RATE_LIMIT_BUFFER).to_i }
   let(:companies_house_api) { instance_double(DefraRuby::CompaniesHouse::API) }
 
-  original_stdout = $stdout
+  original_stdout = $stdout # rubocop:disable RSpec/LeakyLocalVariable
 
   # rubocop:disable RSpec/ExpectOutput
   before do

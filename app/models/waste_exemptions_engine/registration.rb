@@ -55,10 +55,6 @@ module WasteExemptionsEngine
       state == "expired"
     end
 
-    def multisite?
-      is_multisite_registration == true
-    end
-
     def eligible_for_free_renewal?
       business_type == "charity" || registration_exemptions.includes([:exemption]).any? do |re|
         re.exemption.code == "T28"

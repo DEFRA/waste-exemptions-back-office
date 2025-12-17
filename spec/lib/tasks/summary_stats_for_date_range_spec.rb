@@ -6,7 +6,7 @@ require "rails_helper"
 RSpec.describe "summary_stats:stats_for_date_range", type: :rake do
   include_context "rake"
 
-  original_stdout = $stdout
+  original_stdout = $stdout # rubocop:disable RSpec/LeakyLocalVariable
 
   let(:start_date) { 90.days.ago.strftime("%Y-%m-%d") }
   let(:end_date) { Time.zone.today.strftime("%Y-%m-%d") }
