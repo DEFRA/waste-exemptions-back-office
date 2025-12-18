@@ -10,7 +10,7 @@ module Reports
     end
 
     def registration_number
-      return owning_registration.reference unless multisite? && address.site_suffix.present?
+      return owning_registration.reference unless owning_registration.multisite? && address.site_suffix.present?
 
       separator = ENV.fetch("REPORT_SITE_SUFFIX_SEPARATOR", "-")
       "#{owning_registration.reference}#{separator}#{address.site_suffix}"
