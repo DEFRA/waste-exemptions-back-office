@@ -198,9 +198,8 @@ RSpec.describe DeregistrationService do
 
         let(:registration) { create(:registration, :multisite, registration_exemptions: []) }
         let(:site) do
-          site = registration.site_addresses.first
-          site.registration_exemptions << create(:registration_exemption, state: "active")
-          site.registration_exemptions << create(:registration_exemption, state: "active")
+          site = registration.site_address
+          site.registration_exemptions = create_list(:registration_exemption, 2, state: "active")
           site
         end
 

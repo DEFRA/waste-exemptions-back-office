@@ -40,7 +40,10 @@ RSpec.describe "one_off:migrate_legacy_single_site_registrations", type: :rake d
     let(:registration) { WasteExemptionsEngine::Registration.last }
     let(:site_address) { registration.site_address }
 
-    before { create(:registration) }
+    before do
+      ENV["LEGACY_DATA_MODEL"] = "true"
+      create(:registration)
+    end
 
     it "adds registration_exemptions on the site_address" do
       expect { run_rake_task }.to change { site_address.reload.registration_exemptions.count }.from(0)
