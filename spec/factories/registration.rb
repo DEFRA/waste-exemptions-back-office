@@ -107,7 +107,7 @@ FactoryBot.define do
     end
 
     trait :with_ceased_exemptions do
-      registration_exemptions { build_list(:registration_exemption, 3, :ceased) }
+      registration_exemptions { build_list(:registration_exemption, 3, :ceased, address: site_address) }
     end
 
     trait :eligible_for_deregistration do
@@ -171,9 +171,19 @@ FactoryBot.define do
         registration.registration_exemptions = []
         registration.site_addresses = (1..30).map do |i|
           site_address = build(:address, :site_address)
-          site_address.registration_exemptions << build_list(:registration_exemption, 3, :active, registration:)
+          site_address.registration_exemptions << build_list(:registration_exemption, 3, :active, registration: registration)
           site_address.site_suffix = format("%05d", i)
           site_address
+        end
+      end
+    end
+
+    # ensure that all exemptions are linked to a site address
+    after(:build) do |registration|
+      unless ENV["LEGACY_DATA_MODEL"]
+        address = registration.site_addresses&.first || build(:address, :site_address, :manual, :postal)
+        registration.registration_exemptions.each do |registration_exemption|
+          registration_exemption.address = address
         end
       end
     end

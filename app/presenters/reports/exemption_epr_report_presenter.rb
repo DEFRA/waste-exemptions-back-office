@@ -5,15 +5,12 @@ module Reports
 
     delegate :code, to: :exemption, prefix: true
 
-    # The presenter operates at the registration_exemption level but uses many attributes of the owning registration.
-    # Multisite registration_exemptions have an indirect association with the registration.
     def owning_registration
-      @owning_registration ||= multisite? ? address.registration : registration
+      @owning_registration ||= registration
     end
 
     def registration_number
-      # if registration_exemption.multisite?
-      if multisite?
+      if owning_registration.multisite?
         "#{owning_registration.reference}/#{address.site_suffix}"
       else
         owning_registration.reference
