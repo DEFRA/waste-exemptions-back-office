@@ -128,7 +128,7 @@ RSpec.describe WasteExemptionsEngine::Address do
   end
 
   describe "#site_status" do
-    let(:address) { build(:address, :site_address, registration:) }
+    let(:address) { build(:address, :site_address) }
 
     shared_examples "returns deregistered" do
       it { expect(address.site_status).to eq("deregistered") }
@@ -139,10 +139,12 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is single-site" do
-      let(:registration_exemption) { build(:registration_exemption, :active) }
-      let(:registration) { build(:registration, registration_exemptions: [registration_exemption]) }
+      let(:registration_exemption) { build(:registration_exemption, :active, address: address) }
+      let(:registration) { build(:registration, site_addresses: [address], registration_exemptions: [registration_exemption]) }
 
       context "when registration has active exemptions" do
+        before { registration_exemption.update(state: "active") }
+
         it_behaves_like "returns active"
       end
 
@@ -154,7 +156,7 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is multi-site" do
-      let(:registration) { build(:registration, :multisite, registration_exemptions: []) }
+      let(:registration) { build(:registration, :multisite, site_addresses: [address], registration_exemptions: []) }
       let(:registration_exemption) { build(:registration_exemption, :active) }
 
       before do
@@ -180,13 +182,14 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
 
     context "when registration is single-site" do
-      let(:address) { create(:address, :site_address, registration:) }
+      let(:address) { create(:address, :site_address) }
 
       context "when registration has ceased exemptions" do
-        let(:registration) { create(:registration, :with_ceased_exemptions) }
+        let(:registration) { create(:registration, :with_ceased_exemptions, site_addresses: [address]) }
 
         it "returns a comma-separated list of ceased or revoked exemption codes" do
           expected_codes = registration.registration_exemptions.map(&:exemption).map(&:code).join(", ")
+
           expect(address.ceased_or_revoked_exemptions).to eq(expected_codes)
         end
       end

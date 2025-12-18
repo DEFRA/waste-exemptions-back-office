@@ -6,7 +6,7 @@ require "rails_helper"
 RSpec.describe "test:magic_link", type: :rake do
   include_context "rake"
 
-  original_stdout = $stdout
+  original_stdout = $stdout # rubocop:disable RSpec/LeakyLocalVariable
 
   let(:registration) { create(:registration) }
 

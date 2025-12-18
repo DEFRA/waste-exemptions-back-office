@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "SiteDeregistrations" do
   let(:registration) { create(:registration, :with_active_exemptions) }
-  let(:site) { registration.site_addresses.first }
+  let(:site) { registration.site_address }
 
   describe "GET #show" do
     context "when a user is signed in" do

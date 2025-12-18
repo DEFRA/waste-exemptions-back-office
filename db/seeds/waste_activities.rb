@@ -15,7 +15,7 @@ def seed_waste_activities
 
     waste_activity["exemptions"].each do |exemption|
       exemption = WasteExemptionsEngine::Exemption.find_by(code: exemption)
-      exemption.update(waste_activity_id: activity.id) if exemption.present?
+      exemption.presence&.update(waste_activity_id: activity.id)
     end
   end
 end
