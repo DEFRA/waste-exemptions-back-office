@@ -43,12 +43,12 @@ class TestingController < ApplicationController
     order = FactoryBot.create(:order)
     registration.account.orders << order
 
-    registration_exemptions = registration.site_addresses.flat_map(&:registration_exemptions)
-    registration_exemptions.each { |re| order.order_exemptions.create!(exemption: re.exemption) }
+    registration.registration_exemptions.find_each do |re|
+      order.order_exemptions.create!(exemption: re.exemption)
+    end
 
-    # force creation of charge_detail and calculation of balance
     calc = WasteExemptionsEngine::OrderCalculator.new(
-      order:,
+      order: order,
       strategy_type: WasteExemptionsEngine::RegularChargingStrategy
     )
     calc.charge_detail
@@ -74,23 +74,38 @@ class TestingController < ApplicationController
   def create_registration_with_sites(number_of_sites, registration_exemptions)
     is_multisite = number_of_sites > 1
 
-    addresses = [
-      FactoryBot.build(:address, :operator_address),
-      FactoryBot.build(:address, :contact_address)
-    ]
+    operator_address = FactoryBot.build(:address, :operator_address)
+    contact_address  = FactoryBot.build(:address, :contact_address)
 
-    FactoryBot.create(:registration, is_multisite_registration: is_multisite,
-                                     registration_exemptions: [], addresses: addresses).tap do |registration|
-      registration.site_addresses = (1..number_of_sites).map do |i|
-        site_address = FactoryBot.build(:address, :site_address)
-        site_address.registration_exemptions = registration_exemptions.map(&:dup)
-        registration.registration_exemptions << site_address.registration_exemptions
-        site_address.site_suffix = format("%05d", i)
-        site_address
+    site_addresses = (1..number_of_sites).map do |i|
+      FactoryBot.build(:address, :site_address).tap do |site|
+        site.site_suffix = format("%05d", i)
+        site.area ||= "Outside England"
       end
-
-      registration.save!
     end
+
+    registration = FactoryBot.build(
+      :registration,
+      is_multisite_registration: is_multisite,
+      registration_exemptions: [],
+      addresses: [operator_address, contact_address] + site_addresses
+    )
+
+    registration.addresses.each { |a| a.registration = registration }
+
+    site_addresses.each do |site|
+      registration_exemptions.each do |registration_exemption|
+        copy = registration_exemption.dup
+        copy.registration = registration
+        copy.address = site
+
+        site.registration_exemptions << copy
+        registration.registration_exemptions << copy
+      end
+    end
+
+    registration.save!
+    registration
   end
 
   def non_production_only
