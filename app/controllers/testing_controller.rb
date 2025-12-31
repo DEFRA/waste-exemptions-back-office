@@ -76,13 +76,7 @@ class TestingController < ApplicationController
 
     operator_address = FactoryBot.build(:address, :operator_address)
     contact_address  = FactoryBot.build(:address, :contact_address)
-
-    site_addresses = (1..number_of_sites).map do |i|
-      FactoryBot.build(:address, :site_address).tap do |site|
-        site.site_suffix = format("%05d", i)
-        site.area ||= "Outside England"
-      end
-    end
+    site_addresses = build_site_addresses(number_of_sites)
 
     registration = FactoryBot.build(
       :registration,
@@ -92,7 +86,22 @@ class TestingController < ApplicationController
     )
 
     registration.addresses.each { |a| a.registration = registration }
+    attach_exemptions_to_sites(registration, site_addresses, registration_exemptions)
 
+    registration.save!
+    registration
+  end
+
+  def build_site_addresses(number_of_sites)
+    (1..number_of_sites).map do |i|
+      FactoryBot.build(:address, :site_address).tap do |site|
+        site.site_suffix = format("%05d", i)
+        site.area ||= "Outside England"
+      end
+    end
+  end
+
+  def attach_exemptions_to_sites(registration, site_addresses, registration_exemptions)
     site_addresses.each do |site|
       registration_exemptions.each do |registration_exemption|
         copy = registration_exemption.dup
@@ -103,9 +112,6 @@ class TestingController < ApplicationController
         registration.registration_exemptions << copy
       end
     end
-
-    registration.save!
-    registration
   end
 
   def non_production_only
