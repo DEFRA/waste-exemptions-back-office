@@ -1,7 +1,7 @@
 function sanitizeFormInput(form) {
   form.addEventListener('submit', function() {
     form.querySelectorAll('input').forEach(function(input) {
-      input.value = input.value.replace(/[\t\&\<\\>"\'\/]+/ig, '');
+      input.value = input.value.replace(/[\t&<\\>"'/]+/ig, '');
     });
   });
 }
