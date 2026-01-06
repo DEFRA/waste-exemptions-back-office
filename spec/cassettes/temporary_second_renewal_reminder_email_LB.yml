@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"contact8@example.com","template_id":"69a8254e-2bd0-4e09-b27a-ad7e8a29d783","personalisation":{"contact_name":"Firstcontact36
+        Lastcontact36","exemptions":["F106 Use of spam in cooking","F107 Use of spam
+        in cooking","F108 Use of spam in cooking"],"expiry_date":"6 January 2029","magic_link_url":"http://localhost:3000/start","reference":"WEX000036","site_location":"ST
+        58337 72855","unsubscribe_link":"http://localhost:3000/registrations/unsubscribe/cbfoprtggrEt8MWURo5JupHq"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/6.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2063'
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 06 Jan 2026 12:12:45 GMT
+      X-B3-Spanid:
+      - self-3983457f7cb7ce90
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      X-B3-Traceid:
+      - smyM-np0k7M_GSI_jaVetL4GnC96t2Xt-J6K9Ay0x1kgLcJjdPWhkg==
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 e3a1c705cc1183f2a1e2a55e5510e170.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR3-P4
+      X-Amz-Cf-Id:
+      - smyM-np0k7M_GSI_jaVetL4GnC96t2Xt-J6K9Ay0x1kgLcJjdPWhkg==
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"Dear Firstcontact36 Lastcontact36\r\n\r\n# Renew
+        by 6 January 2029\r\n\r\nYou can now use the digital service to register and
+        renew your waste exemptions on multiple sites.  \r\n\r\nThe first time you
+        register in the service you''ll need to answer all the questions and select
+        the exemptions and sites you need. \r\n\r\nOnce registered in the service,
+        your information will be saved for the next time you renew.\r\n\r\n# Before
+        you start \r\n\r\nRead the guidance on GOV.UK about how to register and what
+        the charges are:\r\n\r\nhttps://www.gov.uk/government/publications/waste-exemptions-how-to-choose-register-and-pay\r\n\r\n#
+        Renew your waste exemptions now\r\n \r\nGo to https://wasteexemptions.service.gov.uk/
+        and click on ''Register your waste exemptions'' to start.\r\n \r\n## Your
+        information\r\n\r\nRegistration number: WEX000036\r\n\r\nThese exemptions
+        will expire on 6 January 2029:\r\n\r\n\n\n* F106 Use of spam in cooking\n*
+        F107 Use of spam in cooking\n* F108 Use of spam in cooking\r\n\r\nIf you no
+        longer need your exemptions, you don\u2019t need to do anything. They will
+        be removed from the public register. \r\n\r\n\r\nTo unsubscribe from email
+        reminders\r\n[Unsubscribe](http://localhost:3000/registrations/unsubscribe/cbfoprtggrEt8MWURo5JupHq)\r\n\r\nEnvironment
+        Agency Helpline\r\n03708 506 506 (Monday to Friday, 8am to 6pm)\r\nenquiries@environment-agency.gov.uk\r\n\r\n----\r\n\r\nThis
+        is an automated email. Please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Multiple
+        site waste exemptions expire on 6 January 2029: renew in the digital service"},"id":"a57bb635-0141-4ebf-a6a6-4bc494cf1967","reference":null,"scheduled_for":null,"template":{"id":"69a8254e-2bd0-4e09-b27a-ad7e8a29d783","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/69a8254e-2bd0-4e09-b27a-ad7e8a29d783","version":8},"uri":"https://api.notifications.service.gov.uk/v2/notifications/a57bb635-0141-4ebf-a6a6-4bc494cf1967"}
+
+        '
+  recorded_at: Tue, 06 Jan 2026 12:12:38 GMT
+recorded_with: VCR 6.4.0
