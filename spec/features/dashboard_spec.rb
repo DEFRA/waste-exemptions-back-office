@@ -31,7 +31,7 @@ RSpec.describe "Dashboard" do
 
         # Unlike the other examples, we can't use Capybara 'fill_in' here because it emulates keyboard
         # input so the tab character embedded in the string would cause it to tab to the next field.
-        page.execute_script "$(\"#term\").val(\"#{wex_reference}\")"
+        page.execute_script "document.getElementById('term').value = '#{wex_reference}'"
 
         expect(page).to have_button("Search")
         click_on "Search"
