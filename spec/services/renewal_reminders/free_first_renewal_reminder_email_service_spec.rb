@@ -10,7 +10,7 @@ module RenewalReminders
 
       let(:registration) { create(:registration) }
 
-      context "when the registration is not assisted digital" do
+      context "when the registration is not legacy bulk" do
         before { registration.update(is_legacy_bulk: false) }
 
         let(:cassette) { "free_first_renewal_reminder_email" }
@@ -22,10 +22,10 @@ module RenewalReminders
         end
       end
 
-      context "when the registration is assisted digital" do
+      context "when the registration is legacy bulk" do
         before { registration.update(is_legacy_bulk: true) }
 
-        let(:cassette) { "free_first_renewal_reminder_email_AD" }
+        let(:cassette) { "free_first_renewal_reminder_email_LB" }
         let(:template) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
 
         it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
