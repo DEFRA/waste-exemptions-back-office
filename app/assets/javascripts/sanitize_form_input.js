@@ -1,13 +1,19 @@
-function sanitizeFormInput(searchForm) {
-  searchForm.submit(function() {
-    searchForm.find('input').each(function() {
-      const input = $(this);
-      input.val(input.val().replace(/[\t\&\<\\>"\'\/]+/ig, ''));
+function sanitizeFormInput(form) {
+  form.addEventListener('submit', function() {
+    form.querySelectorAll('input').forEach(function(input) {
+      input.value = input.value.replace(/[\t&<\\>"'/]+/ig, '');
     });
   });
 }
 
-$(document).ready(function() {
-  const searchForm = $('#search-filters').closest('form');
-  sanitizeFormInput(searchForm);
+document.addEventListener('DOMContentLoaded', function() {
+  const searchFilters = document.getElementById('search-filters');
+  if (!searchFilters) {
+    return;
+  }
+
+  const form = searchFilters.closest('form');
+  if (form) {
+    sanitizeFormInput(form);
+  }
 });
