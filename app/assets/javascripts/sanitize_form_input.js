@@ -7,10 +7,12 @@ function sanitizeFormInput(form) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  var searchFilters = document.getElementById('search-filters');
-  if (!searchFilters) return;
+  const searchFilters = document.getElementById('search-filters');
+  if (!searchFilters) {
+    return;
+  }
 
-  var form = searchFilters.closest('form');
+  const form = searchFilters.closest('form');
   if (form) {
     sanitizeFormInput(form);
   }
