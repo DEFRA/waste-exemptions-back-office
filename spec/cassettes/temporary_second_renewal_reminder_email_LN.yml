@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.notifications.service.gov.uk/v2/notifications/email
+    body:
+      encoding: UTF-8
+      string: '{"email_address":"contact6@example.com","template_id":"e1c51be7-702e-40dc-9671-63279140e3ee","personalisation":{"contact_name":"Firstcontact6
+        Lastcontact6","exemptions":["F16 Use of spam in cooking","F17 Use of spam
+        in cooking","F18 Use of spam in cooking"],"expiry_date":"12 January 2029","magic_link_url":"http://localhost:3000/start","reference":"WEX000006","site_location":"ST
+        58337 72855","unsubscribe_link":"http://localhost:3000/registrations/unsubscribe/mnegnB93t6ALPNhbrFere24K"}}'
+    headers:
+      User-Agent:
+      - NOTIFY-API-RUBY-CLIENT/6.3.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Basic <API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2768'
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 12 Jan 2026 16:59:54 GMT
+      X-B3-Spanid:
+      - self-de0fffbe1d596092
+      Server:
+      - gunicorn
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Headers:
+      - Content-Type,Authorization
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE
+      X-B3-Traceid:
+      - LoA0wy5mAkLXuRPox7HyUiiI-HcI0xGFBXOHRmy5mMZ8pjlDb1gMzg==
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 0f9bc3bf1e603116a76b76d7cd5d556a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR3-P4
+      X-Amz-Cf-Id:
+      - LoA0wy5mAkLXuRPox7HyUiiI-HcI0xGFBXOHRmy5mMZ8pjlDb1gMzg==
+    body:
+      encoding: UTF-8
+      string: '{"content":{"body":"Dear Firstcontact6 Lastcontact6\r\n\r\n# Renew
+        by 12 January 2029\r\n\r\nYou can now use the online form to register and
+        renew your waste exemptions along a linear network.  \r\n\r\n# Completing
+        the form\r\n\r\nYou''ll need to:\r\n\r\n* state the exemptions you need\r\n*
+        provide grid references or a map to show the areas of waste activity\r\n*
+        give your business and contact details\r\n\r\nWhen you submit your form, the
+        Environment Agency will contact you within 5 days to deal with your registration
+        and payment. Once registered, the exemptions will be valid for 3 years. \r\n\r\n#
+        Exemptions you can register along a linear network\r\n\r\nThere are only 4
+        waste exemptions you can register for waste activity along a linear network:  \r\n\r\n*
+        U1: using waste in construction   \r\n* U12: using mulch  \r\n* D1: depositing
+        waste from dredging inland waters\r\n* D2: depositing waste from train toilets\r\n\r\n#
+        Renew your waste exemptions now\r\n \r\nGo to: https://www.gov.uk/guidance/register-linear-network-waste-exemptions
+        \r\n \r\n## Your information\r\n\r\nRegistration number: WEX000006\r\n\r\nThese
+        exemptions will expire on 12 January 2029:\r\n\r\n\n\n* F16 Use of spam in
+        cooking\n* F17 Use of spam in cooking\n* F18 Use of spam in cooking\r\n\r\nIf
+        any of these exemptions cannot be included in a linear network registration,
+        you must register them separately in the waste exemptions service. Go to:
+        https://www.gov.uk/guidance/register-your-waste-exemptions\r\n\r\nIf you no
+        longer need your exemptions, you don\u2019t need to do anything. They will
+        be removed from the public register. \r\n\r\n# Charges for waste exemptions\r\n\r\nRead
+        the guidance on GOV.UK about how to register and what the charges are:\r\n\r\nhttps://www.gov.uk/government/publications/waste-exemptions-how-to-choose-register-and-pay\r\n\r\n\r\n\r\nTo
+        unsubscribe from email reminders\r\n[Unsubscribe](http://localhost:3000/registrations/unsubscribe/mnegnB93t6ALPNhbrFere24K)\r\n\r\nEnvironment
+        Agency Helpline\r\n03708 506 506 (Monday to Friday, 8am to 6pm)\r\nenquiries@environment-agency.gov.uk\r\n\r\n----\r\n\r\nThis
+        is an automated email. Please do not reply.","from_email":"waste.exemptions@notifications.service.gov.uk","one_click_unsubscribe_url":null,"subject":"Linear
+        network waste exemptions expire on 12 January 2029: renew using the online
+        form"},"id":"f948507b-cd6d-48a2-814f-68fddcc253a7","reference":null,"scheduled_for":null,"template":{"id":"e1c51be7-702e-40dc-9671-63279140e3ee","uri":"https://api.notifications.service.gov.uk/services/367ec8d8-ae34-4e85-bb3e-870659f93c43/templates/e1c51be7-702e-40dc-9671-63279140e3ee","version":11},"uri":"https://api.notifications.service.gov.uk/v2/notifications/f948507b-cd6d-48a2-814f-68fddcc253a7"}
+
+        '
+  recorded_at: Mon, 12 Jan 2026 16:59:54 GMT
+recorded_with: VCR 6.4.0
