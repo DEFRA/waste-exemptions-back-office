@@ -36,7 +36,7 @@ module RenewalReminders
 
         it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
           let(:cassette_name) { "temporary_first_renewal_reminder_email" }
-          let(:template_id) { "5a4f6146-1952-4e62-9824-ab5d0bd9a978" }
+          let(:template_id) { Templates::RENEWAL_REMINDER_TEMPORARY }
         end
       end
 

@@ -24,7 +24,7 @@ module RenewalReminders
       elsif @registration.is_legacy_bulk?
         Templates::RENEWAL_REMINDER_LEGACY_BULK
       else
-        "b1c9cda2-b502-4667-b22c-63e8725f7a27"
+        Templates::FIRST_RENEWAL_REMINDER
       end
     end
   end

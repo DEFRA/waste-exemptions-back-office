@@ -29,7 +29,7 @@ module RenewalReminders
 
         it_behaves_like "sends a Notify message with the correct template id and with a renewal link" do
           let(:cassette_name) { "first_renewal_reminder_email" }
-          let(:template_id) { "b1c9cda2-b502-4667-b22c-63e8725f7a27" }
+          let(:template_id) { Templates::FIRST_RENEWAL_REMINDER }
         end
       end
 

@@ -13,7 +13,7 @@ module RenewalReminders
         before { registration.update(is_legacy_bulk: false, is_linear: false) }
 
         let(:cassette) { "second_free_renewal_reminder_email" }
-        let(:template) { "f308a8a9-0358-41e1-b633-ea4044ad9580" }
+        let(:template) { Templates::SECOND_RENEWAL_REMINDER }
 
         it_behaves_like "sends a Notify message with the correct template id and with a renewal link" do
           let(:cassette_name) { cassette }
