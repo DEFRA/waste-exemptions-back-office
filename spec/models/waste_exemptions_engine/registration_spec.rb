@@ -78,6 +78,20 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
   end
 
+  describe "#linear?" do
+    let(:registration) { create(:registration) }
+
+    it "returns true when is_linear is set to TRUE" do
+      registration.update(is_linear: true)
+      expect(registration).to be_linear
+    end
+
+    it "returns false when is_linear is not set to TRUE" do
+      registration.update(is_linear: false)
+      expect(registration).not_to be_linear
+    end
+  end
+
   describe "#renewable?" do
 
     before do
