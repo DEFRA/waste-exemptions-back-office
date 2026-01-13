@@ -25,7 +25,7 @@ module RenewalReminders
             expect(notifications_client).to have_received(:send_sms)
               .with(hash_including(
                       phone_number: registration.contact_phone,
-                      template_id: "7d101a7d-9678-464e-a57d-e18714afbc5d"
+                      template_id: Templates::FINAL_RENEWAL_REMINDER_TEXT
                     ))
           end
         end

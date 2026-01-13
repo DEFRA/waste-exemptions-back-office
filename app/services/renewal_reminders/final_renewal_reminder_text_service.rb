@@ -12,7 +12,7 @@ module RenewalReminders
     end
 
     def template
-      "7d101a7d-9678-464e-a57d-e18714afbc5d"
+      Templates::FINAL_RENEWAL_REMINDER_TEXT
     end
   end
 end

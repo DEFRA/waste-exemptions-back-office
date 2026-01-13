@@ -31,12 +31,12 @@ module RenewalReminders
         end
       end
 
-      context "when the registration is not legacy bulk" do
-        before { registration.update(is_legacy_bulk: false) }
+      context "when the registration is not legacy bulk or linear" do
+        before { registration.update(is_legacy_bulk: false, is_linear: false) }
 
         it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
           let(:cassette_name) { "temporary_first_renewal_reminder_email" }
-          let(:template_id) { "5a4f6146-1952-4e62-9824-ab5d0bd9a978" }
+          let(:template_id) { Templates::RENEWAL_REMINDER_TEMPORARY }
         end
       end
 
@@ -45,7 +45,16 @@ module RenewalReminders
 
         it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
           let(:cassette_name) { "temporary_first_renewal_reminder_email_LB" }
-          let(:template_id) { "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" }
+          let(:template_id) { Templates::RENEWAL_REMINDER_LEGACY_BULK }
+        end
+      end
+
+      context "when the registration is linear" do
+        before { registration.update(is_linear: true) }
+
+        it_behaves_like "sends a Notify message with the correct template id and without a renewal link" do
+          let(:cassette_name) { "temporary_first_renewal_reminder_email_LN" }
+          let(:template_id) { Templates::RENEWAL_REMINDER_LINEAR }
         end
       end
 

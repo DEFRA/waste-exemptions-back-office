@@ -19,7 +19,13 @@ module RenewalReminders
     private
 
     def template
-      @registration.is_legacy_bulk ? "69a8254e-2bd0-4e09-b27a-ad7e8a29d783" : "b1c9cda2-b502-4667-b22c-63e8725f7a27"
+      if @registration.linear?
+        Templates::RENEWAL_REMINDER_LINEAR
+      elsif @registration.is_legacy_bulk?
+        Templates::RENEWAL_REMINDER_LEGACY_BULK
+      else
+        Templates::FIRST_RENEWAL_REMINDER
+      end
     end
   end
 end
