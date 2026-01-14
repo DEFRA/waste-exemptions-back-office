@@ -127,15 +127,16 @@ RSpec.describe WasteExemptionsEngine::Address do
     end
   end
 
+  # Note that the specs here reflect the current service
+  # design, where all registration_exemptions for a registration
+  # have the same state. This would need to be heavily revised if
+  # we were to allow registration_exemptions for a registration
+  # to expire on different dates or to be ceased independently.
   describe "#site_status" do
     let(:address) { build(:address, :site_address) }
 
-    shared_examples "returns deregistered" do
-      it { expect(address.site_status).to eq("deregistered") }
-    end
-
-    shared_examples "returns active" do
-      it { expect(address.site_status).to eq("active") }
+    shared_examples "returns site status" do |expected_status|
+      it { expect(address.site_status).to eq(expected_status) }
     end
 
     context "when registration is single-site" do
@@ -145,13 +146,19 @@ RSpec.describe WasteExemptionsEngine::Address do
       context "when registration has active exemptions" do
         before { registration_exemption.update(state: "active") }
 
-        it_behaves_like "returns active"
+        it_behaves_like "returns site status", "Active"
       end
 
-      context "when registration does not have active exemptions" do
+      context "when registration has ceased exemptions" do
         before { registration_exemption.update(state: "ceased") }
 
-        it_behaves_like "returns deregistered"
+        it_behaves_like "returns site status", "Deregistered"
+      end
+
+      context "when registration has expired exemptions" do
+        before { registration_exemption.update(state: "expired") }
+
+        it_behaves_like "returns site status", "Expired"
       end
     end
 
@@ -164,13 +171,19 @@ RSpec.describe WasteExemptionsEngine::Address do
       end
 
       context "when site has active registration exemptions" do
-        it_behaves_like "returns active"
+        it_behaves_like "returns site status", "Active"
       end
 
-      context "when site does not have active registration exemptions" do
+      context "when site has ceased registration exemptions" do
         before { registration_exemption.update(state: "ceased") }
 
-        it_behaves_like "returns deregistered"
+        it_behaves_like "returns site status", "Deregistered"
+      end
+
+      context "when registration has expired exemptions" do
+        before { registration_exemption.update(state: "expired") }
+
+        it_behaves_like "returns site status", "Expired"
       end
     end
   end

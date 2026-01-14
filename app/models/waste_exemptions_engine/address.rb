@@ -17,7 +17,8 @@ module WasteExemptionsEngine
     end
 
     def site_status
-      registration_exemptions.any? { |re| re.state == "active" } ? "active" : "deregistered"
+      # Currently all registration_exemptions have the same status, so just use the latest
+      I18n.t "sites.index.states.#{registration_exemptions.last.state}"
     end
 
     def ceased_or_revoked_exemptions
