@@ -8,40 +8,40 @@
 <div class="action-panel govuk-body">
   <% if display_edit_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.edit"), edit_link_for(resource) %>
+      <%= link_to t(".actions.edit"), edit_link_for(resource), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_edit_expiry_date_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.edit_expiry_date"), edit_expiry_date_link_for(resource) %>
+      <%= link_to t(".actions.edit_expiry_date"), edit_expiry_date_link_for(resource), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_reset_transient_registrations_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.reset_transient_registrations"), reset_transient_registrations_link_for(resource) %>
+      <%= link_to t(".actions.reset_transient_registrations"), reset_transient_registrations_link_for(resource), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_resume_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.resume"), resume_link_for(resource) %>
+      <%= link_to t(".actions.resume"), resume_link_for(resource), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_confirmation_communication_links_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.resend_confirmation_email"), resend_confirmation_email_path(resource.reference) %>
+      <%= link_to t(".actions.resend_confirmation_email"), resend_confirmation_email_path(resource.reference), class: "button-link clear-background" %>
     </p>
     <p class="govuk-body">
-      <%= link_to t(".actions.resend_confirmation_letter"), resend_confirmation_letter_path(resource.reference) %>
+      <%= link_to t(".actions.resend_confirmation_letter"), resend_confirmation_letter_path(resource.reference), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_send_edit_invite_email_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to send_edit_invite_emails_path(resource), id: "send_edit_invite_email_#{resource.reference}" do %>
+      <%= link_to send_edit_invite_emails_path(resource), id: "send_edit_invite_email_#{resource.reference}", class: "button-link clear-background" do %>
         <%= t(".actions.send_edit_invite_email.link_text") %>
         <span class="govuk-visually-hidden">
           <%= t(".actions.send_edit_invite_email.visually_hidden_text",
@@ -53,7 +53,7 @@
 
   <% if display_certificate_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to registration_certificate_path(resource.reference) do %>
+      <%= link_to registration_certificate_path(resource.reference), class: "button-link clear-background" do %>
         <%= t(".actions.view_certificate.link_text") %>
         <span class="govuk-visually-hidden">
           <%= t(".actions.view_certificate.visually_hidden_text",
@@ -67,7 +67,7 @@
     <p class="govuk-body"><%= t(".actions.renew.already_renewed") %></p>
   <% elsif display_renew_links_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to ad_privacy_policy_path(renew_registration: resource.reference), id: "renew_#{resource.reference}" do %>
+      <%= link_to ad_privacy_policy_path(renew_registration: resource.reference), id: "renew_#{resource.reference}", class: "button-link clear-background" do %>
         <%= t(".actions.renew.link_text") %>
         <span class="govuk-visually-hidden">
           <%= t(".actions.renew.visually_hidden_text",
@@ -76,7 +76,7 @@
       <% end %>
     </p>
     <p class="govuk-body">
-      <%= link_to resend_renewal_email_path(reference: resource.reference), id: "resend_renew_email_#{resource.reference}" do %>
+      <%= link_to resend_renewal_email_path(reference: resource.reference), id: "resend_renew_email_#{resource.reference}", class: "button-link clear-background" do %>
         <%= t(".actions.resend_renew_email.link_text") %>
         <span class="govuk-visually-hidden">
           <%= t(".actions.resend_renew_email.visually_hidden_text",
@@ -85,51 +85,60 @@
       <% end %>
     </p>
     <p class="govuk-body">
-      <%= link_to t(".actions.resend_renewal_letter"), resend_renewal_letter_path(resource.reference) %>
+      <%= link_to t(".actions.resend_renewal_letter"), resend_renewal_letter_path(resource.reference), class: "button-link clear-background" %>
     </p>
   <% elsif display_renew_window_closed_text_for?(resource) %>
     <p class="govuk-body"><%= t(".actions.renew.renew_window_closed") %></p>
   <% end %>
 
   <% if display_refresh_registered_company_name_link_for?(resource) %>
-    <%= link_to t(".actions.refresh_companies_house"),
-                  refresh_companies_house_name_path(resource.reference),
-                  method: :patch %>
+    <p class="govuk-body">
+      <%= button_to t(".actions.refresh_companies_house"),
+                    refresh_companies_house_name_path(resource.reference),
+                    class: "button-link clear-background",
+                    method: :patch %>
+    </p>
   <% end %>
 
   <% if display_deregister_link_for?(resource) %>
-    <p class="govuk-!-margin-top-6">
-      <%= link_to t(".actions.deregister"), deregister_registrations_form_path(resource) %>
+    <p class="govuk-body">
+      <%= link_to t(".actions.deregister"), deregister_registrations_form_path(resource), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_communication_logs_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.show_communication_history"), registration_communication_logs_path(resource.reference) %>
+      <%= link_to t(".actions.show_communication_history"), registration_communication_logs_path(resource.reference), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_change_history_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.show_change_history"), registration_change_history_path(resource.reference) %>
+      <%= link_to t(".actions.show_change_history"), registration_change_history_path(resource.reference), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_payment_details_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.payment_details"), registration_payment_details_path(resource.reference) %>
+      <%= link_to t(".actions.payment_details"), registration_payment_details_path(resource.reference), class: "button-link clear-background" %>
     </p>
   <% end %>
 
   <% if display_mark_as_legacy_bulk_or_linear_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.mark_as_legacy_bulk"), registration_mark_as_legacy_bulk_path(resource.reference), method: "patch" %>
+      <%= button_to t(".actions.mark_as_legacy_bulk"),
+                    registration_mark_as_legacy_bulk_path(resource.reference),
+                    class: "button-link clear-background",
+                    method: :patch %>
     </p>
   <% end %>
 
   <% if display_mark_as_legacy_bulk_or_linear_link_for?(resource) %>
     <p class="govuk-body">
-      <%= link_to t(".actions.mark_as_legacy_linear"), registration_mark_as_legacy_linear_path(resource.reference), method: "patch" %>
+      <%= button_to t(".actions.mark_as_legacy_linear"),
+                    registration_mark_as_legacy_linear_path(resource.reference),
+                    class: "button-link clear-background",
+                    method: :patch %>
     </p>
   <% end %>
 </div>
