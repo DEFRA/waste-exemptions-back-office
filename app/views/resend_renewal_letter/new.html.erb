@@ -21,7 +21,7 @@
     </p>
 
     <p class="govuk-body">
-      <%= link_to t(".send_link"), resend_renewal_letter_path(@registration.reference), method: :post, class: "govuk-button" %>
+      <%= button_to t(".send_link"), resend_renewal_letter_path(@registration.reference), method: :post, class: "govuk-button" %>
     </p>
     <p class="govuk-body">
       <%= link_to t(".do_not_send_link"), registration_path(@registration.reference) %>
