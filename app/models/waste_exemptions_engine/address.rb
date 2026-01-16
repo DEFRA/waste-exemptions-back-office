@@ -17,7 +17,13 @@ module WasteExemptionsEngine
     end
 
     def site_status
-      registration_exemptions.any? { |re| re.state == "active" } ? "active" : "deregistered"
+      if registration_exemptions.any? { |re| re.state == "active" }
+        "active"
+      elsif registration_exemptions.any? { |re| re.state == "expired" }
+        "expired"
+      else
+        "deregistered"
+      end
     end
 
     def ceased_or_revoked_exemptions

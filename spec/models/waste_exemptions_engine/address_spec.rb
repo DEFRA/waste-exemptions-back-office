@@ -128,56 +128,95 @@ RSpec.describe WasteExemptionsEngine::Address do
   end
 
   describe "#site_status" do
-    let(:address) { build(:address, :site_address) }
-
-    shared_examples "returns deregistered" do
-      it { expect(address.site_status).to eq("deregistered") }
-    end
-
-    shared_examples "returns active" do
-      it { expect(address.site_status).to eq("active") }
-    end
 
     context "when registration is single-site" do
-      let(:registration_exemption) { build(:registration_exemption, :active, address: address) }
-      let(:registration) { build(:registration, site_addresses: [address], registration_exemptions: [registration_exemption]) }
+      let(:site_address) { create(:address, :site_address) }
+      let(:registration_exemption_active) { create(:registration_exemption, :active) }
+      let(:registration_exemption_ceased) { create(:registration_exemption, :ceased) }
+      let(:registration_exemption_revoked) { create(:registration_exemption, :revoked) }
+      let(:registration_exemption_expired) { create(:registration_exemption, :expired) }
+      let(:registration) { create(:registration, site_addresses: [site_address], registration_exemptions: registration_exemptions) }
 
-      context "when registration has active exemptions" do
-        before { registration_exemption.update(state: "active") }
-
-        it_behaves_like "returns active"
+      shared_examples "returns site status" do |expected_status|
+        it { expect(site_address.site_status).to eq(expected_status) }
       end
 
-      context "when registration does not have active exemptions" do
-        before { registration_exemption.update(state: "ceased") }
+      before { registration }
 
-        it_behaves_like "returns deregistered"
+      context "when registration has any active exemptions" do
+        let(:registration_exemptions) do
+          [
+            registration_exemption_active,
+            registration_exemption_ceased,
+            registration_exemption_revoked
+          ]
+        end
+
+        it_behaves_like "returns site status", "active"
+      end
+
+      context "when registration has any expired exemptions" do
+        let(:registration_exemptions) do
+          [
+            registration_exemption_expired,
+            registration_exemption_ceased,
+            registration_exemption_revoked
+          ]
+        end
+
+        it_behaves_like "returns site status", "expired"
+      end
+
+      context "when registration does not have active or expired exemptions" do
+        let(:registration_exemptions) do
+          [
+            registration_exemption_ceased,
+            registration_exemption_revoked
+          ]
+        end
+
+        it_behaves_like "returns site status", "deregistered"
       end
     end
 
     context "when registration is multi-site" do
-      let(:registration) { build(:registration, :multisite, site_addresses: [address], registration_exemptions: []) }
-      let(:registration_exemption) { build(:registration_exemption, :active) }
+      let(:registration) { create(:registration, :multisite_complete) }
+      let(:site_address) { registration.site_addresses.sample }
+      let(:registration_exemptions) { site_address.registration_exemptions }
+      let(:registration_exemption) { registration_exemptions.sample }
+
+      shared_examples "returns site status" do |expected_status|
+        it { expect(site_address.site_status).to eq(expected_status) }
+      end
 
       before do
-        address.registration_exemptions << registration_exemption
+        registration
+        registration_exemption
       end
 
-      context "when site has active registration exemptions" do
-        it_behaves_like "returns active"
+      context "when address has any active registration_exemptions" do
+        before { registration_exemption.update(state: "active") }
+
+        it_behaves_like "returns site status", "active"
       end
 
-      context "when site does not have active registration exemptions" do
-        before { registration_exemption.update(state: "ceased") }
+      context "when registration has all expired exemptions" do
+        before { registration_exemptions.map { |re| re.update(state: "expired") } }
 
-        it_behaves_like "returns deregistered"
+        it_behaves_like "returns site status", "expired"
+      end
+
+      context "when registration does not have active or expired exemptions" do
+        before { registration_exemptions.map { |re| re.update(state: %w[ceased revoked].sample) } }
+
+        it_behaves_like "returns site status", "deregistered"
       end
     end
   end
 
   describe "#ceased_or_revoked_exemptions" do
 
-    shared_examples "returns an empty sring" do
+    shared_examples "returns an empty string" do
       it { expect(address.ceased_or_revoked_exemptions).to be_blank }
     end
 
@@ -197,7 +236,7 @@ RSpec.describe WasteExemptionsEngine::Address do
       context "when registration has no ceased exemptions" do
         let(:registration) { create(:registration) }
 
-        it_behaves_like "returns an empty sring"
+        it_behaves_like "returns an empty string"
       end
     end
 
@@ -217,7 +256,7 @@ RSpec.describe WasteExemptionsEngine::Address do
         let(:registration_exemption) { create(:registration_exemption, :active) }
         let(:address) { create(:address, :site_address, registration:, registration_exemptions: [registration_exemption]) }
 
-        it_behaves_like "returns an empty sring"
+        it_behaves_like "returns an empty string"
       end
     end
   end

@@ -22,7 +22,7 @@ RSpec.describe "Sites" do
     it { expect(response.body).to include(site_address.grid_reference) }
     it { expect(response.body).to include(site_address.description) }
     it { expect(response.body).to include(site_address.area.to_s) }
-    it { expect(response.body).to include(site_address.site_status) }
+    it { expect(response.body).to include(site_address.site_status.capitalize) }
     it { expect(response.body).to include(site_address.ceased_or_revoked_exemptions) }
   end
 
@@ -43,20 +43,19 @@ RSpec.describe "Sites" do
       it_behaves_like "includes the correct content"
 
       it "paginates the results" do
-        registration = create(:registration, :multisite, addresses: [])
-        create_list(:address, 25, :site_address, registration: registration)
+        registration = create(:registration, :multisite_complete, addresses: [])
 
         get "/registrations/#{registration.reference}/sites"
 
         expect(response.body).to include("Waste operation sites")
-        expect(response.body).to include("Showing 1 &ndash; 20 of 25 results")
+        expect(response.body).to include("Showing 1 &ndash; 20 of 30 results")
         expect(response.body).to include("Next")
         expect(response.body).not_to include("Prev")
 
         get "/registrations/#{registration.reference}/sites?page=2"
 
         expect(response.body).to include("Waste operation sites")
-        expect(response.body).to include("Showing 21 &ndash; 25 of 25 results")
+        expect(response.body).to include("Showing 21 &ndash; 30 of 30 results")
         expect(response.body).not_to include("Next")
         expect(response.body).to include("Prev")
       end

@@ -41,7 +41,7 @@
                 <%= site_address.area %>
               </td>
               <td class="govuk-table__cell">
-                <%= site_address.site_status %>
+                <%= t("sites.index.states.#{site_address.site_status}").capitalize %>
               </td>
               <td class="govuk-table__cell">
                 <%= site_address.ceased_or_revoked_exemptions %>
