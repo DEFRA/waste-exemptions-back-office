@@ -11,6 +11,10 @@ en:
         status: "Site status"
         ceased_or_revoked: "Ceased/revoked exemptions"
         actions: "Actions"
+      states:
+        active: active
+        deregistered: deregistered
+        expired: expired
       actions:
         exemptions: "Exemptions"
         deregister: "Deregister"
