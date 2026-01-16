@@ -17,14 +17,13 @@ module WasteExemptionsEngine
     end
 
     def site_status
-      state = if registration_exemptions.any? { |re| re.state == "active" }
-                "active"
-              elsif registration_exemptions.any? { |re| re.state == "expired" }
-                "expired"
-              else
-                "deregistered"
-              end
-      I18n.t "sites.index.states.#{state}"
+      if registration_exemptions.any? { |re| re.state == "active" }
+        "active"
+      elsif registration_exemptions.any? { |re| re.state == "expired" }
+        "expired"
+      else
+        "deregistered"
+      end
     end
 
     def ceased_or_revoked_exemptions
