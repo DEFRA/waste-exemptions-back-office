@@ -214,12 +214,6 @@ RSpec.describe Analytics::UserJourney do
       end
     end
 
-    context "with a new registration" do
-      let(:transient_registration) { create(:new_charged_registration) }
-
-      it_behaves_like "completes the journey"
-    end
-
     context "with a new charged registration" do
       let(:transient_registration) { create(:new_charged_registration) }
 
