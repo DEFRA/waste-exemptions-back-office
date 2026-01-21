@@ -40,9 +40,9 @@ RSpec.describe "Dashboards" do
         end
       end
 
-      context "when the SearchService returns one registration and one new_registration" do
+      context "when the SearchService returns one registration and one transient registration" do
         let(:registration) { create(:registration) }
-        let(:new_registration) { create(:new_registration) }
+        let(:new_registration) { create(:new_charged_registration) }
         let(:results) { Kaminari.paginate_array([registration, new_registration]).page(1) }
         let(:search_terms) { { term: "foo" } }
 
@@ -51,7 +51,7 @@ RSpec.describe "Dashboards" do
 
           expect(response.body).to include(registration.reference)
 
-          # a new_registration does not have a reference
+          # a transient registration does not have a reference
           expect(response.body).to include("not yet submitted")
         end
 

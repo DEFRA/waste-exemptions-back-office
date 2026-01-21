@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe RegistrationsHelper do
-  let(:resource) { build(:new_registration) }
+  let(:resource) { build(:new_charged_registration) }
 
   describe "#applicant_data_present?" do
     context "when the resource has data in at least one relevant field" do
@@ -76,8 +76,8 @@ RSpec.describe RegistrationsHelper do
       end
     end
 
-    context "with a new_registration" do
-      let(:registration) { create(:new_registration) }
+    context "with a transient registration" do
+      let(:registration) { create(:new_charged_registration) }
 
       it do
         expect(helper.registration_date_range(registration))

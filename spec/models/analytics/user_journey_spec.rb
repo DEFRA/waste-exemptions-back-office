@@ -8,27 +8,25 @@ require "rails_helper"
 RSpec.describe Analytics::UserJourney do
 
   describe "journey type scopes" do
-    # rubocop:disable RSpec/IndexedLet
-    let(:count1) { Faker::Number.between(from: 1, to: 5) }
-    let(:count2) { Faker::Number.between(from: 1, to: 5) }
-    let(:count3) { Faker::Number.between(from: 1, to: 5) }
-    let(:count4) { Faker::Number.between(from: 1, to: 5) }
-    # rubocop:enable RSpec/IndexedLet
+    let(:registration_count) { Faker::Number.between(from: 1, to: 5) }
+    let(:charged_count) { Faker::Number.between(from: 1, to: 5) }
+    let(:renewal_count) { Faker::Number.between(from: 1, to: 5) }
+    let(:other_count) { Faker::Number.between(from: 1, to: 5) }
 
     before do
-      create_list(:user_journey, count1, :registration)
-      create_list(:user_journey, count2, :renewal)
-      create_list(:user_journey, count3, journey_type: "Foo")
-      create_list(:user_journey, count4, :charged_registration)
+      create_list(:user_journey, registration_count, :registration)
+      create_list(:user_journey, renewal_count, :renewal)
+      create_list(:user_journey, other_count, journey_type: "Foo")
+      create_list(:user_journey, charged_count, :charged_registration)
     end
 
-    it { expect(described_class.registrations.length).to eq count1 }
-    it { expect(described_class.renewals.length).to eq count2 }
-    it { expect(described_class.charged_registrations.length).to eq count4 }
-    it { expect(described_class.only_types(%w[NewRegistration]).length).to eq count1 }
-    it { expect(described_class.only_types(%w[NewChargedRegistration]).length).to eq count4 }
-    it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq count2 }
-    it { expect(described_class.only_types(%w[NewRegistration RenewingRegistration]).length).to eq count1 + count2 }
+    it { expect(described_class.registrations.length).to eq registration_count }
+    it { expect(described_class.renewals.length).to eq renewal_count }
+    it { expect(described_class.charged_registrations.length).to eq charged_count }
+    it { expect(described_class.only_types(%w[NewRegistration]).length).to eq registration_count }
+    it { expect(described_class.only_types(%w[NewChargedRegistration]).length).to eq charged_count }
+    it { expect(described_class.only_types(%w[RenewingRegistration]).length).to eq renewal_count }
+    it { expect(described_class.only_types(%w[NewRegistration NewChargedRegistration RenewingRegistration]).length).to eq registration_count + charged_count + renewal_count }
   end
 
   describe "start route scopes" do
@@ -217,7 +215,7 @@ RSpec.describe Analytics::UserJourney do
     end
 
     context "with a new registration" do
-      let(:transient_registration) { create(:new_registration) }
+      let(:transient_registration) { create(:new_charged_registration) }
 
       it_behaves_like "completes the journey"
     end
@@ -230,8 +228,8 @@ RSpec.describe Analytics::UserJourney do
   end
 
   describe ".average_session_duration" do
-    let(:transient_registration_a) { create(:new_registration) }
-    let(:transient_registration_b) { create(:new_registration) }
+    let(:transient_registration_a) { create(:new_charged_registration) }
+    let(:transient_registration_b) { create(:new_charged_registration) }
 
     let!(:journey_a) { Timecop.freeze(6.hours.ago) { create(:user_journey, token: transient_registration_a.token) } }
     let!(:journey_b) { Timecop.freeze(4.hours.ago) { create(:user_journey, token: transient_registration_b.token) } }

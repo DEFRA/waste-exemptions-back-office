@@ -52,14 +52,6 @@ RSpec.describe DashboardsHelper do
   end
 
   describe "status_tag_for" do
-    context "when the result is a new_registration" do
-      let(:result) { build(:new_registration) }
-
-      it "returns :pending" do
-        expect(helper.status_tag_for(result)).to eq(:pending)
-      end
-    end
-
     context "when the result is a new_charged_registration" do
       let(:result) { build(:new_charged_registration) }
 
@@ -68,7 +60,7 @@ RSpec.describe DashboardsHelper do
       end
     end
 
-    context "when the result is not a new_registration" do
+    context "when the result is not a new registration" do
       let(:result) { build(:registration) }
 
       it "returns :active" do
@@ -78,7 +70,7 @@ RSpec.describe DashboardsHelper do
   end
 
   describe "result_name_for_visually_hidden_text" do
-    let(:result) { build(:new_registration) }
+    let(:result) { build(:new_charged_registration) }
 
     context "when the result has an operator_name" do
       before { result.operator_name = "Foo" }
