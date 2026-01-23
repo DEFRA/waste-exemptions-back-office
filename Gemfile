@@ -68,7 +68,7 @@ gem "sucker_punch", "~> 3.2"
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "main"
+    branch: "fix/RUBY-4164_site_grid_reference_back"
 
 # for handling EA Areas GeoJSON data
 gem "rgeo-geojson"

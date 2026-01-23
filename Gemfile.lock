@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: a52f6d626477ddd552c80ffc28ae30860409f4fa
-  branch: main
+  revision: 31eb897d6357d934ad119c9580d8ab4d7e45f681
+  branch: fix/RUBY-4164_site_grid_reference_back
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
