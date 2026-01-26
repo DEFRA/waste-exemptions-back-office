@@ -96,7 +96,5 @@
 
 
 <p class="govuk-body">
-  <% if @bands.count < 4 %>
-    <%= link_to t(".new_band_link_text"), new_band_path %>
-  <% end %>
+  <%= link_to t(".new_band_link_text"), new_band_path %>
 </p>
