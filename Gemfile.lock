@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: a52f6d626477ddd552c80ffc28ae30860409f4fa
+  revision: bdbc3c61cd372d63c893364f0e78d1320de7ace4
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -194,7 +194,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.5.1)
-    defra_ruby_address (0.1.0)
+    defra_ruby_address (0.3.0)
       rest-client (~> 2.0)
     defra_ruby_alert (2.2.1)
       airbrake
@@ -346,7 +346,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2025.0924)
+    mime-types-data (3.2026.0113)
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (6.0.1)
@@ -393,7 +393,7 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    prism (1.7.0)
+    prism (1.8.0)
     protocol-hpack (1.5.0)
     protocol-http (0.34.0)
     protocol-http1 (0.22.0)
@@ -456,7 +456,7 @@ GEM
     rainbow (3.1.1)
     rake (13.3.1)
     rbtree3 (0.7.1)
-    rdoc (7.0.3)
+    rdoc (7.1.0)
       erb
       psych (>= 4.0.0)
       tsort
@@ -474,7 +474,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.4.4)
-    rgeo (3.0.1)
+    rgeo (3.1.0)
     rgeo-activerecord (8.0.0)
       activerecord (>= 7.0)
       rgeo (>= 3.0)
@@ -576,7 +576,7 @@ GEM
     stringio (3.2.0)
     sucker_punch (3.3.0)
       concurrent-ruby (~> 1.0)
-    thor (1.4.0)
+    thor (1.5.0)
     tilt (2.4.0)
     timecop (0.9.10)
     timeout (0.6.0)
