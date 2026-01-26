@@ -9,7 +9,7 @@ RSpec.describe Ability do
   let(:site) { build(:address, :site_address) }
   let(:registration) { build(:registration, site_addresses: [site]) }
   let(:registration_exemption) { build(:registration_exemption) }
-  let(:new_registration) { build(:new_registration) }
+  let(:new_charged_registration) { build(:new_charged_registration) }
 
   before do
     site.registration_exemptions << registration_exemption

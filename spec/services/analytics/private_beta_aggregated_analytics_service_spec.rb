@@ -28,7 +28,7 @@ module Analytics
       let(:end_date) { Time.zone.today }
 
       before do
-        create_list(:user_journey, 2, :registration, visited_pages:, created_at: 5.days.ago, completed_at: nil)
+        create_list(:user_journey, 2, :renewal, visited_pages:, created_at: 5.days.ago, completed_at: nil)
         create_list(:user_journey, 3, :charged_registration, visited_pages:, created_at: 3.days.ago, completed_at: 2.days.ago)
         create_list(:user_journey, 4, :charged_registration, visited_pages:, created_at: 3.days.ago, completed_at: nil)
         create_list(:user_journey, 2, :renewal, visited_pages:, created_at: 4.days.ago, completed_at: nil)

@@ -12,9 +12,6 @@ class NewRegistrationsController < ApplicationController
   private
 
   def find_resource(id)
-    @resource = WasteExemptionsEngine::NewRegistration.find_by(id: id)
-    return unless @resource.nil?
-
     @resource = WasteExemptionsEngine::NewChargedRegistration.find(id)
   end
 

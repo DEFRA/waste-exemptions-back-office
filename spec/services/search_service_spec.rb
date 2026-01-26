@@ -67,22 +67,17 @@ RSpec.describe SearchService do
 
     context "when the model is set to 'new_registrations'" do
       let(:model) { :new_registrations }
-      let!(:new_registration) { create(:new_registration) }
       let!(:new_charged_registration) { create(:new_charged_registration) }
+      let!(:other_new_charged_registration) { create(:new_charged_registration) }
       let!(:back_office_edit_registration) { create(:back_office_edit_registration) }
-      let!(:other_new_registration) { create(:new_registration) }
 
       shared_examples "'new_registrations' matches and non-matches" do
-        it "returns matching new_registrations" do
-          expect(results).to include(new_registration)
-        end
-
         it "returns matching new_charged_registrations" do
           expect(results).to include(new_charged_registration)
         end
 
-        it "does not return non-matching new_registrations" do
-          expect(results).not_to include(other_new_registration)
+        it "does not return non-matching new_charged_registrations" do
+          expect(results).not_to include(other_new_charged_registration)
         end
 
         it "does not return matching back_office_edit_registrations" do
@@ -91,26 +86,21 @@ RSpec.describe SearchService do
       end
 
       before do
-        # align the relevant matching attributes for new_registration, new_charged_registration
-        # and back_office_edit_registration so the same spec match setup works for each:
-        new_charged_registration.update(
-          applicant_first_name: new_registration.applicant_first_name,
-          contact_phone: new_registration.contact_phone
-        )
+        # align the relevant matching attributes so the same spec match setup works for each:
         back_office_edit_registration.update(
-          applicant_first_name: new_registration.applicant_first_name,
-          contact_phone: new_registration.contact_phone
+          applicant_first_name: new_charged_registration.applicant_first_name,
+          contact_phone: new_charged_registration.contact_phone
         )
       end
 
       context "with matches on applicant_first_name" do
-        let(:term) { new_registration.applicant_first_name }
+        let(:term) { new_charged_registration.applicant_first_name }
 
         it_behaves_like "'new_registrations' matches and non-matches"
       end
 
       context "with matches on contact_phone" do
-        let(:term) { new_registration.contact_phone }
+        let(:term) { new_charged_registration.contact_phone }
 
         it_behaves_like "'new_registrations' matches and non-matches"
       end
