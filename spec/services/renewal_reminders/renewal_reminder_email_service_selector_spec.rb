@@ -32,7 +32,7 @@ module RenewalReminders
 
         it { expect(described_class.first_reminder_email_service(chargeable_registration)).to eq(FirstRenewalReminderEmailService) }
         it { expect(described_class.first_reminder_email_service(charity_registration)).to eq(FreeFirstRenewalReminderEmailService) }
-        it { expect(described_class.first_reminder_email_service(t28_registration)).to eq(FreeFirstRenewalReminderEmailService) }
+        it { expect(described_class.first_reminder_email_service(t28_registration)).to eq(FirstRenewalReminderEmailService) }
 
         it { expect(described_class.first_reminder_email_service(legacy_bulk_registration)).to eq(FirstRenewalReminderEmailService) }
       end
@@ -42,7 +42,7 @@ module RenewalReminders
 
         it { expect(described_class.first_reminder_email_service(chargeable_registration)).to eq(TemporaryFirstRenewalReminderEmailService) }
         it { expect(described_class.first_reminder_email_service(charity_registration)).to eq(FreeFirstRenewalReminderEmailService) }
-        it { expect(described_class.first_reminder_email_service(t28_registration)).to eq(FreeFirstRenewalReminderEmailService) }
+        it { expect(described_class.first_reminder_email_service(t28_registration)).to eq(TemporaryFirstRenewalReminderEmailService) }
 
         it { expect(described_class.first_reminder_email_service(legacy_bulk_registration)).to eq(FirstRenewalReminderEmailService) }
       end
@@ -56,7 +56,7 @@ module RenewalReminders
 
         it { expect(described_class.second_reminder_email_service(chargeable_registration)).to eq(SecondRenewalReminderEmailService) }
         it { expect(described_class.second_reminder_email_service(charity_registration)).to eq(FreeSecondRenewalReminderEmailService) }
-        it { expect(described_class.second_reminder_email_service(t28_registration)).to eq(FreeSecondRenewalReminderEmailService) }
+        it { expect(described_class.second_reminder_email_service(t28_registration)).to eq(SecondRenewalReminderEmailService) }
 
         it { expect(described_class.second_reminder_email_service(legacy_bulk_registration)).to eq(SecondRenewalReminderEmailService) }
       end
@@ -66,7 +66,7 @@ module RenewalReminders
 
         it { expect(described_class.second_reminder_email_service(chargeable_registration)).to eq(TemporarySecondRenewalReminderEmailService) }
         it { expect(described_class.second_reminder_email_service(charity_registration)).to eq(FreeSecondRenewalReminderEmailService) }
-        it { expect(described_class.second_reminder_email_service(t28_registration)).to eq(FreeSecondRenewalReminderEmailService) }
+        it { expect(described_class.second_reminder_email_service(t28_registration)).to eq(TemporarySecondRenewalReminderEmailService) }
 
         it { expect(described_class.second_reminder_email_service(legacy_bulk_registration)).to eq(SecondRenewalReminderEmailService) }
       end
