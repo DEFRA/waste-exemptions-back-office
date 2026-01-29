@@ -10,7 +10,6 @@ module WasteExemptionsEngine
     scope :search_registration_and_relations, lambda { |term|
       base_search_registration_and_relations(term)
         .where(type: [
-                 "WasteExemptionsEngine::NewRegistration",
                  "WasteExemptionsEngine::NewChargedRegistration"
                ])
     }

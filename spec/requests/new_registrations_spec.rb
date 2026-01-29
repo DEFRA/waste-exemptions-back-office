@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "NewRegistrations" do
-  let(:new_registration) { create(:new_registration) }
+  let(:new_registration) { create(:new_charged_registration) }
 
   describe "GET /new-registrations/:id" do
     context "when a user is signed in" do

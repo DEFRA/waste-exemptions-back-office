@@ -7,13 +7,13 @@ RSpec.describe "Cleanup task", type: :rake do
 
   describe "cleanup:transient_registrations" do
     let(:rake_task) { Rake::Task["cleanup:transient_registrations"] }
-    let(:old_registration) { create(:new_registration, created_at: 31.days.ago) }
+    let(:old_registration) { create(:new_charged_registration, created_at: 31.days.ago) }
     let(:env_limit) { "1" }
 
     before do
       old_registration
-      create(:new_registration, created_at: 31.days.ago)
-      create(:new_registration)
+      create(:new_charged_registration, created_at: 31.days.ago)
+      create(:new_charged_registration)
       allow(ENV).to receive(:fetch).with("TRANSIENT_REGISTRATION_CLEANUP_LIMIT", any_args).and_return(env_limit)
     end
 
