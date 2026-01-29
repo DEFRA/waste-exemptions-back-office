@@ -92,3 +92,10 @@ FactoryBot/ExcessiveCreateList:
   Exclude:
     # testing pagination with a large number of records
     - spec/requests/sites_spec.rb
+
+RSpec/Output:
+  # TODO: to be refactored later
+  Exclude:
+    - spec/rails_helper.rb
+    - spec/manual_benchmarks/bulk_seed_registrations.rb
+    

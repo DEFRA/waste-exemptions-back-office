@@ -27,32 +27,32 @@ module Analytics
     # rubocop:disable Metrics/BlockLength
     scope :passed_start_cutoff_page, lambda {
       # Subquery to check for the existence of the START_CUTOFF_PAGES in any PageView for the UserJourney
-      start_cutoff_page_subquery = <<-SQL.squish
-          EXISTS (
-            SELECT 1
-            FROM analytics_page_views
-            WHERE
-              analytics_page_views.user_journey_id = analytics_user_journeys.id
-              AND analytics_page_views.page IN ('#{START_CUTOFF_PAGES.join("', '")}')
-          )
+      start_cutoff_page_subquery = <<~SQL.squish
+        EXISTS (
+          SELECT 1
+          FROM analytics_page_views
+          WHERE
+            analytics_page_views.user_journey_id = analytics_user_journeys.id
+            AND analytics_page_views.page IN ('#{START_CUTOFF_PAGES.join("', '")}')
+        )
       SQL
 
       # Subquery to find the last PageView for each UserJourney
-      last_page_not_cutoff_subquery = <<-SQL.squish
-          NOT EXISTS (
-            SELECT 1
-            FROM analytics_page_views as last_pages
-            WHERE
-              last_pages.user_journey_id = analytics_user_journeys.id
-              AND last_pages.id = (
-                SELECT id
-                FROM analytics_page_views
-                WHERE analytics_page_views.user_journey_id = last_pages.user_journey_id
-                ORDER BY created_at DESC
-                LIMIT 1
-              )
-              AND last_pages.page IN ('#{START_CUTOFF_PAGES.join("', '")}')
-          )
+      last_page_not_cutoff_subquery = <<~SQL.squish
+        NOT EXISTS (
+          SELECT 1
+          FROM analytics_page_views as last_pages
+          WHERE
+            last_pages.user_journey_id = analytics_user_journeys.id
+            AND last_pages.id = (
+              SELECT id
+              FROM analytics_page_views
+              WHERE analytics_page_views.user_journey_id = last_pages.user_journey_id
+              ORDER BY created_at DESC
+              LIMIT 1
+            )
+            AND last_pages.page IN ('#{START_CUTOFF_PAGES.join("', '")}')
+        )
       SQL
 
       where(start_cutoff_page_subquery).where(last_page_not_cutoff_subquery)
