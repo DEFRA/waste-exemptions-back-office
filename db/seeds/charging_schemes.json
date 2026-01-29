@@ -1,6 +1,12 @@
 {
   "bands" : [
     {
+      "name": "Zero compliance cost band",
+      "sequence": 0,
+      "initial_compliance_charge": 0,
+      "additional_compliance_charge": 0
+    },
+    {
       "name": "Band 1",
       "sequence": 1,
       "initial_compliance_charge": 42000,
@@ -41,6 +47,10 @@
   ],
   "band_exemptions" : [
     {
+      "band_sequence": 0,
+      "exemption_codes": ["T28"]
+    },
+    {
       "band_sequence": 1,
       "exemption_codes": ["S1", "S2", "U1", "T4", "T5", "T6", "T10", "T12", "T21", "T24", "T25", "U9"]
     },
@@ -50,7 +60,7 @@
     },
     {
       "band_sequence": 3,
-      "exemption_codes": ["U3", "U5", "U6", "U7", "U12", "U13", "U14", "U15", "T18", "T20", "T26", "T27", "T28", "T29", "T32", "D2", "D3", "D4", "D5", "D6", "D7", "D8"]
+      "exemption_codes": ["U3", "U5", "U6", "U7", "U12", "U13", "U14", "U15", "T18", "T20", "T26", "T27", "T29", "T32", "D2", "D3", "D4", "D5", "D6", "D7", "D8"]
     },
     {
       "band_sequence": 4,
