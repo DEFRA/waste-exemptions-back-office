@@ -2,7 +2,9 @@ en:
   analytics:
     index:
       title: Analytics Dashboard
-      private_beta_analytics_link_text: Private beta analytics
       aggregate_data_table:
         header: Aggregate User Journey data
-        total_journeys_abandoned: Number of incomplete journeys that have gone past the business location page
+        total_journeys_abandoned: "Number of incomplete journeys (%{link})"
+        incomplete_journeys_link_text: see individual pages where users dropped out
+        average_time_per_page: "Average time taken to complete (%{link})"
+        average_time_per_page_link_text: see time per page
