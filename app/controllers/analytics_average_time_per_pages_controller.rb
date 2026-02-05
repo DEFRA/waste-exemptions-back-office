@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PrivateBetaAverageTimePerPagesController < ApplicationController
+class AnalyticsAverageTimePerPagesController < ApplicationController
   prepend_before_action :authorize_user
 
   def index
