@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Analytics
-  class PrivateBetaDropoffPagesService < WasteExemptionsEngine::BaseService
+  class DropoffPagesService < WasteExemptionsEngine::BaseService
 
     attr_reader :start_date, :end_date
 
@@ -31,6 +31,7 @@ module Analytics
       UserJourney
         .only_types(["NewChargedRegistration"])
         .incomplete
+        .passed_start_cutoff_page
         .date_range(start_date, end_date)
         .where(updated_at: ...abandoned_cutoff_time)
     end
