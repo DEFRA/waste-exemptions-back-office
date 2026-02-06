@@ -10,9 +10,11 @@ ruby "3.4.6"
 # ~/.bash_profile (or equivalent)
 # https://github.com/skywinder/github-changelog-generator#github-token
 # Then simply run `bundle exec rake changelog` to update CHANGELOG.md
-# Should be in the :development group however when it is it breaks deployment
-# to Heroku. Hence moved outside group till we can understand why.
-gem "github_changelog_generator", require: false
+# Should be in the :development group however when it is it breaks the
+# Jenkins deployment. Hence moved outside group till we can understand why.
+# future versions of github_changelog_generator rely on async gem and
+# do cause errors. So pinning to a version that does not have this dependency.
+gem "github_changelog_generator", "~> 1.15.2", require: false
 
 # GOV.UK design system styling
 gem "defra_ruby_template", "~> 5.11"

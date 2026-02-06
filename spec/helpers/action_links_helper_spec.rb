@@ -467,7 +467,7 @@ RSpec.describe ActionLinksHelper do
                ])
       end
 
-      it { expect(helper.display_renew_links_for?(resource)).to be(true) }
+      it { expect(helper.display_renew_links_for?(resource)).to be(false) }
     end
 
     context "when the resource is not a registration" do

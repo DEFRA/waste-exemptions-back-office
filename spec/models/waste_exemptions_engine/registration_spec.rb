@@ -502,8 +502,8 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
 
     it { expect(charity_registration.eligible_for_free_renewal?).to be true }
-    it { expect(t28_only_registration.eligible_for_free_renewal?).to be true }
-    it { expect(t28_plus_registration.eligible_for_free_renewal?).to be true }
+    it { expect(t28_only_registration.eligible_for_free_renewal?).to be false }
+    it { expect(t28_plus_registration.eligible_for_free_renewal?).to be false }
     it { expect(non_charity_non_t28_registration.eligible_for_free_renewal?).to be false }
   end
 end

@@ -1,5 +1,41 @@
 # Changelog
 
+## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.0.0...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-4167\] Refactor eligible\_for\_free\_renewal? method and exclude t28 from free renewals [\#1991](https://github.com/DEFRA/waste-exemptions-back-office/pull/1991) ([brujeo](https://github.com/brujeo))
+
+**Merged pull requests:**
+
+- Bump waste\_exemptions\_engine from `d80ceb2` to `46e16f4` [\#1996](https://github.com/DEFRA/waste-exemptions-back-office/pull/1996) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump waste\_exemptions\_engine from `a52f6d6` to `d80ceb2` [\#1994](https://github.com/DEFRA/waste-exemptions-back-office/pull/1994) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump devise from 4.9.4 to 5.0.0 [\#1990](https://github.com/DEFRA/waste-exemptions-back-office/pull/1990) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump whenever from 1.1.1 to 1.1.2 [\#1984](https://github.com/DEFRA/waste-exemptions-back-office/pull/1984) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump selenium-webdriver from 4.39.0 to 4.40.0 [\#1983](https://github.com/DEFRA/waste-exemptions-back-office/pull/1983) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump pry-byebug from 3.11.0 to 3.12.0 [\#1982](https://github.com/DEFRA/waste-exemptions-back-office/pull/1982) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v4.0.0](https://github.com/defra/waste-exemptions-back-office/tree/v4.0.0) (2026-01-23)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v3.2.0...v4.0.0)
+
+**Implemented enhancements:**
+
+- \[RUBY-4111\] Implement zero compliance cost band service and related tasks [\#1986](https://github.com/DEFRA/waste-exemptions-back-office/pull/1986) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-4081\] Adjusting renewal reminders for linear registrations [\#1977](https://github.com/DEFRA/waste-exemptions-back-office/pull/1977) ([brujeo](https://github.com/brujeo))
+
+**Fixed bugs:**
+
+- Fix/ruby 4133 site expired [\#1981](https://github.com/DEFRA/waste-exemptions-back-office/pull/1981) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- \[RUBY-4114\] Refactor patch links to use button\_to instead of link\_to [\#1980](https://github.com/DEFRA/waste-exemptions-back-office/pull/1980) ([brujeo](https://github.com/brujeo))
+
+**Merged pull requests:**
+
+- Update CHANGELOG for v4.0.0 [\#1988](https://github.com/DEFRA/waste-exemptions-back-office/pull/1988) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-4117\] Remove 'unsafe-eval' from script\_src in secure headers configuration [\#1975](https://github.com/DEFRA/waste-exemptions-back-office/pull/1975) ([jjromeo](https://github.com/jjromeo))
+
 ## [v3.2.0](https://github.com/defra/waste-exemptions-back-office/tree/v3.2.0) (2025-08-21)
 
 [Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v3.1.0...v3.2.0)
