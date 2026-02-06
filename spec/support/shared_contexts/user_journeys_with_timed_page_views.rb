@@ -6,7 +6,7 @@ RSpec.shared_context "with user journeys with timed page views" do
     # These should not be included:
 
     # Not a charged registration journey
-    create(:user_journey, :registration,
+    create(:user_journey, :charged_registration,
            created_at:,
            page_views: [
              build(:page_view, page: "start_form", time: start_time + 2.seconds),

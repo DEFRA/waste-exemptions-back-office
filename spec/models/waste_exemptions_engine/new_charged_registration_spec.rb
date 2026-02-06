@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe WasteExemptionsEngine::NewRegistration do
-  let(:matching_registration) { create(:new_registration) }
-  let(:non_matching_registration) { create(:new_registration) }
+RSpec.describe WasteExemptionsEngine::NewChargedRegistration do
+  let(:matching_registration) { create(:new_charged_registration) }
+  let(:non_matching_registration) { create(:new_charged_registration) }
 
   describe "#search_registration_and_relations" do
     let(:term) { nil }

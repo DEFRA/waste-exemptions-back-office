@@ -14,14 +14,6 @@ RSpec.describe ActionLinksHelper do
       end
     end
 
-    context "when the resource is a new_registration" do
-      let(:resource) { create(:new_registration) }
-
-      it "returns the correct path" do
-        expect(helper.view_link_for(resource)).to eq(new_registration_path(resource.id))
-      end
-    end
-
     context "when the resource is a new_charged_registration" do
       let(:resource) { create(:new_charged_registration) }
 
@@ -30,7 +22,7 @@ RSpec.describe ActionLinksHelper do
       end
     end
 
-    context "when the resource is not a registration or a new_registration" do
+    context "when the resource is not a registration" do
       let(:resource) { nil }
 
       it "returns the correct path" do
@@ -56,17 +48,6 @@ RSpec.describe ActionLinksHelper do
       end
     end
 
-    context "when the resource is a new_registration" do
-      let(:resource) { create(:new_registration) }
-
-      it "returns the correct path" do
-        path = WasteExemptionsEngine::Engine.routes.url_helpers.new_start_form_path(resource.token)
-        expect(helper.resume_link_for(resource)).to eq(path)
-      end
-
-      it_behaves_like "assistance mode changes"
-    end
-
     context "when the resource is a new_charged_registration" do
       let(:resource) { create(:new_charged_registration) }
 
@@ -78,7 +59,7 @@ RSpec.describe ActionLinksHelper do
       it_behaves_like "assistance mode changes"
     end
 
-    context "when the resource is not a new_registration" do
+    context "when the resource is not a transient registration" do
       let(:resource) { nil }
 
       it "returns the correct path" do
@@ -140,19 +121,13 @@ RSpec.describe ActionLinksHelper do
       end
     end
 
-    context "when the resource is a new_registration" do
-      let(:resource) { create(:new_registration) }
-
-      it_behaves_like "displays the resume link"
-    end
-
     context "when the resource is a new_charged_registration" do
       let(:resource) { create(:new_charged_registration) }
 
       it_behaves_like "displays the resume link"
     end
 
-    context "when the resource is not a new_registration" do
+    context "when the resource is not a transient registration" do
       let(:resource) { nil }
 
       it { expect(helper.display_resume_link_for?(resource)).to be(false) }
@@ -496,7 +471,7 @@ RSpec.describe ActionLinksHelper do
     end
 
     context "when the resource is not a registration" do
-      let(:resource) { create(:new_registration) }
+      let(:resource) { create(:new_charged_registration) }
 
       it { expect(helper.display_renew_links_for?(resource)).to be(false) }
     end
@@ -612,7 +587,7 @@ RSpec.describe ActionLinksHelper do
     end
 
     context "when the resource is not a registration" do
-      let(:resource) { create(:new_registration) }
+      let(:resource) { create(:new_charged_registration) }
 
       it { expect(helper.display_already_renewed_text_for?(resource)).to be(false) }
     end

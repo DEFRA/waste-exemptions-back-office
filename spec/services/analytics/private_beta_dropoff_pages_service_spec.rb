@@ -30,7 +30,7 @@ module Analytics
                     visited_pages: %w[start_form location_form],
                     created_at:, updated_at:, completed_at: nil)
         # Past location page, non-charged, abandoned
-        create_list(:user_journey, 3, :registration,
+        create_list(:user_journey, 3, :renewal,
                     visited_pages: %w[start_form location_form business_type_form],
                     created_at:, updated_at:, completed_at: nil)
         # Past location page, charged, not abandoned
@@ -42,7 +42,7 @@ module Analytics
                     visited_pages: %w[start_form location_form business_type_form],
                     created_at:, updated_at: 50.hours.ago, completed_at: nil)
         # To declaration page, non-charged, abandoned
-        create_list(:user_journey, 5, :registration,
+        create_list(:user_journey, 5, :renewal,
                     visited_pages: %w[start_form location_form business_type_form declaration_form],
                     created_at:, updated_at:, completed_at: nil)
         # To declaration page, charged, abandoned
