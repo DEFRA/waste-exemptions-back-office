@@ -68,7 +68,7 @@ gem "sucker_punch", "~> 3.2"
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "RUBY-4077-wex-simplification-remove-legacy-registration-code"
+    branch: "main"
 
 # for handling EA Areas GeoJSON data
 gem "rgeo-geojson"
