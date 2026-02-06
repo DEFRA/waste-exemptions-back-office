@@ -29,6 +29,7 @@ module Analytics
                                           NewRegistration
                                           RenewingRegistration
                                           FrontOfficeEditRegistration
+                                          BackOfficeEditRegistration
                                           NewChargedRegistration
                                         ]).date_range(start_date, end_date)
     end
