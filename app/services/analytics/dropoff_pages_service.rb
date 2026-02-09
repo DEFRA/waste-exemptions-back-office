@@ -29,7 +29,6 @@ module Analytics
 
     def user_journeys_scope
       UserJourney
-        .only_types(["NewChargedRegistration"])
         .incomplete
         .passed_start_cutoff_page
         .date_range(start_date, end_date)

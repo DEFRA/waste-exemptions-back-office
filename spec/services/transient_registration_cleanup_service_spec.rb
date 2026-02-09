@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe TransientRegistrationCleanupService do
   describe ".run" do
-    let(:transient_registration) { create(:new_registration) }
+    let(:transient_registration) { create(:new_charged_registration) }
     let(:id) { transient_registration.id }
 
     context "when a transient_registration is older than 30 days" do
@@ -42,7 +42,7 @@ RSpec.describe TransientRegistrationCleanupService do
 
       context "when there are more transient_registrations than the limit" do
         before do
-          10.times { create(:new_registration, created_at: 31.days.ago) }
+          10.times { create(:new_charged_registration, created_at: 31.days.ago) }
         end
 
         it "deletes only up to the limit" do

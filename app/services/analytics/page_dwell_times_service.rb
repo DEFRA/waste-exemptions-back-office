@@ -71,8 +71,7 @@ module Analytics
     end
 
     def user_journeys_scope
-      UserJourney.only_types(["NewChargedRegistration"])
-                 .completed
+      UserJourney.completed
                  .date_range(start_date, end_date)
     end
   end

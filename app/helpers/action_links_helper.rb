@@ -5,7 +5,7 @@ module ActionLinksHelper
     case resource
     when WasteExemptionsEngine::Registration
       registration_path(resource.reference)
-    when WasteExemptionsEngine::NewRegistration, WasteExemptionsEngine::NewChargedRegistration
+    when WasteExemptionsEngine::NewChargedRegistration
       new_registration_path(resource.id)
     else
       "#"
@@ -154,7 +154,6 @@ module ActionLinksHelper
   end
 
   def new_or_new_charged_registration(resource)
-    resource.is_a?(WasteExemptionsEngine::NewRegistration) ||
-      resource.is_a?(WasteExemptionsEngine::NewChargedRegistration)
+    resource.is_a?(WasteExemptionsEngine::NewChargedRegistration)
   end
 end
