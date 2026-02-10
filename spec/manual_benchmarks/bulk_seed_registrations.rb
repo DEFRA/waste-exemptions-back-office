@@ -6,7 +6,7 @@ require "rails_helper"
 # It makes use of FactoryBot and Timecop, so it has been implemented as a spec
 # instead of a rake task to avoid introducing test gem dependencies outside the test env.
 
-# rubocop:disable RSpec/DescribeClass, RSpec/NoExpectationExample
+# rubocop:disable RSpec/DescribeClass, RSpec/NoExpectationExample, RSpec/Output
 RSpec.describe "bulk seed registrations" do
   it "creates registations" do
     registration_count = ENV.fetch("BULK_SEED_REGISTRATION_COUNT").to_i
@@ -27,4 +27,4 @@ RSpec.describe "bulk seed registrations" do
     end
   end
 end
-# rubocop:enable RSpec/DescribeClass, RSpec/NoExpectationExample
+# rubocop:enable RSpec/DescribeClass, RSpec/NoExpectationExample, RSpec/Output

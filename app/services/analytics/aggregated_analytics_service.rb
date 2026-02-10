@@ -29,6 +29,8 @@ module Analytics
                                           NewRegistration
                                           RenewingRegistration
                                           FrontOfficeEditRegistration
+                                          BackOfficeEditRegistration
+                                          NewChargedRegistration
                                         ]).date_range(start_date, end_date)
     end
 
@@ -86,6 +88,7 @@ module Analytics
 
     def incomplete_journeys
       journey_base_scope.incomplete
+                        .passed_start_cutoff_page
                         .count
     end
   end

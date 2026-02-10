@@ -7,7 +7,7 @@ def time_diff(from_time, to_time)
 end
 
 module Analytics
-  RSpec.describe PrivateBetaPageDwellTimesService do
+  RSpec.describe PageDwellTimesService do
     describe ".run" do
       subject(:result) { described_class.run(start_date:, end_date:) }
 

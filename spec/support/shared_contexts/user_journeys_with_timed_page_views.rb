@@ -43,7 +43,7 @@ RSpec.shared_context "with user journeys with timed page views" do
            ])
 
     # Everything from here should be included
-    create(:user_journey, :charged_registration,
+    create(:user_journey, :charged_registration, :completed_digital,
            created_at:,
            page_views: [
              build(:page_view, page: "beta_start_form", time: start_time + 3.seconds),
@@ -51,14 +51,14 @@ RSpec.shared_context "with user journeys with timed page views" do
              build(:page_view, page: "operator_name_form", time: start_time + 1.hour),
              build(:page_view, page: "declaration_form", time: start_time + 2.days)
            ])
-    create(:user_journey, :charged_registration,
+    create(:user_journey, :charged_registration, :completed_digital,
            created_at:,
            page_views: [
              build(:page_view, page: "beta_start_form", time: start_time + 7.seconds),
              build(:page_view, page: "location_form", time: start_time + 18.minutes),
              build(:page_view, page: "operator_name_form", time: start_time + 4.days)
            ])
-    create(:user_journey, :charged_registration,
+    create(:user_journey, :charged_registration, :completed_digital,
            created_at:,
            page_views: [
              build(:page_view, page: "beta_start_form", time: start_time + 6.seconds),

@@ -57,7 +57,7 @@ module Analytics
         it { expect(result[:back_office_completed]).to eq(1) }
         it { expect(result[:cross_office_completed]).to eq(1) }
         it { expect(result[:total_journeys_abandoned]).to eq(7) }
-        it { expect(result[:incomplete_journeys]).to eq(10) }
+        it { expect(result[:incomplete_journeys]).to eq(7) }
       end
 
       context "with default date range" do

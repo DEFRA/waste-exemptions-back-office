@@ -1,6 +1,6 @@
 <%=
   render("waste_exemptions_engine/shared/back",
-    back_path: "#{private_beta_analytics_path}?start_date=#{@start_date}&end_date=#{@end_date}")
+    back_path: "#{analytics_path}?start_date=#{@start_date}&end_date=#{@end_date}")
 %>
 
 <h1 class="govuk-heading-l">
@@ -19,14 +19,14 @@
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
       <th scope="col" class="govuk-table__header"> <%= t(".header_page") %> </th>
-      <th scope="col" class="govuk-table__header"> <%= t(".header_user_count") %> </th>
+      <th scope="col" class="govuk-table__header"> <%= t(".header_average_time") %> </th>
     </tr>
   </thead>
   <tbody class="govuk-table__body">
-    <% Analytics::PrivateBetaDropoffPagesService.run(start_date: @start_date, end_date: @end_date).each do |page, count| %>
+    <% Analytics::PageDwellTimesService.run(start_date: @start_date, end_date: @end_date).each do |page, duration| %>
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header"><%= page %></th>
-        <td class="govuk-table__cell"><%= count %></td>
+        <td class="govuk-table__cell"><%= duration %></td>
       </tr>
     <% end %>
   </tbody>

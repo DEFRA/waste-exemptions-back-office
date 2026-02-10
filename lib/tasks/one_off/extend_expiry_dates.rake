@@ -49,7 +49,6 @@ namespace :one_off do
 end
 
 # :nocov:
-# rubocop:disable Rails/Output
 def print_registration_stats(registrations)
   return if Rails.env.test?
 
@@ -65,7 +64,6 @@ def print_registration_stats(registrations)
     puts "#{registration.reference} | #{reg_expiry_date_formatted}"
   end
 end
-# rubocop:enable Rails/Output
 # :nocov:
 
 def extend_registration_expiry_date_by_6months(registration)

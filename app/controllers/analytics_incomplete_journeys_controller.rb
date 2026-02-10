@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PrivateBetaIncompleteJourneysController < ApplicationController
+class AnalyticsIncompleteJourneysController < ApplicationController
   prepend_before_action :authorize_user
 
   def index

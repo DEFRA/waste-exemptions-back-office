@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Analytics
-  class PrivateBetaPageDwellTimesService < WasteExemptionsEngine::BaseService
+  class PageDwellTimesService < WasteExemptionsEngine::BaseService
 
     attr_accessor :start_date, :end_date, :page_dwell_times, :page_dwell_counts
 
@@ -71,10 +71,8 @@ module Analytics
     end
 
     def user_journeys_scope
-      # All user journeys in the date range which include a page_view for the beta-start page
-      UserJourney.date_range(start_date, end_date)
-                 .joins(:page_views)
-                 .where(page_views: { page: "beta_start_form" })
+      UserJourney.completed
+                 .date_range(start_date, end_date)
     end
   end
 end

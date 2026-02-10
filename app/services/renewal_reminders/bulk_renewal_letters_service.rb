@@ -29,9 +29,9 @@ module RenewalReminders
           .where(contact_email: nil)
           .where(
             id: WasteExemptionsEngine::RegistrationExemption
-                  .all_active_exemptions
-                  .where(expires_on: @expires_on)
-                  .select(:registration_id)
+                .all_active_exemptions
+                .where(expires_on: @expires_on)
+                .select(:registration_id)
           )
       end.call
     end

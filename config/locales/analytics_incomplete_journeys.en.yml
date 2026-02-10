@@ -1,0 +1,9 @@
+en:
+  analytics_incomplete_journeys:
+    index:
+      title: &title Drop off pages
+      header: *title
+      start_date: "Start date: %{date}"
+      end_date: "End date: %{date}"
+      header_page: Page
+      header_user_count: Number of users

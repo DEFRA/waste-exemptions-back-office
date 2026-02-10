@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Analytics
-  RSpec.describe PrivateBetaDropoffPagesService do
+  RSpec.describe DropoffPagesService do
     describe ".run" do
       subject(:result) { described_class.run(start_date:, end_date:) }
 
@@ -51,21 +51,23 @@ module Analytics
                     created_at:, updated_at:, completed_at: nil)
         # Completed, non-charged, last updated meets definition of abanoned
         create_list(:user_journey, 8, :renewal,
-                    visited_pages: %w[start_form location_form private_beta_registration_complete_form],
+                    visited_pages: %w[start_form location_form registration_complete_form],
                     created_at:, updated_at:, completed_at: 3.days.ago)
         # Completed, charged, last updated meets definition of abanoned
         create_list(:user_journey, 9, :charged_registration,
-                    visited_pages: %w[start_form location_form private_beta_registration_complete_form],
+                    visited_pages: %w[start_form location_form registration_complete_form],
                     created_at:, updated_at:, completed_at: 3.days.ago)
       end
 
+      # hasn't passed start_cutoff_page yet
       it { expect(result["start"]).to be_nil }
-      it { expect(result["location"]).to eq 2 }
-      it { expect(result["business-type"]).to eq 5 }
+      # hasn't passed start_cutoff_page yet
+      it { expect(result["location"]).to be_nil }
+      it { expect(result["business-type"]).to eq 8 }
       it { expect(result["exemptions"]).to be_nil }
-      it { expect(result["declaration"]).to eq 7 }
+      it { expect(result["declaration"]).to eq 12 }
       # Completion pages are not dropoff pages
-      it { expect(result["private-beta-registration-complete"]).to be_nil }
+      it { expect(result["registration-complete"]).to be_nil }
     end
   end
 end

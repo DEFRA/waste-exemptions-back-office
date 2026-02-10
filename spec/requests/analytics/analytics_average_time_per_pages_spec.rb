@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Analytics
-  RSpec.describe "Private beta average time per page" do
+  RSpec.describe "Analytics average time per page" do
     let(:role) { "data_viewer" }
     let(:user) { create(:user, role: role) }
 
@@ -24,13 +24,13 @@ module Analytics
 
     before { sign_in(user) }
 
-    describe "GET /private_beta_average_time_per_page" do
+    describe "GET /analytics_average_time_per_pages" do
 
       context "when user does not have permission to view analytics" do
         let(:role) { "data_viewer" }
 
         it "raises an authorization error" do
-          get private_beta_average_time_per_pages_path,
+          get analytics_average_time_per_pages_path,
               params: { start_date: start_date_param, end_date: end_date_param }
           expect(response).to redirect_to("/pages/permission")
         end
@@ -40,7 +40,7 @@ module Analytics
         let(:role) { "admin_team_user" }
 
         before do
-          get private_beta_average_time_per_pages_path,
+          get analytics_average_time_per_pages_path,
               params: { start_date: start_date_param, end_date: end_date_param }
         end
 

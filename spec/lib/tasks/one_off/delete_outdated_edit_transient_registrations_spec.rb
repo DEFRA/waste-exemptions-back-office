@@ -11,7 +11,7 @@ RSpec.describe "one_off:delete_outdate_edit_transient_registrations", type: :rak
   before do
     # Use raw SQL to bypass STI mechanism and insert data that imitates a deprecated transient registration
     ActiveRecord::Base.connection.execute(
-      <<-SQL.squish
+      <<~SQL.squish
         INSERT INTO transient_registrations
           (type, reference, created_at, updated_at)
         VALUES
