@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require WasteExemptionsEngine::Engine.root.join(
+load WasteExemptionsEngine::Engine.root.join(
   "app",
   "services",
   "waste_exemptions_engine",
-  "edit_permission_checker_service"
+  "edit_permission_checker_service.rb"
 )
 
 module WasteExemptionsEngine
