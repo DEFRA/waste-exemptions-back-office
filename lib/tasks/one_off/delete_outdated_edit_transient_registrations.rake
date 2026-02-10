@@ -40,7 +40,7 @@ def delete_associated_records(outdated_registration_ids)
 end
 
 def delete_transient_registrations(outdated_registration_ids)
-  sql = <<-SQL.squish
+  sql = <<~SQL.squish
     DELETE FROM transient_registrations
     WHERE id IN (#{outdated_registration_ids.join(', ')});
   SQL
