@@ -150,10 +150,8 @@ Rails.application.routes.draw do
       as: "quarterly_stats"
 
   resources :analytics, only: %i[index]
-
-  resources :private_beta_analytics, only: %i[index]
-  resources :private_beta_incomplete_journeys, only: %i[index]
-  resources :private_beta_average_time_per_pages, only: %i[index]
+  resources :analytics_incomplete_journeys, only: %i[index]
+  resources :analytics_average_time_per_pages, only: %i[index]
 
   get "/testing/create_registration/:expiry_date",
       to: "testing#create_registration"

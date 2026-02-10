@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Analytics
-  RSpec.describe "Private beta incomplete journeys" do
+  RSpec.describe "Analytics incomplete journeys" do
     let(:role) { "data_viewer" }
     let(:user) { create(:user, role: role) }
 
@@ -22,9 +22,9 @@ module Analytics
       sign_in(user)
     end
 
-    describe "GET /private_beta_incomplete_journeys" do
+    describe "GET /analytics_incomplete_journeys" do
       before do
-        get private_beta_incomplete_journeys_path,
+        get analytics_incomplete_journeys_path,
             params: { start_date: start_date_param, end_date: end_date_param }
       end
 
