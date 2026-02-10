@@ -63,9 +63,9 @@ module Analytics
       it { expect(result["start"]).to be_nil }
       # hasn't passed start_cutoff_page yet
       it { expect(result["location"]).to be_nil }
-      it { expect(result["business-type"]).to eq 5 }
+      it { expect(result["business-type"]).to eq 8 }
       it { expect(result["exemptions"]).to be_nil }
-      it { expect(result["declaration"]).to eq 7 }
+      it { expect(result["declaration"]).to eq 12 }
       # Completion pages are not dropoff pages
       it { expect(result["registration-complete"]).to be_nil }
     end
