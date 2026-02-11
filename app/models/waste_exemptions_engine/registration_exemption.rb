@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "registration_exemption")
+load WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "registration_exemption.rb")
 
 module WasteExemptionsEngine
   class RegistrationExemption < WasteExemptionsEngine::ApplicationRecord

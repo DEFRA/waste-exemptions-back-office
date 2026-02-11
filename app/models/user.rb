@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "application_record")
+load WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "application_record.rb")
 
 class User < WasteExemptionsEngine::ApplicationRecord
   has_paper_trail

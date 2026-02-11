@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "transient_person")
+load WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "transient_person.rb")
 
 module WasteExemptionsEngine
   class TransientPerson

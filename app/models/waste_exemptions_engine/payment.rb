@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "payment")
+load WasteExemptionsEngine::Engine.root.join("app", "models", "waste_exemptions_engine", "payment.rb")
 
 module WasteExemptionsEngine
   class Payment < ApplicationRecord
