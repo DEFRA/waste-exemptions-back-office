@@ -2,7 +2,6 @@ en:
   shared:
     resource_details:
       subheadings:
-        applicant: Applicant details
         contact: Contact details
         business_or_organisation_details: Business or organisation details
         exemptions: Exemptions
@@ -13,10 +12,6 @@ en:
       labels:
         workflow_state: Workflow state
         reference: Reference
-        applicant_first_name: Applicant first name
-        applicant_last_name: Applicant last name
-        applicant_phone: Applicant phone
-        applicant_email: Applicant email
         business_or_organisation_name: Name
         business_or_organisation_type: Business type
         renewed_from: Renewed from
@@ -41,7 +36,6 @@ en:
           full: Fully assisted
           partial: Partially assisted
           none: Self-Serve
-      no_applicant_data: No applicant details
       no_contact_data: No contact details
       no_exemptions: No exemptions
       no_people: No people
