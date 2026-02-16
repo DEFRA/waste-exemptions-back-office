@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: f1531b62a38e7c0c44b27b9bb493e105852c49a5
-  branch: RUBY-4138-wex-npj-remove-applicant-details-from-registration-and-renewals-journeys
+  revision: 9fed6d94b26eced7b1c95ff3ced4f43f1c5b27f9
+  branch: main
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)

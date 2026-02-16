@@ -25,7 +25,7 @@ RSpec.describe "Dashboards" do
       it "shows the updated search hint text" do
         get "/"
 
-        expect(response.body).to include("You can search for a registration by: postcodes, registration reference number, business or partner name, contact name, telephone number, and contact email")
+        expect(response.body.squish).to include("You can search for a registration by: postcodes, registration reference number, business or partner name, contact name, telephone number, and contact email")
       end
 
       # rubocop:disable RSpec/AnyInstance
