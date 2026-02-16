@@ -22,10 +22,8 @@ def cleanup_orphan_addresses(dry_run: false)
   safe_to_delete = orphans.where.missing(:registration_exemptions)
   ids = safe_to_delete.pluck(:id)
 
-  unless Rails.env.test? || ids.empty?
-    prefix = dry_run ? "[DRY RUN] Would delete" : "Deleting"
-    puts "#{prefix} orphan address IDs: #{ids.join(', ')}"
-  end
+  prefix = dry_run ? "[DRY RUN] Would delete" : "Deleting"
+  puts "#{prefix} orphan address IDs: #{ids.join(', ')}" unless Rails.env.test? || ids.empty?
 
   WasteExemptionsEngine::Address.where(id: ids).delete_all unless dry_run
   ids.length
@@ -35,10 +33,8 @@ def cleanup_orphan_transient_addresses(dry_run: false)
   orphans = WasteExemptionsEngine::TransientAddress.where(transient_registration_id: nil)
   ids = orphans.pluck(:id)
 
-  unless Rails.env.test? || ids.empty?
-    prefix = dry_run ? "[DRY RUN] Would delete" : "Deleting"
-    puts "#{prefix} orphan transient_address IDs: #{ids.join(', ')}"
-  end
+  prefix = dry_run ? "[DRY RUN] Would delete" : "Deleting"
+  puts "#{prefix} orphan transient_address IDs: #{ids.join(', ')}" unless Rails.env.test? || ids.empty?
 
   WasteExemptionsEngine::TransientAddress.where(id: ids).delete_all unless dry_run
   ids.length

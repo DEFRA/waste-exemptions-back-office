@@ -72,10 +72,8 @@ def deduplicate_address_group(registration_id, address_ids, dry_run: false)
 
   return 0 if ids_to_delete.empty?
 
-  unless Rails.env.test?
-    prefix = dry_run ? "[DRY RUN] Would delete" : "Deleting"
-    puts "#{prefix} addresses #{ids_to_delete.join(', ')} for registration #{registration_id}"
-  end
+  prefix = dry_run ? "[DRY RUN] Would delete" : "Deleting"
+  puts "#{prefix} addresses #{ids_to_delete.join(', ')} for registration #{registration_id}" unless Rails.env.test?
 
   unless dry_run
     ActiveRecord::Base.transaction do
