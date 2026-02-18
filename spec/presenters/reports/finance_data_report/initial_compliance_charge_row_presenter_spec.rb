@@ -25,8 +25,24 @@ module Reports
       end
 
       describe "#charge_amount" do
-        it "returns the formatted charge amount" do
-          expect(presenter.charge_amount).to eq("10")
+        context "when registration is single site" do
+          it "returns the formatted charge amount" do
+            expect(presenter.charge_amount).to eq("10")
+          end
+        end
+
+        context "when registration is multisite" do
+          let(:registration) { build(:registration, :multisite, reference: "REG123", submitted_at: Time.zone.now, account: account) }
+          let(:site_address) { build(:address, registration: registration) }
+          let(:presenter) { described_class.new(registration: registration, secondary_object: band_charge_detail, site_address: site_address, total: -1000) }
+
+          before do
+            allow(order.charge_detail).to receive(:site_count).and_return(2)
+          end
+
+          it "returns the formatted charge amount divided by site count" do
+            expect(presenter.charge_amount).to eq("5")
+          end
         end
       end
 

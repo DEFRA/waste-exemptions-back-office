@@ -8,7 +8,13 @@ module Reports
       end
 
       def charge_amount
-        display_pence_as_pounds_and_pence(pence: @secondary_object.additional_compliance_charge_amount,
+        charge_amount = if @registration.multisite?
+                          @secondary_object.additional_compliance_charge_amount / @secondary_object.charge_detail.site_count
+                        else
+                          @secondary_object.additional_compliance_charge_amount
+                        end
+
+        display_pence_as_pounds_and_pence(pence: charge_amount,
                                           hide_pence_if_zero: true)
       end
 
