@@ -22,6 +22,12 @@ RSpec.describe "Dashboards" do
         expect(response).to have_http_status(:ok)
       end
 
+      it "shows the updated search hint text" do
+        get "/"
+
+        expect(response.body.squish).to include("You can search for a registration by: postcodes, registration reference number, business or partner name, contact name, telephone number, and contact email")
+      end
+
       # rubocop:disable RSpec/AnyInstance
       context "when there is a term, a filter and a page" do
         it "calls a SearchService with the correct params" do
@@ -60,6 +66,13 @@ RSpec.describe "Dashboards" do
 
           reg_path = registration_path(reference: registration.reference, term: search_terms[:term])
           expect(response.body).to include(reg_path)
+        end
+
+        it "does not show applicant details in the search results" do
+          get "/", params: search_terms
+
+          expect(response.body).not_to include("Applicant")
+          expect(response.body).not_to include("#{registration.applicant_first_name} #{registration.applicant_last_name}")
         end
       end
     end

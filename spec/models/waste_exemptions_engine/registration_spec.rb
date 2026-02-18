@@ -171,8 +171,8 @@ RSpec.describe WasteExemptionsEngine::Registration do
     context "when the search term is an applicant_email" do
       let(:term) { matching_registration.applicant_email }
 
-      it "returns registrations with a matching reference" do
-        expect(scope).to include(matching_registration)
+      it "does not return registrations based on applicant email" do
+        expect(scope).not_to include(matching_registration)
       end
 
       it "does not return others" do
@@ -182,8 +182,8 @@ RSpec.describe WasteExemptionsEngine::Registration do
       context "when the search term is in the wrong case" do
         let(:term) { matching_registration.applicant_email.upcase }
 
-        it "still returns matching results" do
-          expect(scope).to include(matching_registration)
+        it "still does not return matching results" do
+          expect(scope).not_to include(matching_registration)
         end
       end
     end
@@ -201,8 +201,8 @@ RSpec.describe WasteExemptionsEngine::Registration do
     context "when the search term is an applicant_first_name" do
       let(:term) { matching_registration.applicant_first_name }
 
-      it "returns registrations with a matching applicant name" do
-        expect(scope).to include(matching_registration)
+      it "does not return registrations based on applicant name" do
+        expect(scope).not_to include(matching_registration)
       end
 
       it "does not return others" do
@@ -213,8 +213,8 @@ RSpec.describe WasteExemptionsEngine::Registration do
     context "when the search term is an applicant_last_name" do
       let(:term) { matching_registration.applicant_last_name }
 
-      it "returns registrations with a matching applicant name" do
-        expect(scope).to include(matching_registration)
+      it "does not return registrations based on applicant name" do
+        expect(scope).not_to include(matching_registration)
       end
 
       it "does not return others" do
@@ -225,8 +225,8 @@ RSpec.describe WasteExemptionsEngine::Registration do
     context "when the search term is an applicant's full name" do
       let(:term) { "#{matching_registration.applicant_first_name} #{matching_registration.applicant_last_name}" }
 
-      it "returns registrations with a matching applicant name" do
-        expect(scope).to include(matching_registration)
+      it "does not return registrations based on applicant name" do
+        expect(scope).not_to include(matching_registration)
       end
 
       it "does not return others" do
