@@ -9,7 +9,8 @@ module Reports
 
       def charge_amount
         charge_amount = if @registration.multisite?
-                          @secondary_object.additional_compliance_charge_amount / @secondary_object.charge_detail.site_count
+                          @secondary_object.additional_compliance_charge_amount /
+                            @secondary_object.charge_detail.site_count
                         else
                           @secondary_object.additional_compliance_charge_amount
                         end
