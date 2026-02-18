@@ -42,9 +42,7 @@ module Reports
           end
         end
 
-        # A multisite registration_exemption has an indirect association to the owning registration.
-        # Confirm that the registration is reachable outside the specialised registration_number method:
-        it "does not raise an exception" do
+        it "can access the registration for organisation data" do
           expect { presenter.organisation_name }.not_to raise_error
         end
       end
@@ -137,14 +135,14 @@ module Reports
 
     describe "#site_premises" do
       let(:site_address) { create(:address, :site_address, premises: "Bar 123") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address premises" do
+      it "returns the site address premises" do
         expect(presenter.site_premises).to eq("Bar 123")
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_premises).to be_nil
@@ -154,14 +152,14 @@ module Reports
 
     describe "#site_street_address" do
       let(:site_address) { create(:address, :site_address, street_address: "12 Baz road") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address street" do
+      it "returns the site street address" do
         expect(presenter.site_street_address).to eq("12 Baz road")
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_street_address).to be_nil
@@ -171,14 +169,14 @@ module Reports
 
     describe "#site_locality" do
       let(:site_address) { create(:address, :site_address, locality: "Avon") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address locality" do
+      it "returns the site address locality" do
         expect(presenter.site_locality).to eq("Avon")
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_locality).to be_nil
@@ -188,14 +186,14 @@ module Reports
 
     describe "#site_city" do
       let(:site_address) { create(:address, :site_address, city: "Bristol") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address locality" do
+      it "returns the site address city" do
         expect(presenter.site_city).to eq("Bristol")
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_city).to be_nil
@@ -205,14 +203,14 @@ module Reports
 
     describe "#site_postcode" do
       let(:site_address) { create(:address, :site_address, postcode: "BS2 34G") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address postcode" do
+      it "returns the site address postcode" do
         expect(presenter.site_postcode).to eq("BS2 34G")
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_postcode).to be_nil
@@ -222,14 +220,14 @@ module Reports
 
     describe "#site_country" do
       let(:site_address) { create(:address, :site_address, country_iso: "GB") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address country" do
+      it "returns the site address country" do
         expect(presenter.site_country).to eq("GB")
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_country).to be_nil
@@ -238,11 +236,8 @@ module Reports
     end
 
     describe "#site_ngr" do
-      # Not clear how this can happen, but see https://eaflood.atlassian.net/browse/RUBY-3667
-      context "when the site address does not exist" do
-        let(:registration) { create(:registration) }
-
-        before { registration.update(site_address: nil) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_ngr).to be_nil
@@ -251,7 +246,7 @@ module Reports
 
       context "when the site address has a postcode" do
         let(:site_address) { create(:address, :site_address, grid_reference: "SB1234", postcode: "AB12 3CD") }
-        let(:registration) { create(:registration, addresses: [site_address]) }
+        let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
         it "returns nil" do
           expect(presenter.site_ngr).to be_nil
@@ -260,7 +255,7 @@ module Reports
 
       context "when the site address does not have a postcode" do
         let(:site_address) { create(:address, :site_address, grid_reference: "SB1234", postcode: nil) }
-        let(:registration) { create(:registration, addresses: [site_address]) }
+        let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
         it "returns the grid reference" do
           expect(presenter.site_ngr).to eq("SB1234")
@@ -270,14 +265,14 @@ module Reports
 
     describe "#site_easting" do
       let(:site_address) { create(:address, :site_address, x: "123.45") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address x coordinates" do
+      it "returns the site address x coordinates" do
         expect(presenter.site_easting).to eq(123.45)
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_easting).to be_nil
@@ -287,14 +282,14 @@ module Reports
 
     describe "#site_northing" do
       let(:site_address) { create(:address, :site_address, y: "123.45") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
-      it "returns the operator address y coordinates" do
+      it "returns the site address y coordinates" do
         expect(presenter.site_northing).to eq(123.45)
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.site_northing).to be_nil
@@ -304,14 +299,14 @@ module Reports
 
     describe "#ea_area_location" do
       let(:site_address) { create(:address, :site_address, area: "Foo") }
-      let(:registration) { create(:registration, addresses: [site_address]) }
+      let(:registration_exemption) { create(:registration_exemption, address: site_address) }
 
       it "returns the area name" do
         expect(presenter.ea_area_location).to eq("Foo")
       end
 
-      context "when the registration has no site address" do
-        let(:registration) { create(:registration, addresses: []) }
+      context "when the exemption has no site address" do
+        let(:registration_exemption) { create(:registration_exemption, address: nil) }
 
         it "returns nil" do
           expect(presenter.ea_area_location).to be_nil
