@@ -16,6 +16,13 @@ RSpec.describe "Registrations" do
         expect(response.body).to include(registration.reference)
       end
 
+      it "does not show applicant details on the details page" do
+        get "/registrations/#{registration.reference}"
+
+        expect(response.body).not_to include("Applicant details")
+        expect(response.body).not_to include(registration.applicant_email)
+      end
+
       it "includes the correct back link" do
         search_terms = { term: "foo", filter: "registrations", page: "2" }
         get "/registrations/#{registration.reference}", params: search_terms

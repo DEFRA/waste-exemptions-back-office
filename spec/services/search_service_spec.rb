@@ -88,13 +88,13 @@ RSpec.describe SearchService do
       before do
         # align the relevant matching attributes so the same spec match setup works for each:
         back_office_edit_registration.update(
-          applicant_first_name: new_charged_registration.applicant_first_name,
+          contact_first_name: new_charged_registration.contact_first_name,
           contact_phone: new_charged_registration.contact_phone
         )
       end
 
-      context "with matches on applicant_first_name" do
-        let(:term) { new_charged_registration.applicant_first_name }
+      context "with matches on contact_first_name" do
+        let(:term) { new_charged_registration.contact_first_name }
 
         it_behaves_like "'new_registrations' matches and non-matches"
       end

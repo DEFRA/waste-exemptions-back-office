@@ -8,8 +8,6 @@ en:
         - "postcodes"
         - "registration reference number"
         - "business or partner name"
-        - "applicant name"
-        - "applicant email"
         - "contact name"
         - "telephone number"
         - "contact email"
@@ -32,4 +30,3 @@ en:
     helper:
       registered_name: "Registered name"
       operator_name: "Operator (business) name"
-

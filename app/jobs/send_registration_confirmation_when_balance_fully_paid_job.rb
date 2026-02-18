@@ -3,7 +3,7 @@
 class SendRegistrationConfirmationWhenBalanceFullyPaidJob < ApplicationJob
   queue_as :default
 
-  REGISTRATION_COMPLETION_EMAIL_TEMPLATE_ID = "9025773f-35a3-4894-b8c6-105d65c19df4"
+  REGISTRATION_COMPLETION_EMAIL_TEMPLATE_ID = WasteExemptionsEngine::NotificationTemplates::CONFIRMATION_EMAIL_WITH_PDF
 
   def perform(reference:)
     registration = find_registration(reference)

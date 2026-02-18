@@ -1,51 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-m">
-      <%= t(".subheadings.applicant") %>
-    </h2>
-
-    <% if applicant_data_present?(resource) %>
-      <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t(".labels.applicant_first_name") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= resource.applicant_first_name %>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t(".labels.applicant_last_name") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= resource.applicant_last_name %>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t(".labels.applicant_phone") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= resource.applicant_phone %>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            <%= t(".labels.applicant_email") %>
-          </dt>
-          <dd class="govuk-summary-list__value">
-            <%= resource.applicant_email %>
-          </dd>
-        </div>
-      </dl>
-    <% else %>
-      <p class="govuk-body">
-        <%= t(".no_applicant_data") %>
-      </p>
-    <% end %>
-
-    <h2 class="govuk-heading-m">
       <%= t(".subheadings.contact") %>
     </h2>
 
@@ -98,22 +53,22 @@
       </p>
     <% end %>
 
-  <h2 class="govuk-heading-m">
-    <%= t(".subheadings.current_balance") %>
-  </h2>
+    <h2 class="govuk-heading-m">
+      <%= t(".subheadings.current_balance") %>
+    </h2>
 
-  <% if resource.is_a?(WasteExemptionsEngine::Registration) %>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          <%= t(".labels.amount") %>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          <%= display_pence_as_pounds_sterling_and_pence(pence: resource.account.balance) if resource.account&.balance.present? %>
-        </dd>
-      </div>
-    </dl>
-  <% end %>
+    <% if resource.is_a?(WasteExemptionsEngine::Registration) %>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".labels.amount") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <%= display_pence_as_pounds_sterling_and_pence(pence: resource.account.balance) if resource.account&.balance.present? %>
+          </dd>
+        </div>
+      </dl>
+    <% end %>
 
   </div>
 
