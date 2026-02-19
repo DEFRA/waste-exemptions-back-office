@@ -212,7 +212,7 @@ GEM
       rest-client (~> 2.0)
       uk_postcode
       validates_email_format_of
-    devise (5.0.0)
+    devise (5.0.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 7.0)
@@ -742,7 +742,7 @@ CHECKSUMS
   defra_ruby_style (0.4.1) sha256=9d8a273a1c0deb11ce529189182d3b8141ffd6a119c5e08dbe3a10c640fc7815
   defra_ruby_template (5.11.1) sha256=9d8c1d7e765b92651cc8975010cb825fda0284e7a74b7d3f24a121dd1274faf9
   defra_ruby_validators (3.0.0) sha256=8a483981012306a203e19afe1b230142304671ced7155f37aebe946869bb4a9d
-  devise (5.0.0) sha256=3ff37d39ccedf5d7dbe5971214d81fdf7a89b32d7071857f6585a0f7863f056b
+  devise (5.0.2) sha256=254330c9290e612ad9681e8a18c96aa21fb95bc391af936b84480965444bb0b6
   devise_invitable (2.0.11) sha256=780014f74b8848218d93a297300590120f1742984396acf3d6799ab49b9a6a3f
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
