@@ -50,41 +50,6 @@
   <% end %>
 <% end %>
 
-<% if can?(:read, Reports::GeneratedReport) %>
-  <br/>
-  <br/>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-m">
-        <%= t(".bulk.heading") %>
-      </h2>
-    </div>
-  </div>
-
-  <% if @bulk_exports.links.any? %>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <p class="govuk-body">
-          <%= @bulk_exports.exported_at_message %>
-        </p>
-      </div>
-    </div>
-
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <ul class="govuk-list">
-          <% @bulk_exports.links.each do |link_data| %>
-          <li>
-            <%= link_to link_data[:text], data_export_download_path(link_data[:id]) %>
-          </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
-<% end %>
-
 <% if can?(:read_finance_data, Reports::GeneratedReport) %>
   <br/>
   <br/>
@@ -120,4 +85,58 @@
     </div>
   <% end %>
 
+<% end %>
+
+<% if can?(:read, Reports::GeneratedReport) %>
+  <br/>
+  <br/>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m">
+        <%= t(".bulk.heading") %>
+      </h2>
+    </div>
+  </div>
+
+  <% if @bulk_exports.links.any? %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <p class="govuk-body">
+          <%= @bulk_exports.exported_at_message %>
+        </p>
+      </div>
+    </div>
+
+    <% third = (@bulk_exports.links.size / 3.0).ceil %>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list">
+          <% @bulk_exports.links.first(third).each do |link_data| %>
+          <li>
+            <%= link_to link_data[:text], data_export_download_path(link_data[:id]) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list">
+          <% @bulk_exports.links.drop(third).first(third).each do |link_data| %>
+          <li>
+            <%= link_to link_data[:text], data_export_download_path(link_data[:id]) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <ul class="govuk-list">
+          <% @bulk_exports.links.drop(third * 2).each do |link_data| %>
+          <li>
+            <%= link_to link_data[:text], data_export_download_path(link_data[:id]) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 <% end %>
