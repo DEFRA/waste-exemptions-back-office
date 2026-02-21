@@ -18,7 +18,7 @@ module Reports
       Airbrake.notify e, file_name: file_name
       Rails.logger.error "Generate bulk export csv error for #{file_name}:\n#{e}"
     ensure
-      File.unlink(file_path) if File.exist?(file_path)
+      FileUtils.rm_f(file_path)
     end
 
     private
