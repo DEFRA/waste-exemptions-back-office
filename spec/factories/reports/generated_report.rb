@@ -12,5 +12,9 @@ FactoryBot.define do
     trait :boxi do
       report_type { "boxi" }
     end
+
+    trait :bulk do
+      report_type { "bulk" }
+    end
   end
 end

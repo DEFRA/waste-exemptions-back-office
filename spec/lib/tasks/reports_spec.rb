@@ -18,6 +18,12 @@ RSpec.describe "Reports task", type: :rake do
     end
   end
 
+  describe "reports:export:bulk" do
+    it "runs without error" do
+      expect { subject.invoke }.not_to raise_error
+    end
+  end
+
   describe "reports:export:boxi" do
     it "runs without error" do
       expect { subject.invoke }.not_to raise_error

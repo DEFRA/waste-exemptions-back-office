@@ -8,6 +8,10 @@ en:
         heading: "BOXI export"
         not_yet_exported: "The file has not yet been generated"
         exported_at:  "This file was created at %{export_executed_at}."
+      bulk:
+        heading: "Monthly bulk data export"
+        not_yet_exported: "The files have not yet been generated"
+        exported_at: "These files were created at %{export_executed_at}."
       finance_data: 
         heading: "Daily finance data export"
         exported_at:  "This file was created at %{export_executed_at}."

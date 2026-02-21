@@ -8,7 +8,9 @@ module Reports
     delegate :summary, to: :exemption, prefix: true
 
     def reference_number
-      registration.reference
+      return registration.reference unless registration.multisite? && address&.site_suffix.present?
+
+      "#{registration.reference}M#{address.site_suffix}"
     end
 
     def registration_date
@@ -140,7 +142,7 @@ module Reports
     end
 
     def site_address
-      @_site_address ||= registration.site_address
+      @_site_address ||= address || registration.site_address
     end
 
     def back_office_host

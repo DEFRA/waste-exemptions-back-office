@@ -13,6 +13,11 @@ namespace :reports do
       Reports::EprExportService.run
     end
 
+    desc "Generate the monthly bulk data reports and upload them to S3."
+    task bulk: :environment do
+      Reports::BulkExportService.run
+    end
+
     desc "Generate the BOXI report (zipped) and upload it to S3."
     task boxi: :environment do
       Reports::BoxiExportService.run

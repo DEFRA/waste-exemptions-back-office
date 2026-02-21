@@ -12,7 +12,7 @@ module WasteExemptionsEngine
       registered_on_range = (first_day_of_the_month..first_day_of_the_month.end_of_month)
 
       where(registered_on: registered_on_range)
-        .includes(:exemption)
+        .includes(:exemption, :address)
         .includes(registration: :addresses)
         .order(:registered_on, :registration_id)
     }
