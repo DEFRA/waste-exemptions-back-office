@@ -23,6 +23,17 @@ module Reports
       it "returns the correct registration reference number" do
         expect(exemption_bulk_report_presenter.reference_number).to eq(registration.reference)
       end
+
+      context "with a multi-site registration" do
+        let(:multisite_registration) { create(:registration, :multisite_complete) }
+        let(:site_address) { multisite_registration.site_addresses.last }
+        let(:registration_exemption) { site_address.registration_exemptions.last }
+
+        it "returns the reference with M separator and site suffix" do
+          expect(exemption_bulk_report_presenter.reference_number)
+            .to eq("#{multisite_registration.reference}M#{site_address.site_suffix}")
+        end
+      end
     end
 
     describe "#registration_date" do
@@ -312,6 +323,16 @@ module Reports
 
         it "returns nil" do
           expect(exemption_bulk_report_presenter.site_location_area).to be_nil
+        end
+      end
+
+      context "with a multi-site registration" do
+        let(:multisite_registration) { create(:registration, :multisite_complete) }
+        let(:multisite_site_address) { multisite_registration.site_addresses.first }
+        let(:registration_exemption) { multisite_site_address.registration_exemptions.first }
+
+        it "uses the registration_exemption's own site address area" do
+          expect(exemption_bulk_report_presenter.site_location_area).to eq(multisite_site_address.area)
         end
       end
     end

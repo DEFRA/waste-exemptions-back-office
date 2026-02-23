@@ -53,6 +53,24 @@ RSpec.describe "Bulk Exports" do
       end
     end
 
+    context "when bulk data report is present" do
+      before do
+        create(:generated_report, :bulk, file_name: "20230601-20230630.csv",
+                                         data_from_date: Date.new(2023, 6, 1))
+      end
+
+      context "when user has permission to download bulk report" do
+        let(:user) { create(:user, :admin_team_lead) }
+
+        it_behaves_like "renders the correct template and returns correct status"
+
+        it "contains bulk report link" do
+          get data_exports_path
+          expect(response.body).to include("June 2023")
+        end
+      end
+    end
+
     context "when finance_data data report is present" do
       before do
         create(:generated_report, :finance_data, file_name: "finance_data_report.csv")

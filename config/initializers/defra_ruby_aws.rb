@@ -44,6 +44,16 @@ DefraRuby::Aws.configure do |c|
     encrypt_with_kms: ENV.fetch("AWS_BOXI_ENCRYPT_WITH_KMS", nil)
   }
 
+  bulk_export_bucket = {
+    name: ENV.fetch("AWS_BULK_EXPORT_BUCKET", nil),
+    region: ENV.fetch("AWS_REGION", nil),
+    credentials: {
+      access_key_id: ENV.fetch("AWS_BULK_EXPORT_ACCESS_KEY_ID", nil),
+      secret_access_key: ENV.fetch("AWS_BULK_EXPORT_SECRET_ACCESS_KEY", nil)
+    },
+    encrypt_with_kms: ENV.fetch("AWS_BULK_ENCRYPT_WITH_KMS", nil)
+  }
+
   govpay_mocks_bucket = {
     name: ENV.fetch("AWS_DEFRA_RUBY_MOCKS_BUCKET", "dummy"),
     region: ENV.fetch("AWS_REGION", "eu-west-1"),
@@ -58,6 +68,7 @@ DefraRuby::Aws.configure do |c|
     finance_data_bucket,
     epr_bucket,
     boxi_export_bucket,
+    bulk_export_bucket,
     deregistration_email_export_bucket,
     govpay_mocks_bucket
   ]
