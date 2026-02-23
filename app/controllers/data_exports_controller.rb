@@ -5,6 +5,7 @@ class DataExportsController < ApplicationController
     authorize! :read, Reports::GeneratedReport
 
     @boxi_exports = BoxiExportsPresenter.new
+    @bulk_exports = BulkExportsPresenter.new
     @finance_data_exports = FinanceDataExportsPresenter.new
   end
 
@@ -42,6 +43,8 @@ class DataExportsController < ApplicationController
       WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
     when "boxi"
       WasteExemptionsBackOffice::Application.config.boxi_exports_bucket_name
+    when "bulk"
+      WasteExemptionsBackOffice::Application.config.bulk_reports_bucket_name
     else
       raise StandardError, "Unknown report type: #{generated_report.report_type}"
     end
