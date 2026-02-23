@@ -2,7 +2,31 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.0.0...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.0.1...HEAD)
+
+**Implemented enhancements:**
+
+- Feature/ruby 4204 wex restoring monthly back office data export [\#2019](https://github.com/DEFRA/waste-exemptions-back-office/pull/2019) ([brujeo](https://github.com/brujeo))
+- \[RUBY-4179\] Add rake tasks for cleaning up duplicate and orphan addresses [\#2009](https://github.com/DEFRA/waste-exemptions-back-office/pull/2009) ([brujeo](https://github.com/brujeo))
+- \[RUBY-4119\] Remove applicant details from registration and renewals journeys [\#2005](https://github.com/DEFRA/waste-exemptions-back-office/pull/2005) ([jjromeo](https://github.com/jjromeo))
+- Feature/ruby 3906 wex bo service analytics dashboard changes [\#2001](https://github.com/DEFRA/waste-exemptions-back-office/pull/2001) ([brujeo](https://github.com/brujeo))
+
+**Fixed bugs:**
+
+- \[RUBY-4194\] Fix charge amount calculation for multisite registrations in finance export [\#2012](https://github.com/DEFRA/waste-exemptions-back-office/pull/2012) ([brujeo](https://github.com/brujeo))
+- \[RUBY-4196\] Fix bug with incorrect site details being shown for multiple sites [\#2011](https://github.com/DEFRA/waste-exemptions-back-office/pull/2011) ([jjromeo](https://github.com/jjromeo))
+
+**Merged pull requests:**
+
+- \[RUBY-4177\] Update exemption codes in charging schemes JSON seed data [\#2017](https://github.com/DEFRA/waste-exemptions-back-office/pull/2017) ([jjromeo](https://github.com/jjromeo))
+- Bump waste\_exemptions\_engine from `9fed6d9` to `3a1cf10` [\#2015](https://github.com/DEFRA/waste-exemptions-back-office/pull/2015) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump rack from 2.2.21 to 2.2.22 [\#2007](https://github.com/DEFRA/waste-exemptions-back-office/pull/2007) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Replace require with load to avoid undefined method score error on fi… [\#2003](https://github.com/DEFRA/waste-exemptions-back-office/pull/2003) ([brujeo](https://github.com/brujeo))
+- Refactor new registration handling to remove legacy code and simplify logic [\#1985](https://github.com/DEFRA/waste-exemptions-back-office/pull/1985) ([jjromeo](https://github.com/jjromeo))
+
+## [v4.0.1](https://github.com/defra/waste-exemptions-back-office/tree/v4.0.1) (2026-02-02)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.0.0...v4.0.1)
 
 **Implemented enhancements:**
 
@@ -10,6 +34,8 @@
 
 **Merged pull requests:**
 
+- Move github\_changelog\_generator gem outside of development group [\#1998](https://github.com/DEFRA/waste-exemptions-back-office/pull/1998) ([brujeo](https://github.com/brujeo))
+- Release/v4.0.1 [\#1997](https://github.com/DEFRA/waste-exemptions-back-office/pull/1997) ([brujeo](https://github.com/brujeo))
 - Bump waste\_exemptions\_engine from `d80ceb2` to `46e16f4` [\#1996](https://github.com/DEFRA/waste-exemptions-back-office/pull/1996) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump waste\_exemptions\_engine from `a52f6d6` to `d80ceb2` [\#1994](https://github.com/DEFRA/waste-exemptions-back-office/pull/1994) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump devise from 4.9.4 to 5.0.0 [\#1990](https://github.com/DEFRA/waste-exemptions-back-office/pull/1990) ([dependabot[bot]](https://github.com/apps/dependabot))
