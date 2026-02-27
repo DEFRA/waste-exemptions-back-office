@@ -14,6 +14,10 @@ module Reports
         display_pence_as_pounds_and_pence(pence: amount_to_credit, hide_pence_if_zero: true)
       end
 
+      def comments
+        @secondary_object.comments.presence
+      end
+
       def balance
         @total += amount_to_credit
         display_pence_as_pounds_and_pence(pence: @total, hide_pence_if_zero: true)
