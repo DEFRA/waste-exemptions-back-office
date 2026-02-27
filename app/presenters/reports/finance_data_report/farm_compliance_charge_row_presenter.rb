@@ -12,6 +12,10 @@ module Reports
                                           hide_pence_if_zero: true)
       end
 
+      def summary_charge_amount_in_pence
+        @secondary_object.bucket_charge_amount
+      end
+
       def exemption
         order = @secondary_object.order
         order_bucket = order.bucket

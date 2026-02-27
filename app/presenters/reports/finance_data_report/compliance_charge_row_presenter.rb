@@ -16,6 +16,10 @@ module Reports
                                           hide_pence_if_zero: true)
       end
 
+      def summary_charge_amount_in_pence
+        charge_amount_in_pence
+      end
+
       def exemption
         @secondary_object.charge_detail.order.exemptions.select do |e|
           e.band_id == @secondary_object.band_id && bucket_exemption_codes.exclude?(e.code)

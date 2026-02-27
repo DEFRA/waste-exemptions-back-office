@@ -7,11 +7,12 @@ module Reports
 
       include FinanceDetailsHelper
 
-      def initialize(registration:, secondary_object: nil, total: nil, site_address: nil)
+      def initialize(registration:, secondary_object: nil, total: nil, site_address: nil, show_payment_status: false)
         @registration = registration
         @secondary_object = secondary_object
         @total = total
         @site_address = site_address
+        @show_payment_status = show_payment_status
       end
 
       def registration_no
@@ -44,6 +45,10 @@ module Reports
 
       def charge_amount
         nil
+      end
+
+      def summary_charge_amount_in_pence
+        0
       end
 
       def charge_band
@@ -91,6 +96,7 @@ module Reports
       end
 
       def payment_status
+        return nil unless @show_payment_status
         return nil if @total.nil?
 
         if @total.negative?

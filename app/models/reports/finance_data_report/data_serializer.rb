@@ -52,6 +52,7 @@ module Reports
         return [] if order&.charge_detail.blank?
 
         @total = 0
+        @charge_total = 0
         charge_detail = order.charge_detail
 
         order_rows = []
@@ -59,6 +60,7 @@ module Reports
         order_rows.concat(generate_compliance_charge_rows(registration, charge_detail))
         order_rows.concat(generate_charge_adjustment_rows(registration))
         order_rows.concat(generate_payment_rows(registration))
+        order_rows.concat(summary_row(registration))
         order_rows
       end
 
@@ -80,6 +82,7 @@ module Reports
         rows = []
 
         charge_detail.band_charge_details.each do |band_charge_detail|
+          rows.concat(no_compliance_charge_row(registration, band_charge_detail, site_address))
           rows.concat(initial_compliance_charge_row(registration, band_charge_detail, site_address))
           rows.concat(additional_compliance_charge_row(registration, band_charge_detail, site_address))
         end
@@ -109,6 +112,7 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @charge_total += presenter.summary_charge_amount_in_pence
         @total = presenter.total
         [output]
       end
@@ -121,6 +125,7 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @charge_total += presenter.summary_charge_amount_in_pence
         @total = presenter.total
         [output]
       end
@@ -133,6 +138,7 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @charge_total += presenter.summary_charge_amount_in_pence
         @total = presenter.total
         [output]
       end
@@ -143,6 +149,7 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @charge_total += presenter.summary_charge_amount_in_pence
         @total = presenter.total
         [output]
       end
@@ -153,6 +160,7 @@ module Reports
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
+        @charge_total += presenter.summary_charge_amount_in_pence
         @total = presenter.total
         [output]
       end
@@ -160,6 +168,35 @@ module Reports
       def payment_row(registration, secondary_object, site_address)
         presenter = FinanceDataReport::PaymentRowPresenter.new(registration:, secondary_object:, total: @total,
                                                                site_address:)
+        output = ATTRIBUTES.map do |attribute|
+          presenter.public_send(attribute)
+        end
+        @total = presenter.total
+        [output]
+      end
+
+      def no_compliance_charge_row(registration, secondary_object, site_address)
+        initial_charge = secondary_object.initial_compliance_charge_amount.to_i
+        additional_charge = secondary_object.additional_compliance_charge_amount.to_i
+        return [] unless initial_charge.zero? && additional_charge.zero?
+
+        presenter = FinanceDataReport::ComplianceNoChargeRowPresenter.new(registration:, secondary_object:,
+                                                                          total: @total, site_address:)
+        output = ATTRIBUTES.map do |attribute|
+          presenter.public_send(attribute)
+        end
+        @charge_total += presenter.summary_charge_amount_in_pence
+        @total = presenter.total
+        [output]
+      end
+
+      def summary_row(registration)
+        presenter = FinanceDataReport::SummaryRowPresenter.new(
+          registration:,
+          secondary_object: @charge_total,
+          total: @total,
+          show_payment_status: true
+        )
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end

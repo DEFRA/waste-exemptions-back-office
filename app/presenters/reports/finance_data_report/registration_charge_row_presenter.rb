@@ -11,6 +11,10 @@ module Reports
         display_pence_as_pounds_and_pence(pence: @secondary_object.registration_charge_amount, hide_pence_if_zero: true)
       end
 
+      def summary_charge_amount_in_pence
+        @secondary_object.registration_charge_amount
+      end
+
       def balance
         @total -= @secondary_object.registration_charge_amount
         display_pence_as_pounds_and_pence(pence: @total,

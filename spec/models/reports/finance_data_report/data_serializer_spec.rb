@@ -24,7 +24,6 @@ module Reports
             expect(csv[row_number]["is_a_farmer"]).to be_present
             expect(csv[row_number]["ea_admin_area"]).to be_present
             expect(csv[row_number]["balance"]).to be_present
-            expect(csv[row_number]["payment_status"]).to be_present
             expect(csv[row_number]["status"]).to be_present
           end
         end
@@ -45,6 +44,7 @@ module Reports
             expect(csv[row_number]["reference"]).to be_nil
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_nil
+            expect(csv[row_number]["payment_status"]).to be_nil
           end
         end
       end
@@ -63,6 +63,7 @@ module Reports
             expect(csv[row_number]["reference"]).to be_nil
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_nil
+            expect(csv[row_number]["payment_status"]).to be_nil
           end
         end
       end
@@ -81,6 +82,7 @@ module Reports
             expect(csv[row_number]["reference"]).to be_nil
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_nil
+            expect(csv[row_number]["payment_status"]).to be_nil
           end
         end
       end
@@ -101,6 +103,7 @@ module Reports
             expect(csv[row_number]["payment_amount"]).to be_nil
             expect(csv[row_number]["on_a_farm"]).to be_truthy
             expect(csv[row_number]["is_a_farmer"]).to be_truthy
+            expect(csv[row_number]["payment_status"]).to be_nil
           end
         end
       end
@@ -117,8 +120,9 @@ module Reports
             expect(csv[row_number]["payment_type"]).to be_nil
             expect(csv[row_number]["refund_type"]).to be_nil
             expect(csv[row_number]["reference"]).to be_nil
-            expect(csv[row_number]["comments"]).to be_nil
+            expect(csv[row_number]["comments"]).to be_present
             expect(csv[row_number]["payment_amount"]).to be_nil
+            expect(csv[row_number]["payment_status"]).to be_nil
           end
         end
       end
@@ -137,6 +141,34 @@ module Reports
             expect(csv[row_number]["reference"]).to be_present
             expect(csv[row_number]["comments"]).to be_nil
             expect(csv[row_number]["payment_amount"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_nil
+          end
+        end
+      end
+
+      shared_examples "a valid summary row" do |row_number|
+        it "has summary row specific fields" do
+          aggregate_failures do
+            expect(csv[row_number]["registration_no"]).to eq(registration.reference)
+            expect(csv[row_number]["date"]).to eq(Time.zone.now.strftime("%d/%m/%Y"))
+            expect(csv[row_number]["multisite"]).to be_present
+            expect(csv[row_number]["organisation_name"]).to be_present
+            expect(csv[row_number]["site"]).to be_nil
+            expect(csv[row_number]["charge_type"]).to eq("summary")
+            expect(csv[row_number]["charge_amount"]).to be_present
+            expect(csv[row_number]["charge_band"]).to be_nil
+            expect(csv[row_number]["exemption"]).to be_nil
+            expect(csv[row_number]["payment_type"]).to be_nil
+            expect(csv[row_number]["refund_type"]).to be_nil
+            expect(csv[row_number]["reference"]).to be_nil
+            expect(csv[row_number]["comments"]).to be_nil
+            expect(csv[row_number]["payment_amount"]).to be_nil
+            expect(csv[row_number]["on_a_farm"]).to be_present
+            expect(csv[row_number]["is_a_farmer"]).to be_present
+            expect(csv[row_number]["ea_admin_area"]).to be_present
+            expect(csv[row_number]["balance"]).to be_present
+            expect(csv[row_number]["payment_status"]).to be_present
+            expect(csv[row_number]["status"]).to be_present
           end
         end
       end
@@ -172,6 +204,32 @@ module Reports
 
           it_behaves_like "a valid charge adjustment row", 7
           it_behaves_like "a valid payment row", 8
+          it_behaves_like "a valid summary row", 9
+
+          it "only includes payment_status on the summary row" do
+            summary_rows = csv.select { |row| row["charge_type"] == "summary" }
+            non_summary_rows = csv.reject { |row| row["charge_type"] == "summary" }
+
+            expect(summary_rows).not_to be_empty
+            expect(summary_rows.map { |row| row["payment_status"] }).to all(be_present)
+            expect(non_summary_rows.map { |row| row["payment_status"] }).to all(be_nil)
+          end
+
+          it "keeps the final balance unchanged on the summary row" do
+            expect(csv[9]["balance"]).to eq(csv[8]["balance"])
+          end
+
+          it "shows summary charge_amount as the total of charge rows" do
+            summary_charge_amount_in_pence = (csv[9]["charge_amount"].to_r * 100).to_i
+
+            charge_rows_total_in_pence = csv.reject do |row|
+              row["charge_type"].blank? || row["charge_type"] == "summary"
+            end.sum do |row|
+              (row["charge_amount"].to_r * 100).to_i
+            end
+
+            expect(summary_charge_amount_in_pence).to eq(charge_rows_total_in_pence)
+          end
         end
 
         context "when CSV output is generated - when registration has multiple orders" do
@@ -213,22 +271,24 @@ module Reports
 
           it_behaves_like "a valid charge adjustment row", 7
           it_behaves_like "a valid payment row", 8
+          it_behaves_like "a valid summary row", 9
 
           # ORDER 2
 
-          it_behaves_like "a valid registration charge row", 9
+          it_behaves_like "a valid registration charge row", 10
 
-          it_behaves_like "a valid initial compliance charge row", 10
-          it_behaves_like "a valid additional compliance charge row", 11
+          it_behaves_like "a valid initial compliance charge row", 11
+          it_behaves_like "a valid additional compliance charge row", 12
 
-          it_behaves_like "a valid initial compliance charge row", 12
-          it_behaves_like "a valid additional compliance charge row", 13
+          it_behaves_like "a valid initial compliance charge row", 13
+          it_behaves_like "a valid additional compliance charge row", 14
 
-          it_behaves_like "a valid initial compliance charge row", 14
-          it_behaves_like "a valid additional compliance charge row", 15
+          it_behaves_like "a valid initial compliance charge row", 15
+          it_behaves_like "a valid additional compliance charge row", 16
 
-          it_behaves_like "a valid charge adjustment row", 16
-          it_behaves_like "a valid payment row", 17
+          it_behaves_like "a valid charge adjustment row", 17
+          it_behaves_like "a valid payment row", 18
+          it_behaves_like "a valid summary row", 19
         end
 
         context "when CSV output is generated - registration has both successful and failed payments" do
@@ -291,6 +351,7 @@ module Reports
 
           it_behaves_like "a valid charge adjustment row", 8
           it_behaves_like "a valid payment row", 9
+          it_behaves_like "a valid summary row", 10
         end
 
         context "when registration is multisite" do
@@ -328,6 +389,56 @@ module Reports
               expect(row["registration_no"]).to match(%r{/\d{5}$})
               expect(row["site"]).to match(/\d{5}/)
             end
+          end
+
+          it "only includes one summary row for a multisite registration" do
+            summary_rows = csv.select do |row|
+              row["charge_type"] == "summary" && row["registration_no"] == multisite_registration.reference
+            end
+
+            expect(summary_rows.count).to eq(1)
+            expect(summary_rows.first["multisite"]).to eq("TRUE")
+            expect(summary_rows.first["site"]).to be_nil
+          end
+        end
+
+        context "when payments include back office comments" do
+          let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+          before do
+            order
+            registration
+            account.payments.success.first.update!(comments: "Back office note")
+          end
+
+          it "shows payment comments in the comments column" do
+            payment_row = csv.find { |row| row["payment_type"].present? }
+
+            expect(payment_row["comments"]).to eq("Back office note")
+          end
+        end
+
+        context "when a band has no compliance charge" do
+          let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+          before do
+            order
+            registration
+            order.charge_detail.band_charge_details.each do |band_charge_detail|
+              band_charge_detail.update!(band_id: order.exemptions.last.band_id)
+            end
+
+            order.charge_detail.band_charge_details.first.update!(
+              initial_compliance_charge_amount: 0,
+              additional_compliance_charge_amount: 0
+            )
+          end
+
+          it "exports a compliance_no_charge row with zero amount" do
+            no_charge_row = csv.find { |row| row["charge_type"] == "compliance_no_charge" }
+
+            expect(no_charge_row).to be_present
+            expect(no_charge_row["charge_amount"]).to eq("0")
           end
         end
       end
