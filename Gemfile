@@ -54,6 +54,7 @@ gem "cancancan", "~> 3.5"
 # Use Devise for user authentication
 gem "devise"
 gem "devise_invitable"
+gem "devise-security"
 
 # Use Kaminari for pagination
 gem "kaminari", "~> 1.2"
