@@ -1,0 +1,4 @@
+en:
+  devise:
+    failure:
+      session_limited: "You have been signed out of your account because it has been accessed by another user. Reset your password to login again. Do not share your new password."

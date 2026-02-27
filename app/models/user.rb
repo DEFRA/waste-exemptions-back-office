@@ -53,6 +53,7 @@ class User < WasteExemptionsEngine::ApplicationRecord
          :lockable,
          :recoverable,
          :trackable,
+         :session_limitable,
          :validatable
 
   # Devise security improvements, used to invalidate old sessions on logout
