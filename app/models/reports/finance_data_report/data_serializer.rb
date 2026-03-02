@@ -193,14 +193,10 @@ module Reports
       def summary_row(registration)
         presenter = FinanceDataReport::SummaryRowPresenter.new(
           registration:,
-          secondary_object: @charge_total,
-          total: @total,
-          show_payment_status: true
+          charge_total_in_pence: @charge_total,
+          balance_in_pence: @total
         )
-        output = ATTRIBUTES.map do |attribute|
-          presenter.public_send(attribute)
-        end
-        @total = presenter.total
+        output = presenter.to_row(ATTRIBUTES)
         [output]
       end
 

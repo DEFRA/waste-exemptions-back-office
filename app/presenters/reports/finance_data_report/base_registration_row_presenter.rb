@@ -7,12 +7,11 @@ module Reports
 
       include FinanceDetailsHelper
 
-      def initialize(registration:, secondary_object: nil, total: nil, site_address: nil, show_payment_status: false)
+      def initialize(registration:, secondary_object: nil, total: nil, site_address: nil)
         @registration = registration
         @secondary_object = secondary_object
         @total = total
         @site_address = site_address
-        @show_payment_status = show_payment_status
       end
 
       def registration_no
@@ -96,16 +95,7 @@ module Reports
       end
 
       def payment_status
-        return nil unless @show_payment_status
-        return nil if @total.nil?
-
-        if @total.negative?
-          "Unpaid"
-        elsif @total.zero?
-          "Paid"
-        else
-          "Overpaid"
-        end
+        nil
       end
 
       def status
