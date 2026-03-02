@@ -23,7 +23,7 @@ Metrics/BlockLength:
 
 Metrics/ClassLength:
   Exclude:
-  # Not worthwhile refacting now as the offense is marginal and we anticipate refactoring 
+  # Not worthwhile refacting now as the offense is marginal and we anticipate refactoring
   # this serializer anyway once we have more charge and payment data in the system.
     - app/models/reports/finance_data_report/data_serializer.rb
 
@@ -87,6 +87,7 @@ Naming/PredicatePrefix:
   Exclude:
     # Presenter column names are driven by the registration field names and can't be changed
     - 'app/presenters/reports/finance_data_report/base_registration_row_presenter.rb'
+    - 'app/presenters/reports/finance_data_report/summary_row_presenter.rb'
 
 FactoryBot/ExcessiveCreateList:
   Exclude:
