@@ -11,6 +11,14 @@ module Reports
         display_pence_as_pounds_and_pence(pence: charge_adjustment_amount, hide_pence_if_zero: true)
       end
 
+      def summary_charge_amount_in_pence
+        charge_adjustment_amount
+      end
+
+      def comments
+        @secondary_object.reason.presence
+      end
+
       def balance
         @total -= charge_adjustment_amount
         display_pence_as_pounds_and_pence(pence: @total,

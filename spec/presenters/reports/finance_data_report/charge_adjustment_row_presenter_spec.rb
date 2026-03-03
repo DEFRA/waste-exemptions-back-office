@@ -26,6 +26,12 @@ module Reports
         end
       end
 
+      describe "#comments" do
+        it "returns the adjustment reason" do
+          expect(presenter.comments).to eq(charge_adjustment.reason)
+        end
+      end
+
       describe "#balance" do
         it "returns the formatted balance amount, calculated as the previous balance minus the charge adjustment amount" do
           expect(presenter.balance).to eq("-15")

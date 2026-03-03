@@ -46,6 +46,10 @@ module Reports
         nil
       end
 
+      def summary_charge_amount_in_pence
+        0
+      end
+
       def charge_band
         nil
       end
@@ -91,15 +95,7 @@ module Reports
       end
 
       def payment_status
-        return nil if @total.nil?
-
-        if @total.negative?
-          "Unpaid"
-        elsif @total.zero?
-          "Paid"
-        else
-          "Overpaid"
-        end
+        nil
       end
 
       def status

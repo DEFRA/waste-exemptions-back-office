@@ -50,6 +50,14 @@ module Reports
         end
       end
 
+      describe "#comments" do
+        it "returns payment comments when present" do
+          account.payments.first.update(comments: "Back office note")
+
+          expect(presenter.comments).to eq("Back office note")
+        end
+      end
+
       describe "#balance" do
         it "returns the formatted balance amount, calculated as the previous balance minus amount paid" do
           account.payments.first.update(payment_type: "bank_transfer")
