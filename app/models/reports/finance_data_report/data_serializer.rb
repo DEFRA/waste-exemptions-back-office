@@ -176,8 +176,8 @@ module Reports
       end
 
       def no_compliance_charge_row(registration, secondary_object, site_address)
-        initial_charge = secondary_object.initial_compliance_charge_amount.to_i
-        additional_charge = secondary_object.additional_compliance_charge_amount.to_i
+        initial_charge = secondary_object.initial_compliance_charge_amount
+        additional_charge = secondary_object.additional_compliance_charge_amount
         return [] unless initial_charge.zero? && additional_charge.zero?
 
         presenter = FinanceDataReport::ComplianceNoChargeRowPresenter.new(registration:, secondary_object:,
