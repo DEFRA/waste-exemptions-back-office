@@ -440,5 +440,38 @@ RSpec.describe Reports::FinanceDataReport::DataSerializer do
         expect(no_charge_row["charge_amount"]).to eq("0")
       end
     end
+
+    context "when a farming bucket band has no compliance charge" do
+      let(:bucket) { create(:bucket, :farmer_exemptions) }
+      let(:order) { create(:order, :with_exemptions, :with_charge_detail, order_owner: account, bucket: bucket) }
+      let(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+
+      before do
+        order
+        registration
+        bucket.exemptions = order.exemptions
+
+        order.charge_detail.band_charge_details.each do |band_charge_detail|
+          band_charge_detail.update!(
+            band_id: order.exemptions.last.band_id,
+            initial_compliance_charge_amount: 0,
+            additional_compliance_charge_amount: 0
+          )
+        end
+
+        order.charge_detail.update!(bucket_charge_amount: 8800)
+      end
+
+      it "does not export compliance_no_charge rows for farming bucket exemptions" do
+        charge_types = csv.pluck("charge_type")
+
+        expect(charge_types).not_to include("compliance_no_charge")
+        expect(charge_types).to include("compliance_farm")
+      end
+
+      it "still exports a summary row as the final row" do
+        expect(csv[csv.size - 1]["charge_type"]).to eq("summary")
+      end
+    end
   end
 end
