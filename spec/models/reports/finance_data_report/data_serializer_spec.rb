@@ -470,7 +470,7 @@ RSpec.describe Reports::FinanceDataReport::DataSerializer do
       end
 
       it "still exports a summary row as the final row" do
-        expect(csv[csv.size - 1]["charge_type"]).to eq("summary")
+        expect(csv[-1]["charge_type"]).to eq("summary")
       end
     end
   end

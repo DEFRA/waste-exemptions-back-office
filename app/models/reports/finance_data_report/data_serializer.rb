@@ -197,7 +197,7 @@ module Reports
         return false if bucket.blank?
 
         band_exemption_codes = order.exemptions.select { |exemption| exemption.band_id == secondary_object.band_id }
-                                   .map(&:code)
+                                               .map(&:code)
         return false if band_exemption_codes.blank?
 
         non_bucket_codes = band_exemption_codes - bucket.exemptions.map(&:code)
