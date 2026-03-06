@@ -20,10 +20,12 @@ module Reports
         charge_amount_in_pence
       end
 
+      def has_non_bucket_exemptions?
+        non_bucket_band_exemptions.any?
+      end
+
       def exemption
-        @secondary_object.charge_detail.order.exemptions.select do |e|
-          e.band_id == @secondary_object.band_id && bucket_exemption_codes.exclude?(e.code)
-        end.map(&:code).sort.join(", ")
+        non_bucket_band_exemptions.map(&:code).sort.join(", ")
       end
 
       def balance
@@ -34,8 +36,14 @@ module Reports
 
       private
 
-      def bucket_exemption_codes
-        @secondary_object.charge_detail.order.bucket&.exemptions&.map(&:code) || []
+      def non_bucket_band_exemptions
+        @secondary_object.charge_detail.order.exemptions.select do |exemption|
+          exemption.band_id == @secondary_object.band_id && bucket_exemptions.exclude?(exemption)
+        end
+      end
+
+      def bucket_exemptions
+        @secondary_object.charge_detail.order.bucket&.exemptions || []
       end
     end
   end

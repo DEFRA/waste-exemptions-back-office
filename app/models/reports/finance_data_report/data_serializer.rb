@@ -176,13 +176,12 @@ module Reports
       end
 
       def no_compliance_charge_row(registration, secondary_object, site_address)
-        initial_charge = secondary_object.initial_compliance_charge_amount
-        additional_charge = secondary_object.additional_compliance_charge_amount
-        return [] unless initial_charge.zero? && additional_charge.zero?
-        return [] if bucket_only_band_exemptions?(secondary_object)
+        return [] unless zero_band_compliance_charges?(secondary_object)
 
         presenter = FinanceDataReport::ComplianceNoChargeRowPresenter.new(registration:, secondary_object:,
                                                                           total: @total, site_address:)
+        return [] unless presenter.has_non_bucket_exemptions?
+
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)
         end
@@ -191,17 +190,9 @@ module Reports
         [output]
       end
 
-      def bucket_only_band_exemptions?(secondary_object)
-        order = secondary_object.charge_detail.order
-        bucket = order.bucket
-        return false if bucket.blank?
-
-        band_exemption_codes = order.exemptions.select { |exemption| exemption.band_id == secondary_object.band_id }
-                                               .map(&:code)
-        return false if band_exemption_codes.blank?
-
-        non_bucket_codes = band_exemption_codes - bucket.exemptions.map(&:code)
-        non_bucket_codes.empty?
+      def zero_band_compliance_charges?(secondary_object)
+        secondary_object.initial_compliance_charge_amount.zero? &&
+          secondary_object.additional_compliance_charge_amount.zero?
       end
 
       def summary_row(registration)
