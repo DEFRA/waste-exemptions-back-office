@@ -64,10 +64,10 @@ module Reports
         end
       end
 
-      describe "#has_non_bucket_exemptions?" do
+      describe "#non_bucket_exemptions?" do
         context "when there are non-bucket exemptions for the band" do
           it "returns true" do
-            expect(presenter.has_non_bucket_exemptions?).to be(true)
+            expect(presenter.non_bucket_exemptions?).to be(true)
           end
         end
 
@@ -80,7 +80,7 @@ module Reports
           end
 
           it "returns false" do
-            expect(presenter.has_non_bucket_exemptions?).to be(false)
+            expect(presenter.non_bucket_exemptions?).to be(false)
           end
         end
       end

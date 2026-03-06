@@ -180,7 +180,7 @@ module Reports
 
         presenter = FinanceDataReport::ComplianceNoChargeRowPresenter.new(registration:, secondary_object:,
                                                                           total: @total, site_address:)
-        return [] unless presenter.has_non_bucket_exemptions?
+        return [] unless presenter.non_bucket_exemptions?
 
         output = ATTRIBUTES.map do |attribute|
           presenter.public_send(attribute)

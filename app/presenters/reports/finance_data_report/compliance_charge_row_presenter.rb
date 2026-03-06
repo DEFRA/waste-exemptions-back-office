@@ -20,7 +20,7 @@ module Reports
         charge_amount_in_pence
       end
 
-      def has_non_bucket_exemptions?
+      def non_bucket_exemptions?
         non_bucket_band_exemptions.any?
       end
 
