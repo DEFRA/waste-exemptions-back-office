@@ -64,6 +64,27 @@ module Reports
         end
       end
 
+      describe "#non_bucket_exemptions?" do
+        context "when there are non-bucket exemptions for the band" do
+          it "returns true" do
+            expect(presenter.non_bucket_exemptions?).to be(true)
+          end
+        end
+
+        context "when all exemptions for the band are bucket exemptions" do
+          let(:bucket) { build(:bucket, :farmer_exemptions) }
+          let(:order) { build(:order, :with_exemptions, :with_charge_detail, order_owner: account, bucket: bucket) }
+
+          before do
+            bucket.exemptions = order.exemptions
+          end
+
+          it "returns false" do
+            expect(presenter.non_bucket_exemptions?).to be(false)
+          end
+        end
+      end
+
       describe "#balance" do
         before do
           allow(presenter).to receive(:charge_amount_in_pence).and_return(1000)
