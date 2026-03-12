@@ -17,6 +17,7 @@ en:
         renewed_from: Renewed from
         people: Partners
         company_no: Company number
+        charitable_purpose: Charitable purpose
         contact_first_name: Contact first name
         contact_last_name: Contact last name
         contact_position: Contact position
@@ -32,6 +33,9 @@ en:
           localAuthority: Local authority or public body
           partnership: Partnership
           soleTrader: Individual or sole trader
+        charitable_purpose:
+          "true": "Yes"
+          "false": "No"
         assistance_mode:
           full: Fully assisted
           partial: Partially assisted
