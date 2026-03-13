@@ -27,10 +27,10 @@ en:
         amount: Amount
       values:
         business_or_organisation_type:
-          charity: Charity or trust
+          charity: Third sector, community group or trust
           limitedCompany: Limited company
           limitedLiabilityPartnership: Limited liability partnership
-          localAuthority: Local authority or public body
+          localAuthority: Public sector
           partnership: Partnership
           soleTrader: Individual or sole trader
         charitable_purpose:
