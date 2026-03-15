@@ -59,10 +59,6 @@ module WasteExemptionsEngine
       is_linear == true
     end
 
-    def eligible_for_free_renewal?
-      business_type == "charity"
-    end
-
     # rubocop:disable Metrics/CyclomaticComplexity
     def state
       raise "A Registration must have at least one RegistrationExemption." if registration_exemptions.empty?
