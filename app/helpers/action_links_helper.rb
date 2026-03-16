@@ -80,9 +80,7 @@ module ActionLinksHelper
   end
 
   def display_renew_links_for?(resource)
-    unless WasteExemptionsEngine::FeatureToggle.active?(:enable_renewals) || resource.try(:eligible_for_free_renewal?)
-      return false
-    end
+    return false unless WasteExemptionsEngine::FeatureToggle.active?(:enable_renewals)
 
     resource.is_a?(WasteExemptionsEngine::Registration) &&
       can?(:renew, resource) &&

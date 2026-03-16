@@ -451,7 +451,7 @@ RSpec.describe ActionLinksHelper do
 
       let(:resource) { create(:registration, :expires_tomorrow, business_type: "charity") }
 
-      it { expect(helper.display_renew_links_for?(resource)).to be(true) }
+      it { expect(helper.display_renew_links_for?(resource)).to be(false) }
     end
 
     context "when the resource has a T28 exemption" do
