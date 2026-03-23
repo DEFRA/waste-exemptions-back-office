@@ -7,7 +7,7 @@ class SitesController < ApplicationController
     find_resource(params[:registration_reference])
 
     @site_addresses = @resource.site_addresses.includes([:registration_exemptions])
-                               .page(params[:page]).order(:id).per(20)
+                               .page(params[:sites_page]).order(:id).per(20)
   end
 
   private

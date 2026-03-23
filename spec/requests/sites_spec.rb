@@ -52,12 +52,21 @@ RSpec.describe "Sites" do
         expect(response.body).to include("Next")
         expect(response.body).not_to include("Prev")
 
-        get "/registrations/#{registration.reference}/sites?page=2"
+        get "/registrations/#{registration.reference}/sites?sites_page=2"
 
         expect(response.body).to include("Waste operation sites")
         expect(response.body).to include("Showing 21 &ndash; 30 of 30 results")
         expect(response.body).not_to include("Next")
         expect(response.body).to include("Prev")
+      end
+
+      it "ignores the global page parameter from registrations pagination" do
+        registration = create(:registration, :multisite_complete, addresses: [])
+
+        get "/registrations/#{registration.reference}/sites", params: { page: "2" }
+
+        expect(response.body).to include("Waste operation sites")
+        expect(response.body).to include("Showing 1 &ndash; 20 of 30 results")
       end
     end
   end

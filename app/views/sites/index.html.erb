@@ -62,7 +62,7 @@
           <%= page_entries_info @site_addresses, entry_name: "item" %>
         </div>
         <span class="govuk-body">
-          <%= paginate @site_addresses %>
+          <%= paginate @site_addresses, param_name: :sites_page %>
         </span>
       </nav>
     </div>
