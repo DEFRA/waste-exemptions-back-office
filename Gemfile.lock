@@ -273,7 +273,7 @@ GEM
       retriable (~> 3.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    govuk_design_system_formbuilder (5.13.0)
+    govuk_design_system_formbuilder (6.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -779,7 +779,7 @@ CHECKSUMS
   ffi-geos (1.2.2) sha256=295ff6294162fa4d7993764cc538f84ce23a1ccc1bdada78c54bf9bb875cbfd8
   github_changelog_generator (1.15.2) sha256=b1faa5f54ddd38140d875ee96a244034c0c578e0714ebde2b7091e98d86ceaff
   globalid (1.3.0) sha256=05c639ad6eb4594522a0b07983022f04aa7254626ab69445a0e493aa3786ff11
-  govuk_design_system_formbuilder (5.13.0) sha256=126ff4af70b36f06395e8f4f09d399944bcc10e9a41c2ff7d7773e81e92ca885
+  govuk_design_system_formbuilder (6.0.0) sha256=30025c64e05b71018a48b8618e6e9501efe4bf049d5e127d90e2fd48c0b60ea8
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   high_voltage (3.1.2) sha256=7786716114cc21b3754e537818a6d9b2c91aa1126aa77272977d50598e556c2f
   html-attributes-utils (1.0.2) sha256=594e0b37b3dd4e554abe893bee9719896f876675fd08fe534fc2e6e1b4e2538c
