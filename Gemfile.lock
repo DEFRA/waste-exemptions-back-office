@@ -118,8 +118,8 @@ GEM
       rbtree3 (~> 0.6)
     ast (2.4.3)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1220.0)
-    aws-sdk-core (3.242.0)
+    aws-partitions (1.1229.0)
+    aws-sdk-core (3.244.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -127,17 +127,17 @@ GEM
       bigdecimal
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.122.0)
-      aws-sdk-core (~> 3, >= 3.241.4)
+    aws-sdk-kms (1.123.0)
+      aws-sdk-core (~> 3, >= 3.244.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-s3 (1.213.0)
-      aws-sdk-core (~> 3, >= 3.241.4)
+    aws-sdk-s3 (1.217.0)
+      aws-sdk-core (~> 3, >= 3.244.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.12.1)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.3.0)
-    bcrypt (3.1.21)
+    bcrypt (3.1.22)
     benchmark (0.5.0)
     bigdecimal (4.0.1)
     bindex (0.8.1)
@@ -197,8 +197,8 @@ GEM
       sprockets-rails
     defra_ruby_govpay (1.1.0)
       rest-client (~> 2.1)
-    defra_ruby_mocks (5.3.0)
-      defra_ruby_aws (~> 0.5)
+    defra_ruby_mocks (5.4.0)
+      defra_ruby_aws (~> 0.6)
       rails (~> 7.0)
       rest-client (~> 2.0)
       sprockets (~> 4.0)
@@ -215,7 +215,7 @@ GEM
       rest-client (~> 2.0)
       uk_postcode
       validates_email_format_of
-    devise (5.0.2)
+    devise (5.0.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 7.0)
@@ -241,7 +241,7 @@ GEM
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faker (3.6.0)
+    faker (3.6.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.14.1)
       faraday-net_http (>= 2.0, < 3.5)
@@ -273,7 +273,7 @@ GEM
       retriable (~> 3.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    govuk_design_system_formbuilder (5.13.0)
+    govuk_design_system_formbuilder (6.0.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -294,7 +294,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (2.18.1)
+    json (2.19.3)
     jwt (3.1.2)
       base64
     kaminari (1.2.2)
@@ -468,7 +468,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
-    retriable (3.2.1)
+    retriable (3.4.1)
     rexml (3.4.4)
     rgeo (3.1.0)
     rgeo-activerecord (8.0.0)
@@ -494,7 +494,7 @@ GEM
       rspec-mocks (>= 3.13.0, < 5.0.0)
       rspec-support (>= 3.13.0, < 5.0.0)
     rspec-support (3.13.7)
-    rubocop (1.84.2)
+    rubocop (1.86.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -505,7 +505,7 @@ GEM
       rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.49.0)
+    rubocop-ast (1.49.1)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     rubocop-capybara (2.22.1)
@@ -711,13 +711,13 @@ CHECKSUMS
   airbrake-ruby (6.2.2) sha256=293e34fb36e763e1b6d67ab584cce7c5b6fe9eea1a70c26d8c13c0f5d7de2fbc
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   aws-eventstream (1.4.0) sha256=116bf85c436200d1060811e6f5d2d40c88f65448f2125bc77ffce5121e6e183b
-  aws-partitions (1.1220.0) sha256=1567da9ae45cba28e1d31f5e996928b2eb92ad01700000846d6d90043be8670f
-  aws-sdk-core (3.242.0) sha256=c17b3003acc78d80c1a8437b285a1cfc5e4d7749ce7821cf3071e847535a29a0
-  aws-sdk-kms (1.122.0) sha256=47ce3f51b26bd7d76f1270cfdfca17b40073ecd3219c8c9400788712abfb4eb8
-  aws-sdk-s3 (1.213.0) sha256=af596ccf544582406db610e95cc9099276eaf03142f57a2f30f76940e598e50d
+  aws-partitions (1.1229.0) sha256=4cdba3093cc518e1ffe9f0f35050953cb5fb4a79797e4c928ab1cd3ed369407b
+  aws-sdk-core (3.244.0) sha256=3e458c078b0c5bdee95bc370c3a483374b3224cf730c1f9f0faf849a5d9a18ea
+  aws-sdk-kms (1.123.0) sha256=d405f37e82f8fa32045ca8980be266c0b45b37aaf2012afe0254321a1e811f20
+  aws-sdk-s3 (1.217.0) sha256=6ea709272c666888b14e9c62345abd9a6a967759ae13667c28f01fde6823c24b
   aws-sigv4 (1.12.1) sha256=6973ff95cb0fd0dc58ba26e90e9510a2219525d07620c8babeb70ef831826c00
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
-  bcrypt (3.1.21) sha256=5964613d750a42c7ee5dc61f7b9336fb6caca429ba4ac9f2011609946e4a2dcf
+  bcrypt (3.1.22) sha256=1f0072e88c2d705d94aff7f2c5cb02eb3f1ec4b8368671e19112527489f29032
   benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
   bigdecimal (4.0.1) sha256=8b07d3d065a9f921c80ceaea7c9d4ae596697295b584c296fe599dd0ad01c4a7
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
@@ -746,11 +746,11 @@ CHECKSUMS
   defra_ruby_email (1.3.0) sha256=8c253d9ac48eb8efd19bf44ca9b8bbda3d46c9a0426791419c62e3f7e85fb8c6
   defra_ruby_features (0.2.0) sha256=9df436de26729af81dfaa4307ce37f76c02c5c6aab243414acd5b556a1234a81
   defra_ruby_govpay (1.1.0) sha256=aa62ee2a2a9b875f6e0dc611fe6dbe8d2cac6e27be78c66fa7c9d917b2238db2
-  defra_ruby_mocks (5.3.0) sha256=57bc3f8c8c541123c0a2a251f50faa114154ed6fbc917cf713fab7c1d1399dd5
+  defra_ruby_mocks (5.4.0) sha256=eba252dbd0779ee7a79bb700c401a91a531bb8bc2baf093f54957b1c1edcb1ce
   defra_ruby_style (0.4.1) sha256=9d8a273a1c0deb11ce529189182d3b8141ffd6a119c5e08dbe3a10c640fc7815
   defra_ruby_template (5.11.1) sha256=9d8c1d7e765b92651cc8975010cb825fda0284e7a74b7d3f24a121dd1274faf9
   defra_ruby_validators (3.0.0) sha256=8a483981012306a203e19afe1b230142304671ced7155f37aebe946869bb4a9d
-  devise (5.0.2) sha256=254330c9290e612ad9681e8a18c96aa21fb95bc391af936b84480965444bb0b6
+  devise (5.0.3) sha256=c4c065051cdc4ace11547b2b7f5c3c4c97d0f1269250f5fe90f614ff78f29546
   devise-security (0.18.0) sha256=fc06be1624b5151044ff9c5d8e61abdfa7d56eb16bfdaec16a11235d54708513
   devise_invitable (2.0.11) sha256=780014f74b8848218d93a297300590120f1742984396acf3d6799ab49b9a6a3f
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
@@ -763,7 +763,7 @@ CHECKSUMS
   erubi (1.13.1) sha256=a082103b0885dbc5ecf1172fede897f9ebdb745a4b97a5e8dc63953db1ee4ad9
   factory_bot (6.5.6) sha256=12beb373214dccc086a7a63763d6718c49769d5606f0501e0a4442676917e077
   factory_bot_rails (6.5.1) sha256=d3cc4851eae4dea8a665ec4a4516895045e710554d2b5ac9e68b94d351bc6d68
-  faker (3.6.0) sha256=4ce80bf91c8d09bbfff4c5596690bf862d60eac420f86737ca8ce12a54dc464a
+  faker (3.6.1) sha256=c513d23c1d26b426283e913b25e0b714576011d7c1ad368a9ac6ea2113a1ccde
   faraday (2.14.1) sha256=a43cceedc1e39d188f4d2cdd360a8aaa6a11da0c407052e426ba8d3fb42ef61c
   faraday-http-cache (2.6.1) sha256=7772ae61c5fe1c0243452dec1f069b15bcc3304e9436e4f8545ccdb5963c4285
   faraday-net_http (3.4.2) sha256=f147758260d3526939bf57ecf911682f94926a3666502e24c69992765875906c
@@ -779,7 +779,7 @@ CHECKSUMS
   ffi-geos (1.2.2) sha256=295ff6294162fa4d7993764cc538f84ce23a1ccc1bdada78c54bf9bb875cbfd8
   github_changelog_generator (1.15.2) sha256=b1faa5f54ddd38140d875ee96a244034c0c578e0714ebde2b7091e98d86ceaff
   globalid (1.3.0) sha256=05c639ad6eb4594522a0b07983022f04aa7254626ab69445a0e493aa3786ff11
-  govuk_design_system_formbuilder (5.13.0) sha256=126ff4af70b36f06395e8f4f09d399944bcc10e9a41c2ff7d7773e81e92ca885
+  govuk_design_system_formbuilder (6.0.0) sha256=30025c64e05b71018a48b8618e6e9501efe4bf049d5e127d90e2fd48c0b60ea8
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   high_voltage (3.1.2) sha256=7786716114cc21b3754e537818a6d9b2c91aa1126aa77272977d50598e556c2f
   html-attributes-utils (1.0.2) sha256=594e0b37b3dd4e554abe893bee9719896f876675fd08fe534fc2e6e1b4e2538c
@@ -789,7 +789,7 @@ CHECKSUMS
   io-console (0.8.2) sha256=d6e3ae7a7cc7574f4b8893b4fca2162e57a825b223a177b7afa236c5ef9814cc
   irb (1.17.0) sha256=168c4ddb93d8a361a045c41d92b2952c7a118fa73f23fe14e55609eb7a863aae
   jmespath (1.6.2) sha256=238d774a58723d6c090494c8879b5e9918c19485f7e840f2c1c7532cf84ebcb1
-  json (2.18.1) sha256=fe112755501b8d0466b5ada6cf50c8c3f41e897fa128ac5d263ec09eedc9f986
+  json (2.19.3) sha256=289b0bb53052a1fa8c34ab33cc750b659ba14a5c45f3fcf4b18762dc67c78646
   jwt (3.1.2) sha256=af6991f19a6bb4060d618d9add7a66f0eeb005ac0bc017cd01f63b42e122d535
   kaminari (1.2.2) sha256=c4076ff9adccc6109408333f87b5c4abbda5e39dc464bd4c66d06d9f73442a3e
   kaminari-actionview (1.2.2) sha256=1330f6fc8b59a4a4ef6a549ff8a224797289ebf7a3a503e8c1652535287cc909
@@ -867,7 +867,7 @@ CHECKSUMS
   request_store (1.7.0) sha256=e1b75d5346a315f452242a68c937ef8e48b215b9453a77a6c0acdca2934c88cb
   responders (3.2.0) sha256=89c2d6ac0ae16f6458a11524cae4a8efdceba1a3baea164d28ee9046bd3df55a
   rest-client (2.1.0) sha256=35a6400bdb14fae28596618e312776c158f7ebbb0ccad752ff4fa142bf2747e3
-  retriable (3.2.1) sha256=26e87a33391fae4c382d4750f1e135e4dda7e5aa32b6b71f1992265981f9b991
+  retriable (3.4.1) sha256=fb3f114b7d492121c158c01f3d5152b5a615c5b70d5877d0bc08c7ec3725c3bc
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   rgeo (3.1.0) sha256=89c1804894b35acf65891e1f24e15bbf2fbd972d4183e63c444bb97c1ccaf5d5
   rgeo-activerecord (8.0.0) sha256=c8a22f8dc568b875a734b5288d1dbad12ff846cd63a9a2e6b09decaac4ff3094
@@ -877,8 +877,8 @@ CHECKSUMS
   rspec-mocks (3.13.8) sha256=086ad3d3d17533f4237643de0b5c42f04b66348c28bf6b9c2d3f4a3b01af1d47
   rspec-rails (8.0.4) sha256=06235692fc0892683d3d34977e081db867434b3a24ae0dd0c6f3516bad4e22df
   rspec-support (3.13.7) sha256=0640e5570872aafefd79867901deeeeb40b0c9875a36b983d85f54fb7381c47c
-  rubocop (1.84.2) sha256=5692cea54168f3dc8cb79a6fe95c5424b7ea893c707ad7a4307b0585e88dbf5f
-  rubocop-ast (1.49.0) sha256=49c3676d3123a0923d333e20c6c2dbaaae2d2287b475273fddee0c61da9f71fd
+  rubocop (1.86.0) sha256=4ff1186fe16ebe9baff5e7aad66bb0ad4cabf5cdcd419f773146dbba2565d186
+  rubocop-ast (1.49.1) sha256=4412f3ee70f6fe4546cc489548e0f6fcf76cafcfa80fa03af67098ffed755035
   rubocop-capybara (2.22.1) sha256=ced88caef23efea53f46e098ff352f8fc1068c649606ca75cb74650970f51c0c
   rubocop-factory_bot (2.28.0) sha256=4b17fc02124444173317e131759d195b0d762844a71a29fe8139c1105d92f0cb
   rubocop-rails (2.34.3) sha256=10d37989024865ecda8199f311f3faca990143fbac967de943f88aca11eb9ad2

@@ -20,7 +20,7 @@ module Reports
 
         csv_lines = monthly_bulk_serializer.to_csv.split("\n")
 
-        expect(csv_lines.first).to eq(described_class::ATTRIBUTES.map(&:to_s).join(","))
+        expect(csv_lines.first).to eq(described_class::ATTRIBUTES.join(","))
         expect(csv_lines.count).to eq(total_exemptions + 1)
       end
     end
