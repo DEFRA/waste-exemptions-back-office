@@ -205,8 +205,7 @@ RSpec.describe Reports::FinanceDataReport::DataSerializer do
       it_behaves_like "a valid summary row", 9
 
       it "only includes payment_status on the summary row" do
-        summary_rows = csv.select { |row| row["charge_type"] == "summary" }
-        non_summary_rows = csv.reject { |row| row["charge_type"] == "summary" }
+        summary_rows, non_summary_rows = csv.partition { |row| row["charge_type"] == "summary" }
 
         expect(summary_rows).not_to be_empty
         expect(summary_rows.pluck("payment_status")).to all(be_present)

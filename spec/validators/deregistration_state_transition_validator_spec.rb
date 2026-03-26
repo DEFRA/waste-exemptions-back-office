@@ -10,7 +10,7 @@ module Test
   end
 end
 
-module WasteExemptionsEngine
+module WasteExemptionsEngine # rubocop:disable Style/OneClassPerFile
   RSpec.describe DeregistrationStateTransitionValidator, type: :model do
     valid_transition = %w[revoke cease].sample
 
