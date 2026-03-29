@@ -45,7 +45,8 @@ module Analytics
       end
 
       it do
-        expect(result["operator-name"]).to eq(
+        # Allow a margin of error for daylight saving time changes (1 hour = 3600 seconds)
+        expect(result["operator-name"]).to be_within(3600).of(
           (
             (time_diff(1.hour, 2.days) +
             time_diff(7.minutes, 25.hours)
