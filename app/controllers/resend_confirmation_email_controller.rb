@@ -33,32 +33,24 @@ class ResendConfirmationEmailController < ApplicationController
   end
 
   def send_emails
-    emails_to_contact.each do |email|
-      WasteExemptionsEngine::ConfirmationEmailService.run(registration: registration,
-                                                          recipient: email)
-    end
-  end
+    return if registration.contact_email.blank?
 
-  def emails_to_contact
-    [registration.applicant_email, registration.contact_email]
-      .compact
-      .uniq
+    WasteExemptionsEngine::ConfirmationEmailService.run(registration: registration,
+                                                        recipient: registration.contact_email)
   end
 
   def success_message
-    I18n.t("resend_confirmation_email.messages.success",
-           applicant_email: registration.applicant_email,
-           contact_email: registration.contact_email,
-           default_email: emails_to_contact.first,
-           count: emails_to_contact.length)
+    if registration.contact_email.present?
+      I18n.t("resend_confirmation_email.messages.success",
+             contact_email: registration.contact_email)
+    else
+      I18n.t("resend_confirmation_email.messages.no_recipient")
+    end
   end
 
   def failure_message
     I18n.t("resend_confirmation_email.messages.failure",
-           applicant_email: registration.applicant_email,
-           contact_email: registration.contact_email,
-           default_email: emails_to_contact.first,
-           count: emails_to_contact.length)
+           contact_email: registration.contact_email)
   end
 
   def failure_description
