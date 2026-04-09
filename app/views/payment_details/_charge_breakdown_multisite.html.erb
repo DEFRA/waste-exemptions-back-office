@@ -17,50 +17,64 @@
       </thead>
       <tbody>
         <% presenter.sorted_orders.each do |order| %>
-          <tr class="govuk-table__row">
-            <td rowspan="4" class="govuk-table__cell">
-              <%= format_date(order.created_at) %>
-            </td>
-            <td class="govuk-!-padding-top-2">
-              <% if order.exemption_codes_excluding_bucket.present? %>
-                <%= order.exemption_codes_excluding_bucket %> x [<%= order.site_count %>]
+          <% charge_rows = [] %>
+          <% if order.chargeable_exemption_codes_excluding_bucket.present? %>
+            <% charge_rows << {
+              breakdown: "#{order.chargeable_exemption_codes_excluding_bucket} x [#{order.site_count}]",
+              amount: display_pence_as_pounds_sterling_and_pence(
+                pence: order.charge_detail&.total_compliance_charge_amount_excluding_bucket
+              ),
+              breakdown_classes: "govuk-!-padding-top-2",
+              amount_classes: "govuk-!-text-align-right govuk-!-padding-top-2"
+            } %>
+          <% end %>
+          <% if order.no_charge_exemption_codes_excluding_bucket.present? %>
+            <% charge_rows << {
+              breakdown: "#{order.no_charge_exemption_codes_excluding_bucket} x [#{order.site_count}]",
+              amount: display_pence_as_pounds_sterling_and_pence(pence: 0),
+              breakdown_classes: charge_rows.empty? ? "govuk-!-padding-top-2" : nil,
+              amount_classes: [
+                "govuk-!-text-align-right",
+                ("govuk-!-padding-top-2" if charge_rows.empty?)
+              ].compact.join(" ")
+            } %>
+          <% end %>
+          <% if order.bucket_exemption_codes.present? %>
+            <% charge_rows << {
+              breakdown: "#{t(".details_section.charges.bucket_exemptions_label.#{order.bucket.bucket_type}")} #{order.bucket_exemption_codes} x [#{order.site_count}]",
+              amount: display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.bucket_charge_amount),
+              breakdown_classes: nil,
+              amount_classes: "govuk-!-text-align-right"
+            } %>
+          <% end %>
+          <% charge_rows << {
+            breakdown: t(".details_section.charges.registration_charge_label"),
+            amount: display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.registration_charge_amount),
+            breakdown_classes: nil,
+            amount_classes: "govuk-!-text-align-right"
+          } %>
+          <% charge_rows << {
+            breakdown: t(".details_section.charges.total_charge_label"),
+            amount: display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.total_charge_amount),
+            breakdown_classes: "govuk-table__cell govuk-!-padding-top-0",
+            amount_classes: "govuk-table__cell govuk-!-text-align-right govuk-!-padding-top-0"
+          } %>
+
+          <% charge_rows.each_with_index do |row, index| %>
+            <tr class="govuk-table__row">
+              <% if index.zero? %>
+                <td rowspan="<%= order.charge_breakdown_row_count %>" class="govuk-table__cell">
+                  <%= format_date(order.created_at) %>
+                </td>
               <% end %>
-            </td>
-            <td class="govuk-!-text-align-right govuk-!-padding-top-2">
-              <% if order.exemption_codes_excluding_bucket.present? %>
-                <%= display_pence_as_pounds_sterling_and_pence(pence: (order.charge_detail&.total_compliance_charge_amount_excluding_bucket)) %>
-              <% end %>
-            </td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td>
-              <% if order.bucket.present? %>
-                <%= t(".details_section.charges.bucket_exemptions_label.#{order.bucket.bucket_type}") %>
-                <%= order.bucket_exemption_codes %> x [<%= order.site_count %>]
-              <% end %>
-            </td>
-            <td class="govuk-!-text-align-right">
-              <% if order.bucket.present? %>
-                <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.bucket_charge_amount) %>
-              <% end %>
-            </td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td>
-              <%= t(".details_section.charges.registration_charge_label") %>
-            </td>
-            <td class="govuk-!-text-align-right">
-              <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.registration_charge_amount) %>
-            </td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-padding-top-0">
-              <%= t(".details_section.charges.total_charge_label") %>
-            </td>
-            <td class="govuk-table__cell govuk-!-text-align-right govuk-!-padding-top-0">
-              <%= display_pence_as_pounds_sterling_and_pence(pence: order.charge_detail&.total_charge_amount) %>
-            </td>
-          </tr>
+              <td class="<%= row[:breakdown_classes] %>">
+                <%= row[:breakdown] %>
+              </td>
+              <td class="<%= row[:amount_classes] %>">
+                <%= row[:amount] %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>
