@@ -80,6 +80,72 @@ RSpec.describe "Payment details" do
     it { expect(response.body).to include (registration.account.balance / 100).round(2).to_s }
   end
 
+  shared_examples "a separated no-charge exemption row" do
+    let(:user) { create(:user) }
+    let(:chargeable_band) { create(:band) }
+    let(:no_charge_band) do
+      create(
+        :band,
+        initial_compliance_charge: build(:charge, :initial_compliance_charge, charge_amount: 0),
+        additional_compliance_charge: build(:charge, :additional_compliance_charge, charge_amount: 0)
+      )
+    end
+    let(:charged_exemption) { create(:exemption, code: "U1", band: chargeable_band) }
+    let(:no_charge_exemption) { create(:exemption, code: "T28", band: no_charge_band) }
+    let(:account) { create(:account) }
+    let(:registration) do
+      multisite ? create(:registration, :multisite_complete, account:) : create(:registration, account:)
+    end
+    let(:site_count) { multisite ? 3 : 1 }
+    let(:expected_chargeable_row_label) { multisite ? "U1 x [3]" : "U1" }
+    let(:expected_no_charge_row_label) { multisite ? "T28 x [3]" : "T28" }
+    let(:unexpected_combined_row_label) do
+      multisite ? "T28, U1 x [#{site_count}]" : "T28, U1"
+    end
+    let(:order) do
+      create(
+        :order,
+        order_owner: account,
+        exemptions: [charged_exemption, no_charge_exemption],
+        charge_detail: build(
+          :charge_detail,
+          registration_charge_amount: 2500,
+          site_count:,
+          band_charge_details: [
+            build(
+              :band_charge_detail,
+              band: chargeable_band,
+              initial_compliance_charge_amount: 5000,
+              additional_compliance_charge_amount: 0
+            ),
+            build(
+              :band_charge_detail,
+              band: no_charge_band,
+              initial_compliance_charge_amount: 0,
+              additional_compliance_charge_amount: 0
+            )
+          ]
+        )
+      )
+    end
+
+    before do
+      order
+      sign_in(user)
+
+      get registration_payment_details_path(registration.reference)
+    end
+
+    it "shows the no-charge exemption on a separate zero-value row" do
+      breakdowns = charge_breakdown_rows.pluck(-2)
+      no_charge_row = charge_breakdown_rows.find { |row| row[-2] == expected_no_charge_row_label }
+
+      expect(breakdowns).to include(expected_chargeable_row_label, expected_no_charge_row_label)
+      expect(breakdowns).not_to include(unexpected_combined_row_label)
+      expect(no_charge_row).to eq([expected_no_charge_row_label, "£0.00"])
+    end
+  end
+
   describe "GET /registrations/:reference/payment_details" do
     let(:registration) { create(:registration, account: create(:account, :with_order, :with_payment)) }
     let(:account) { registration.account }
@@ -265,118 +331,15 @@ RSpec.describe "Payment details" do
     end
 
     context "when a single-site order mixes charged and no-charge exemptions" do
-      let(:user) { create(:user) }
-      let(:chargeable_band) { create(:band) }
-      let(:no_charge_band) do
-        create(
-          :band,
-          initial_compliance_charge: build(:charge, :initial_compliance_charge, charge_amount: 0),
-          additional_compliance_charge: build(:charge, :additional_compliance_charge, charge_amount: 0)
-        )
-      end
-      let(:charged_exemption) { create(:exemption, code: "U1", band: chargeable_band) }
-      let(:no_charge_exemption) { create(:exemption, code: "T28", band: no_charge_band) }
-      let(:account) { create(:account) }
-      let(:registration) { create(:registration, account:) }
-      let(:order) do
-        create(
-          :order,
-          order_owner: account,
-          exemptions: [charged_exemption, no_charge_exemption],
-          charge_detail: build(
-            :charge_detail,
-            registration_charge_amount: 2500,
-            band_charge_details: [
-              build(
-                :band_charge_detail,
-                band: chargeable_band,
-                initial_compliance_charge_amount: 5000,
-                additional_compliance_charge_amount: 0
-              ),
-              build(
-                :band_charge_detail,
-                band: no_charge_band,
-                initial_compliance_charge_amount: 0,
-                additional_compliance_charge_amount: 0
-              )
-            ]
-          )
-        )
-      end
+      let(:multisite) { false }
 
-      before do
-        order
-        sign_in(user)
-
-        get registration_payment_details_path(registration.reference)
-      end
-
-      it "shows the no-charge exemption on a separate zero-value row" do
-        breakdowns = charge_breakdown_rows.pluck(-2)
-        no_charge_row = charge_breakdown_rows.find { |row| row[-2] == "T28" }
-
-        expect(breakdowns).to include("U1", "T28")
-        expect(breakdowns).not_to include("T28, U1")
-        expect(no_charge_row).to eq(["T28", "£0.00"])
-      end
+      it_behaves_like "a separated no-charge exemption row"
     end
 
     context "when a multi-site order mixes charged and no-charge exemptions" do
-      let(:user) { create(:user) }
-      let(:chargeable_band) { create(:band) }
-      let(:no_charge_band) do
-        create(
-          :band,
-          initial_compliance_charge: build(:charge, :initial_compliance_charge, charge_amount: 0),
-          additional_compliance_charge: build(:charge, :additional_compliance_charge, charge_amount: 0)
-        )
-      end
-      let(:charged_exemption) { create(:exemption, code: "U1", band: chargeable_band) }
-      let(:no_charge_exemption) { create(:exemption, code: "T28", band: no_charge_band) }
-      let(:account) { create(:account) }
-      let(:registration) { create(:registration, :multisite_complete, account:) }
-      let(:order) do
-        create(
-          :order,
-          order_owner: account,
-          exemptions: [charged_exemption, no_charge_exemption],
-          charge_detail: build(
-            :charge_detail,
-            registration_charge_amount: 2500,
-            site_count: 3,
-            band_charge_details: [
-              build(
-                :band_charge_detail,
-                band: chargeable_band,
-                initial_compliance_charge_amount: 5000,
-                additional_compliance_charge_amount: 0
-              ),
-              build(
-                :band_charge_detail,
-                band: no_charge_band,
-                initial_compliance_charge_amount: 0,
-                additional_compliance_charge_amount: 0
-              )
-            ]
-          )
-        )
-      end
+      let(:multisite) { true }
 
-      before do
-        order
-        sign_in(user)
-
-        get registration_payment_details_path(registration.reference)
-      end
-
-      it "shows the no-charge exemption on its own multi-site zero-value row" do
-        breakdowns = charge_breakdown_rows.pluck(-2)
-        no_charge_row = charge_breakdown_rows.find { |row| row[-2] == "T28 x [3]" }
-
-        expect(breakdowns).to include("U1 x [3]", "T28 x [3]")
-        expect(breakdowns).not_to include("T28, U1 x [3]")
-        expect(no_charge_row).to eq(["T28 x [3]", "£0.00"])
-      end
+      it_behaves_like "a separated no-charge exemption row"
     end
   end
 end

@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe PaymentDetails::ChargeBreakdownPresenter do
   subject(:presenter) { described_class.new(order:, multisite:) }
 
+  let(:rows) { presenter.rows }
   let(:multisite) { false }
   let(:bucket_band) { create(:band) }
   let(:chargeable_band) { create(:band) }
@@ -44,9 +45,15 @@ RSpec.describe PaymentDetails::ChargeBreakdownPresenter do
     )
   end
 
+  describe "#date" do
+    it "returns the order date" do
+      expect(presenter.date).to eq(order.created_at)
+    end
+  end
+
   describe "#rows" do
     it "builds the expected rows for a single-site order" do
-      expect(presenter.rows.map { |row| [row.label, row.amount_pence] }).to eq(
+      expect(rows.map { |row| [row.label, row.amount_pence] }).to eq(
         [
           ["EX002", 2500],
           ["EX003", 0],
@@ -58,10 +65,10 @@ RSpec.describe PaymentDetails::ChargeBreakdownPresenter do
     end
 
     it "exposes presentational cell classes on each row" do
-      expect(presenter.rows.first.breakdown_cell_classes).to eq("govuk-!-padding-top-2")
-      expect(presenter.rows.first.amount_cell_classes).to eq("govuk-!-text-align-right govuk-!-padding-top-2")
-      expect(presenter.rows.last.breakdown_cell_classes).to eq("govuk-table__cell govuk-!-padding-top-0")
-      expect(presenter.rows.last.amount_cell_classes).to eq("govuk-table__cell govuk-!-text-align-right govuk-!-padding-top-0")
+      expect(rows.first.breakdown_cell_classes).to eq("govuk-!-padding-top-2")
+      expect(rows.first.amount_cell_classes).to eq("govuk-!-text-align-right govuk-!-padding-top-2")
+      expect(rows.last.breakdown_cell_classes).to eq("govuk-table__cell govuk-!-padding-top-0")
+      expect(rows.last.amount_cell_classes).to eq("govuk-table__cell govuk-!-text-align-right govuk-!-padding-top-0")
     end
   end
 
@@ -75,7 +82,7 @@ RSpec.describe PaymentDetails::ChargeBreakdownPresenter do
     let(:multisite) { true }
 
     it "adds the site count suffix to exemption rows" do
-      expect(presenter.rows.map(&:label)).to eq(
+      expect(rows.map(&:label)).to eq(
         [
           "EX002 x [3]",
           "EX003 x [3]",

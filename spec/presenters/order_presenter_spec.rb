@@ -45,9 +45,12 @@ RSpec.describe OrderPresenter do
       expect(presenter.exemption_codes_excluding_bucket).to eq("EX002, EX003")
     end
 
-    it "returns all exemption codes if bucket is nil" do
-      allow(order).to receive(:bucket).and_return(nil)
-      expect(presenter.exemption_codes_excluding_bucket).to eq("EX001, EX002, EX003")
+    context "when bucket is nil" do
+      before { allow(order).to receive(:bucket).and_return(nil) }
+
+      it "returns all exemption codes" do
+        expect(presenter.exemption_codes_excluding_bucket).to eq("EX001, EX002, EX003")
+      end
     end
   end
 
@@ -68,9 +71,12 @@ RSpec.describe OrderPresenter do
       expect(presenter.bucket_exemption_codes).to eq("EX001")
     end
 
-    it "returns nil if bucket is blank" do
-      allow(order).to receive(:bucket).and_return(nil)
-      expect(presenter.bucket_exemption_codes).to be_nil
+    context "when bucket is blank" do
+      before { allow(order).to receive(:bucket).and_return(nil) }
+
+      it "returns nil" do
+        expect(presenter.bucket_exemption_codes).to be_nil
+      end
     end
   end
 end
