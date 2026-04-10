@@ -25,4 +25,8 @@ class BasePresenter < SimpleDelegator
   def h
     @view
   end
+
+  def model
+    __getobj__
+  end
 end

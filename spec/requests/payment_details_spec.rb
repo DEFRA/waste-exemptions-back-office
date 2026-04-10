@@ -21,7 +21,7 @@ RSpec.describe "Payment details" do
   shared_examples "a correct charge breakdown headers" do
     it "includes the expected charges table headers" do
       aggregate_failures do
-        expect(response.body).to include I18n.t(".#{i18n_charge_breakdown_section}.headers.date")
+        expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.date")
         expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.breakdown")
         expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.amount")
       end
@@ -115,7 +115,7 @@ RSpec.describe "Payment details" do
 
       context "for the details section when registration is single-site" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
-        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_singlesite.details_section.charges" }
+        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown.details_section.charges" }
 
         # charges
         it_behaves_like "a correct charges table headers"
@@ -144,7 +144,7 @@ RSpec.describe "Payment details" do
       context "for the details section when registration is multi-site" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
         let(:registration) { create(:registration, :multisite_complete, account: create(:account, :with_order, :with_payment)) }
-        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_multisite.details_section.charges" }
+        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown.details_section.charges" }
 
         # charges
         it_behaves_like "a correct charges table headers"
