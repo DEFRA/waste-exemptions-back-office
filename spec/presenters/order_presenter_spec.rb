@@ -73,10 +73,4 @@ RSpec.describe OrderPresenter do
       expect(presenter.bucket_exemption_codes).to be_nil
     end
   end
-
-  describe "#charge_breakdown_row_count" do
-    it "counts the visible rows in the payment details charge table" do
-      expect(presenter.charge_breakdown_row_count).to eq(5)
-    end
-  end
 end

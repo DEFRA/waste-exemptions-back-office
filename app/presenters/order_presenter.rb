@@ -23,16 +23,6 @@ class OrderPresenter < BasePresenter
     format_exemption_codes(exemptions & bucket.exemptions)
   end
 
-  def charge_breakdown_row_count
-    [
-      chargeable_exemption_codes_excluding_bucket.present?,
-      no_charge_exemption_codes_excluding_bucket.present?,
-      bucket_exemption_codes.present?,
-      true,
-      true
-    ].count(true)
-  end
-
   def site_count
     charge_detail&.site_count || 1
   end
