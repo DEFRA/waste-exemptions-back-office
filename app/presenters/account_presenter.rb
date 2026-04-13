@@ -31,11 +31,11 @@ class AccountPresenter < BasePresenter
     orders.order(created_at: :desc).map { |order| OrderPresenter.new(order) }
   end
 
-  def charge_breakdowns(multisite:)
+  def charge_breakdowns(is_multisite: false)
     return [] if model.blank?
 
     sorted_orders.map do |order|
-      PaymentDetails::ChargeBreakdownPresenter.new(order:, multisite:)
+      PaymentDetails::ChargeBreakdownPresenter.new(order:, is_multisite:)
     end
   end
 

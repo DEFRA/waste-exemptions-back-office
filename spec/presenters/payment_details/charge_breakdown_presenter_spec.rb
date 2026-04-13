@@ -3,10 +3,10 @@
 require "rails_helper"
 
 RSpec.describe PaymentDetails::ChargeBreakdownPresenter do
-  subject(:presenter) { described_class.new(order:, multisite:) }
+  subject(:presenter) { described_class.new(order:, is_multisite:) }
 
   let(:rows) { presenter.rows }
-  let(:multisite) { false }
+  let(:is_multisite) { false }
   let(:bucket_band) { create(:band) }
   let(:chargeable_band) { create(:band) }
   let(:no_charge_band) { create(:band) }
@@ -79,7 +79,7 @@ RSpec.describe PaymentDetails::ChargeBreakdownPresenter do
   end
 
   context "when rendering a multisite charge breakdown" do
-    let(:multisite) { true }
+    let(:is_multisite) { true }
 
     it "adds the site count suffix to exemption rows" do
       expect(rows.map(&:label)).to eq(

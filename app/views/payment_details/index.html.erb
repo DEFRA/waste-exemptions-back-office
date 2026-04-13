@@ -18,7 +18,7 @@
       date_header: t("payment_details.charge_breakdown.details_section.charges.headers.date"),
       breakdown_header: t("payment_details.charge_breakdown.details_section.charges.headers.breakdown"),
       amount_header: t("payment_details.charge_breakdown.details_section.charges.headers.amount"),
-      charge_breakdowns: @presenter.charge_breakdowns(multisite: @resource.multisite?)
+      charge_breakdowns: @presenter.charge_breakdowns(is_multisite: @resource.multisite?)
     ) %>
 
     <h2 class="govuk-heading-m">

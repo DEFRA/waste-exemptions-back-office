@@ -27,9 +27,9 @@ module PaymentDetails
       end
     end
 
-    def initialize(order:, multisite:)
+    def initialize(order:, is_multisite: false)
       @order = order.is_a?(OrderPresenter) ? order : OrderPresenter.new(order)
-      @multisite = multisite
+      @is_multisite = is_multisite
     end
 
     def date
@@ -93,7 +93,7 @@ module PaymentDetails
     def exemption_label(label)
       return if label.blank?
 
-      return label unless @multisite
+      return label unless @is_multisite
 
       "#{label} x [#{@order.site_count}]"
     end

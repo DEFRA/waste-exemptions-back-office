@@ -77,14 +77,14 @@ RSpec.describe AccountPresenter do
     context "when account is present" do
       let(:account) { create(:account, orders: build_list(:order, 2)) }
 
-      it { expect(presenter.charge_breakdowns(multisite: false).length).to eq(2) }
-      it { expect(presenter.charge_breakdowns(multisite: false)).to all(be_an(PaymentDetails::ChargeBreakdownPresenter)) }
+      it { expect(presenter.charge_breakdowns(is_multisite: false).length).to eq(2) }
+      it { expect(presenter.charge_breakdowns(is_multisite: false)).to all(be_an(PaymentDetails::ChargeBreakdownPresenter)) }
     end
 
     context "when account is not present" do
       let(:account) { nil }
 
-      it { expect(presenter.charge_breakdowns(multisite: false)).to be_empty }
+      it { expect(presenter.charge_breakdowns(is_multisite: false)).to be_empty }
     end
   end
 
