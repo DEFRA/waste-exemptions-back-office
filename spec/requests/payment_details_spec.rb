@@ -3,6 +3,11 @@
 require "rails_helper"
 
 RSpec.describe "Payment details" do
+  def charge_breakdown_rows
+    Nokogiri::HTML(response.body).css("table.govuk-table").first.css("tbody tr").map do |row|
+      row.css("td").map { |cell| cell.text.squish }
+    end
+  end
 
   shared_examples "a correct charges table headers" do
     it { expect(response).to have_http_status(:ok) }
@@ -16,7 +21,7 @@ RSpec.describe "Payment details" do
   shared_examples "a correct charge breakdown headers" do
     it "includes the expected charges table headers" do
       aggregate_failures do
-        expect(response.body).to include I18n.t(".#{i18n_charge_breakdown_section}.headers.date")
+        expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.date")
         expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.breakdown")
         expect(response.body).to include I18n.t("#{i18n_charge_breakdown_section}.headers.amount")
       end
@@ -75,6 +80,72 @@ RSpec.describe "Payment details" do
     it { expect(response.body).to include (registration.account.balance / 100).round(2).to_s }
   end
 
+  shared_examples "a separated no-charge exemption row" do
+    let(:user) { create(:user) }
+    let(:chargeable_band) { create(:band) }
+    let(:no_charge_band) do
+      create(
+        :band,
+        initial_compliance_charge: build(:charge, :initial_compliance_charge, charge_amount: 0),
+        additional_compliance_charge: build(:charge, :additional_compliance_charge, charge_amount: 0)
+      )
+    end
+    let(:charged_exemption) { create(:exemption, code: "U1", band: chargeable_band) }
+    let(:no_charge_exemption) { create(:exemption, code: "T28", band: no_charge_band) }
+    let(:account) { create(:account) }
+    let(:registration) do
+      multisite ? create(:registration, :multisite_complete, account:) : create(:registration, account:)
+    end
+    let(:site_count) { multisite ? 3 : 1 }
+    let(:expected_chargeable_row_label) { multisite ? "U1 x [3]" : "U1" }
+    let(:expected_no_charge_row_label) { multisite ? "T28 x [3]" : "T28" }
+    let(:unexpected_combined_row_label) do
+      multisite ? "T28, U1 x [#{site_count}]" : "T28, U1"
+    end
+    let(:order) do
+      create(
+        :order,
+        order_owner: account,
+        exemptions: [charged_exemption, no_charge_exemption],
+        charge_detail: build(
+          :charge_detail,
+          registration_charge_amount: 2500,
+          site_count:,
+          band_charge_details: [
+            build(
+              :band_charge_detail,
+              band: chargeable_band,
+              initial_compliance_charge_amount: 5000,
+              additional_compliance_charge_amount: 0
+            ),
+            build(
+              :band_charge_detail,
+              band: no_charge_band,
+              initial_compliance_charge_amount: 0,
+              additional_compliance_charge_amount: 0
+            )
+          ]
+        )
+      )
+    end
+
+    before do
+      order
+      sign_in(user)
+
+      get registration_payment_details_path(registration.reference)
+    end
+
+    it "shows the no-charge exemption on a separate zero-value row" do
+      breakdowns = charge_breakdown_rows.pluck(-2)
+      no_charge_row = charge_breakdown_rows.find { |row| row[-2] == expected_no_charge_row_label }
+
+      expect(breakdowns).to include(expected_chargeable_row_label, expected_no_charge_row_label)
+      expect(breakdowns).not_to include(unexpected_combined_row_label)
+      expect(no_charge_row).to eq([expected_no_charge_row_label, "£0.00"])
+    end
+  end
+
   describe "GET /registrations/:reference/payment_details" do
     let(:registration) { create(:registration, account: create(:account, :with_order, :with_payment)) }
     let(:account) { registration.account }
@@ -110,7 +181,7 @@ RSpec.describe "Payment details" do
 
       context "for the details section when registration is single-site" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
-        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_singlesite.details_section.charges" }
+        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown.details_section.charges" }
 
         # charges
         it_behaves_like "a correct charges table headers"
@@ -139,7 +210,7 @@ RSpec.describe "Payment details" do
       context "for the details section when registration is multi-site" do
         let(:i18n_details_section) { "#{i18n_page}.details_section" }
         let(:registration) { create(:registration, :multisite_complete, account: create(:account, :with_order, :with_payment)) }
-        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown_multisite.details_section.charges" }
+        let(:i18n_charge_breakdown_section) { ".payment_details.charge_breakdown.details_section.charges" }
 
         # charges
         it_behaves_like "a correct charges table headers"
@@ -257,6 +328,18 @@ RSpec.describe "Payment details" do
           expect(response.body).to include(I18n.t("#{i18n_actions_section}.links.charge_adjustment"))
         end
       end
+    end
+
+    context "when a single-site order mixes charged and no-charge exemptions" do
+      let(:multisite) { false }
+
+      it_behaves_like "a separated no-charge exemption row"
+    end
+
+    context "when a multi-site order mixes charged and no-charge exemptions" do
+      let(:multisite) { true }
+
+      it_behaves_like "a separated no-charge exemption row"
     end
   end
 end

@@ -12,11 +12,14 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <% if @resource.multisite? %>
-      <%= render("charge_breakdown_multisite", presenter: @presenter, resource: @resource) %>
-    <% else %>
-      <%= render("charge_breakdown_singlesite", presenter: @presenter) %>
-    <% end %>
+    <%= render(
+      "charge_breakdown",
+      heading: t("payment_details.charge_breakdown.details_section.charges.heading"),
+      date_header: t("payment_details.charge_breakdown.details_section.charges.headers.date"),
+      breakdown_header: t("payment_details.charge_breakdown.details_section.charges.headers.breakdown"),
+      amount_header: t("payment_details.charge_breakdown.details_section.charges.headers.amount"),
+      charge_breakdowns: @presenter.charge_breakdowns(is_multisite: @resource.multisite?)
+    ) %>
 
     <h2 class="govuk-heading-m">
       <%= t(".details_section.charge_adjustments.heading") %>
