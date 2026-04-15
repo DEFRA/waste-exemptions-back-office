@@ -53,7 +53,7 @@
             <td class="govuk-table__cell">
               <%= adjustment.reason %>
             </td>
-            <td class="govuk-table__cell govuk-!-text-align-right no-wrap">
+            <td class="govuk-table__cell govuk-!-text-align-right no-wrap vertical-align-top">
               <%= adjustment.amount %>
             </td>
           </tr>
@@ -83,13 +83,13 @@
             <td class="govuk-table__cell">
               <%= payment.payment_type %>
             </td>
-            <td class="govuk-table__cell govuk-!-text-align-right no-wrap">
+            <td class="govuk-table__cell govuk-!-text-align-right no-wrap vertical-align-top">
               <%= payment.payment_amount %>
             </td>
-            <td class="govuk-table__cell govuk-!-text-align-right no-wrap">
+            <td class="govuk-table__cell govuk-!-text-align-right no-wrap vertical-align-top">
               <%= display_pence_as_pounds_sterling_and_pence(pence: payment.total_refunded_amount) %>
             </td>
-            <td class="govuk-table__cell govuk-!-text-align-right no-wrap">
+            <td class="govuk-table__cell govuk-!-text-align-right no-wrap vertical-align-top">
               <%= payment.available_refund_amount %>
             </td>
           </tr>
@@ -115,7 +115,7 @@
             <td class="govuk-table__cell"><%= format_date(payment.created_at) %></td>
             <td class="govuk-table__cell"><%= payment.reference %></td>
             <td class="govuk-table__cell"><%= payment.comments %></td>
-            <td class="govuk-table__cell govuk-!-text-align-right no-wrap">
+            <td class="govuk-table__cell govuk-!-text-align-right no-wrap vertical-align-top">
               <%= payment.payment_amount %>
             </td>
           </tr>
@@ -142,7 +142,7 @@
           <td class="govuk-table__cell govuk-!-font-weight-bold">
             <%= t(".details_section.balance.amount") %>
           </td>
-          <td class="govuk-table__cell govuk-!-text-align-right no-wrap" id="balance">
+          <td class="govuk-table__cell govuk-!-text-align-right no-wrap vertical-align-top" id="balance">
             <%= @presenter.balance %>
           </td>
         </tr>
