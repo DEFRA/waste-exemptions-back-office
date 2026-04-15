@@ -1,4 +1,7 @@
 <div class="govuk-summary-list__row">
+  <% site_count = resource.site_addresses.count %>
+  <% site_count_text = t(".values.site_count", count: site_count) %>
+
   <dt class="govuk-summary-list__key">
     <%= t('.heading') %>
   </dt>
@@ -8,16 +11,11 @@
     </p>
 
     <p class="govuk-body">
-      <%= resource.site_addresses.count %>
+      <% if resource.reference.present? %>
+        <%= link_to site_count_text, registration_sites_path(registration_reference: resource.reference), class: "govuk-link" %>
+      <% else %>
+        <%= site_count_text %>
+      <% end %>
     </p>
-  </dd>
-  <dd class="govuk-summary-list__value">
-    <p class="govuk-body govuk-!-font-weight-bold">
-      &nbsp;
-    </p>
-
-    <% if resource.reference.present? %>
-      <%= link_to t('.labels.see_sites'), registration_sites_path(registration_reference: resource.reference), class: "govuk-link" %>
-    <% end %>
   </dd>
 </div>
