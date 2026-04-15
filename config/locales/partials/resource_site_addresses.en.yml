@@ -4,4 +4,7 @@ en:
       heading: Site location(s)
       labels:
         sites: Sites
-        see_sites: See sites
+      values:
+        site_count:
+          one: "%{count} site"
+          other: "%{count} sites"

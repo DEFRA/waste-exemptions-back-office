@@ -32,6 +32,26 @@ RSpec.describe "Registrations" do
         root_path_with_search_terms = root_path(search_terms).gsub("&", "&amp;")
         expect(response.body).to include(root_path_with_search_terms)
       end
+
+      it "shows the single site count as a link in the sites row" do
+        get "/registrations/#{registration.reference}"
+
+        aggregate_failures do
+          expect(response.body).to include("Site location(s)")
+          expect(response.body).to include(%(href="/registrations/#{registration.reference}/sites">1 site</a>))
+          expect(response.body).not_to include("See sites")
+        end
+      end
+
+      it "pluralises the linked site count for multisite registrations" do
+        multisite_registration = create(:registration, :multisite_complete)
+
+        get "/registrations/#{multisite_registration.reference}"
+
+        expect(response.body).to include(
+          %(href="/registrations/#{multisite_registration.reference}/sites">#{multisite_registration.site_addresses.count} sites</a>)
+        )
+      end
     end
 
     context "when a valid user is not signed in" do
