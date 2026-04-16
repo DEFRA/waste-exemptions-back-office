@@ -21,9 +21,9 @@ module PaymentDetails
 
       def amount_cell_classes
         return "govuk-table__cell govuk-!-text-align-right govuk-!-padding-top-0" if @total
-        return "govuk-!-text-align-right govuk-!-padding-top-2" if @top_padded
+        return "govuk-!-text-align-right govuk-!-padding-top-2 vertical-align-top" if @top_padded
 
-        "govuk-!-text-align-right"
+        "govuk-!-text-align-right vertical-align-top"
       end
     end
 
