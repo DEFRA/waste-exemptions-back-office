@@ -65,9 +65,9 @@ RSpec.describe PaymentDetails::ChargeBreakdownPresenter do
     end
 
     it "exposes presentational cell classes on each row" do
-      expect(rows.first.breakdown_cell_classes).to eq("govuk-!-padding-top-2")
+      expect(rows.first.breakdown_cell_classes).to eq("charge-breakdown__breakdown-cell govuk-!-padding-top-2")
       expect(rows.first.amount_cell_classes).to eq("govuk-!-text-align-right govuk-!-padding-top-2 vertical-align-top")
-      expect(rows.last.breakdown_cell_classes).to eq("govuk-table__cell govuk-!-padding-top-0")
+      expect(rows.last.breakdown_cell_classes).to eq("charge-breakdown__breakdown-cell govuk-table__cell govuk-!-padding-top-0")
       expect(rows.last.amount_cell_classes).to eq("govuk-table__cell govuk-!-text-align-right govuk-!-padding-top-0")
     end
   end
