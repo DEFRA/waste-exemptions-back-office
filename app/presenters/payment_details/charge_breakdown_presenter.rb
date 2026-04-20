@@ -13,10 +13,16 @@ module PaymentDetails
       end
 
       def breakdown_cell_classes
-        return "charge-breakdown__breakdown-cell govuk-table__cell govuk-!-padding-top-0" if @total
-        return "charge-breakdown__breakdown-cell govuk-!-padding-top-2" if @top_padded
+        classes = ["charge-breakdown__breakdown-cell"]
 
-        "charge-breakdown__breakdown-cell"
+        if @total
+          classes << "govuk-table__cell"
+          classes << "govuk-!-padding-top-0"
+        elsif @top_padded
+          classes << "govuk-!-padding-top-2"
+        end
+
+        classes.join(" ")
       end
 
       def amount_cell_classes
