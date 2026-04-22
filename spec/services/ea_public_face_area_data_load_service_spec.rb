@@ -5,9 +5,9 @@ require "zip"
 
 RSpec.describe EaPublicFaceAreaDataLoadService, type: :service do
   describe ".run" do
-    existing_code = "WSX" # this value is present in the fixture JSON file
-    existing_area_id = "28" # this value is present in the fixture JSON file
-    existing_name = "an area name" # this value is NOT present in the fixture JSON file
+    existing_code = "WSX" # this value is present in the fixture GeoJSON file
+    existing_area_id = "28" # this value is present in the fixture GeoJSON file
+    existing_name = "an area name" # this value is NOT present in the fixture GeoJSON file
 
     # The service is heavy so run it once only
     before(:all) do # rubocop:disable RSpec/BeforeAfterAll
