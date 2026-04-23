@@ -22,7 +22,7 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
 
     attributes = {
       name: feature.properties["long_name"],
-      area_id: feature.properties["identifier"],
+      area_id: normalized_area_id(feature.properties["identifier"]),
       area: feature.geometry
     }
 
@@ -52,5 +52,11 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
 
   def areas_filename
     "Administrative_Boundaries_Environment_Agency_and_Natural_England_Public_Face_Areas.geojson"
+  end
+
+  def normalized_area_id(identifier)
+    return identifier.to_i.to_s if identifier.is_a?(Float) && identifier.integer?
+
+    identifier.to_s
   end
 end
