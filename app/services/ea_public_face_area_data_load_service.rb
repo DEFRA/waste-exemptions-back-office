@@ -51,6 +51,6 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
   end
 
   def areas_filename
-    "Administrative_Boundaries_Environment_Agency_and_Natural_England_Public_Face_Areas.json"
+    "Administrative_Boundaries_Environment_Agency_and_Natural_England_Public_Face_Areas.geojson"
   end
 end
