@@ -22,7 +22,7 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
 
     attributes = {
       name: feature.properties["long_name"],
-      area_id: normalized_area_id(feature.properties["identifier"]),
+      area_id: feature.properties["identifier"],
       area: feature.geometry
     }
 
@@ -52,13 +52,5 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
 
   def areas_filename
     "Administrative_Boundaries_Environment_Agency_and_Natural_England_Public_Face_Areas.geojson"
-  end
-
-  # The source GeoJSON encodes whole-number identifiers as numeric values like 28.0.
-  # We store the canonical integer form ("28") because area_id is a string column.
-  def normalized_area_id(identifier)
-    return identifier.to_i.to_s if identifier.is_a?(Numeric) && identifier == identifier.to_i
-
-    identifier.to_s
   end
 end
