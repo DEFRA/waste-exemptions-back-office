@@ -4,6 +4,16 @@ require "rails_helper"
 require "zip"
 
 RSpec.describe EaPublicFaceAreaDataLoadService, type: :service do
+  describe "#normalized_area_id" do
+    subject(:normalized_area_id) { described_class.new.send(:normalized_area_id, identifier) }
+
+    context "when the parser returns a whole-number numeric identifier" do
+      let(:identifier) { 28.0 }
+
+      it { expect(normalized_area_id).to eq("28") }
+    end
+  end
+
   describe ".run" do
     existing_code = "WSX" # this value is present in the fixture GeoJSON file
     existing_area_id = "28" # this value is present in the fixture GeoJSON file
