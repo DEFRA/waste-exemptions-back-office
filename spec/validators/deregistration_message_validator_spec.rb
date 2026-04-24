@@ -10,7 +10,7 @@ module Test
   end
 end
 
-module WasteExemptionsEngine # rubocop:disable Style/OneClassPerFile
+module WasteExemptionsEngine
   RSpec.describe DeregistrationMessageValidator, type: :model do
     valid_message = "This exemption is no longer relevant."
     too_long_message = Helpers::TextGenerator.random_string(501) # The max length is 500.
