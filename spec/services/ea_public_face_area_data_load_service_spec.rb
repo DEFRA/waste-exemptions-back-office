@@ -12,6 +12,12 @@ RSpec.describe EaPublicFaceAreaDataLoadService, type: :service do
 
       it { expect(normalized_area_id).to eq("28") }
     end
+
+    context "when the parser returns a non-whole numeric identifier" do
+      let(:identifier) { 28.5 }
+
+      it { expect(normalized_area_id).to eq("28.5") }
+    end
   end
 
   describe ".run" do
