@@ -5,9 +5,10 @@ require "zip"
 
 RSpec.describe EaPublicFaceAreaDataLoadService, type: :service do
   describe ".run" do
-    existing_code = "WSX" # this value is present in the fixture JSON file
-    existing_area_id = "28" # this value is present in the fixture JSON file
-    existing_name = "an area name" # this value is NOT present in the fixture JSON file
+    existing_code = "WSX" # this value is present in the fixture GeoJSON file
+    existing_area_id = "28" # this value was used by the previous fixture format
+    upstream_area_id = "28.0" # this value is present in the current fixture GeoJSON file
+    existing_name = "an area name" # this value is NOT present in the fixture GeoJSON file
 
     # The service is heavy so run it once only
     before(:all) do # rubocop:disable RSpec/BeforeAfterAll
@@ -38,8 +39,8 @@ RSpec.describe EaPublicFaceAreaDataLoadService, type: :service do
       expect(existing_area.reload.code).to eq existing_code
     end
 
-    it "does not update the area_id" do
-      expect(existing_area.reload.area_id).to eq existing_area_id
+    it "updates the area_id to match the upstream data" do
+      expect(existing_area.reload.area_id).to eq upstream_area_id
     end
 
     it "saves the area geometry" do
