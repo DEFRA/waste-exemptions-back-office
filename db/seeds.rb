@@ -26,4 +26,5 @@ if !Rails.env.production? || ENV["ALLOW_SEED"]
   load "db/seeds/exemptions.rb"
   load "db/seeds/waste_activities.rb"
   load "db/seeds/charging_schemes.rb"
+  load "db/seeds/admin_areas.rb"
 end
