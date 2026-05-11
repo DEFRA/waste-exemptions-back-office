@@ -5,7 +5,7 @@ module WasteExemptionsEngine
     def form_path
       return super unless @transient_registration.is_a?(BackOfficeEditRegistration)
 
-      @transient_registration.save unless @transient_registration.token.present?
+      @transient_registration.save if @transient_registration.token.blank?
 
       helper_name = :"new_#{@transient_registration.workflow_state}_path"
 

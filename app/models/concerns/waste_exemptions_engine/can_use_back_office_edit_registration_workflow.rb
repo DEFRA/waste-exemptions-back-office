@@ -4,6 +4,7 @@ module WasteExemptionsEngine
   module CanUseBackOfficeEditRegistrationWorkflow
     extend ActiveSupport::Concern
 
+    # rubocop:disable Metrics/BlockLength
     included do
       include AASM
 
@@ -226,6 +227,7 @@ module WasteExemptionsEngine
         end
       end
     end
+    # rubocop:enable Metrics/BlockLength
 
     private
 

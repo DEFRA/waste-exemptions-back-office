@@ -21,7 +21,7 @@ module WasteExemptionsEngine
       expect do
         form.submit(temp_company_no: "12345678")
       end.to change { edit_registration.reload.company_no }.to("12345678")
-        .and change { edit_registration.reload.operator_name }.to(company_name)
+                                                           .and change { edit_registration.reload.operator_name }.to(company_name)
     end
 
     it "inherits from the engine base form" do

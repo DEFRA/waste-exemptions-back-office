@@ -19,9 +19,7 @@ module WasteExemptionsEngine
       total_sites_count >= minimum_sites_required
     end
 
-    def minimum_sites_required
-      WasteExemptionsEngine::CanHaveMultipleSites.minimum_sites_required
-    end
+    delegate :minimum_sites_required, to: :"WasteExemptionsEngine::CanHaveMultipleSites"
 
     def sites_per_page
       ENV.fetch("MULTISITE_PAGINATION_SIZE", 20).to_i
