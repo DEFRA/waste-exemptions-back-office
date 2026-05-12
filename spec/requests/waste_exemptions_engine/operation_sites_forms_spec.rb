@@ -46,6 +46,11 @@ module WasteExemptionsEngine
 
     describe "GET edit_site_operation_sites_form" do
       let(:request_path) { edit_site_operation_sites_forms_path(token: transient_registration.token, site_id: site_address.id) }
+      let(:site_grid_reference_path) do
+        WasteExemptionsEngine::Engine.routes.url_helpers.new_site_grid_reference_form_path(
+          token: transient_registration.token
+        )
+      end
 
       it "sets the temp_site_id" do
         expect { get request_path }.to change { transient_registration.reload.temp_site_id }.from(nil).to(site_address.id)
@@ -53,7 +58,7 @@ module WasteExemptionsEngine
 
       it "redirects to the new site_grid_reference_form page" do
         get request_path
-        expect(response).to redirect_to(new_site_grid_reference_form_path(token: transient_registration.token))
+        expect(response).to redirect_to(site_grid_reference_path)
       end
 
       context "when the site does not exist" do
