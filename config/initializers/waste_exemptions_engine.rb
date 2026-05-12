@@ -49,7 +49,7 @@ end
 WasteExemptionsEngine.start_airbrake
 
 Rails.application.config.to_prepare do
-  redirect_override = WasteExemptionsEngine::CanRedirectBackOfficeEditRegistration
+  redirect_override = CanRedirectEditRegistration
   forms_controller = WasteExemptionsEngine::FormsController
 
   forms_controller.prepend(redirect_override) unless forms_controller < redirect_override

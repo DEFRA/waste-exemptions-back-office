@@ -11,14 +11,14 @@ module WasteExemptionsEngine
   class RegistrationNumberForm < BaseForm
     def submit(params)
       params = params.to_h.symbolize_keys
-      update_back_office_registration_details(params) if transient_registration.is_a?(BackOfficeEditRegistration)
+      update_edit_registration_details(params) if transient_registration.is_a?(::EditRegistration)
 
       super
     end
 
     private
 
-    def update_back_office_registration_details(params)
+    def update_edit_registration_details(params)
       company_no = process_company_no(params[:temp_company_no])
       companies_house_details = DefraRuby::CompaniesHouse::API.run(company_number: company_no)
 

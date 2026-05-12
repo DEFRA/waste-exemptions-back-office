@@ -7,7 +7,7 @@ module WasteExemptionsEngine
     subject(:form) { described_class.new(edit_registration) }
 
     let(:edit_registration) do
-      create(:back_office_edit_registration, workflow_state: "registration_number_form", temp_company_no: "09360070")
+      create(:edit_registration, workflow_state: "registration_number_form", temp_company_no: "09360070")
     end
     let(:company_name) { "Acme Waste Ltd" }
 

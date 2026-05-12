@@ -157,7 +157,7 @@ Rails.application.routes.draw do
       to: "testing#create_registration"
 
   # Editing: Back office
-  scope "/:token", module: "waste_exemptions_engine" do
+  scope "/:token" do
     resources :reason_for_change_forms,
               only: %i[new create],
               path: "reason-for-change",
@@ -173,92 +173,92 @@ Rails.application.routes.draw do
                     on: :collection
               end
 
-    resources :back_office_edit_forms,
+    resources :edit_forms,
               only: %i[new create],
               path: "edit",
               path_names: { new: "" } do
                 get "main_people",
-                    to: "back_office_edit_forms#edit_main_people",
+                    to: "edit_forms#edit_main_people",
                     as: "main_people",
                     on: :collection
 
                 get "registration_number",
-                    to: "back_office_edit_forms#edit_registration_number",
+                    to: "edit_forms#edit_registration_number",
                     as: "registration_number",
                     on: :collection
 
                 get "operator_name",
-                    to: "back_office_edit_forms#edit_operator_name",
+                    to: "edit_forms#edit_operator_name",
                     as: "operator_name",
                     on: :collection
 
                 get "operator_postcode",
-                    to: "back_office_edit_forms#edit_operator_postcode",
+                    to: "edit_forms#edit_operator_postcode",
                     as: "operator_postcode",
                     on: :collection
 
                 get "contact_name",
-                    to: "back_office_edit_forms#edit_contact_name",
+                    to: "edit_forms#edit_contact_name",
                     as: "contact_name",
                     on: :collection
 
                 get "contact_position",
-                    to: "back_office_edit_forms#edit_contact_position",
+                    to: "edit_forms#edit_contact_position",
                     as: "contact_position",
                     on: :collection
 
                 get "contact_phone",
-                    to: "back_office_edit_forms#edit_contact_phone",
+                    to: "edit_forms#edit_contact_phone",
                     as: "contact_phone",
                     on: :collection
 
                 get "contact_email",
-                    to: "back_office_edit_forms#edit_contact_email",
+                    to: "edit_forms#edit_contact_email",
                     as: "contact_email",
                     on: :collection
 
                 get "contact_postcode",
-                    to: "back_office_edit_forms#edit_contact_postcode",
+                    to: "edit_forms#edit_contact_postcode",
                     as: "contact_postcode",
                     on: :collection
 
                 get "on_a_farm",
-                    to: "back_office_edit_forms#edit_on_a_farm",
+                    to: "edit_forms#edit_on_a_farm",
                     as: "on_a_farm",
                     on: :collection
 
                 get "is_a_farmer",
-                    to: "back_office_edit_forms#edit_is_a_farmer",
+                    to: "edit_forms#edit_is_a_farmer",
                     as: "is_a_farmer",
                     on: :collection
 
                 get "operation_sites",
-                    to: "back_office_edit_forms#edit_operation_sites",
+                    to: "edit_forms#edit_operation_sites",
                     as: "operation_sites",
                     on: :collection
 
                 get "site_grid_reference",
-                    to: "back_office_edit_forms#edit_site_grid_reference",
+                    to: "edit_forms#edit_site_grid_reference",
                     as: "site_grid_reference",
                     on: :collection
 
                 get "cancel",
-                    to: "back_office_edit_forms#cancel",
+                    to: "edit_forms#cancel",
                     as: "cancel",
                     on: :collection
               end
 
-    resources :back_office_edit_complete_forms,
+    resources :edit_complete_forms,
               only: %i[new create],
               path: "edit-complete",
               path_names: { new: "" }
 
-    resources :confirm_back_office_edit_cancelled_forms,
+    resources :confirm_edit_cancelled_forms,
               only: %i[new create],
               path: "confirm-edit-cancelled",
               path_names: { new: "" }
 
-    resources :back_office_edit_cancelled_forms,
+    resources :edit_cancelled_forms,
               only: %i[new create],
               path: "edit-cancelled",
               path_names: { new: "" }

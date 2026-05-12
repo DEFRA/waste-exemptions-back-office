@@ -9,7 +9,7 @@ RSpec.describe "one_off:delete_all_transient_registrations", type: :rake do
   let(:registration) { create(:registration) }
 
   before do
-    create_list(:back_office_edit_registration, 3)
+    create_list(:edit_registration, 3)
     create_list(:new_charged_registration, 2)
     create_list(:renewing_registration, 5)
   end

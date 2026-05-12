@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteExemptionsEngine
   RSpec.describe SiteGridReferenceForm, type: :model do
     let(:source_registration) { create(:registration) }
-    let(:transient_registration) { BackOfficeEditRegistration.new(reference: source_registration.reference) }
+    let(:transient_registration) { ::EditRegistration.new(reference: source_registration.reference) }
     let(:existing_site) { transient_registration.site_addresses.first }
     let(:form) { described_class.new(transient_registration) }
 
