@@ -12,7 +12,7 @@ module CanUseEditRegistrationWorkflow
       # You cannot edit business_type or exemptions, so these are not in the edit journey.
 
       # Start
-      state :edit_form, initial: true
+      state :back_office_edit_form, initial: true
 
       # Operator details
       state :main_people_form
@@ -44,79 +44,79 @@ module CanUseEditRegistrationWorkflow
       # End pages
       state :reason_for_change_form
       state :declaration_form
-      state :edit_complete_form
+      state :back_office_edit_complete_form
 
       # Cancelling
-      state :confirm_edit_cancelled_form
-      state :edit_cancelled_form
+      state :confirm_back_office_edit_cancelled_form
+      state :back_office_edit_cancelled_form
 
       ## Transitions
 
       # Operator details
 
       event :edit_main_people do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :main_people_form
       end
 
       event :edit_registration_number do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :registration_number_form
       end
 
       event :edit_operator_name do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :operator_name_form
       end
 
       event :edit_operator_postcode do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :operator_postcode_form
       end
 
       # Contact details
 
       event :edit_contact_name do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :contact_name_form
       end
 
       event :edit_contact_position do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :contact_position_form
       end
 
       event :edit_contact_phone do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :contact_phone_form
       end
 
       event :edit_contact_email do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :contact_email_form
       end
 
       event :edit_contact_postcode do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :contact_postcode_form
       end
 
       # Farm questions
 
       event :edit_on_a_farm do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :on_a_farm_form
       end
 
       event :edit_is_a_farmer do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :is_a_farmer_form
       end
 
       # Operation Sites
 
       event :edit_operation_sites do
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :operation_sites_form
       end
 
@@ -130,8 +130,8 @@ module CanUseEditRegistrationWorkflow
       # Cancellation
 
       event :cancel_edit do
-        transitions from: :edit_form,
-                    to: :confirm_edit_cancelled_form
+        transitions from: :back_office_edit_form,
+                    to: :confirm_back_office_edit_cancelled_form
       end
 
       # Next transitions once you're on a form
@@ -164,18 +164,18 @@ module CanUseEditRegistrationWorkflow
                     to: :site_address_lookup_form
 
         # Completing the edit process
-        transitions from: :edit_form,
+        transitions from: :back_office_edit_form,
                     to: :reason_for_change_form
 
         transitions from: :reason_for_change_form,
                     to: :declaration_form
 
         transitions from: :declaration_form,
-                    to: :edit_complete_form
+                    to: :back_office_edit_complete_form
 
         # Cancelling the edit process
-        transitions from: :confirm_edit_cancelled_form,
-                    to: :edit_cancelled_form
+        transitions from: :confirm_back_office_edit_cancelled_form,
+                    to: :back_office_edit_cancelled_form
 
         # Everything else should always return to edit
         transitions from: %i[business_type_form
@@ -198,7 +198,7 @@ module CanUseEditRegistrationWorkflow
                              site_grid_reference_form
                              site_address_lookup_form
                              exemptions_form],
-                    to: :edit_form
+                    to: :back_office_edit_form
       end
 
       event :skip_to_manual_address do

@@ -27,7 +27,7 @@ RSpec.describe "Confirm Edit Cancelled Forms" do
     it "moves to the cancelled page" do
       expect do
         post request_path, params: { confirm_edit_cancelled_form: {} }
-      end.to change { form.transient_registration.reload.workflow_state }.to("edit_cancelled_form")
+      end.to change { form.transient_registration.reload.workflow_state }.to("back_office_edit_cancelled_form")
     end
 
     it "redirects to the next form" do

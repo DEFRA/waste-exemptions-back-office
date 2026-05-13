@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :edit_cancelled_form, class: "EditCancelledForm" do
     initialize_with do
-      new(create(:edit_registration, workflow_state: "edit_cancelled_form"))
+      new(create(:edit_registration, workflow_state: "back_office_edit_cancelled_form"))
     end
   end
 end
