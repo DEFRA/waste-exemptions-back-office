@@ -2,7 +2,6 @@
 
 class EditFormsBaseController < WasteExemptionsEngine::FormsController
   include EditPermissionChecks
-  prepend CanRedirectEditRegistration
 
   # Persisted workflow states keep the legacy back_office names; BO app classes/controllers use shorter names.
   WORKFLOW_STATE_FORM_CLASSES = {

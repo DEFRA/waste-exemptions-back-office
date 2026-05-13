@@ -24,6 +24,16 @@ module WasteExemptionsEngine
                                                            .and change { edit_registration.reload.operator_name }.to(company_name)
     end
 
+    it "zero-pads the company number before storing company details" do
+      form.submit(temp_company_no: "123")
+
+      aggregate_failures do
+        expect(DefraRuby::CompaniesHouse::API).to have_received(:run).with(company_number: "00000123").at_least(:once)
+        expect(DefraRuby::CompaniesHouse::API).not_to have_received(:run).with(company_number: "123")
+        expect(edit_registration.reload.company_no).to eq("00000123")
+      end
+    end
+
     it "inherits from the engine base form" do
       expect(form).to be_a(WasteExemptionsEngine::BaseForm)
     end
