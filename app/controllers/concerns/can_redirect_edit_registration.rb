@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CanRedirectEditRegistration
-  # Persisted workflow states keep the legacy back_office names; BO app routes use shorter names.
+  # Maps actual workflow states to their routes which no longer include back_office as a prefix
   WORKFLOW_STATE_ROUTE_HELPERS = {
     "back_office_edit_form" => :new_edit_form_path,
     "back_office_edit_complete_form" => :new_edit_complete_form_path,
