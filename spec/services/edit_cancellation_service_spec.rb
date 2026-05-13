@@ -15,7 +15,7 @@ RSpec.describe EditCancellationService do
     end
 
     it "deletes the edit_registration" do
-      expect { service }.to change { EditRegistration.where(reference: edit_registration.reference).count }.to(0)
+      expect { service }.to change { WasteExemptionsEngine::BackOfficeEditRegistration.where(reference: edit_registration.reference).count }.to(0)
     end
   end
 end

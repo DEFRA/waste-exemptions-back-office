@@ -35,7 +35,7 @@ RSpec.describe "Edit Complete Forms" do
       expect { get request_path }
         .to change { registration.reload.operator_name }.to(form.transient_registration.operator_name)
         .and change {
-          EditRegistration.where(reference: registration.reference).count
+          WasteExemptionsEngine::BackOfficeEditRegistration.where(reference: registration.reference).count
         }.from(1).to(0)
     end
 

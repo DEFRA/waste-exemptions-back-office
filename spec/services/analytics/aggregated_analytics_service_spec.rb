@@ -42,25 +42,24 @@ module Analytics
           create(:user_journey, visited_pages: %w[start_form], created_at: 6.days.ago)
           create(:user_journey, visited_pages: %w[start_form location_form], created_at: 6.days.ago)
 
-          # these should be included as edit journeys are counted in aggregate analytics:
+          # this should be included as edit journeys are counted in aggregate analytics:
           create(:user_journey, visited_pages:, created_at: 6.days.ago, journey_type: "BackOfficeEditRegistration")
-          create(:user_journey, visited_pages:, created_at: 6.days.ago, journey_type: "EditRegistration")
 
           # this should be excluded as only supported journey types should be counted:
           create(:user_journey, visited_pages:, created_at: 6.days.ago, journey_type: "Foo")
         end
 
         it { expect(result).to match(expected_structure) }
-        it { expect(result[:total_journeys_started]).to eq(14) }
+        it { expect(result[:total_journeys_started]).to eq(13) }
         it { expect(result[:back_office_started]).to eq(2) }
-        it { expect(result[:front_office_started]).to eq(12) }
+        it { expect(result[:front_office_started]).to eq(11) }
         it { expect(result[:total_journeys_completed]).to eq(5) }
-        it { expect(result[:completion_rate]).to eq((5.0 / 14 * 100).round(2)) }
+        it { expect(result[:completion_rate]).to eq((5.0 / 13 * 100).round(2)) }
         it { expect(result[:front_office_completed]).to eq(3) }
         it { expect(result[:back_office_completed]).to eq(1) }
         it { expect(result[:cross_office_completed]).to eq(1) }
-        it { expect(result[:total_journeys_abandoned]).to eq(9) }
-        it { expect(result[:incomplete_journeys]).to eq(9) }
+        it { expect(result[:total_journeys_abandoned]).to eq(8) }
+        it { expect(result[:incomplete_journeys]).to eq(8) }
       end
 
       context "with default date range" do

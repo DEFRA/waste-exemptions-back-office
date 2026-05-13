@@ -2,7 +2,7 @@
 
 module CanRedirectEditRegistration
   def form_path
-    return super unless @transient_registration.is_a?(EditRegistration)
+    return super unless @transient_registration.is_a?(WasteExemptionsEngine::BackOfficeEditRegistration)
 
     @transient_registration.save if @transient_registration.token.blank?
 

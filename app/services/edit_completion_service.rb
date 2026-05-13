@@ -27,7 +27,7 @@ class EditCompletionService < WasteExemptionsEngine::BaseService
 
     copy_attributes
     copy_addresses
-    # Even if exemptions aren’t changed, we must copy them to EditRegistration and back,
+    # Even if exemptions aren’t changed, we must copy them to the edit registration and back,
     # updating registration_exemption with new address IDs.
     # This is necessary because address records are replaced during registration edits.
     copy_exemptions

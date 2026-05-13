@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :edit_registration, class: "EditRegistration" do
+  factory :edit_registration, class: "WasteExemptionsEngine::BackOfficeEditRegistration" do
     # Create a new registration when initializing so we can copy its data
     initialize_with do
       new(reference: create(:registration).reference)

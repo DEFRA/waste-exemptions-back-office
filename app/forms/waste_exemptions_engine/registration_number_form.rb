@@ -11,7 +11,9 @@ module WasteExemptionsEngine
   class RegistrationNumberForm < BaseForm
     def submit(params)
       params = params.to_h.symbolize_keys
-      update_edit_registration_details(params) if transient_registration.is_a?(::EditRegistration)
+      if transient_registration.is_a?(WasteExemptionsEngine::BackOfficeEditRegistration)
+        update_edit_registration_details(params)
+      end
 
       super
     end

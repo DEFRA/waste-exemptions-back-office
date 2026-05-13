@@ -30,7 +30,7 @@ RSpec.describe "Edit Cancelled Forms" do
 
     it "cancels the edit registration" do
       expect { get request_path }
-        .to change { EditRegistration.where(reference: form.transient_registration.reference).count }.from(1).to(0)
+        .to change { WasteExemptionsEngine::BackOfficeEditRegistration.where(reference: form.transient_registration.reference).count }.from(1).to(0)
     end
 
     context "when `WasteExemptionsEngine.configuration.edit_enabled` is anything other than \"true\"" do

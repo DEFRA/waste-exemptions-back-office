@@ -43,9 +43,9 @@ RSpec.describe "Edit Forms" do
           end
         end
 
-        it "creates a new EditRegistration for the registration when an edit is not already in progress" do
+        it "creates a new back-office edit registration when an edit is not already in progress" do
           expect { get request_path }.to change {
-            EditRegistration.where(reference: registration.reference).count
+            WasteExemptionsEngine::BackOfficeEditRegistration.where(reference: registration.reference).count
           }.from(0).to(1)
         end
       end
@@ -54,9 +54,9 @@ RSpec.describe "Edit Forms" do
         let(:edit_registration) { create(:edit_registration) }
         let(:request_path) { "/#{edit_registration.reference}/edit/" }
 
-        it "does not create a new EditRegistration for the registration" do
+        it "does not create a new back-office edit registration for the registration" do
           expect { get request_path }.not_to change {
-            EditRegistration.where(reference: edit_registration.reference).count
+            WasteExemptionsEngine::BackOfficeEditRegistration.where(reference: edit_registration.reference).count
           }.from(1)
         end
       end

@@ -82,9 +82,9 @@ class EditFormsController < EditFormsBaseController
   end
 
   def find_or_initialize_edited_registration(reference)
-    @transient_registration = EditRegistration.where(
+    @transient_registration = WasteExemptionsEngine::BackOfficeEditRegistration.where(
       reference: reference
-    ).first || EditRegistration.new(reference: reference)
+    ).first || WasteExemptionsEngine::BackOfficeEditRegistration.new(reference: reference)
   end
 
   def transition_to_edit(transition)

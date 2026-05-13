@@ -5,7 +5,7 @@ require "rails_helper"
 module WasteExemptionsEngine
   RSpec.describe SiteAddressLookupForm, type: :model do
     let(:source_registration) { create(:registration) }
-    let(:transient_registration) { ::EditRegistration.new(reference: source_registration.reference) }
+    let(:transient_registration) { WasteExemptionsEngine::BackOfficeEditRegistration.new(reference: source_registration.reference) }
     let(:existing_site) { transient_registration.site_addresses.last }
     let(:form) { described_class.new(transient_registration) }
     let(:address_data) do

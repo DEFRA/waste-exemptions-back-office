@@ -60,7 +60,6 @@ module Analytics
         before do
           create(:user_journey, :completed_digital, journey_type: "FrontOfficeEditRegistration", completed_at: 3.days.ago)
           create(:user_journey, :completed_digital, journey_type: "BackOfficeEditRegistration", completed_at: 3.days.ago)
-          create(:user_journey, :completed_digital, journey_type: "EditRegistration", completed_at: 3.days.ago)
         end
 
         it { expect(result[:analytics_total]).to eq(0) }

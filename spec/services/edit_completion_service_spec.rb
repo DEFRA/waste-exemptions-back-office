@@ -84,7 +84,7 @@ RSpec.describe EditCompletionService do
         ceased_exemption = registration.registration_exemptions.first
         ceased_exemption.update(state: "ceased", deregistered_at: Time.zone.today, deregistration_message: "Test message")
 
-        edit_registration = EditRegistration.new(reference: registration.reference)
+        edit_registration = WasteExemptionsEngine::BackOfficeEditRegistration.new(reference: registration.reference)
         edit_registration.save!
         edit_registration.update(contact_email: "new_email@example.com")
 
@@ -104,7 +104,7 @@ RSpec.describe EditCompletionService do
         ceased_exemption = registration.site_addresses.first.registration_exemptions.first
         ceased_exemption.update(state: "ceased", deregistered_at: Time.zone.today, deregistration_message: "Test message")
 
-        edit_registration = EditRegistration.new(reference: registration.reference)
+        edit_registration = WasteExemptionsEngine::BackOfficeEditRegistration.new(reference: registration.reference)
         edit_registration.save!
         edit_registration.update(contact_email: "new_email@example.com")
 
@@ -166,18 +166,18 @@ RSpec.describe EditCompletionService do
     end
 
     it "deletes the edit_registration" do
-      expect { run_service }.to change { EditRegistration.where(reference: edit_registration.reference).count }.by(-1)
+      expect { run_service }.to change { WasteExemptionsEngine::BackOfficeEditRegistration.where(reference: edit_registration.reference).count }.by(-1)
     end
 
     it "deletes the edit_registration addresses" do
-      edit_registration_id = EditRegistration.find_by(reference: edit_registration.reference).id
+      edit_registration_id = WasteExemptionsEngine::BackOfficeEditRegistration.find_by(reference: edit_registration.reference).id
 
       expect { run_service }.to change { WasteExemptionsEngine::TransientAddress.where(transient_registration_id: edit_registration_id).count }.to(0)
     end
 
     it "deletes the edit_registration people" do
       edit_registration = create(:edit_registration, :with_people)
-      edit_registration_id = EditRegistration.find_by(reference: edit_registration.reference).id
+      edit_registration_id = WasteExemptionsEngine::BackOfficeEditRegistration.find_by(reference: edit_registration.reference).id
 
       expect do
         described_class.run(edit_registration: edit_registration)
@@ -201,7 +201,7 @@ RSpec.describe EditCompletionService do
 
       context "when no data has changed" do
         let(:registration) { create(:registration) }
-        let(:edit_registration) { EditRegistration.new(reference: registration.reference) }
+        let(:edit_registration) { WasteExemptionsEngine::BackOfficeEditRegistration.new(reference: registration.reference) }
 
         before do
           registration.site_address.update!(area: "Outside England")

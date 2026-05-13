@@ -7,7 +7,7 @@ class EditFormsBaseController < WasteExemptionsEngine::FormsController
   private
 
   def find_or_initialize_registration(token)
-    @transient_registration = EditRegistration.find_by(token: token)
+    @transient_registration = WasteExemptionsEngine::BackOfficeEditRegistration.find_by(token: token)
     not_found if @transient_registration.blank?
   end
 
