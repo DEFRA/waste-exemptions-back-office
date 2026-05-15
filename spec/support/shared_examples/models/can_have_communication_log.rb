@@ -10,12 +10,17 @@ RSpec.shared_examples "CanHaveCommunicationLog" do
 
       let(:notifications_client) { instance_double(Notifications::Client) }
       let(:service) { service_class.new }
+      let(:notify_response) do
+        instance_double(Notifications::Client::ResponseNotification,
+                        id: SecureRandom.uuid,
+                        content: { "body" => "Test email body", "subject" => "Test subject" })
+      end
 
       before do
         allow(Notifications::Client).to receive(:new).and_return(notifications_client)
-        allow(notifications_client).to receive(:send_email)
-        allow(notifications_client).to receive(:send_letter)
-        allow(notifications_client).to receive(:send_sms)
+        allow(notifications_client).to receive_messages(send_email: notify_response,
+                                                        send_letter: notify_response,
+                                                        send_sms: notify_response)
       end
 
       it { expect { run_service }.not_to raise_error }
@@ -31,6 +36,15 @@ RSpec.shared_examples "CanHaveCommunicationLog" do
         expect(log_instance.template_id).to eq service.communications_log_params[:template_id]
         expect(log_instance.template_label).to eq service.communications_log_params[:template_label]
         expect(log_instance.sent_to).to eq service.communications_log_params[:sent_to]
+      end
+
+      it "populates notification response fields" do
+        run_service
+
+        log_instance = WasteExemptionsEngine::CommunicationLog.first
+
+        expect(log_instance.notification_id).to eq notify_response.id
+        expect(log_instance.body).to eq "Test email body"
       end
     end
   end
