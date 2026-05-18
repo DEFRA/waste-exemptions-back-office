@@ -7,47 +7,47 @@
 <% if @resource.present? %>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <table class="govuk-table" aria-label="<%= t(".heading") %>">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="col"><%= t(".template_name") %></th>
-            <th class="govuk-table__header" scope="col"><%= t(".template_id") %></th>
-            <th class="govuk-table__header" scope="col"><%= t(".type") %></th>
-            <th class="govuk-table__header" scope="col"><%= t(".sent_to") %></th>
-            <th class="govuk-table__header" scope="col"><%= t(".sent_on") %></th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <% @communication_logs.each do |log| %>
-             <tr class="govuk-table__row">
-              <td class="govuk-table__cell">
-                <%= log.template_label %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= log.template_id %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= log.message_type %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= log.sent_to %>
-              </td>
-              <td class="govuk-table__cell">
-                <%= log.created_at.to_formatted_s(:time_on_day_month_year) %>
-              </td>
+      <% if @communication_logs.any? %>
+        <table class="govuk-table" aria-label="<%= t(".heading") %>">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col"><%= t(".columns.title") %></th>
+              <th class="govuk-table__header" scope="col"><%= t(".columns.type") %></th>
+              <th class="govuk-table__header" scope="col"><%= t(".columns.sent_on") %></th>
+              <th class="govuk-table__header" scope="col"><%= t(".columns.delivery_status") %></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody class="govuk-table__body">
+            <% @communication_logs.each do |log| %>
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <%= link_to log.template_label, registration_communication_log_path(reference: @resource.reference, id: log.id) %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= log.message_type %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= log.created_at.to_formatted_s(:time_on_day_month_year) %>
+                </td>
+                <td class="govuk-table__cell">
+                  <%= log.status || t(".default_status") %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
 
-      <nav role="navigation" class="pagination" aria-label="Pagination">
-        <div class="pagination__summary govuk-body">
-          <%= page_entries_info @communication_logs, entry_name: "item" %>
-        </div>
-        <span class="govuk-body">
-          <%= paginate @communication_logs %>
-        </span>
-      </nav>
+        <nav role="navigation" class="pagination" aria-label="Pagination">
+          <div class="pagination__summary govuk-body">
+            <%= page_entries_info @communication_logs, entry_name: "item" %>
+          </div>
+          <span class="govuk-body">
+            <%= paginate @communication_logs %>
+          </span>
+        </nav>
+      <% else %>
+        <p class="govuk-body"><%= t(".no_results") %></p>
+      <% end %>
     </div>
   </div>
 <% end %>

@@ -3,8 +3,21 @@ en:
     index:
       title: "Communication history"
       heading: "Communication history"
-      template_name: "Template name"
+      columns:
+        title: "Title"
+        type: "Type"
+        sent_on: "Sent on"
+        delivery_status: "Delivery status"
+      default_status: "Sent"
+      no_results: "No results found"
+    show:
+      title: "Communication history"
+      heading: "Communication history"
+      template_title: "Template title"
       template_id: "Template ID"
       type: "Type"
       sent_to: "Sent to"
       sent_on: "Sent on"
+      delivery_status: "Delivery status"
+      content: "Content"
+      not_available: "Not available"

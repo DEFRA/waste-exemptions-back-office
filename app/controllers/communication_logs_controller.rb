@@ -8,6 +8,13 @@ class CommunicationLogsController < ApplicationController
     @communication_logs = @resource.communication_logs.order(created_at: :desc).page(params[:page]).per(10)
   end
 
+  def show
+    find_resource(params[:registration_reference])
+    authorize! :read, @resource
+
+    @communication_log = @resource.communication_logs.find(params[:id])
+  end
+
   protected
 
   def find_resource(reference)
