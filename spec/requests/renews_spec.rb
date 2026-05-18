@@ -12,6 +12,9 @@ RSpec.describe "Renews" do
 
     before do
       sign_in(user) if defined?(user)
+
+      allow(WasteExemptionsEngine.configuration)
+        .to receive(:renewal_window_before_expiry_in_days).and_return(28)
     end
 
     context "when a data agent user is signed in" do
@@ -64,10 +67,6 @@ RSpec.describe "Renews" do
         context "when not in renewal window" do
           let(:renewing_registration) { create(:renewing_registration, workflow_state: "contact_name_form") }
 
-          before do
-            allow_any_instance_of(WasteExemptionsEngine::Registration).to receive(:in_renewal_window?).and_return(false)
-          end
-
           it "redirects to the correct template status" do
             get request_path
 
@@ -90,10 +89,6 @@ RSpec.describe "Renews" do
 
         context "when not in renewal window" do
           let(:registration) { create(:registration) }
-
-          before do
-            allow_any_instance_of(WasteExemptionsEngine::Registration).to receive(:in_renewal_window?).and_return(false)
-          end
 
           it "redirects to the check registered name and address form, creates a new RenewingRegistration and returns a 303 status code" do
             get request_path
@@ -120,10 +115,6 @@ RSpec.describe "Renews" do
 
         context "when not in renewal window" do
           let(:registration) { create(:registration) }
-
-          before do
-            allow_any_instance_of(WasteExemptionsEngine::Registration).to receive(:in_renewal_window?).and_return(false)
-          end
 
           it "redirects to the renewal start form, creates a new RenewingRegistration and returns a 303 status code" do
             get request_path
