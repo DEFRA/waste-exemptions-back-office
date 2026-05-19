@@ -102,6 +102,9 @@ gem "hashdiff"
 # so it needs to be loaded in production.
 gem "faker"
 
+# Markdown parser and converter
+gem "kramdown"
+
 group :production do
   # Web application server that replaces webrick. It handles HTTP requests,
   # manages processes and resources, and enables administration, monitoring

@@ -37,7 +37,12 @@
 
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key"><%= t(".content") %></dt>
-    <dd class="govuk-summary-list__value"><%= simple_format(@communication_log.body) if @communication_log.body.present? %>
-      <%= t(".not_available") unless @communication_log.body.present? %></dd>
+    <dd class="govuk-summary-list__value">
+      <% if @communication_log.body.present? %>
+        <%= render_markdown(@communication_log.body) %>
+      <% else %>
+        <%= t(".not_available") %>
+      <% end %>
+    </dd>
   </div>
 </dl>
