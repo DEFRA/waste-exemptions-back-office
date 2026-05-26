@@ -3,7 +3,10 @@
 require "rails_helper"
 
 RSpec.describe Reports::SsclReceiptsReport::DataSerializer do
-  subject(:csv) { CSV.parse(serializer.to_csv, headers: true) }
+  subject(:csv) do
+    payment
+    CSV.parse(serializer.to_csv, headers: true)
+  end
 
   let(:serializer) { described_class.new }
   let(:registration) do
@@ -12,7 +15,7 @@ RSpec.describe Reports::SsclReceiptsReport::DataSerializer do
       submitted_at: Date.new(2025, 2, 3)
     )
   end
-  let!(:payment) do
+  let(:payment) do
     create(
       :payment,
       :bank_transfer,
