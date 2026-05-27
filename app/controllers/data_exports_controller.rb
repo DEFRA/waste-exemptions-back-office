@@ -40,9 +40,7 @@ class DataExportsController < ApplicationController
 
   def bucket_name_for_report(generated_report)
     case generated_report.report_type
-    when "finance_data"
-      WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
-    when "sscl_receipts"
+    when "finance_data", "sscl_receipts"
       WasteExemptionsBackOffice::Application.config.finance_data_reports_bucket_name
     when "boxi"
       WasteExemptionsBackOffice::Application.config.boxi_exports_bucket_name
