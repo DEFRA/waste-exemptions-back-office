@@ -9,6 +9,10 @@ FactoryBot.define do
       report_type { "finance_data" }
     end
 
+    trait :sscl_receipts do
+      report_type { "sscl_receipts" }
+    end
+
     trait :boxi do
       report_type { "boxi" }
     end

@@ -97,6 +97,33 @@ RSpec.describe "Bulk Exports" do
         end
       end
     end
+
+    context "when sscl_receipts data report is present" do
+      before do
+        create(:generated_report, :sscl_receipts, file_name: "sscl_receipts_report.csv")
+      end
+
+      context "when user has permission to download finance data report" do
+        let(:user) { create(:user, :admin_team_lead) }
+
+        it_behaves_like "renders the correct template and returns correct status"
+
+        it "contains sscl_receipts report link" do
+          get data_exports_path
+          expect(response.body).to include("sscl_receipts_report.csv")
+        end
+      end
+
+      context "when user has no permission to download finance data report" do
+
+        it_behaves_like "renders the correct template and returns correct status"
+
+        it "does not contain sscl_receipts report link" do
+          get data_exports_path
+          expect(response.body).not_to include("sscl_receipts_report.csv")
+        end
+      end
+    end
   end
 
   describe "GET /data-exports/:id" do
@@ -112,6 +139,16 @@ RSpec.describe "Bulk Exports" do
 
       expect(response).to redirect_to(download_link)
       expect(response).to have_http_status(:found)
+    end
+
+    context "when downloading an SSCL receipts report" do
+      let(:generated_report) { create(:generated_report, :sscl_receipts, file_name: "sscl_receipts_report.csv") }
+
+      it "redirects to the finance data bucket URL" do
+        get data_export_download_path(generated_report)
+
+        expect(response).to redirect_to(download_link)
+      end
     end
   end
 

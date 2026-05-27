@@ -5,11 +5,13 @@ module Reports
     self.table_name = :reports_generated_reports
 
     REPORT_TYPE_FINANCE_DATA = "finance_data"
+    REPORT_TYPE_SSCL_RECEIPTS = "sscl_receipts"
     REPORT_TYPE_BOXI = "boxi"
     REPORT_TYPE_BULK = "bulk"
-    REPORT_TYPES = [REPORT_TYPE_FINANCE_DATA, REPORT_TYPE_BOXI, REPORT_TYPE_BULK].freeze
+    REPORT_TYPES = [REPORT_TYPE_FINANCE_DATA, REPORT_TYPE_SSCL_RECEIPTS, REPORT_TYPE_BOXI, REPORT_TYPE_BULK].freeze
 
     scope :finance_data, -> { where(report_type: REPORT_TYPE_FINANCE_DATA) }
+    scope :sscl_receipts, -> { where(report_type: REPORT_TYPE_SSCL_RECEIPTS) }
     scope :boxi, -> { where(report_type: REPORT_TYPE_BOXI) }
     scope :bulk, -> { where(report_type: REPORT_TYPE_BULK) }
 
