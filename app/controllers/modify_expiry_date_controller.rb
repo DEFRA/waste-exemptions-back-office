@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ModifyExpiryDateController < ApplicationController
-  include WasteExemptionsEngine::EditPermissionChecks
+  include EditPermissionChecks
 
   def new
     modify_expiry_date_form

@@ -69,7 +69,7 @@ RSpec.describe SearchService do
       let(:model) { :new_registrations }
       let!(:new_charged_registration) { create(:new_charged_registration) }
       let!(:other_new_charged_registration) { create(:new_charged_registration) }
-      let!(:back_office_edit_registration) { create(:back_office_edit_registration) }
+      let!(:edit_registration) { create(:edit_registration) }
 
       shared_examples "'new_registrations' matches and non-matches" do
         it "returns matching new_charged_registrations" do
@@ -80,14 +80,14 @@ RSpec.describe SearchService do
           expect(results).not_to include(other_new_charged_registration)
         end
 
-        it "does not return matching back_office_edit_registrations" do
-          expect(results).not_to include(back_office_edit_registration)
+        it "does not return matching edit_registrations" do
+          expect(results).not_to include(edit_registration)
         end
       end
 
       before do
         # align the relevant matching attributes so the same spec match setup works for each:
-        back_office_edit_registration.update(
+        edit_registration.update(
           contact_first_name: new_charged_registration.contact_first_name,
           contact_phone: new_charged_registration.contact_phone
         )

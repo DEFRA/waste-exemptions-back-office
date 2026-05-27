@@ -1,0 +1,48 @@
+<%= render("waste_exemptions_engine/shared/back", back_path: registration_communication_logs_path(reference: @resource.reference)) %>
+
+<h1 class="govuk-heading-l">
+  <%= t(".heading") %>
+</h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><%= t(".template_title") %></dt>
+    <dd class="govuk-summary-list__value"><%= @communication_log.template_label %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><%= t(".template_id") %></dt>
+    <dd class="govuk-summary-list__value"><%= @communication_log.template_id %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><%= t(".type") %></dt>
+    <dd class="govuk-summary-list__value"><%= @communication_log.message_type %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><%= t(".sent_to") %></dt>
+    <dd class="govuk-summary-list__value"><%= @communication_log.sent_to %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><%= t(".sent_on") %></dt>
+    <dd class="govuk-summary-list__value"><%= @communication_log.created_at.to_formatted_s(:time_on_day_month_year) %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><%= t(".delivery_status") %></dt>
+    <dd class="govuk-summary-list__value"><%= @communication_log.status || t(".not_available") %></dd>
+  </div>
+
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key"><%= t(".content") %></dt>
+    <dd class="govuk-summary-list__value">
+      <% if @communication_log.body.present? %>
+        <%= render_markdown(@communication_log.body) %>
+      <% else %>
+        <%= t(".not_available") %>
+      <% end %>
+    </dd>
+  </div>
+</dl>

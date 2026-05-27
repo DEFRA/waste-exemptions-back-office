@@ -12,6 +12,9 @@ RSpec.describe "Renews" do
 
     before do
       sign_in(user) if defined?(user)
+
+      allow(WasteExemptionsEngine.configuration)
+        .to receive(:renewal_window_before_expiry_in_days).and_return(28)
     end
 
     context "when a data agent user is signed in" do

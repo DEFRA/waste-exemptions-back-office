@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :registrations, only: %i[show index], param: :reference do
     get "certificate", to: "certificates#show", as: :certificate
     get "communication_logs", to: "communication_logs#index", as: :communication_logs
+    get "communication_logs/:id", to: "communication_logs#show", as: :communication_log
     get "change_history", to: "change_history#index", as: :change_history
     get "payments", to: "payments#new", as: :add_payment_form
     post "payments", to: "payments#create", as: :add_payment
@@ -155,6 +156,114 @@ Rails.application.routes.draw do
 
   get "/testing/create_registration/:expiry_date",
       to: "testing#create_registration"
+
+  # Editing: Back office
+  scope "/:token" do
+    resources :reason_for_change_forms,
+              only: %i[new create],
+              path: "reason-for-change",
+              path_names: { new: "" }
+
+    resources :operation_sites_forms,
+              only: %i[new create],
+              path: "operation_sites",
+              path_names: { new: "" } do
+                get ":site_id",
+                    to: "operation_sites_forms#edit_site",
+                    as: "edit_site",
+                    on: :collection
+              end
+
+    resources :edit_forms,
+              only: %i[new create],
+              path: "edit",
+              path_names: { new: "" } do
+                get "main_people",
+                    to: "edit_forms#edit_main_people",
+                    as: "main_people",
+                    on: :collection
+
+                get "registration_number",
+                    to: "edit_forms#edit_registration_number",
+                    as: "registration_number",
+                    on: :collection
+
+                get "operator_name",
+                    to: "edit_forms#edit_operator_name",
+                    as: "operator_name",
+                    on: :collection
+
+                get "operator_postcode",
+                    to: "edit_forms#edit_operator_postcode",
+                    as: "operator_postcode",
+                    on: :collection
+
+                get "contact_name",
+                    to: "edit_forms#edit_contact_name",
+                    as: "contact_name",
+                    on: :collection
+
+                get "contact_position",
+                    to: "edit_forms#edit_contact_position",
+                    as: "contact_position",
+                    on: :collection
+
+                get "contact_phone",
+                    to: "edit_forms#edit_contact_phone",
+                    as: "contact_phone",
+                    on: :collection
+
+                get "contact_email",
+                    to: "edit_forms#edit_contact_email",
+                    as: "contact_email",
+                    on: :collection
+
+                get "contact_postcode",
+                    to: "edit_forms#edit_contact_postcode",
+                    as: "contact_postcode",
+                    on: :collection
+
+                get "on_a_farm",
+                    to: "edit_forms#edit_on_a_farm",
+                    as: "on_a_farm",
+                    on: :collection
+
+                get "is_a_farmer",
+                    to: "edit_forms#edit_is_a_farmer",
+                    as: "is_a_farmer",
+                    on: :collection
+
+                get "operation_sites",
+                    to: "edit_forms#edit_operation_sites",
+                    as: "operation_sites",
+                    on: :collection
+
+                get "site_grid_reference",
+                    to: "edit_forms#edit_site_grid_reference",
+                    as: "site_grid_reference",
+                    on: :collection
+
+                get "cancel",
+                    to: "edit_forms#cancel",
+                    as: "cancel",
+                    on: :collection
+              end
+
+    resources :edit_complete_forms,
+              only: %i[new create],
+              path: "edit-complete",
+              path_names: { new: "" }
+
+    resources :confirm_edit_cancelled_forms,
+              only: %i[new create],
+              path: "confirm-edit-cancelled",
+              path_names: { new: "" }
+
+    resources :edit_cancelled_forms,
+              only: %i[new create],
+              path: "edit-cancelled",
+              path_names: { new: "" }
+  end
 
   # Engine
   mount WasteExemptionsEngine::Engine => "/"
