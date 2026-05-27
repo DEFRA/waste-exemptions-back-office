@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Payment details" do
   def charge_breakdown_rows
-    Nokogiri::HTML(response.body).css("table.govuk-table").first.css("tbody tr").map do |row|
+    response.parsed_body.css("table.govuk-table").first.css("tbody tr").map do |row|
       row.css("td").map { |cell| cell.text.squish }
     end
   end
