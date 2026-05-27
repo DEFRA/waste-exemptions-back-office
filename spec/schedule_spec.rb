@@ -15,7 +15,7 @@ RSpec.describe "Whenever::Test::Schedule" do
 
   it "makes sure 'rake_and_format' statements exist" do
     rake_jobs = schedule.jobs[:rake_and_format]
-    expect(rake_jobs.count).to eq(15)
+    expect(rake_jobs.count).to eq(16)
 
     epr_jobs = rake_jobs.select { |j| j[:task] == "reports:export:epr" }
     expect(epr_jobs.count).to eq(1)
@@ -104,6 +104,13 @@ RSpec.describe "Whenever::Test::Schedule" do
 
     expect(job_details[:every][0]).to eq(:day)
     expect(job_details[:every][1][:at]).to eq("03:05")
+  end
+
+  it "picks up the SSCL receipts export generation run frequency and time" do
+    job_details = schedule.jobs[:rake_and_format].find { |h| h[:task] == "reports:export:sscl_receipts" }
+
+    expect(job_details[:every][0]).to eq(:day)
+    expect(job_details[:every][1][:at]).to eq("05:45")
   end
 
   it "picks up the transient registration cleanup execution run frequency and time" do
