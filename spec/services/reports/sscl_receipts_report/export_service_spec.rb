@@ -6,11 +6,10 @@ module Reports
   module SsclReceiptsReport
     RSpec.describe ExportService do
       describe ".run" do
-        around do |example|
-          travel_to(Time.zone.local(2026, 5, 26, 10, 30, 15)) { example.run }
+        before do
+          travel_to(Time.zone.local(2026, 5, 26, 10, 30, 15))
+          allow(Airbrake).to receive(:notify)
         end
-
-        before { allow(Airbrake).to receive(:notify) }
 
         context "when the request succeeds" do
           before do
