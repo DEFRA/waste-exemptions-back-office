@@ -35,7 +35,8 @@ module RenewalReminders
     private
 
     def template
-      "931a9338-9177-4470-a51a-3a6991561863"
+      # "931a9338-9177-4470-a51a-3a6991561863"
+      "f4336132-e515-45e7-a7f2-58309b382ef7"
     end
 
     def personalisation
