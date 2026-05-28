@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../concerns/can_load_file_to_aws"
-
 module Reports
   module SsclReceiptsReport
     class ExportService < WasteExemptionsEngine::BaseService
