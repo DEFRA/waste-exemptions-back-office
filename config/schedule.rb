@@ -89,6 +89,12 @@ every :day, at: ENV["EXPORT_SERVICE_BOXI_EXPORT_TIME"] || "03:05", roles: [:db] 
   rake_and_format "reports:export:boxi"
 end
 
+# This is the SSCL receipts export job. When run, it will generate a CSV file
+# containing SSCL receipt details for payments since charging started.
+every :day, at: ENV["EXPORT_SERVICE_SSCL_RECEIPTS_EXPORT_TIME"] || "05:45", roles: [:db] do
+  rake_and_format "reports:export:sscl_receipts"
+end
+
 # This is the second renewal email reminder job. For each registration expiring
 # in 14 days time, it will generate and send the second email reminder
 every :day, at: ENV["SECOND_RENEWAL_EMAIL_REMINDER_DAILY_RUN_TIME"] || "04:05", roles: [:db] do

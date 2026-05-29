@@ -8,6 +8,11 @@ namespace :reports do
       Reports::FinanceDataReport::ExportService.run
     end
 
+    desc "Generate the SSCL receipts report and upload it to S3."
+    task sscl_receipts: :environment do
+      Reports::SsclReceiptsReport::ExportService.run
+    end
+
     desc "Generate the EPR report and upload it to S3."
     task epr: :environment do
       Reports::EprExportService.run
