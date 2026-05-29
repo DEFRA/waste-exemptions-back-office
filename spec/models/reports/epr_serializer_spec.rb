@@ -63,7 +63,7 @@ module Reports
       end
 
       it "writes exemption details as a string in CSV format" do
-        expect(rows.last.split(",").length).to eq expected_columns.length
+        expect(CSV.parse_line(rows.last).length).to eq expected_columns.length
       end
 
       context "when the presenter encounters an error" do

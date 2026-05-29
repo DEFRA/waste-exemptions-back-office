@@ -16,5 +16,9 @@ en:
         heading: "Daily finance data export"
         exported_at:  "This file was created at %{export_executed_at}."
         not_yet_exported: "The file has not yet been generated"
+      sscl_receipts:
+        heading: "SSCL receipts export"
+        exported_at: "The most recent file was created at %{export_executed_at}."
+        not_yet_exported: "The file has not yet been generated"
     reports:
       generated_report: "Registration Data Export"
