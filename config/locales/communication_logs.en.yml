@@ -19,5 +19,6 @@ en:
       sent_to: "Sent to"
       sent_on: "Sent on"
       delivery_status: "Delivery status"
+      subject: "Subject"
       content: "Content"
       not_available: "Not available"
