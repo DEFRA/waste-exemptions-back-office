@@ -13,7 +13,7 @@ This service is currently beta public and has been developed in accordance with 
 
 This project is the back office application which internal staff use to register and manage exemptions via the assisted digital route. It uses the [waste-exemptions-engine](https://github.com/DEFRA/waste-exemptions-engine).
 
-## Prequisites
+## Prerequisites
 
 You'll need [Ruby 3.4.6](https://www.ruby-lang.org/en/) installed plus the [Bundler](http://bundler.io/) gem.
 
@@ -70,7 +70,7 @@ If that's the case use `bundle exec rails s -p 8000` swapping `8000` for whateve
 
 The `defra_ruby_mocks` gem allows us to simulate the production GOV.UK Pay API, which behaves differently to the GOV.UK sandbox API. Refer to the mocks gem README for details.
 
-In order to use the govpay mock you'll need to provide applicaton-specific configuration details:
+In order to use the govpay mock you'll need to provide application-specific configuration details:
 - The root Govpay mock URLs for both front- and back-office. Both are required because the mocks for front-office point at back-office and vice-versa, and the mock gem needs to know both values for the two hosting applications.
 - The external URL for both applications. These are required because the mock gem needs to map from internal-EC2 only URLs to externally accessible URLs.
 
