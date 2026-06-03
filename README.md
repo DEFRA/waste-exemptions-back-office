@@ -13,7 +13,7 @@ This service is currently beta public and has been developed in accordance with 
 
 This project is the back office application which internal staff use to register and manage exemptions via the assisted digital route. It uses the [waste-exemptions-engine](https://github.com/DEFRA/waste-exemptions-engine).
 
-## Prequisites
+## Prerequisites
 
 You'll need [Ruby 3.4.6](https://www.ruby-lang.org/en/) installed plus the [Bundler](http://bundler.io/) gem.
 
@@ -70,7 +70,7 @@ If that's the case use `bundle exec rails s -p 8000` swapping `8000` for whateve
 
 The `defra_ruby_mocks` gem allows us to simulate the production GOV.UK Pay API, which behaves differently to the GOV.UK sandbox API. Refer to the mocks gem README for details.
 
-In order to use the govpay mock you'll need to provide applicaton-specific configuration details:
+In order to use the govpay mock you'll need to provide application-specific configuration details:
 - The root Govpay mock URLs for both front- and back-office. Both are required because the mocks for front-office point at back-office and vice-versa, and the mock gem needs to know both values for the two hosting applications.
 - The external URL for both applications. These are required because the mock gem needs to map from internal-EC2 only URLs to externally accessible URLs.
 
@@ -119,6 +119,50 @@ To run all the tests, use `bundle exec rspec` or `bundle exec rake`.
 ## Debugging
 
 Add breakpoints with `remote_byebug` and run `./bin/byebug` from *within your vagrant box* to start a session.
+
+## Releasing
+
+Two scripts automate the release workflow.
+
+### Preparing a release
+
+```bash
+bin/prepare-release
+```
+
+The script will:
+
+1. Verify you are on `main` and pull the latest changes.
+2. Check that `CHANGELOG_GITHUB_TOKEN` is set (a GitHub personal access token required by the changelog generator).
+3. Prompt for the next version number (suggests an incremented patch, e.g. `v1.30.1`).
+4. Create a `release/vX.Y.Z` branch.
+5. Optionally run `bundle update`, RuboCop, and RSpec — if you choose to update dependencies.
+6. Commit `Gemfile.lock` (with a detailed message listing gem version changes).
+7. Generate the changelog via `bundle exec rake changelog`.
+8. Commit `CHANGELOG.md`.
+9. Print next steps (push the branch and open a PR).
+
+The script **does not** push the branch or create the pull request — those are left for you to do manually.
+
+If the script is re-run on an existing `release/v*` branch it will skip the main-branch check and resume from where it left off.
+
+### Completing a release
+
+After the release PR has been merged on GitHub, run from the release branch:
+
+```bash
+bin/complete-release
+```
+
+The script will:
+
+1. Verify you are on a `release/vX.Y.Z` branch and extract the version.
+2. Verify the release branch has been merged into `main` (supports regular, squash, and rebase merges).
+3. Switch to `main` and pull the latest changes.
+4. Create an annotated git tag for the version.
+5. Print next steps (push the tag).
+
+The script **does not** push the tag — that is left for you to do manually.
 
 ## Contributing to this project
 
