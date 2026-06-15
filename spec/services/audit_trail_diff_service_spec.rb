@@ -82,6 +82,42 @@ RSpec.describe AuditTrailDiffService do
           ]
           expect(service.run(older_version_json: version_eight, newer_version_json: version_nine)).to eq(expected_output)
         end
+
+        it "contains site EA area updates" do
+          older_version = {
+            addresses: [
+              site_address_version(area: "Thames")
+            ]
+          }.to_json
+          newer_version = {
+            addresses: [
+              site_address_version(area: "Wessex")
+            ]
+          }.to_json
+
+          expect(service.run(older_version_json: older_version, newer_version_json: newer_version)).to eq(
+            [["~", "addresses.site_area", "Thames", "Wessex"]]
+          )
+        end
+
+        it "distinguishes multisite addresses by site suffix" do
+          older_version = {
+            addresses: [
+              site_address_version(area: "Thames", site_suffix: "00001", description: "Site 1"),
+              site_address_version(area: "Wessex", site_suffix: "00002", description: "Site 2")
+            ]
+          }.to_json
+          newer_version = {
+            addresses: [
+              site_address_version(area: "Yorkshire", site_suffix: "00001", description: "Site 1"),
+              site_address_version(area: "Wessex", site_suffix: "00002", description: "Site 2")
+            ]
+          }.to_json
+
+          expect(service.run(older_version_json: older_version, newer_version_json: newer_version)).to eq(
+            [["~", "addresses.site_area", "Thames", "Yorkshire"]]
+          )
+        end
       end
 
       context "with registration exemption changes" do
@@ -97,5 +133,16 @@ RSpec.describe AuditTrailDiffService do
         end
       end
     end
+  end
+
+  def site_address_version(area:, site_suffix: nil, description: "Site description")
+    {
+      address_type: "site",
+      site_suffix: site_suffix,
+      mode: "auto",
+      grid_reference: "ST 58132 72695",
+      description: description,
+      area: area
+    }.compact
   end
 end

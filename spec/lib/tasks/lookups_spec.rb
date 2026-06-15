@@ -69,4 +69,20 @@ RSpec.describe "Lookups task", :vcr, type: :rake do
     end
   end
 
+  describe "lookups:update:ea_area" do
+    before do
+      subject.reenable
+      allow(CheckEaAreaService).to receive(:run)
+    end
+
+    it "runs the EA area check service" do
+      subject.invoke
+
+      expect(CheckEaAreaService).to have_received(:run).with(
+        batch_size: CheckEaAreaService::DEFAULT_BATCH_SIZE,
+        logger: an_instance_of(Logger)
+      )
+    end
+  end
+
 end

@@ -31,6 +31,7 @@ en:
         addresses:
           contact: "Contact address"
           site: "Site address"
+          site_area: "Site EA area"
           operator: "Operator address"
         registration_exemptions:
           expires_on: "Expiry date"
