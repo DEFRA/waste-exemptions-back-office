@@ -11,6 +11,7 @@ class CheckEaAreaService < WasteExemptionsEngine::BaseService
     @batch_size = [batch_size.to_i, 1].max
     @logger = logger
     @result = %i[registrations_checked sites_checked sites_updated site_errors].index_with(0)
+    @site_errors = []
 
     log("Checking EA areas for active registration sites")
 
@@ -21,12 +22,13 @@ class CheckEaAreaService < WasteExemptionsEngine::BaseService
     end
 
     log_summary
+    log_site_errors
     @result
   end
 
   private
 
-  attr_reader :logger, :result
+  attr_reader :logger, :result, :site_errors
 
   def active_registrations
     WasteExemptionsEngine::Registration
@@ -69,8 +71,7 @@ class CheckEaAreaService < WasteExemptionsEngine::BaseService
     log_area_update(registration, site_address, previous_area, new_area)
   rescue StandardError => e
     result[:site_errors] += 1
-    notify_airbrake(e, registration, site_address)
-    log_area_error(registration, site_address, e)
+    site_errors << area_error_message(registration, site_address, e)
   end
 
   def determine_area(site_address)
@@ -86,9 +87,9 @@ class CheckEaAreaService < WasteExemptionsEngine::BaseService
         "previous_area=#{previous_area.inspect} new_area=#{new_area.inspect}")
   end
 
-  def log_area_error(registration, site_address, error)
-    log("EA area check error #{site_details(registration, site_address)} " \
-        "error_class=#{error.class.name} error_message=#{error.message.inspect}", level: :error)
+  def area_error_message(registration, site_address, error)
+    "EA area check error #{site_details(registration, site_address)} " \
+      "error_class=#{error.class.name} error_message=#{error.message.inspect}"
   end
 
   def site_details(registration, site_address)
@@ -102,24 +103,19 @@ class CheckEaAreaService < WasteExemptionsEngine::BaseService
     ].join(" ")
   end
 
-  def notify_airbrake(error, registration, site_address)
-    return unless defined?(Airbrake)
-
-    Airbrake.notify(
-      error,
-      registration_id: registration.id,
-      registration_reference: registration.reference,
-      site_address_id: site_address.id,
-      site_reference: site_address.reference
-    )
-  end
-
   def log_summary
     log(
       "EA area check complete registrations_checked=#{result[:registrations_checked]} " \
       "sites_checked=#{result[:sites_checked]} sites_updated=#{result[:sites_updated]} " \
       "site_errors=#{result[:site_errors]}"
     )
+  end
+
+  def log_site_errors
+    return if site_errors.empty?
+
+    log("EA area check errors:")
+    site_errors.each { |site_error| log(site_error, level: :error) }
   end
 
   def log(message, level: :info)

@@ -10,7 +10,6 @@ RSpec.describe CheckEaAreaService do
 
   before do
     allow(WasteExemptionsEngine::DetermineAreaService).to receive(:run).and_return("Wessex")
-    allow(Airbrake).to receive(:notify)
   end
 
   describe ".run" do
@@ -127,9 +126,13 @@ RSpec.describe CheckEaAreaService do
         allow(WasteExemptionsEngine::DetermineAreaService).to receive(:run).and_raise(StandardError, "lookup failed")
       end
 
-      it "logs the error and continues" do
+      it "collects the error, logs it after the summary, and continues" do
         expect { run_service }.not_to raise_error
 
+        expect(logger).to have_received(:info).with(
+          a_string_including("EA area check complete", "site_errors=1")
+        ).ordered
+        expect(logger).to have_received(:info).with("EA area check errors:").ordered
         expect(logger).to have_received(:error).with(
           a_string_including(
             "EA area check error",
@@ -138,20 +141,7 @@ RSpec.describe CheckEaAreaService do
             "error_class=StandardError",
             'error_message="lookup failed"'
           )
-        )
-      end
-
-      it "notifies Airbrake" do
-        run_service
-
-        expect(Airbrake).to have_received(:notify).with(
-          an_instance_of(StandardError),
-          hash_including(
-            registration_id: registration.id,
-            registration_reference: registration.reference,
-            site_address_id: site_address.id
-          )
-        )
+        ).ordered
       end
     end
 
