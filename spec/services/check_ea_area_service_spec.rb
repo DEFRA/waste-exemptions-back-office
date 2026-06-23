@@ -10,6 +10,7 @@ RSpec.describe CheckEaAreaService do
 
   before do
     allow(WasteExemptionsEngine::DetermineAreaService).to receive(:run).and_return("Wessex")
+    allow(RecordEaAreaChangeHistoryService).to receive(:run)
   end
 
   describe ".run" do
@@ -39,6 +40,12 @@ RSpec.describe CheckEaAreaService do
         )
       end
 
+      it "records change history for changed EA areas" do
+        run_service
+
+        expect(RecordEaAreaChangeHistoryService).to have_received(:run).with(registration: registration)
+      end
+
       it "returns a processing summary" do
         expect(run_service).to include(
           registrations_checked: 1,
@@ -61,6 +68,12 @@ RSpec.describe CheckEaAreaService do
 
         it "does not update the site" do
           expect { run_service }.not_to change { site_address.reload.updated_at }
+        end
+
+        it "does not record change history" do
+          run_service
+
+          expect(RecordEaAreaChangeHistoryService).not_to have_received(:run)
         end
       end
     end
@@ -168,24 +181,4 @@ RSpec.describe CheckEaAreaService do
     end
   end
 
-  describe "change history", :versioning do
-    let(:registration) { create(:registration, :with_active_exemptions) }
-    let(:site_address) { registration.site_address }
-
-    before do
-      site_address.update!(area: "Thames")
-      registration.addresses.reload
-      registration.reason_for_change = "Baseline area"
-      registration.paper_trail.save_with_version
-    end
-
-    it "creates a registration version for changed EA areas" do
-      expect { run_service }.to change { registration.reload.versions.count }.by(1)
-
-      change_history = RegistrationChangeHistoryService.run(registration)
-      expect(change_history.last[:changed]).to include(["~", "addresses.site_area", "Thames", "Wessex"])
-      expect(change_history.last[:reason_for_change]).to eq(described_class::CHANGE_REASON)
-      expect(change_history.last[:changed_by]).to eq(described_class::VERSION_AUTHOR)
-    end
-  end
 end

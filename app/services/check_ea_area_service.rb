@@ -2,8 +2,6 @@
 
 class CheckEaAreaService < WasteExemptionsEngine::BaseService
   DEFAULT_BATCH_SIZE = 1000
-  CHANGE_REASON = "EA area checked and updated"
-  VERSION_AUTHOR = "System"
 
   class EaAreaLookupError < StandardError; end
 
@@ -15,10 +13,8 @@ class CheckEaAreaService < WasteExemptionsEngine::BaseService
 
     log("Checking EA areas for active registration sites")
 
-    PaperTrail.request(whodunnit: VERSION_AUTHOR) do
-      active_registrations.find_each(batch_size: @batch_size) do |registration|
-        process_registration(registration)
-      end
+    active_registrations.find_each(batch_size: @batch_size) do |registration|
+      process_registration(registration)
     end
 
     log_summary
@@ -63,8 +59,7 @@ class CheckEaAreaService < WasteExemptionsEngine::BaseService
 
     ActiveRecord::Base.transaction do
       site_address.update!(area: new_area)
-      registration.reason_for_change = CHANGE_REASON
-      registration.paper_trail.save_with_version
+      RecordEaAreaChangeHistoryService.run(registration:)
     end
 
     result[:sites_updated] += 1
