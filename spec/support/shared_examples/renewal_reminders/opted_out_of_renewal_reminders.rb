@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.shared_examples "opted out of renewal reminder" do
   let(:registration) { create(:registration, reminder_opt_in: false) }
+
   it "does not send an email" do
     expect(run_service).not_to be_a(Notifications::Client::ResponseNotification)
   end
