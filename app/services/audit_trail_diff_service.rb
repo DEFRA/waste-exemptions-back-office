@@ -32,10 +32,18 @@ class AuditTrailDiffService < WasteExemptionsEngine::BaseService
 
   def reduce_array(array)
     if array.first.is_a?(Hash) && array.first.key?("address_type")
-      array.index_by { |a| a["address_type"] || SecureRandom.uuid }
+      array.index_by { |address| address_identifier(address) }
     else
       array.map { |a| reduce(a) }
     end
+  end
+
+  def address_identifier(address_hash)
+    address_type = address_hash["address_type"]
+    return SecureRandom.uuid if address_type.blank?
+    return address_type unless address_type == "site" && address_hash["site_suffix"].present?
+
+    "#{address_type}_#{address_hash['site_suffix']}"
   end
 
   def json_to_hash(json_str)
@@ -72,7 +80,9 @@ class AuditTrailDiffService < WasteExemptionsEngine::BaseService
   def build_change_entry(change)
     change_type, identifier, data, additional = change
 
-    if identifier.include?("addresses.")
+    if address_area_change?(identifier)
+      process_address_area_change(identifier)
+    elsif identifier.include?("addresses.")
       process_address_change(identifier)
     elsif identifier.include?("registration_exemptions")
       process_registration_exemptions_change(identifier)
@@ -81,13 +91,29 @@ class AuditTrailDiffService < WasteExemptionsEngine::BaseService
     end
   end
 
-  def process_address_change(identifier)
-    address_type = identifier.split(".")[1]
-    older_address_text = address_hash_to_text(@older_version.dig("addresses", address_type))
-    newer_address_text = address_hash_to_text(@newer_version.dig("addresses", address_type))
+  def address_area_change?(identifier)
+    identifier.match?(/\Aaddresses\.[^.]+\.area\z/)
+  end
 
-    column_identifier = identifier.split(".").first(2).join(".")
+  def process_address_area_change(identifier)
+    address_key = identifier.split(".")[1]
+    older_area = @older_version.dig("addresses", address_key, "area")
+    newer_area = @newer_version.dig("addresses", address_key, "area")
+
+    generate_update_row("addresses.#{normalised_address_key(address_key)}_area", older_area, newer_area)
+  end
+
+  def process_address_change(identifier)
+    address_key = identifier.split(".")[1]
+    older_address_text = address_hash_to_text(@older_version.dig("addresses", address_key))
+    newer_address_text = address_hash_to_text(@newer_version.dig("addresses", address_key))
+
+    column_identifier = "addresses.#{normalised_address_key(address_key)}"
     generate_update_row(column_identifier, older_address_text, newer_address_text)
+  end
+
+  def normalised_address_key(address_key)
+    address_key.start_with?("site") ? "site" : address_key
   end
 
   def process_registration_exemptions_change(identifier)
