@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: e25ef432f71b8216545ea45237e5ca74e73c149a
+  revision: 63fb2cfcfd9a36f202d7b85f26a502fae0cd6849
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -157,7 +157,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cgi (0.5.1)
+    cgi (0.5.2)
     chronic (0.10.2)
     coderay (1.1.3)
     concurrent-ruby (1.3.7)
@@ -271,7 +271,7 @@ GEM
       rainbow (>= 2.2.1)
       rake (>= 10.0)
       retriable (~> 3.0)
-    globalid (1.3.0)
+    globalid (1.4.0)
       activesupport (>= 6.1)
     govuk_design_system_formbuilder (6.2.0)
       actionview (>= 7.2)
@@ -285,7 +285,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.1.6)
       domain_name (~> 0.5)
-    i18n (1.14.8)
+    i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     io-console (0.8.2)
     irb (1.18.0)
@@ -391,7 +391,7 @@ GEM
     pg (1.6.3-x86_64-linux-musl)
     pgreset (0.4)
     phonelib (0.10.22)
-    pp (0.6.3)
+    pp (0.6.4)
       prettyprint
     prettyprint (0.2.0)
     prism (1.9.0)
@@ -609,7 +609,7 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     webrick (1.9.2)
     websocket (1.2.11)
-    websocket-driver (0.8.1)
+    websocket-driver (0.8.2)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -731,7 +731,7 @@ CHECKSUMS
   byebug (13.0.0) sha256=d2263efe751941ca520fa29744b71972d39cbc41839496706f5d9b22e92ae05d
   cancancan (3.6.1) sha256=975c1d5cbf58d5df48a9452a7f61ae3d254608cd87570402f5925a8864c56b62
   capybara (3.40.0) sha256=42dba720578ea1ca65fd7a41d163dd368502c191804558f6e0f71b391054aeef
-  cgi (0.5.1) sha256=e93fcafc69b8a934fe1e6146121fa35430efa8b4a4047c4893764067036f18e9
+  cgi (0.5.2) sha256=61ca30298171190fd4fa0d8018e57ada456eae9b7a2b78526debf7f0a0e6f8bb
   chronic (0.10.2) sha256=766f2fcce6ac3cc152249ed0f2b827770d3e517e2e87c5fba7ed74f4889d2dc3
   coderay (1.1.3) sha256=dc530018a4684512f8f38143cd2a096c9f02a1fc2459edcfe534787a7fc77d4b
   concurrent-ruby (1.3.7) sha256=4412caec3a5ea2e5fdc52076724c071a81f2c0593d83b2ac8cbb8ca63b3151b0
@@ -783,14 +783,14 @@ CHECKSUMS
   ffi (1.17.4-x86_64-linux-musl) sha256=3fdf9888483de005f8ef8d1cf2d3b20d86626af206cbf780f6a6a12439a9c49e
   ffi-geos (1.2.2) sha256=295ff6294162fa4d7993764cc538f84ce23a1ccc1bdada78c54bf9bb875cbfd8
   github_changelog_generator (1.15.2) sha256=b1faa5f54ddd38140d875ee96a244034c0c578e0714ebde2b7091e98d86ceaff
-  globalid (1.3.0) sha256=05c639ad6eb4594522a0b07983022f04aa7254626ab69445a0e493aa3786ff11
+  globalid (1.4.0) sha256=037f12fbf1d9d7a014d501c2d5c77356fd4ddd96d7a7991d6700bba96706f427
   govuk_design_system_formbuilder (6.2.0) sha256=d8cd1543776b7b15ba3d1774f16e3b8458c59446b0cad56ccbbc1e517a575e93
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   high_voltage (3.1.2) sha256=7786716114cc21b3754e537818a6d9b2c91aa1126aa77272977d50598e556c2f
   html-attributes-utils (1.0.2) sha256=594e0b37b3dd4e554abe893bee9719896f876675fd08fe534fc2e6e1b4e2538c
   http-accept (1.7.0) sha256=c626860682bfbb3b46462f8c39cd470fd7b0584f61b3cc9df5b2e9eb9972a126
   http-cookie (1.1.6) sha256=ba4b82be64de61dc281243dac70e3c382c45142f20268ed9276a3670c93feaa9
-  i18n (1.14.8) sha256=285778639134865c5e0f6269e0b818256017e8cde89993fdfcbfb64d088824a5
+  i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
   io-console (0.8.2) sha256=d6e3ae7a7cc7574f4b8893b4fca2162e57a825b223a177b7afa236c5ef9814cc
   irb (1.18.0) sha256=de9454a0703a54704b9811a5ef31a60c86949fbf4013fcf244fabc7c775248e3
   jmespath (1.6.2) sha256=238d774a58723d6c090494c8879b5e9918c19485f7e840f2c1c7532cf84ebcb1
@@ -847,7 +847,7 @@ CHECKSUMS
   pg (1.6.3-x86_64-linux-musl) sha256=9c9c90d98c72f78eb04c0f55e9618fe55d1512128e411035fe229ff427864009
   pgreset (0.4) sha256=2115e10927554b91554e6077224ba0d0f1af44feeff18b2d7a246c10feea4c31
   phonelib (0.10.22) sha256=072183c6b85408f43e5d0ab116ed1b2707f0a324e6efe1f3d866ff900f104daf
-  pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
+  pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
   pry (0.16.0) sha256=d76c69065698ed1f85e717bd33d7942c38a50868f6b0673c636192b3d1b6054e
@@ -931,7 +931,7 @@ CHECKSUMS
   webmock (3.26.2) sha256=774556f2ea6371846cca68c01769b2eac0d134492d21f6d0ab5dd643965a4c90
   webrick (1.9.2) sha256=beb4a15fc474defed24a3bda4ffd88a490d517c9e4e6118c3edce59e45864131
   websocket (1.2.11) sha256=b7e7a74e2410b5e85c25858b26b3322f29161e300935f70a0e0d3c35e0462737
-  websocket-driver (0.8.1) sha256=5ab238238ce230e5d4b262d2be39624c867914eab99171dc4952b58b577c2d96
+  websocket-driver (0.8.2) sha256=97c556b019bf3410b4961002ac501621e9322d3f8a7bc02161a09301cc4c4146
   websocket-extensions (0.1.5) sha256=1c6ba63092cda343eb53fc657110c71c754c56484aad42578495227d717a8241
   whenever (1.1.2) sha256=af139a25cf6b5c7d2122686724c0b9a4a7495135a1f79a404e29f4cce48abd83
   whenever-test (1.0.1) sha256=ab4be9d79547b50c1cd9881aef1dcb6cd2636b5d773d5beb45caf6da730a3fb6
