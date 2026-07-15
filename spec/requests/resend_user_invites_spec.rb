@@ -92,6 +92,22 @@ RSpec.describe "Resend User Invites" do
         end
       end
 
+      context "when sending the invitation email fails" do
+        before do
+          allow(User).to receive(:find).and_return(invited_user)
+          allow(invited_user).to receive(:invite!).and_raise(StandardError)
+          allow(Airbrake).to receive(:notify)
+        end
+
+        it "notifies Airbrake and redirects to the user list with an error message" do
+          post "/users/resend-invite/#{invited_user.id}"
+          follow_redirect!
+
+          expect(response.body).to include(I18n.t("resend_user_invites.messages.failure_details"))
+          expect(Airbrake).to have_received(:notify)
+        end
+      end
+
       context "when the user has already accepted their invitation" do
         it "does not send an email and redirects to the user list" do
           expect { post "/users/resend-invite/#{accepted_user.id}" }
