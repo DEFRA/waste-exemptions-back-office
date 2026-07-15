@@ -37,6 +37,9 @@ en:
           activate:
             link_text: Activate
             visually_hidden_text: " %{email}"
+          resend_invite:
+            link_text: Resend invite
+            visually_hidden_text: " to %{email}"
   activerecord:
     errors:
       models:

@@ -22,6 +22,16 @@ RSpec.describe "Users" do
         expect(response.body).to include(active_user.email)
         expect(response.body).not_to include(deactivated_user.email)
       end
+
+      it "includes a resend invite link only for users with a pending invitation" do
+        invited_user = create(:user, :invited, email: "invited@example.com")
+        accepted_user = create(:user, email: "accepted@example.com")
+
+        get "/users"
+
+        expect(response.body).to include(resend_user_invite_form_path(invited_user.id))
+        expect(response.body).not_to include(resend_user_invite_form_path(accepted_user.id))
+      end
     end
 
     context "when a non-admin_team_user user is signed in" do
