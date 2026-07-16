@@ -7,7 +7,9 @@ class ResendUserInvitesController < ApplicationController
   before_action :assign_user
   before_action :check_invitation_pending
 
-  def new; end
+  def new
+    # Renders the confirmation page; @user is assigned by the before_actions
+  end
 
   def create
     resend_invite
