@@ -44,5 +44,11 @@ FactoryBot.define do
     trait :inactive do
       active { false }
     end
+
+    trait :invited do
+      invitation_token { SecureRandom.hex(20) }
+      invitation_created_at { 1.day.ago }
+      invitation_sent_at { 1.day.ago }
+    end
   end
 end

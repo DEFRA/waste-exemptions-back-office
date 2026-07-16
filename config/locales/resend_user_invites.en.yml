@@ -1,0 +1,12 @@
+en:
+  resend_user_invites:
+    new:
+      title: "Resend invite"
+      heading: "Resend invite"
+      paragraph_1: "You are about to resend an invitation email to this user:"
+      paragraph_2: "This will send a new invitation link and reset its expiry date. Links in previous invitation emails will stop working."
+      button: "Resend invite"
+    messages:
+      success: "Invitation email sent to %{email}"
+      failure: "We could not send an invitation email to %{email}"
+      failure_details: "The error has been logged. Try again later or contact an administrator."
