@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   post "/users/activate/:id", to: "user_activations#activate", as: :activate_user
   post "/users/deactivate/:id", to: "user_activations#deactivate", as: :deactivate_user
 
+  get "/users/resend-invite/:id", to: "resend_user_invites#new", as: :resend_user_invite_form
+  post "/users/resend-invite/:id", to: "resend_user_invites#create", as: :resend_user_invite
+
   # Confirmation Letter
   get "/confirmation-letter/:id", to: "confirmation_letter#show", as: :confirmation_letter
 
