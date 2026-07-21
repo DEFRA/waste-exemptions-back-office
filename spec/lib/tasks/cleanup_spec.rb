@@ -78,4 +78,16 @@ RSpec.describe "Cleanup task", type: :rake do
       expect(IdentifyRegistrationsWithoutExemptionsOrSitesService).to have_received(:run)
     end
   end
+
+  describe "cleanup:delete_registration" do
+    let(:rake_task) { Rake::Task["cleanup:delete_registration"] }
+
+    after { rake_task.reenable }
+
+    it "runs the DeleteRegistrationWithoutExemptionsService with the given reference" do
+      allow(DeleteRegistrationWithoutExemptionsService).to receive(:run)
+      rake_task.invoke("WEX492684")
+      expect(DeleteRegistrationWithoutExemptionsService).to have_received(:run).with(reference: "WEX492684")
+    end
+  end
 end

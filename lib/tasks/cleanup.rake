@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 namespace :cleanup do
   desc "Remove old transient_registrations from the database"
   task transient_registrations: :environment do
@@ -28,4 +29,20 @@ namespace :cleanup do
       puts CommandLineTableFormatter.new(rows).render if rows.any?
     end
   end
+
+  desc "Delete a registration by reference (e.g. WEX000123), only if it has no exemptions"
+  task :delete_registration, [:reference] => :environment do |_task, args|
+    reference = args[:reference].to_s.strip
+    outcome = DeleteRegistrationWithoutExemptionsService.run(reference: reference)
+
+    unless Rails.env.test?
+      message = case outcome
+                when :deleted then "Deleted registration #{reference}"
+                when :has_exemptions then "Registration #{reference} has exemptions - not deleting"
+                else "No registration found with reference #{reference.inspect}"
+                end
+      puts message
+    end
+  end
 end
+# rubocop:enable Metrics/BlockLength
