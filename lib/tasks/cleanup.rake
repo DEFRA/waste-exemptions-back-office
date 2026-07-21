@@ -18,4 +18,14 @@ namespace :cleanup do
   task remove_expired_registrations: :environment do
     ExpiredRegistrationCleanupService.run
   end
+
+  desc "Identify registrations with no registration_exemptions or no site addresses"
+  task identify_registrations_without_exemptions_or_sites: :environment do
+    rows = IdentifyRegistrationsWithoutExemptionsOrSitesService.run
+
+    unless Rails.env.test?
+      puts "Found #{rows.length} registration(s) with no exemptions or no sites \n\n"
+      puts CommandLineTableFormatter.new(rows).render if rows.any?
+    end
+  end
 end

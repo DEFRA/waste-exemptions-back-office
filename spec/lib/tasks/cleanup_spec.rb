@@ -64,4 +64,18 @@ RSpec.describe "Cleanup task", type: :rake do
       }.from(2).to(1)
     end
   end
+
+  describe "cleanup:identify_registrations_without_exemptions_or_sites" do
+    let(:rake_task) { Rake::Task["cleanup:identify_registrations_without_exemptions_or_sites"] }
+
+    after { rake_task.reenable }
+
+    it { expect { rake_task.invoke }.not_to raise_error }
+
+    it "runs the IdentifyRegistrationsWithoutExemptionsOrSitesService" do
+      allow(IdentifyRegistrationsWithoutExemptionsOrSitesService).to receive(:run)
+      rake_task.invoke
+      expect(IdentifyRegistrationsWithoutExemptionsOrSitesService).to have_received(:run)
+    end
+  end
 end
