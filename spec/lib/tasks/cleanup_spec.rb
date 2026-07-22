@@ -64,4 +64,42 @@ RSpec.describe "Cleanup task", type: :rake do
       }.from(2).to(1)
     end
   end
+
+  describe "cleanup:identify_registrations_without_exemptions_or_sites" do
+    let(:rake_task) { Rake::Task["cleanup:identify_registrations_without_exemptions_or_sites"] }
+
+    after { rake_task.reenable }
+
+    it { expect { rake_task.invoke }.not_to raise_error }
+
+    it "runs the IdentifyRegistrationsWithoutExemptionsOrSitesService" do
+      allow(IdentifyRegistrationsWithoutExemptionsOrSitesService).to receive(:run)
+      rake_task.invoke
+      expect(IdentifyRegistrationsWithoutExemptionsOrSitesService).to have_received(:run)
+    end
+  end
+
+  describe "cleanup:delete_registration" do
+    let(:rake_task) { Rake::Task["cleanup:delete_registration"] }
+
+    after { rake_task.reenable }
+
+    it "runs the DeleteRegistrationWithoutExemptionsService with the given reference" do
+      allow(DeleteRegistrationWithoutExemptionsService).to receive(:run)
+      rake_task.invoke("WEX492684")
+      expect(DeleteRegistrationWithoutExemptionsService).to have_received(:run).with(reference: "WEX492684")
+    end
+  end
+
+  describe "cleanup:remove_expired_registrations" do
+    let(:rake_task) { Rake::Task["cleanup:remove_expired_registrations"] }
+
+    after { rake_task.reenable }
+
+    it "runs the ExpiredRegistrationCleanupService" do
+      allow(ExpiredRegistrationCleanupService).to receive(:run)
+      rake_task.invoke
+      expect(ExpiredRegistrationCleanupService).to have_received(:run)
+    end
+  end
 end
