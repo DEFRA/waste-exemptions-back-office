@@ -25,8 +25,10 @@ namespace :cleanup do
     rows = IdentifyRegistrationsWithoutExemptionsOrSitesService.run
 
     unless Rails.env.test?
+      # :nocov:
       puts "Found #{rows.length} registration(s) with no exemptions or no sites \n\n"
       puts CommandLineTableFormatter.new(rows).render if rows.any?
+      # :nocov:
     end
   end
 
@@ -36,12 +38,14 @@ namespace :cleanup do
     outcome = DeleteRegistrationWithoutExemptionsService.run(reference: reference)
 
     unless Rails.env.test?
+      # :nocov:
       message = case outcome
                 when :deleted then "Deleted registration #{reference}"
                 when :has_exemptions then "Registration #{reference} has exemptions - not deleting"
                 else "No registration found with reference #{reference.inspect}"
                 end
       puts message
+      # :nocov:
     end
   end
 end
