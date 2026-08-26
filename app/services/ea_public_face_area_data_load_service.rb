@@ -26,7 +26,7 @@ class EaPublicFaceAreaDataLoadService < WasteExemptionsEngine::BaseService
       area: feature.geometry
     }
 
-    area = WasteExemptionsEngine::EaPublicFaceArea.where(code: feature.properties["code"]).first
+    area = WasteExemptionsEngine::EaPublicFaceArea.find_by(code: feature.properties["code"])
 
     if area.present?
       area.update(attributes)
