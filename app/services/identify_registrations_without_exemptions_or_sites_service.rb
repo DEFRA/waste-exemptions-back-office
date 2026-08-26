@@ -10,7 +10,7 @@ class IdentifyRegistrationsWithoutExemptionsOrSitesService < WasteExemptionsEngi
   private
 
   def registrations
-    site_type = WasteExemptionsEngine::Address.address_types.fetch(:site)
+    site_type = WasteExemptionsEngine::Address.address_types.fetch(:site).to_i
 
     WasteExemptionsEngine::Registration
       .where(placeholder: false)
