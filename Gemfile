@@ -68,15 +68,10 @@ gem "whenever", "~> 1.0"
 # Used for auditing and version control
 gem "paper_trail"
 
-# Rails is upgraded ahead of the engine's main branch; pin explicitly so a
-# blanket `bundle update` cannot move it unintentionally
-gem "rails", "~> 8.1.0"
-
 # Use the waste exemptions engine for the user journey from the local repo
-# TODO: switch back to branch "main" once the engine's Rails 8.1 upgrade is merged
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "chore/rails-8-1-prep"
+    branch: "main"
 
 # for handling EA Areas GeoJSON data
 gem "rgeo-geojson"
