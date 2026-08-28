@@ -82,11 +82,13 @@ class ExpiredRegistrationCleanupService < WasteExemptionsEngine::BaseService
   # see: https://github.com/DEFRA/waste-exemptions-engine/pull/218
   def clear_versions_archive!
     ActiveRecord::Base.connection.execute(
-      <<~SQL.squish
-        DELETE FROM version_archives
-        WHERE item_type = 'WasteExemptionsEngine::Registration'
-        AND item_id IN (#{registration_ids.join(', ')})
-      SQL
+      ActiveRecord::Base.sanitize_sql_array(
+        [<<~SQL.squish, registration_ids]
+          DELETE FROM version_archives
+          WHERE item_type = 'WasteExemptionsEngine::Registration'
+          AND item_id IN (?)
+        SQL
+      )
     )
   end
 end

@@ -8,7 +8,7 @@ namespace :one_off do
 
     references.each do |reference|
       print "Updating area for #{reference}..."
-      reg = WasteExemptionsEngine::Registration.where(reference: reference).first
+      reg = WasteExemptionsEngine::Registration.find_by(reference: reference)
       puts reg.site_address.update(area: "West Midlands")
     end
   end

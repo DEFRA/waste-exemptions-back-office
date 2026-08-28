@@ -25,9 +25,10 @@ Bundler.require(*Rails.groups)
 
 module WasteExemptionsBackOffice
   class Application < Rails::Application
-    config.load_defaults 7.1
-    config.autoloader = :classic
-    config.active_job.queue_adapter = :sucker_punch
+    config.load_defaults 8.1
+    # ADR-001 (engine repo, .claude/docs): :async as stopgap after Rails 8.1
+    # removed the sucker_punch adapter; Solid Queue is the planned fast-follow
+    config.active_job.queue_adapter = :async
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

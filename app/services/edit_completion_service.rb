@@ -16,7 +16,7 @@ class EditCompletionService < WasteExemptionsEngine::BaseService
   private
 
   def find_original_registration
-    @registration = WasteExemptionsEngine::Registration.where(reference: @edit_registration.reference).first
+    @registration = WasteExemptionsEngine::Registration.find_by(reference: @edit_registration.reference)
   end
 
   def copy_data_from_edit_registration

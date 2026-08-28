@@ -41,6 +41,13 @@ Metrics/ModuleLength:
 Naming/PredicateMethod:
  Enabled: false
 
+# TODO: Adopt params.expect as part of the post-Rails-8.1 modernisation sweep.
+# This cop activated itself when the lockfile moved to Rails 8.1 (it is gated
+# on TargetRailsVersion >= 8.0); converting the 13 call sites is deliberately
+# deferred so the upgrade PR stays minimal.
+Rails/StrongParametersExpect:
+  Enabled: false
+
 RSpec/DescribeClass:
   Exclude:
   # This cop is n/a for rake tasks
