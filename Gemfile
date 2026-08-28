@@ -47,7 +47,7 @@ gem "sassc-rails"
 gem "rack", "~> 2"
 
 # Automatically apply http headers that are related to security
-gem "secure_headers", "~> 6.5"
+gem "secure_headers", "~> 7.3"
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem "turbolinks"
 
