@@ -21,6 +21,7 @@ class Ability
     read_finance_data_report: [:read_finance_data, Reports::GeneratedReport],
     read_user: [:read, User],
     read_registration: [:read, WasteExemptionsEngine::Registration],
+    read_registration_non_payments: [:read, RegistrationNonPaymentsService],
     read_new_registration: [:read,
                             WasteExemptionsEngine::NewChargedRegistration],
     renew_registration: [:renew, WasteExemptionsEngine::Registration],
