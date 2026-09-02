@@ -1,0 +1,14 @@
+en:
+  registration_non_payments:
+    index:
+      title: "Registration non-payments"
+      heading: "Registration non-payments"
+      no_results: "No registrations with outstanding payments found"
+      days:
+        one: "%{count} day"
+        other: "%{count} days"
+      labels:
+        reference: "WEX number"
+        operator_name: "Organisation name"
+        amount_owed: "Amount owed"
+        days_since_registration: "Days since registration"
