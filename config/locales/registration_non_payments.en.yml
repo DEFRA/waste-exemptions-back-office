@@ -4,6 +4,7 @@ en:
       title: "Registration non-payments"
       heading: "Registration non-payments"
       no_results: "No registrations with outstanding payments found"
+      download_full_list: "Download full list"
       days:
         one: "%{count} day"
         other: "%{count} days"

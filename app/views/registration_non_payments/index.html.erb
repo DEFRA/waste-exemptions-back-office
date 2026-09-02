@@ -40,6 +40,10 @@
       </tbody>
     </table>
 
+    <%= link_to t(".download_full_list"),
+                registration_non_payments_path(format: :csv),
+                class: "govuk-button" %>
+
     <nav role="navigation" class="pagination" aria-label="Pagination">
       <div class="pagination__summary govuk-body">
         <%= page_entries_info @registrations, entry_name: "registration" %>

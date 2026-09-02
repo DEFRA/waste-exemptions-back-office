@@ -45,6 +45,12 @@ RSpec.describe "Registration Non-Payments Controller" do
       expect(assigns(:registrations).limit_value).to eq(100)
     end
 
+    it "offers a download of the full list as CSV" do
+      get registration_non_payments_path
+
+      expect(response.body).to include(registration_non_payments_path(format: :csv))
+    end
+
     it "shows the menu item" do
       get registration_non_payments_path
 
@@ -64,6 +70,27 @@ RSpec.describe "Registration Non-Payments Controller" do
         get root_path
 
         expect(response.body).not_to include("Registration non-payments")
+      end
+    end
+  end
+
+  describe "GET /registration-non-payments.csv" do
+    it "responds with the full list as a CSV attachment" do
+      get registration_non_payments_path(format: :csv)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.header["Content-Disposition"]).to include("registration_non_payments_")
+      expect(response.body).to include("WEX number,Organisation name,Amount owed,Days since registration")
+      expect(response.body).to include("#{registration.reference},Anna-Kay Williams,88.00,70")
+    end
+
+    context "when the user's role has no access" do
+      let(:user) { create(:user, :customer_service_adviser) }
+
+      it "redirects to the permission denied page" do
+        get registration_non_payments_path(format: :csv)
+
+        expect(response).to redirect_to("/pages/permission")
       end
     end
   end

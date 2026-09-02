@@ -6,9 +6,19 @@ class RegistrationNonPaymentsController < ApplicationController
   before_action :authorize
 
   def index
-    @registrations = RegistrationNonPaymentsService.run
-                                                   .page(params[:page])
-                                                   .per(REGISTRATIONS_PER_PAGE)
+    respond_to do |format|
+      format.html do
+        @registrations = RegistrationNonPaymentsService.run
+                                                       .page(params[:page])
+                                                       .per(REGISTRATIONS_PER_PAGE)
+      end
+
+      format.csv do
+        timestamp = Time.zone.now.strftime("%Y-%m-%d_%H:%M")
+        send_data Reports::RegistrationNonPaymentsExportService.run,
+                  filename: "registration_non_payments_#{timestamp}.csv"
+      end
+    end
   end
 
   private
