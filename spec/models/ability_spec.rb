@@ -31,6 +31,7 @@ RSpec.describe Ability do
     it_behaves_like "can write-off payments"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
 
     it_behaves_like "cannot manage charges and bands"
@@ -58,6 +59,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).not_to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::GeneratedReport) }
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
   end
@@ -83,6 +85,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).not_to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
   end
 
@@ -102,6 +105,7 @@ RSpec.describe Ability do
 
     it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
     it_behaves_like "cannot manage users"
@@ -120,6 +124,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
     it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
@@ -144,6 +149,7 @@ RSpec.describe Ability do
     it_behaves_like "can deregister sites"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
     it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
     it { expect(ability).to be_able_to(:reset_transient_registrations, registration) }
@@ -161,6 +167,7 @@ RSpec.describe Ability do
     it_behaves_like "can manage charges and bands"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).to be_able_to(:read, Reports::Download) }
     it { expect(ability).to be_able_to(:read_finance_data, Reports::GeneratedReport) }
 
@@ -193,6 +200,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot mark legacy bulk or linear"
 
     it { expect(ability).not_to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
+    it { expect(ability).not_to be_able_to(:read, RegistrationNonPaymentsService) }
     it { expect(ability).not_to be_able_to(:read, Reports::Download) }
     it { expect(ability).not_to be_able_to(:read_finance_data, Reports::GeneratedReport) }
     it { expect(ability).not_to be_able_to(:read, Reports::GeneratedReport) }

@@ -84,6 +84,14 @@
                         class: "govuk-header__link" %>
           </li>
         <% end %>
+
+        <% if can?(:read, RegistrationNonPaymentsService) %>
+          <li class="govuk-header__navigation-item">
+            <%= link_to t("layouts.application.menu.registration_non_payments"),
+                        main_app.registration_non_payments_path,
+                        class: "govuk-header__link" %>
+          </li>
+        <% end %>
       </ul>
     </nav>
   <% end %>
