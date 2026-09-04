@@ -71,7 +71,7 @@ gem "paper_trail"
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "feature/RUBY-4241-wex-mockup-defra-map-in-service"
+    branch: "main"
 
 # for handling EA Areas GeoJSON data
 gem "rgeo-geojson"
@@ -169,6 +169,3 @@ group :test do
   # Use Bullet to find unoptimised queries
   gem "bullet"
 end
-
-# Need to add this temporarily till gem is published to rubygems
-gem "defra_ruby_map", github: "DEFRA/defra-ruby-map", branch: "main"

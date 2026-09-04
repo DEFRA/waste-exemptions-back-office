@@ -1,15 +1,7 @@
 GIT
-  remote: https://github.com/DEFRA/defra-ruby-map.git
-  revision: 06106664ebc7fca0813d83fabef6fefea49adaf1
-  branch: main
-  specs:
-    defra_ruby_map (0.2.1)
-      rails (>= 7.0)
-
-GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: b0b80c8685ba332069d763e30657b0a4f7c3e8cf
-  branch: feature/RUBY-4241-wex-mockup-defra-map-in-service
+  revision: 529b6ef9a71c6da131b48ca212dc29672f5cfb0b
+  branch: main
   specs:
     waste_exemptions_engine (0.1.0)
       aasm (~> 5.5)
@@ -207,6 +199,8 @@ GEM
       sprockets-rails
     defra_ruby_govpay (1.1.0)
       rest-client (~> 2.1)
+    defra_ruby_map (0.2.2)
+      rails (>= 7.0)
     defra_ruby_mocks (5.4.1)
       defra_ruby_aws (~> 0.6)
       rails (>= 7.0)
@@ -238,7 +232,7 @@ GEM
       devise (>= 4.6)
     diff-lcs (1.6.2)
     docile (1.4.1)
-    domain_name (0.6.20240107)
+    domain_name (0.6.20260902)
     dotenv (3.2.0)
     dotenv-rails (3.2.0)
       dotenv (= 3.2.0)
@@ -574,7 +568,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
-    simpleidn (0.2.3)
+    simpleidn (0.3.0)
     spring (4.7.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -655,7 +649,6 @@ DEPENDENCIES
   database_cleaner
   defra_ruby_aws
   defra_ruby_features (~> 0.2)
-  defra_ruby_map!
   defra_ruby_mocks (>= 5.4.1)
   defra_ruby_style
   defra_ruby_template (~> 5.11)
@@ -764,7 +757,7 @@ CHECKSUMS
   defra_ruby_email (1.3.0) sha256=8c253d9ac48eb8efd19bf44ca9b8bbda3d46c9a0426791419c62e3f7e85fb8c6
   defra_ruby_features (0.2.0) sha256=9df436de26729af81dfaa4307ce37f76c02c5c6aab243414acd5b556a1234a81
   defra_ruby_govpay (1.1.0) sha256=aa62ee2a2a9b875f6e0dc611fe6dbe8d2cac6e27be78c66fa7c9d917b2238db2
-  defra_ruby_map (0.2.1)
+  defra_ruby_map (0.2.2) sha256=a53b17530b5ca712ad36eb4a526fac4d659107d892f7d3cacfa9b6312ae31322
   defra_ruby_mocks (5.4.1) sha256=3668ff884751ae334856a1b5523e3cc402d30de6752042bd5c0a1fff1861af97
   defra_ruby_style (0.4.1) sha256=9d8a273a1c0deb11ce529189182d3b8141ffd6a119c5e08dbe3a10c640fc7815
   defra_ruby_template (5.11.1) sha256=9d8c1d7e765b92651cc8975010cb825fda0284e7a74b7d3f24a121dd1274faf9
@@ -774,7 +767,7 @@ CHECKSUMS
   devise_invitable (2.0.12) sha256=3ff1cb9dc85b5675e49c733399872916fc0a60b9e8a4c42ac04828d36c114e78
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   docile (1.4.1) sha256=96159be799bfa73cdb721b840e9802126e4e03dfc26863db73647204c727f21e
-  domain_name (0.6.20240107) sha256=5f693b2215708476517479bf2b3802e49068ad82167bcd2286f899536a17d933
+  domain_name (0.6.20260902) sha256=4fac7f8e0a77dc85ec02f6534fdeff38e143d434ab8a86528fe68ca5bc45a042
   dotenv (3.2.0) sha256=e375b83121ea7ca4ce20f214740076129ab8514cd81378161f11c03853fe619d
   dotenv-rails (3.2.0) sha256=657e25554ba622ffc95d8c4f1670286510f47f2edda9f68293c3f661b303beab
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
@@ -916,7 +909,7 @@ CHECKSUMS
   simplecov (0.22.0) sha256=fe2622c7834ff23b98066bb0a854284b2729a569ac659f82621fc22ef36213a5
   simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
-  simpleidn (0.2.3) sha256=08ce96f03fa1605286be22651ba0fc9c0b2d6272c9b27a260bc88be05b0d2c29
+  simpleidn (0.3.0) sha256=12ca730bed2f3db04d11e9bfd1bca3e11fb37f55b21eb2e9793fb5814bf54d03
   spring (4.7.0) sha256=f81bf6d41f05518ed5d0128ce5c75fb6dd9c6153f158129c8b85c4461ca0b72c
   spring-commands-rspec (1.0.4) sha256=6202e54fa4767452e3641461a83347645af478bf45dddcca9737b43af0dd1a2c
   sprockets (4.4.1) sha256=fbd665edad0916de5c7abefef0fc616866a60c5e48ce2846f39ac3fc5df9e184
