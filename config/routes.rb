@@ -75,6 +75,9 @@ Rails.application.routes.draw do
     get :linear, on: :collection, to: "registrations#linear", as: :linear
   end
 
+  # Registration non-payments
+  get "/registration-non-payments", to: "registration_non_payments#index", as: :registration_non_payments
+
   resources :deregistrations, only: :show, param: :reference
 
   get "/registrations/:id/modify_expiry_date", to: "modify_expiry_date#new", as: :modify_expiry_date_form

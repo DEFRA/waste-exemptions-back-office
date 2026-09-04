@@ -1,0 +1,56 @@
+<%= render("waste_exemptions_engine/shared/back", back_path: root_path) %>
+
+<h1 class="govuk-heading-l">
+  <%= t(".heading") %>
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <table class="govuk-table" aria-label="<%= t(".heading") %>">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col"><%= t(".labels.reference") %></th>
+          <th class="govuk-table__header" scope="col"><%= t(".labels.operator_name") %></th>
+          <th class="govuk-table__header" scope="col"><%= t(".labels.amount_owed") %></th>
+          <th class="govuk-table__header" scope="col"><%= t(".labels.days_since_registration") %></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% if @registrations.any? %>
+          <% @registrations.each do |registration| %>
+            <% presenter = RegistrationNonPaymentPresenter.new(registration) %>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <%= link_to presenter.reference,
+                            registration_payment_details_path(registration_reference: presenter.reference),
+                            class: "govuk-link" %>
+              </td>
+              <td class="govuk-table__cell"><%= presenter.operator_name %></td>
+              <td class="govuk-table__cell"><%= presenter.amount_owed %></td>
+              <td class="govuk-table__cell">
+                <%= t(".days", count: presenter.days_since_registration) if presenter.days_since_registration %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr class="govuk-table__row">
+            <td colspan="4" class="govuk-table__cell"><%= t(".no_results") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= link_to t(".download_full_list"),
+                registration_non_payments_path(format: :csv),
+                class: "govuk-button" %>
+
+    <nav role="navigation" class="pagination" aria-label="Pagination">
+      <div class="pagination__summary govuk-body">
+        <%= page_entries_info @registrations, entry_name: "registration" %>
+      </div>
+      <span class="govuk-body">
+        <%= paginate @registrations %>
+      </span>
+    </nav>
+  </div>
+</div>
