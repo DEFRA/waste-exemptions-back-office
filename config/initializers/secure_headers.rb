@@ -38,9 +38,9 @@ SecureHeaders::Configuration.default do |config|
     connect_src: %w['self' www.google-analytics.com],
     default_src: %w['self'],
     font_src: %w['self' data:],
-    img_src: %w['self' www.google-analytics.com],
+    img_src: %w['self' data: blob: www.google-analytics.com],
     object_src: %w['self'],
-    script_src: %w['self' www.googletagmanager.com www.google-analytics.com],
+    script_src: %w['self' blob: www.googletagmanager.com www.google-analytics.com],
     style_src: %w['self'],
     report_uri: %w[https://environmentagency.report-uri.io/r/default/csp/enforce]
   }
