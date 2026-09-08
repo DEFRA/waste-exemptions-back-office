@@ -6,95 +6,107 @@
 
 <% content_for :page_title, title %>
 
-<% content_for :header_class, "with-proposition" %>
 <% content_for :header_content do %>
-
-  <%= link_to t(:global_proposition_header),
-      main_app.root_path,
-      class: "govuk-header__link govuk-header__service-name",
-      id: "proposition-name" %>
-
-  <% if user_signed_in? %>
-    <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide navigation menu" hidden>Menu</button>
-    <nav id="proposition-menu">
-      <ul id="proposition-links" class="govuk-header__navigation" aria-label="Top Level Navigation">
-        <li class="govuk-header__navigation-item">
-          <%= link_to t("layouts.application.menu.dashboard"),
+  <section aria-label="Service information"
+           class="govuk-service-navigation"
+           data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+      <div class="govuk-service-navigation__container">
+        <span class="govuk-service-navigation__service-name">
+          <%= link_to t(:global_proposition_header),
                       main_app.root_path,
-                      class: "govuk-header__link" %>
-        </li>
-        <% if can?(:read, current_user) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.users"),
-                        main_app.users_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
-        <% if can?(:read, Reports::GeneratedReport) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.exports"),
-                        main_app.data_exports_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
-        <% if can?(:read, Reports::DefraQuarterlyStatsService) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.quarterly_stats"),
-                        main_app.quarterly_stats_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
+                      class: "govuk-service-navigation__link" %>
+        </span>
 
-        <% if can?(:manage, WasteExemptionsEngine::FeatureToggle, current_user) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.feature_toggles"),
-                        features_engine.feature_toggles_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
+        <% if user_signed_in? %>
+          <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+            <button type="button"
+                    class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle"
+                    aria-controls="navigation"
+                    hidden>
+              Menu
+            </button>
+            <ul id="navigation" class="govuk-service-navigation__list">
+              <li class="govuk-service-navigation__item">
+                <%= link_to t("layouts.application.menu.dashboard"),
+                            main_app.root_path,
+                            class: "govuk-service-navigation__link" %>
+              </li>
+              <% if can?(:read, current_user) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.users"),
+                              main_app.users_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
+              <% if can?(:read, Reports::GeneratedReport) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.exports"),
+                              main_app.data_exports_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
+              <% if can?(:read, Reports::DefraQuarterlyStatsService) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.quarterly_stats"),
+                              main_app.quarterly_stats_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
 
-        <% if can?(:view_analytics, current_user) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.analytics"),
-                        main_app.analytics_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
+              <% if can?(:manage, WasteExemptionsEngine::FeatureToggle, current_user) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.feature_toggles"),
+                              features_engine.feature_toggles_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
 
-        <% if can?(:manage_charges, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.band_management"),
-              main_app.bands_path,
-              class: "govuk-header__link" %>
-          </li>
-        <%end%>
+              <% if can?(:view_analytics, current_user) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.analytics"),
+                              main_app.analytics_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
 
-        <% if can?(:manage_charges, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.charge_catalogue"),
-                        main_app.exemptions_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
+              <% if can?(:manage_charges, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.band_management"),
+                              main_app.bands_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
 
-        <% if can?(:read, WasteExemptionsEngine::Registration) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.linear_registrations"),
-                        main_app.linear_registrations_path,
-                        class: "govuk-header__link" %>
-          </li>
-        <% end %>
+              <% if can?(:manage_charges, current_user) && WasteExemptionsEngine::FeatureToggle.active?(:charge_management) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.charge_catalogue"),
+                              main_app.exemptions_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
 
-        <% if can?(:read, RegistrationNonPaymentsService) %>
-          <li class="govuk-header__navigation-item">
-            <%= link_to t("layouts.application.menu.registration_non_payments"),
-                        main_app.registration_non_payments_path,
-                        class: "govuk-header__link" %>
-          </li>
+              <% if can?(:read, WasteExemptionsEngine::Registration) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.linear_registrations"),
+                              main_app.linear_registrations_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
+
+              <% if can?(:read, RegistrationNonPaymentsService) %>
+                <li class="govuk-service-navigation__item">
+                  <%= link_to t("layouts.application.menu.registration_non_payments"),
+                              main_app.registration_non_payments_path,
+                              class: "govuk-service-navigation__link" %>
+                </li>
+              <% end %>
+            </ul>
+          </nav>
         <% end %>
-      </ul>
-    </nav>
-  <% end %>
+      </div>
+    </div>
+  </section>
 <% end %>
 
 <%= render template: "layouts/defra_ruby_template" %>
