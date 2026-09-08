@@ -20,9 +20,9 @@ gem "github_changelog_generator", "~> 1.15.2", require: false
 gem "benchmark"
 
 # GOV.UK design system styling
-gem "defra_ruby_template", "~> 5.11"
+gem "defra_ruby_template", "~> 6.4"
 # GOV.UK design system forms
-gem "govuk_design_system_formbuilder"
+gem "govuk_design_system_formbuilder", "~> 6.4"
 # GOV.UK Notify gem. Allows us to send email via the Notify web API
 gem "notifications-ruby-client"
 # Use postgresql as the database for Active Record

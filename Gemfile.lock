@@ -208,7 +208,7 @@ GEM
       sprockets (~> 4.0)
       sprockets-rails (~> 3.0)
     defra_ruby_style (0.4.1)
-    defra_ruby_template (5.11.1)
+    defra_ruby_template (6.4.0)
     defra_ruby_validators (3.1.0)
       activemodel
       defra_ruby_companies_house
@@ -651,7 +651,7 @@ DEPENDENCIES
   defra_ruby_features (~> 0.2)
   defra_ruby_mocks (>= 5.4.1)
   defra_ruby_style
-  defra_ruby_template (~> 5.11)
+  defra_ruby_template (~> 6.4)
   devise
   devise-security
   devise_invitable
@@ -660,7 +660,7 @@ DEPENDENCIES
   faker
   faraday-retry
   github_changelog_generator (~> 1.15.2)
-  govuk_design_system_formbuilder
+  govuk_design_system_formbuilder (~> 6.4)
   hashdiff
   kaminari (~> 1.2)
   kramdown
@@ -760,7 +760,7 @@ CHECKSUMS
   defra_ruby_map (0.2.2) sha256=a53b17530b5ca712ad36eb4a526fac4d659107d892f7d3cacfa9b6312ae31322
   defra_ruby_mocks (5.4.1) sha256=3668ff884751ae334856a1b5523e3cc402d30de6752042bd5c0a1fff1861af97
   defra_ruby_style (0.4.1) sha256=9d8a273a1c0deb11ce529189182d3b8141ffd6a119c5e08dbe3a10c640fc7815
-  defra_ruby_template (5.11.1) sha256=9d8c1d7e765b92651cc8975010cb825fda0284e7a74b7d3f24a121dd1274faf9
+  defra_ruby_template (6.4.0) sha256=9e1ea0a9b14247b2e35c7ebb3291bee566b64a6dd8ae703f690e2b12fee65988
   defra_ruby_validators (3.1.0) sha256=6c33f1fed2755fe8e109f746fa5e0e87302eb02ced1ae4da116076cf083787ef
   devise (5.0.4) sha256=d605f2b85854e74e56ee789e2d398702bc2d06e6bcd894717a670a3199c74cc1
   devise-security (0.18.0) sha256=fc06be1624b5151044ff9c5d8e61abdfa7d56eb16bfdaec16a11235d54708513
