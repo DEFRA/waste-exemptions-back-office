@@ -113,6 +113,7 @@ module WasteExemptionsBackOffice
     # SassC::SyntaxError: Error: "calc(0px)" is not a number for `max'
     # https://github.com/alphagov/govuk-frontend/issues/1350
     config.assets.css_compressor = nil
+    config.sass.silence_deprecations = ["import"]
 
     # Allow paper_trail to deserialise dates and times: https://stackoverflow.com/a/72970171
     config.active_record.yaml_column_permitted_classes = [
