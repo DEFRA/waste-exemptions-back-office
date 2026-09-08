@@ -169,6 +169,12 @@ GEM
       rexml
     crass (1.0.7)
     csv (3.3.6)
+    dartsass-sprockets (3.2.1)
+      railties (>= 4.0.0)
+      sassc-embedded (~> 1.80.1)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.2)
@@ -277,6 +283,27 @@ GEM
       retriable (~> 3.0)
     globalid (1.4.0)
       activesupport (>= 6.1)
+    google-protobuf (4.36.1)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-aarch64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-aarch64-linux-musl)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-arm64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-x86_64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-x86_64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.1-x86_64-linux-musl)
+      bigdecimal
+      rake (~> 13.3)
     govuk_design_system_formbuilder (6.4.0)
       actionview (>= 7.2)
       activemodel (>= 7.2)
@@ -542,14 +569,24 @@ GEM
       rubocop-rspec (~> 3.5)
     ruby-progressbar (1.13.0)
     rubyzip (2.4.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
+    sass-embedded (1.104.0-aarch64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.0-aarch64-linux-musl)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.0-arm-linux-gnueabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.0-arm-linux-musleabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.0-arm64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.0-x86_64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.0-x86_64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.104.0-x86_64-linux-musl)
+      google-protobuf (~> 4.31)
+    sassc-embedded (1.80.9)
+      sass-embedded (~> 1.80)
     sawyer (0.9.3)
       addressable (>= 2.3.5)
       faraday (>= 0.17.3, < 3)
@@ -646,6 +683,7 @@ DEPENDENCIES
   cancancan (~> 3.5)
   capybara
   csv
+  dartsass-sprockets
   database_cleaner
   defra_ruby_aws
   defra_ruby_features (~> 0.2)
@@ -685,7 +723,6 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   rubyzip (< 3.0)
-  sassc-rails
   secure_headers (~> 7.3)
   selenium-webdriver
   simplecov (~> 0.22.0)
@@ -745,6 +782,7 @@ CHECKSUMS
   crack (1.0.1) sha256=ff4a10390cd31d66440b7524eb1841874db86201d5b70032028553130b6d4c7e
   crass (1.0.7) sha256=94868719948664c89ddcaf0a37c65048413dfcb1c869470a5f7a7ceb5390b295
   csv (3.3.6) sha256=aba61e7e507a66f03d45cb1f3c4b6359861c3504038b422962875dce099e4456
+  dartsass-sprockets (3.2.1) sha256=5163c59d155bfb834e2554bec00e2ff9ab97ad3ea82545cbacf650cf0469f3c3
   database_cleaner (2.1.0) sha256=1dcba26e3b1576da692fc6bac10136a4744da5bcc293d248aae19640c65d89cd
   database_cleaner-active_record (2.2.2) sha256=88296b9f3088c31f7c0d4fcec10f68e4b71c96698043916de59b04debec10388
   database_cleaner-core (2.1.0) sha256=b2875266d9b26b716e8b669c883e01c5250839f6f2ec56422b5e79aa97fb6927
@@ -791,6 +829,13 @@ CHECKSUMS
   ffi-geos (1.2.2) sha256=295ff6294162fa4d7993764cc538f84ce23a1ccc1bdada78c54bf9bb875cbfd8
   github_changelog_generator (1.15.2) sha256=b1faa5f54ddd38140d875ee96a244034c0c578e0714ebde2b7091e98d86ceaff
   globalid (1.4.0) sha256=037f12fbf1d9d7a014d501c2d5c77356fd4ddd96d7a7991d6700bba96706f427
+  google-protobuf (4.36.1) sha256=893ac9d66b36b6ea50da5418f856bc7c2d2072099a578aeefc2d7757dcab6a77
+  google-protobuf (4.36.1-aarch64-linux-gnu) sha256=3883fa1b0e99221f68f4a8511bc4fb1888897dcb6cc8bf2805c92c16fc99b499
+  google-protobuf (4.36.1-aarch64-linux-musl) sha256=6da393554ecc96168ae6ddf663392bf8ce4e4fce7c18fda348882ce2e97d6a87
+  google-protobuf (4.36.1-arm64-darwin) sha256=4d82184f4582dfa123f9793cd7a73beca9b0d3f0d3717948c4120b6cc0d50f2d
+  google-protobuf (4.36.1-x86_64-darwin) sha256=e92bf3c90c0a9c410cbe430cf366190b1b9b5b2b784f6195a43a178c2ef7e338
+  google-protobuf (4.36.1-x86_64-linux-gnu) sha256=e735a3f3d6596b1010013c2030778bc030770e659106fe7e4ae0f07631b551cb
+  google-protobuf (4.36.1-x86_64-linux-musl) sha256=ae2712b7960e8b1f96d52fef8c2c0dc1cd230f2be13e48492dad0aa2a6a7cf03
   govuk_design_system_formbuilder (6.4.0) sha256=28f85f8277d0fe941d04eff20b081e321ac9e84a501152f56c6933ffed1201a6
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   high_voltage (3.1.2) sha256=7786716114cc21b3754e537818a6d9b2c91aa1126aa77272977d50598e556c2f
@@ -900,8 +945,15 @@ CHECKSUMS
   rubocop-rspec_rails (2.32.0) sha256=4a0d641c72f6ebb957534f539d9d0a62c47abd8ce0d0aeee1ef4701e892a9100
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   rubyzip (2.4.1) sha256=8577c88edc1fde8935eb91064c5cb1aef9ad5494b940cf19c775ee833e075615
-  sassc (2.4.0) sha256=4c60a2b0a3b36685c83b80d5789401c2f678c1652e3288315a1551d811d9f83e
-  sassc-rails (2.1.2) sha256=5f4fdf3881fc9bdc8e856ffbd9850d70a2878866feae8114aa45996179952db5
+  sass-embedded (1.104.0-aarch64-linux-gnu) sha256=99e2b95e8101928f8976c7a3f7cced5c5e4289ceb8aca0e1dedd9bb13645e417
+  sass-embedded (1.104.0-aarch64-linux-musl) sha256=d54f9dc45e753d29a999021f24cfc126b49c61f14bcb8e96209a02288cde22c3
+  sass-embedded (1.104.0-arm-linux-gnueabihf) sha256=5dfe35be85c0816131648da14312bc4981b1283d3c3aaaab7254b572420b6d93
+  sass-embedded (1.104.0-arm-linux-musleabihf) sha256=43d61264663409b268d46f33d2312b0084cb18b9af0c3d181563f5e05ab0053f
+  sass-embedded (1.104.0-arm64-darwin) sha256=b1409415e06931b43c2a498fc430fe8ddbad9706be5bb3c4e20b60c14f56b122
+  sass-embedded (1.104.0-x86_64-darwin) sha256=d463b65e6fefcae614352f7a4dcea61d399f35a1238822b38d88471cee954717
+  sass-embedded (1.104.0-x86_64-linux-gnu) sha256=7aeaa07beff7db254836599f1524ac7b67216729613ebc57e3828b94345f0488
+  sass-embedded (1.104.0-x86_64-linux-musl) sha256=bc14555f68aa7057e923d400726c1623bb603101eef6340962e4e80ee89e67ba
+  sassc-embedded (1.80.9) sha256=bf90ad875181548646c1dcc317f985471980a7f5a71a87103536a6d3810dfeaa
   sawyer (0.9.3) sha256=0d0f19298408047037638639fe62f4794483fb04320269169bd41af2bdcf5e41
   secure_headers (7.3.0) sha256=fd48af867e00d016edf8a64a179ae45253c1a2d5f7d8ba75e248440cfb2a0c00
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1

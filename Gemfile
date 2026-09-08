@@ -40,8 +40,8 @@ gem "pg"
 # involve a database drop. Stops the error
 # PG::ObjectInUse: ERROR:  database "wex_db" is being accessed by other users
 gem "pgreset"
-# See: https://github.com/sass/sassc-rails/issues/114
-gem "sassc-rails"
+# Use Dart Sass with the Sprockets asset pipeline
+gem "dartsass-sprockets"
 
 # Pin rack version to avoid this issue: https://github.com/phusion/passenger/issues/2508
 gem "rack", "~> 2"
