@@ -20,9 +20,9 @@ gem "github_changelog_generator", "~> 1.15.2", require: false
 gem "benchmark"
 
 # GOV.UK design system styling
-gem "defra_ruby_template", "~> 5.11"
+gem "defra_ruby_template", "~> 6.4"
 # GOV.UK design system forms
-gem "govuk_design_system_formbuilder"
+gem "govuk_design_system_formbuilder", "~> 6.4"
 # GOV.UK Notify gem. Allows us to send email via the Notify web API
 gem "notifications-ruby-client"
 # Use postgresql as the database for Active Record
@@ -40,8 +40,8 @@ gem "pg"
 # involve a database drop. Stops the error
 # PG::ObjectInUse: ERROR:  database "wex_db" is being accessed by other users
 gem "pgreset"
-# See: https://github.com/sass/sassc-rails/issues/114
-gem "sassc-rails"
+# Use Dart Sass with the Sprockets asset pipeline
+gem "dartsass-sprockets"
 
 # Pin rack version to avoid this issue: https://github.com/phusion/passenger/issues/2508
 gem "rack", "~> 2"
