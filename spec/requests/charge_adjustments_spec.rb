@@ -124,6 +124,13 @@ RSpec.describe "Charge Adjustments" do
 
           expect(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to have_received(:perform_later).with(reference: registration.reference)
         end
+
+        it "triggers the SendProofOfPaymentJob job" do
+          allow(SendProofOfPaymentJob).to receive(:perform_later)
+          post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
+
+          expect(SendProofOfPaymentJob).to have_received(:perform_later).with(reference: registration.reference)
+        end
       end
 
       context "with invalid params" do
