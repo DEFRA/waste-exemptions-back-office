@@ -2,10 +2,24 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.2.4...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.2.5...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-4388\] Add registration non-payments page to back office [\#2143](https://github.com/DEFRA/waste-exemptions-back-office/pull/2143) ([jjromeo](https://github.com/jjromeo))
+- Feature/ruby 4241 wex mockup defra map in service [\#2150](https://github.com/DEFRA/waste-exemptions-back-office/pull/2150) ([brujeo](https://github.com/brujeo))
 
 **Merged pull requests:**
 
+- WEX: Update defra-ruby-template to version 6.4.0 [\#2151](https://github.com/DEFRA/waste-exemptions-back-office/pull/2151) ([jjromeo](https://github.com/jjromeo))
+
+## [v4.2.5](https://github.com/defra/waste-exemptions-back-office/tree/v4.2.5) (2026-09-01)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.2.4...v4.2.5)
+
+**Merged pull requests:**
+
+- Update CHANGELOG.md for v4.2.5 [\#2147](https://github.com/DEFRA/waste-exemptions-back-office/pull/2147) ([brujeo](https://github.com/brujeo))
 - Bump secure\_headers from 6.5 to 7.3 [\#2144](https://github.com/DEFRA/waste-exemptions-back-office/pull/2144) ([brujeo](https://github.com/brujeo))
 - Bump passenger from 6.1.8 to 6.2.0 [\#2142](https://github.com/DEFRA/waste-exemptions-back-office/pull/2142) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Upgrade Rails to 8.1.0 and update configuration [\#2141](https://github.com/DEFRA/waste-exemptions-back-office/pull/2141) ([brujeo](https://github.com/brujeo))
