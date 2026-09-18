@@ -18,9 +18,9 @@ class OrderPresenter < BasePresenter
   end
 
   def bucket_exemption_codes
-    return if bucket.blank?
+    return if charge_breakdown.bucket_exemptions.empty?
 
-    format_exemption_codes(exemptions & bucket.exemptions)
+    format_exemption_codes(charge_breakdown.bucket_exemptions)
   end
 
   def site_count
@@ -33,29 +33,19 @@ class OrderPresenter < BasePresenter
     exemptions.map(&:code).sort.join(", ")
   end
 
-  def bucket_exemptions
-    bucket.present? ? bucket.exemptions : []
-  end
-
   def exemptions_excluding_bucket
-    exemptions - bucket_exemptions
+    charge_breakdown.non_bucket_exemptions
   end
 
   def chargeable_exemptions_excluding_bucket
-    return exemptions_excluding_bucket if no_charge_band_ids.empty?
-
-    exemptions_excluding_bucket.reject { |exemption| no_charge_band_ids.include?(exemption.band_id) }
+    charge_breakdown.chargeable_exemptions
   end
 
   def no_charge_exemptions_excluding_bucket
-    exemptions_excluding_bucket.select { |exemption| no_charge_band_ids.include?(exemption.band_id) }
+    charge_breakdown.no_charge_exemptions
   end
 
-  def no_charge_band_ids
-    return [] if charge_detail.blank?
-
-    @no_charge_band_ids ||= charge_detail.band_charge_details.filter_map do |band_charge_detail|
-      band_charge_detail.band_id if band_charge_detail.total_compliance_charge_amount.zero?
-    end
+  def charge_breakdown
+    @charge_breakdown ||= WasteExemptionsEngine::OrderChargeBreakdown.new(order: model)
   end
 end

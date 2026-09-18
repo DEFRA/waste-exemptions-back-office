@@ -35,6 +35,7 @@ module PaymentDetails
 
     def initialize(order:, is_multisite: false)
       @order = order.is_a?(OrderPresenter) ? order : OrderPresenter.new(order)
+      @breakdown = WasteExemptionsEngine::OrderChargeBreakdown.new(order: @order.model)
       @is_multisite = is_multisite
     end
 
@@ -58,7 +59,7 @@ module PaymentDetails
       [
         optional_row(
           label: exemption_label(@order.chargeable_exemption_codes_excluding_bucket),
-          amount_pence: @order.charge_detail&.total_compliance_charge_amount_excluding_bucket
+          amount_pence: @breakdown.total_compliance_charge_amount_excluding_bucket
         ),
         optional_row(
           label: exemption_label(@order.no_charge_exemption_codes_excluding_bucket),
@@ -67,11 +68,11 @@ module PaymentDetails
         bucket_row,
         row(
           label: I18n.t("payment_details.charge_breakdown.details_section.charges.registration_charge_label"),
-          amount_pence: @order.charge_detail&.registration_charge_amount
+          amount_pence: @breakdown.registration_charge_amount
         ),
         row(
           label: I18n.t("payment_details.charge_breakdown.details_section.charges.total_charge_label"),
-          amount_pence: @order.charge_detail&.total_charge_amount,
+          amount_pence: @breakdown.total_charge_amount,
           total: true
         )
       ].compact
@@ -82,7 +83,7 @@ module PaymentDetails
 
       row(
         label: exemption_label("#{bucket_label} #{@order.bucket_exemption_codes}"),
-        amount_pence: @order.charge_detail&.bucket_charge_amount
+        amount_pence: @breakdown.bucket_charge_amount
       )
     end
 
