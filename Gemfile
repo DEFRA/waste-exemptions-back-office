@@ -71,7 +71,7 @@ gem "paper_trail"
 # Use the waste exemptions engine for the user journey from the local repo
 gem "waste_exemptions_engine",
     git: "https://github.com/DEFRA/waste-exemptions-engine",
-    branch: "main"
+    branch: "RUBY-4395-wex-automating-sending-of-proof-of-payment"
 
 # for handling EA Areas GeoJSON data
 gem "rgeo-geojson"
