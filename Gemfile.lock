@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: 74a66642894fe4e585f3e9decce7a1952c5bffbd
+  revision: 11c759a854a00340a93f2d4f835d0114e28a4023
   branch: RUBY-4395-wex-automating-sending-of-proof-of-payment
   specs:
     waste_exemptions_engine (0.1.0)
