@@ -10,6 +10,7 @@ class PaymentsController < ApplicationController
   def create
     if add_payment_form.submit(payment_params)
       SendRegistrationConfirmationWhenBalanceFullyPaidJob.perform_later(reference: resource.reference)
+      SendProofOfPaymentJob.perform_later(reference: resource.reference)
 
       successful_redirection = WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE
       redirect_to registration_payment_details_path(reference: resource.reference), status: successful_redirection
