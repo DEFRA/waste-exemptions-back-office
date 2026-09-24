@@ -6,6 +6,8 @@ module ApplicationHelper
   end
 
   def render_markdown(text)
-    sanitize(Kramdown::Document.new(text).to_html)
+    markdown = text.gsub(/(?<!\n)\n(?!\n)/, "  \n")
+
+    sanitize(Kramdown::Document.new(markdown).to_html)
   end
 end
