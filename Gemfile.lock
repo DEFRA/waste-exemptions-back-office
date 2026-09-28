@@ -304,7 +304,7 @@ GEM
     google-protobuf (4.36.1-x86_64-linux-musl)
       bigdecimal
       rake (~> 13.3)
-    govuk_design_system_formbuilder (6.4.0)
+    govuk_design_system_formbuilder (6.5.0)
       actionview (>= 7.2)
       activemodel (>= 7.2)
       activesupport (>= 7.2)
@@ -836,7 +836,7 @@ CHECKSUMS
   google-protobuf (4.36.1-x86_64-darwin) sha256=e92bf3c90c0a9c410cbe430cf366190b1b9b5b2b784f6195a43a178c2ef7e338
   google-protobuf (4.36.1-x86_64-linux-gnu) sha256=e735a3f3d6596b1010013c2030778bc030770e659106fe7e4ae0f07631b551cb
   google-protobuf (4.36.1-x86_64-linux-musl) sha256=ae2712b7960e8b1f96d52fef8c2c0dc1cd230f2be13e48492dad0aa2a6a7cf03
-  govuk_design_system_formbuilder (6.4.0) sha256=28f85f8277d0fe941d04eff20b081e321ac9e84a501152f56c6933ffed1201a6
+  govuk_design_system_formbuilder (6.5.0) sha256=ab8932ed72d49025418a4c91d062d221c4fcf761232c9af217ef8e71c3ae4485
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
   high_voltage (3.1.2) sha256=7786716114cc21b3754e537818a6d9b2c91aa1126aa77272977d50598e556c2f
   html-attributes-utils (1.0.2) sha256=594e0b37b3dd4e554abe893bee9719896f876675fd08fe534fc2e6e1b4e2538c
