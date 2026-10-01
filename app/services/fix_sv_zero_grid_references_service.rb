@@ -87,7 +87,10 @@ class FixSvZeroGridReferencesService < WasteExemptionsEngine::BaseService
   end
 
   def log_unfixed(address)
-    log("Unable to fix #{address_details(address)}")
+    log(
+      "Unable to fix #{address_details(address)} " \
+      "mode=#{address.mode} postcode_present=#{address.postcode.present?} uprn_present=#{address.uprn.present?}"
+    )
   end
 
   def log_error(address, error)
