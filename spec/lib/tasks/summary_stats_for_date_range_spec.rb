@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/ExpectOutput
+# rubocop:disable-next RSpec/ExpectOutput
 RSpec.describe "summary_stats:stats_for_date_range", type: :rake do
   include_context "rake"
 
@@ -26,4 +26,3 @@ RSpec.describe "summary_stats:stats_for_date_range", type: :rake do
     expect { Rake::Task[subject].invoke(start_date, end_date) }.not_to raise_error
   end
 end
-# rubocop:enable RSpec/ExpectOutput

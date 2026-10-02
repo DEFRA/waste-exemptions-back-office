@@ -2,7 +2,7 @@
 
 require "defra_ruby/aws"
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 DefraRuby::Aws.configure do |c|
   finance_data_bucket = {
     name: ENV.fetch("AWS_FINANCE_DATA_EXPORT_BUCKET", nil),
@@ -73,4 +73,3 @@ DefraRuby::Aws.configure do |c|
     govpay_mocks_bucket
   ]
 end
-# rubocop:enable Metrics/BlockLength

@@ -35,12 +35,11 @@ class FixGridReferencesService < WasteExemptionsEngine::BaseService
   end
 
   # :nocov:
-  # rubocop:disable Rails/Output
+  # rubocop:disable-next Rails/Output
   def log(message)
     return if Rails.env.test?
 
     puts(message)
   end
-  # rubocop:enable Rails/Output
   # :nocov:
 end

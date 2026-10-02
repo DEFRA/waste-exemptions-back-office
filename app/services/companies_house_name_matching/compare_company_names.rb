@@ -30,7 +30,7 @@ module CompaniesHouseNameMatching
     # Levenshtein distance is a string metric for measuring the difference between two sequences
     # https://en.wikipedia.org/wiki/Levenshtein_distance
 
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Naming/MethodParameterName
+    # rubocop:disable-next Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Naming/MethodParameterName
     def levenshtein_distance(s, t)
       m = s.length
       n = t.length
@@ -54,6 +54,5 @@ module CompaniesHouseNameMatching
       end
       d[m][n]
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Naming/MethodParameterName
   end
 end

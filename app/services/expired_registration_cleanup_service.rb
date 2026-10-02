@@ -35,7 +35,7 @@ class ExpiredRegistrationCleanupService < WasteExemptionsEngine::BaseService
   end
 
   # :nocov:
-  # rubocop:disable Rails/Output
+  # rubocop:disable-next Rails/Output
   def log_references!
     return references if Rails.env.test?
 
@@ -48,7 +48,6 @@ class ExpiredRegistrationCleanupService < WasteExemptionsEngine::BaseService
       TEXT
     )
   end
-  # rubocop:enable Rails/Output
   # :nocov:
 
   def references

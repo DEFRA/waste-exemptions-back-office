@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Rails/ApplicationMailer
+# rubocop:disable-next Rails/ApplicationMailer
 class TestMailer < ActionMailer::Base
   def test_email
     subject = "#{WasteExemptionsEngine.configuration.service_name} email"
@@ -19,4 +19,3 @@ class TestMailer < ActionMailer::Base
     "#{from_name} <#{from_email}>"
   end
 end
-# rubocop:enable Rails/ApplicationMailer

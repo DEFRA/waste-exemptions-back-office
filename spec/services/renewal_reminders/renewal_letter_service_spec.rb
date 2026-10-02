@@ -18,7 +18,7 @@ module RenewalReminders
         allow(address_instance).to receive(:postcode).and_return("BS1 1AA")
       end
 
-      # rubocop:disable RSpec/AnyInstance
+      # rubocop:disable-next RSpec/AnyInstance
       it "sends a letter" do
         VCR.use_cassette("notify_renewal_letter") do
           allow_any_instance_of(Notifications::Client).to receive(:send_letter).and_call_original
@@ -30,7 +30,6 @@ module RenewalReminders
           expect(response.content["subject"]).to include("You can renew from 3 June 2030")
         end
       end
-      # rubocop:enable RSpec/AnyInstance
     end
 
     it_behaves_like "CanHaveCommunicationLog" do

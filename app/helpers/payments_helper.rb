@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Rails/HelperInstanceVariable
+# rubocop:disable-next Rails/HelperInstanceVariable
 module PaymentsHelper
   LOCALE = "payments.helper"
 
@@ -24,4 +24,3 @@ module PaymentsHelper
     @payment_type = params[:add_payment_form][:payment_type].to_sym
   end
 end
-# rubocop:enable Rails/HelperInstanceVariable

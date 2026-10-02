@@ -24,7 +24,7 @@ module Analytics
     scope :completed_digital, -> { where(completed_route: "DIGITAL") }
     scope :completed_assisted_digital, -> { where(completed_route: "ASSISTED_DIGITAL") }
 
-    # rubocop:disable Metrics/BlockLength
+    # rubocop:disable-next Metrics/BlockLength
     scope :passed_start_cutoff_page, lambda {
       # Subquery to check for the existence of the START_CUTOFF_PAGES in any PageView for the UserJourney
       start_cutoff_page_subquery = <<~SQL.squish
@@ -57,7 +57,6 @@ module Analytics
 
       where(start_cutoff_page_subquery).where(last_page_not_cutoff_subquery)
     }
-    # rubocop:enable Metrics/BlockLength
 
     scope :date_range, lambda { |start_date, end_date|
       where(created_at: start_date.beginning_of_day..end_date.end_of_day)

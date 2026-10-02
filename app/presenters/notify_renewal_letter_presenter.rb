@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 class NotifyRenewalLetterPresenter < BasePresenter
   MAX_SITE_DESCRIPTION_LENGTH = 200
 
@@ -166,4 +166,3 @@ class NotifyRenewalLetterPresenter < BasePresenter
     address_fields.map { |field| address.public_send(field) }.compact_blank
   end
 end
-# rubocop:enable Metrics/ClassLength

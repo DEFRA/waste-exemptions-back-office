@@ -11,13 +11,12 @@ namespace :one_off do
       puts "Migrating batch of #{batch.length} addresses" unless Rails.env.test?
 
       ActiveRecord::Base.transaction do
-        # rubocop:disable Rails/SkipsModelValidations
+        # rubocop:disable-next Rails/SkipsModelValidations
         batch.each do |site_address|
           WasteExemptionsEngine::RegistrationExemption
             .where(registration_id: site_address.registration_id, address_id: nil)
             .update_all(address_id: site_address.id)
         end
-        # rubocop:enable Rails/SkipsModelValidations
       end
 
       next if Rails.env.test?
