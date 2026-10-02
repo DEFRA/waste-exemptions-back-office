@@ -3,7 +3,7 @@
 module CanUseEditRegistrationWorkflow
   extend ActiveSupport::Concern
 
-  # rubocop:disable Metrics/BlockLength
+  # rubocop:disable-next Metrics/BlockLength
   included do
     include AASM
 
@@ -226,7 +226,6 @@ module CanUseEditRegistrationWorkflow
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 
   private
 

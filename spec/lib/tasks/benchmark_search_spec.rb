@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Benchmark search task", type: :rake do
   include_context "rake"
 
-  # rubocop:disable RSpec/ExpectOutput
+  # rubocop:disable-next RSpec/ExpectOutput
   describe "benchmark_search" do
 
     original_stdout = $stdout # rubocop:disable RSpec/LeakyLocalVariable
@@ -26,5 +26,4 @@ RSpec.describe "Benchmark search task", type: :rake do
       end.not_to raise_error
     end
   end
-  # rubocop:enable RSpec/ExpectOutput
 end

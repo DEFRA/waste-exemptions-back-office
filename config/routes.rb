@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 Rails.application.routes.draw do
   root "dashboards#index"
 
@@ -280,4 +280,3 @@ Rails.application.routes.draw do
   # Defra ruby mocks (for govpay)
   mount DefraRubyMocks::Engine => "/bo/mocks"
 end
-# rubocop:enable Metrics/BlockLength

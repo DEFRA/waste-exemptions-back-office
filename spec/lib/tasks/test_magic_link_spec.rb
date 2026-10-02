@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/ExpectOutput
+# rubocop:disable-next RSpec/ExpectOutput
 RSpec.describe "test:magic_link", type: :rake do
   include_context "rake"
 
@@ -27,4 +27,3 @@ RSpec.describe "test:magic_link", type: :rake do
     expect { Rake::Task[subject].invoke("foo") }.not_to raise_error
   end
 end
-# rubocop:enable RSpec/ExpectOutput

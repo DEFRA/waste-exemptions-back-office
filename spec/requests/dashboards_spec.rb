@@ -7,13 +7,12 @@ RSpec.describe "Dashboards" do
     let(:results) { Kaminari.paginate_array([]).page(1) }
 
     context "when a valid user is signed in" do
-      # rubocop:disable RSpec/AnyInstance
+      # rubocop:disable-next RSpec/AnyInstance
       before do
         sign_in(create(:user))
         # Stub the service to reduce database hits
         allow_any_instance_of(SearchService).to receive(:search).and_return(results)
       end
-      # rubocop:enable RSpec/AnyInstance
 
       it "renders the index template and returns a 200 response" do
         get "/"
@@ -28,7 +27,7 @@ RSpec.describe "Dashboards" do
         expect(response.body.squish).to include("You can search for a registration by: postcodes, registration reference number, business or partner name, contact name, telephone number, and contact email")
       end
 
-      # rubocop:disable RSpec/AnyInstance
+      # rubocop:disable-next RSpec/AnyInstance
       context "when there is a term, a filter and a page" do
         it "calls a SearchService with the correct params" do
           expect_any_instance_of(SearchService).to receive(:search).with("foo", :registrations, "2")
@@ -36,7 +35,6 @@ RSpec.describe "Dashboards" do
           get "/", params: { term: "foo", filter: "registrations", page: "2" }
         end
       end
-      # rubocop:enable RSpec/AnyInstance
 
       context "when the SearchService does not return results" do
         it "says there are no results" do

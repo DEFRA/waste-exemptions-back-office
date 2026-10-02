@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable-next Metrics/ClassLength
 module Reports
   class ExemptionBulkReportPresenter < BasePresenter
 
@@ -150,4 +150,3 @@ module Reports
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

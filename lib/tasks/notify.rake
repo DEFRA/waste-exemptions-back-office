@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 namespace :notify do
   namespace :letters do
     desc "List all registrations which will receive the renewal letter"
@@ -50,4 +50,3 @@ namespace :notify do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 namespace :cleanup do
   desc "Remove old transient_registrations from the database"
   task transient_registrations: :environment do
@@ -49,4 +49,3 @@ namespace :cleanup do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

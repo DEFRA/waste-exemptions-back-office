@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/ExpectOutput
+# rubocop:disable-next RSpec/ExpectOutput
 RSpec.describe "analytics:cross_check", type: :rake do
   include_context "rake"
 
@@ -44,4 +44,3 @@ RSpec.describe "analytics:cross_check", type: :rake do
     end
   end
 end
-# rubocop:enable RSpec/ExpectOutput
