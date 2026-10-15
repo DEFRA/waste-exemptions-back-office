@@ -3,8 +3,8 @@
 require "notifications/client"
 
 # Sends the October reform comms email once to each unique contact email on an
-# active registration, skipping any already sent. A dry run lists each email and its registrations on the output, and every run ends
-# with the totals.
+# active registration, skipping any already sent. A dry run lists each email and its
+# registrations on the output, and every run ends with the totals.
 class SendOctoberReformCommsEmailsService < WasteExemptionsEngine::BaseService
   # Notify's limit is shared with the service's other emails
   RATE_LIMIT = 3_000
