@@ -3,21 +3,25 @@
 require "notifications/client"
 
 # Sends the October reform comms email once to each unique contact email on an
-# active registration, skipping any already sent. Returns the number of emails sent.
+# active registration, skipping any already sent. A dry run lists each email and its registrations on the output, and every run ends
+# with the totals.
 class SendOctoberReformCommsEmailsService < WasteExemptionsEngine::BaseService
   # Notify's limit is shared with the service's other emails
   RATE_LIMIT = 3_000
   RATE_LIMIT_BUFFER = 0.5
   TIME_BETWEEN_BATCHES = 60 # seconds
 
-  def run(dry_run: false)
+  def run(dry_run: false, output: $stdout)
     @dry_run = dry_run
     sent_count = 0
+    registration_count = 0
 
     registrations_by_email.each_with_index do |(email, registrations), index|
       wait_for_next_batch if (index % batch_size).zero?
       send_email(email, registrations)
+      output.puts "#{email} (#{registrations.size}): #{references(registrations)}" if @dry_run
       sent_count += 1
+      registration_count += registrations.size
     rescue Notifications::Client::RateLimitError => e
       Airbrake.notify e
       Rails.logger.error "Stopped sending reform comms emails as Notify rejected one for exceeding a limit: " \
@@ -28,10 +32,17 @@ class SendOctoberReformCommsEmailsService < WasteExemptionsEngine::BaseService
       Rails.logger.error "Failed to send reform comms email for registrations #{references(registrations)}"
     end
 
+    output_totals(output, sent_count, registration_count)
+
     sent_count
   end
 
   private
+
+  def output_totals(output, sent_count, registration_count)
+    output.puts "Reform comms emails #{@dry_run ? 'to send' : 'sent'}: #{sent_count}",
+                "Registrations covered: #{registration_count}"
+  end
 
   def send_email(email, registrations)
     prefix = @dry_run ? "[DRY RUN] Would send" : "Sending"

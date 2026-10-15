@@ -10,7 +10,6 @@ namespace :one_off do
 
     puts "[DRY RUN] No emails will be sent" if dry_run && !Rails.env.test?
 
-    email_count = SendOctoberReformCommsEmailsService.run(dry_run: dry_run)
-    puts "Reform comms emails #{dry_run ? 'to send' : 'sent'}: #{email_count}" unless Rails.env.test?
+    SendOctoberReformCommsEmailsService.run(dry_run: dry_run)
   end
 end

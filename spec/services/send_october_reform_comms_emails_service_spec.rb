@@ -3,9 +3,10 @@
 require "rails_helper"
 
 RSpec.describe SendOctoberReformCommsEmailsService do
-  subject(:service) { described_class.run(dry_run:) }
+  subject(:service) { described_class.run(dry_run:, output:) }
 
   let(:dry_run) { false }
+  let(:output) { StringIO.new }
   let(:template_id) { OctoberReformCommsEmailService::TEMPLATE_ID }
 
   let(:notify_client) { instance_double(Notifications::Client) }
@@ -66,6 +67,12 @@ RSpec.describe SendOctoberReformCommsEmailsService do
 
     it "returns the number of emails sent" do
       expect(service).to eq(2)
+    end
+
+    it "outputs the number of emails sent and the registrations they cover" do
+      service
+
+      expect(output.string).to eq("Reform comms emails sent: 2\nRegistrations covered: 4\n")
     end
 
     it "shows the email in the communication history of every registration with that contact email" do
@@ -179,6 +186,12 @@ RSpec.describe SendOctoberReformCommsEmailsService do
       it "does not count the failed email" do
         expect(service).to eq(1)
       end
+
+      it "does not count the registrations of the failed email" do
+        service
+
+        expect(output.string).to include("Registrations covered: 1\n")
+      end
     end
 
     context "when it is a dry run" do
@@ -196,6 +209,17 @@ RSpec.describe SendOctoberReformCommsEmailsService do
 
       it "returns the number of emails that would be sent" do
         expect(service).to eq(2)
+      end
+
+      it "outputs each email with the registrations it would be sent for, then the totals" do
+        service
+
+        expect(output.string).to eq(
+          "shared@example.com (3): #{shared_email_registrations.map(&:reference).join(', ')}\n" \
+          "single@example.com (1): #{single_email_registration.reference}\n" \
+          "Reform comms emails to send: 2\n" \
+          "Registrations covered: 4\n"
+        )
       end
     end
   end
