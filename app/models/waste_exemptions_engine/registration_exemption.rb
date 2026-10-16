@@ -19,10 +19,10 @@ module WasteExemptionsEngine
 
     scope :not_expired, -> { where("expires_on >= CURRENT_DATE") }
     scope :expired_by_date, -> { where("expires_on < CURRENT_DATE") }
+    scope :current, -> { active.not_expired }
 
     scope :all_active_exemptions, lambda {
-      active
-        .not_expired
+      current
         .includes(:exemption)
         .includes(registration: :addresses)
         .order(:registered_on, :registration_id)

@@ -72,7 +72,7 @@ class SendOctoberReformCommsEmailsService < WasteExemptionsEngine::BaseService
 
   def active_registrations
     WasteExemptionsEngine::Registration
-      .where(id: WasteExemptionsEngine::RegistrationExemption.active.not_expired.select(:registration_id))
+      .with_current_exemptions
       .contact_email_present
       .select(:id, :reference, :contact_email)
       .order(:id)

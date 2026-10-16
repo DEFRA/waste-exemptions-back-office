@@ -60,6 +60,37 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
     end
   end
 
+  describe ".current" do
+    let(:registration) { create(:registration, registration_exemptions: []) }
+
+    it "returns active exemptions that have not expired" do
+      registration_exemption = create(:registration_exemption, :active, registration:)
+
+      expect(described_class.current).to include(registration_exemption)
+    end
+
+    it "returns active exemptions that expire today" do
+      registration_exemption = create(:registration_exemption, :active, registration:, expires_on: Time.zone.today)
+
+      expect(described_class.current).to include(registration_exemption)
+    end
+
+    it "does not return active exemptions past their expiry date" do
+      registration_exemption = create(:registration_exemption, :active, registration:,
+                                                                        expires_on: Time.zone.yesterday)
+
+      expect(described_class.current).not_to include(registration_exemption)
+    end
+
+    %i[ceased revoked expired].each do |state|
+      it "does not return #{state} exemptions" do
+        registration_exemption = create(:registration_exemption, state, registration:)
+
+        expect(described_class.current).not_to include(registration_exemption)
+      end
+    end
+  end
+
   describe "#renewal" do
     subject(:registration_exemption) { registration.registration_exemptions.first }
 

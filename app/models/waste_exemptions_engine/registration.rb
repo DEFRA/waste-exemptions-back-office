@@ -29,6 +29,12 @@ module WasteExemptionsEngine
 
     scope :contact_email_present, -> { where.not(contact_email: nil) }
 
+    scope :contact_email_not_present, -> { where(contact_email: nil) }
+
+    scope :with_current_exemptions, lambda {
+      where(id: RegistrationExemption.current.select(:registration_id))
+    }
+
     scope :contact_phone_present, -> { where.not(contact_phone: nil) }
 
     scope :site_address_is_not_nccc, lambda {
