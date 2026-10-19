@@ -38,8 +38,6 @@ RSpec.describe "one_off:send_october_reform_comms_letters", type: :rake do
     rake_task.reenable
   end
 
-  it { expect { run_rake_task }.not_to raise_error }
-
   it "sends a batch of letters" do
     run_rake_task
 
@@ -60,27 +58,21 @@ RSpec.describe "one_off:send_october_reform_comms_letters", type: :rake do
     end
   end
 
-  context "when some letters fail or are unsendable" do
+  context "when some letters were not sent" do
     let(:result) do
       super().merge(failed: [{ references: %w[WEX4], error: "Connection reset" }],
-                    unsendable: [{ references: %w[WEX5 WEX6], reason: "no contact address postcode" },
-                                 { references: %w[WEX7], reason: "too few contact address lines" }])
+                    unsendable: [{ references: %w[WEX5 WEX6], reason: "no contact address postcode" }],
+                    rate_limited: true)
     end
 
-    it "outputs them with their references and the reasons" do
+    it "outputs them with their references and reasons, and that the batch stopped early" do
       expect { run_rake_task }.to output(
-        a_string_including("Failed: 1\n  WEX4: Connection reset\n",
-                           "Unsendable: 2\n  WEX5, WEX6: no contact address postcode\n  " \
-                           "WEX7: too few contact address lines\n")
+        "Letters sent: 2\nRegistrations covered: 3\n" \
+        "Failed: 1\n  WEX4: Connection reset\n" \
+        "Unsendable: 1\n  WEX5, WEX6: no contact address postcode\n" \
+        "Stopped early: Notify limit exceeded.\n" \
+        "Letters remaining: 5\n"
       ).to_stdout
-    end
-  end
-
-  context "when Notify stops the batch for exceeding a limit" do
-    let(:result) { super().merge(rate_limited: true) }
-
-    it "outputs that the batch stopped early" do
-      expect { run_rake_task }.to output(/Stopped early: Notify limit exceeded/).to_stdout
     end
   end
 
