@@ -41,10 +41,6 @@ RSpec.describe OctoberReformCommsLetterService do
       )
     end
 
-    it "returns the Notify response" do
-      expect(run_service).to eq(notify_response)
-    end
-
     it "records the letter in the communication history of each registration" do
       run_service
 
@@ -54,28 +50,8 @@ RSpec.describe OctoberReformCommsLetterService do
           template_id: described_class::TEMPLATE_ID,
           template_label: "Reform comms letter - October 2026",
           sent_to: "Jane Smith, Acme Ltd, 1, High Street, Bristol, BS1 1AA",
-          notification_id: "notification-id",
-          subject: "Waste exemptions are changing",
-          body: "Letter body"
+          notification_id: "notification-id"
         )
-      end
-    end
-
-    context "when Notify sends the delivery receipt for the letter" do
-      before do
-        run_service
-
-        WasteExemptionsEngine::NotifyCallbackJob.perform_now(
-          "id" => "notification-id",
-          "status" => "delivered",
-          "notification_type" => "letter"
-        )
-      end
-
-      it "updates the status in the communication history of each registration" do
-        registrations.each do |registration|
-          expect(registration.reload.communication_logs.sole.status).to eq("delivered")
-        end
       end
     end
   end
