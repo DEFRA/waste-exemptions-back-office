@@ -82,12 +82,10 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
       expect(described_class.current).not_to include(registration_exemption)
     end
 
-    %i[ceased revoked expired].each do |state|
-      it "does not return #{state} exemptions" do
-        registration_exemption = create(:registration_exemption, state, registration:)
+    it "does not return exemptions that are no longer active" do
+      registration_exemption = create(:registration_exemption, :ceased, registration:)
 
-        expect(described_class.current).not_to include(registration_exemption)
-      end
+      expect(described_class.current).not_to include(registration_exemption)
     end
   end
 

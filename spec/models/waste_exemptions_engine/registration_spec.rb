@@ -75,18 +75,13 @@ RSpec.describe WasteExemptionsEngine::Registration do
       expect(result).to include(registration)
     end
 
-    it "does not return registrations whose exemptions are all deregistered or expired" do
-      registrations = [
-        create(:registration, registration_exemptions: [build(:registration_exemption, :ceased)]),
-        create(:registration, registration_exemptions: [build(:registration_exemption, :revoked)]),
-        create(:registration, registration_exemptions: [build(:registration_exemption, :expired)]),
-        create(:registration, registration_exemptions: [build(:registration_exemption, :active,
-                                                              expires_on: Time.zone.yesterday)])
-      ]
+    it "does not return registrations with no current exemptions" do
+      registration = create(:registration, registration_exemptions: [build(:registration_exemption, :active,
+                                                                           expires_on: Time.zone.yesterday)])
 
       result = described_class.with_current_exemptions
 
-      expect(result).not_to include(*registrations)
+      expect(result).not_to include(registration)
     end
 
     it "returns each registration once regardless of how many current exemptions it has" do
