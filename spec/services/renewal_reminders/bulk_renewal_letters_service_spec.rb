@@ -43,6 +43,16 @@ module RenewalReminders
         expect(RenewalLetterService).not_to have_received(:run).with(registration: inactive_registration)
       end
 
+      it "sends registrations with an empty contact email to the RenewalLetterService" do
+        empty_email_registration = create(:registration,
+                                          contact_email: "",
+                                          registration_exemptions: [build(:registration_exemption, expires_on:)])
+
+        described_class.run(expires_on)
+
+        expect(RenewalLetterService).to have_received(:run).with(registration: empty_email_registration)
+      end
+
       it "sends only registrations which expire in exactly 30 days" do
         described_class.run(expires_on)
 

@@ -31,24 +31,28 @@ RSpec.describe WasteExemptionsEngine::Registration do
       expect(result).to include(registration)
     end
 
-    it "does not return registrations with no contact email" do
-      registration.update(contact_email: nil)
+    [nil, ""].each do |blank_email|
+      it "does not return registrations with a contact email of #{blank_email.inspect}" do
+        registration.update(contact_email: blank_email)
 
-      result = described_class.contact_email_present
+        result = described_class.contact_email_present
 
-      expect(result).not_to include(registration)
+        expect(result).not_to include(registration)
+      end
     end
   end
 
   describe ".contact_email_not_present" do
     let(:registration) { create(:registration) }
 
-    it "returns registrations with no contact email" do
-      registration.update(contact_email: nil)
+    [nil, ""].each do |blank_email|
+      it "returns registrations with a contact email of #{blank_email.inspect}" do
+        registration.update(contact_email: blank_email)
 
-      result = described_class.contact_email_not_present
+        result = described_class.contact_email_not_present
 
-      expect(result).to include(registration)
+        expect(result).to include(registration)
+      end
     end
 
     it "does not return registrations with a contact email" do
