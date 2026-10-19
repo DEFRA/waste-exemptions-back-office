@@ -3,70 +3,83 @@
 require "notifications/client"
 
 # Sends the October reform comms letter once to each unique contact name and address on an
-# active registration with no contact email, skipping registrations already sent it. Sends at
-# most batch_size letters per run, so re-run to send the rest.
+# active registration with no contact email, skipping registrations to which it was already sent.
+# Sends at most batch_size letters per run.
+#
+# A recipient is the contact name and address of one registration. A letter goes to one
+# recipient and covers every registration whose recipient matches.
 class SendOctoberReformCommsLettersService < WasteExemptionsEngine::BaseService
   DEFAULT_BATCH_SIZE = 1_000
   # Notify needs at least 3 address lines, and the contact name is the first
   MINIMUM_ADDRESS_LINES = 2
+
+  # A letter's recipient and the registrations it covers
+  Letter = Struct.new(:recipient, :registrations)
 
   def run(batch_size: DEFAULT_BATCH_SIZE, dry_run: false)
     @dry_run = dry_run
     @result = { letters_sent: 0, registrations_covered: 0, letters: [], failed: [], unsendable: [],
                 letters_remaining: 0, rate_limited: false }
 
-    groups = recipient_groups
-    groups.first(batch_size).each do |group|
-      send_letter(group)
+    letters = letters_to_send
+    letters.first(batch_size).each do |letter|
+      send_letter(letter)
     rescue Notifications::Client::RateLimitError => e
-      handle_rate_limit(e)
+      record_rate_limit(e)
       break
     rescue Notifications::Client::BadRequestError => e
-      add_unsendable(group, e.message)
+      record_unsendable(letter.registrations, e.message)
     rescue StandardError => e
-      handle_failure(group, e)
+      record_failure(letter, e)
     end
 
-    @result[:letters_remaining] = groups.size - @result[:letters_sent]
+    @result[:letters_remaining] = letters.size - @result[:letters_sent]
     @result
   end
 
   private
 
-  # Recipients sharing a contact name and address, in order of registration id.
-  def recipient_groups
-    sendable_recipients
-      .group_by { |recipient| recipient_key(recipient) }
+  # One letter per matching recipient, addressed using the first of them
+  def letters_to_send
+    addressable_recipients
+      .group_by { |recipient| matching_key(recipient) }
       .values
-      .sort_by { |group| group.map(&:id).min }
+      .map { |recipients| Letter.new(recipients.first, recipients.map(&:model)) }
   end
 
-  def sendable_recipients
-    recipients = registrations_to_send.map do |registration|
+  # Recipients whose contact address can be used for a letter. The rest are recorded as unsendable.
+  def addressable_recipients
+    recipients = eligible_registrations.map do |registration|
       OctoberReformCommsLetterRecipientPresenter.new(registration)
     end
-    unsendable, sendable = recipients.partition { |recipient| unsendable_reason(recipient) }
-    unsendable.each { |recipient| add_unsendable([recipient], unsendable_reason(recipient)) }
-    sendable
+
+    recipients.reject do |recipient|
+      problem = address_problem(recipient)
+      next false if problem.blank?
+
+      record_unsendable([recipient.model], problem)
+      true
+    end
   end
 
-  def registrations_to_send
+  # Active registrations with no contact email that haven't been sent the letter yet
+  def eligible_registrations
     WasteExemptionsEngine::Registration
       .with_current_exemptions
       .contact_email_not_present
-      .where.not(id: already_sent_registration_ids)
+      .where.not(id: registration_ids_already_sent_letter)
       .includes(:contact_address)
-      .order(:id)
   end
 
-  def already_sent_registration_ids
+  def registration_ids_already_sent_letter
     WasteExemptionsEngine::RegistrationCommunicationLog
       .joins(:communication_log)
       .where(communication_logs: { template_id: OctoberReformCommsLetterService::TEMPLATE_ID })
       .select(:registration_id)
   end
 
-  def unsendable_reason(recipient)
+  # Why the recipient's contact address can't be used for a letter, or nil if it can
+  def address_problem(recipient)
     if recipient.contact_address.blank?
       "no contact address"
     elsif recipient.contact_address.postcode.blank?
@@ -76,47 +89,49 @@ class SendOctoberReformCommsLettersService < WasteExemptionsEngine::BaseService
     end
   end
 
-  # Recipients whose names and address lines match (case and whitespace aside) share a letter
-  def recipient_key(recipient)
+  # Recipients whose names and address lines match (case and whitespace aside) will share a letter
+  def matching_key(recipient)
     [recipient.first_name, recipient.last_name, *recipient.address_lines]
       .map { |value| value.delete(" ").downcase }
   end
 
-  def send_letter(group)
-    recipient = group.min_by(&:id)
+  def send_letter(letter)
+    recipient = letter.recipient
 
     unless @dry_run
       OctoberReformCommsLetterService.run(first_name: recipient.first_name, last_name: recipient.last_name,
-                                          address_lines: recipient.address_lines, registrations: group.map(&:model))
+                                          address_lines: recipient.address_lines,
+                                          registrations: letter.registrations)
     end
 
-    add_letter(group, recipient)
+    record_sent(letter)
   end
 
-  def add_letter(group, recipient)
+  def record_sent(letter)
     @result[:letters_sent] += 1
-    @result[:registrations_covered] += group.size
-    @result[:letters] << { references: group.map(&:reference), recipient: recipient.recipient }
+    @result[:registrations_covered] += letter.registrations.size
+    @result[:letters] << { references: letter.registrations.map(&:reference),
+                           recipient: letter.recipient.name_and_address }
   end
 
-  def add_unsendable(group, reason)
-    Rails.logger.warn "Reform comms letter not sendable for registrations #{references(group)}: #{reason}"
-    @result[:unsendable] << { references: group.map(&:reference), reason: }
+  def record_unsendable(registrations, reason)
+    Rails.logger.warn "Reform comms letter not sendable for registrations #{references(registrations)}: #{reason}"
+    @result[:unsendable] << { references: registrations.map(&:reference), reason: }
   end
 
-  def handle_rate_limit(error)
+  def record_rate_limit(error)
     Airbrake.notify error
     Rails.logger.error "Stopped sending reform comms letters, Notify limit exceeded: #{error.message}."
     @result[:rate_limited] = true
   end
 
-  def handle_failure(group, error)
-    Airbrake.notify error, registration: references(group)
-    Rails.logger.error "Failed to send reform comms letter for registrations #{references(group)}"
-    @result[:failed] << { references: group.map(&:reference), error: error.message }
+  def record_failure(letter, error)
+    Airbrake.notify error, registration: references(letter.registrations)
+    Rails.logger.error "Failed to send reform comms letter for registrations #{references(letter.registrations)}"
+    @result[:failed] << { references: letter.registrations.map(&:reference), error: error.message }
   end
 
-  def references(group)
-    group.map(&:reference).join(", ")
+  def references(registrations)
+    registrations.map(&:reference).join(", ")
   end
 end

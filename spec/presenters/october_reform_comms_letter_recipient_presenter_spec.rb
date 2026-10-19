@@ -30,9 +30,9 @@ RSpec.describe OctoberReformCommsLetterRecipientPresenter do
     end
   end
 
-  describe "#recipient" do
+  describe "#name_and_address" do
     it "returns the contact name and address lines" do
-      expect(presenter.recipient).to eq("Jane van Smith, 1, High Street, Bristol, BS1 1AA")
+      expect(presenter.name_and_address).to eq("Jane van Smith, 1, High Street, Bristol, BS1 1AA")
     end
   end
 end

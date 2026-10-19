@@ -17,7 +17,7 @@ class OctoberReformCommsLetterRecipientPresenter < BasePresenter
     displayable_address(contact_address).map(&:squish)
   end
 
-  def recipient
+  def name_and_address
     ["#{first_name} #{last_name}", *address_lines].join(", ")
   end
 end

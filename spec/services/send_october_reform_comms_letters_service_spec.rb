@@ -7,13 +7,8 @@ RSpec.describe SendOctoberReformCommsLettersService do
 
   let(:batch_size) { 10 }
   let(:dry_run) { false }
-  let(:template_id) { OctoberReformCommsLetterService::TEMPLATE_ID }
 
-  let(:notify_client) { instance_double(Notifications::Client) }
-  let(:rate_limit_error) { notify_error(Notifications::Client::RateLimitError, "429", "RateLimitError") }
-  let(:bad_request_error) { notify_error(Notifications::Client::BadRequestError, "400", "ValidationError") }
-
-  # Jane Smith at 1 High Street, with the same contact recorded differently on a later registration
+  # Jane Smith at 1 High Street, with the same contact recorded differently on another registration
   let(:shared_contact_registrations) do
     [
       create_registration,
@@ -40,13 +35,14 @@ RSpec.describe SendOctoberReformCommsLettersService do
     )
   end
 
+  def fail_letter_for(registration, error)
+    allow(OctoberReformCommsLetterService).to receive(:run)
+      .with(hash_including(registrations: [registration]))
+      .and_raise(error)
+  end
+
   before do
-    allow(Notifications::Client).to receive(:new).and_return(notify_client)
-    allow(notify_client).to receive(:send_letter) do |personalisation:, **|
-      instance_double(Notifications::Client::ResponseNotification,
-                      id: "#{personalisation['address_line_1']}-#{personalisation['address_line_2']}",
-                      content: { "subject" => "Waste exemptions are changing", "body" => "Letter body" })
-    end
+    allow(OctoberReformCommsLetterService).to receive(:run)
     allow(Airbrake).to receive(:notify)
 
     shared_contact_registrations
@@ -63,50 +59,31 @@ RSpec.describe SendOctoberReformCommsLettersService do
     it "sends one letter to each unique contact name and address on an active registration with no contact email" do
       service
 
-      expect(notify_client).to have_received(:send_letter).exactly(3).times
+      expect(OctoberReformCommsLetterService).to have_received(:run).exactly(3).times
+      expect(OctoberReformCommsLetterService).to have_received(:run)
+        .with(hash_including(registrations: match_array(shared_contact_registrations)))
     end
 
-    it "uses the contact details of the registration with the lowest id for a shared letter" do
+    it "sends each letter with the recipient's name and address" do
       service
 
-      expect(notify_client).to have_received(:send_letter).with(
-        template_id:,
-        personalisation: {
-          first_name: "Jane",
-          last_name: "Smith",
-          "address_line_1" => "Jane Smith",
-          "address_line_2" => "1",
-          "address_line_3" => "High Street",
-          "address_line_4" => "Bristol",
-          "address_line_5" => "BS1 1AA"
-        }
+      expect(OctoberReformCommsLetterService).to have_received(:run).with(
+        first_name: "Tom", last_name: "Smith", address_lines: ["1", "High Street", "Bristol", "BS1 1AA"],
+        registrations: [same_address_other_name_registration]
       )
     end
 
-    it "shows the letter in the communication history of every registration it was sent for" do
-      service
-
-      shared_contact_registrations.each do |registration|
-        expect(registration.reload.communication_logs.sole).to have_attributes(
-          template_id:,
-          notification_id: "Jane Smith-1",
-          sent_to: "Jane Smith, 1, High Street, Bristol, BS1 1AA"
-        )
-      end
-    end
-
     it "returns the letters sent and the registrations they cover" do
-      expect(service).to include(
+      expect(service).to match(
         letters_sent: 3,
         registrations_covered: 4,
-        letters: [
-          { references: shared_contact_registrations.map(&:reference),
-            recipient: "Jane Smith, 1, High Street, Bristol, BS1 1AA" },
+        letters: contain_exactly(
+          a_hash_including(references: match_array(shared_contact_registrations.map(&:reference))),
           { references: [same_name_other_address_registration.reference],
             recipient: "Jane Smith, 2, High Street, Bristol, BS1 1AA" },
           { references: [same_address_other_name_registration.reference],
             recipient: "Tom Smith, 1, High Street, Bristol, BS1 1AA" }
-        ],
+        ),
         failed: [],
         unsendable: [],
         letters_remaining: 0,
@@ -114,29 +91,28 @@ RSpec.describe SendOctoberReformCommsLettersService do
       )
     end
 
-    context "when some registrations have already been sent the letter" do
-      before { described_class.run(batch_size: 1) }
+    context "when a registration has already been sent the letter" do
+      before do
+        create(:registration_communication_log,
+               registration: shared_contact_registrations.first,
+               communication_log: build(:communication_log, :letter,
+                                        template_id: OctoberReformCommsLetterService::TEMPLATE_ID))
+      end
 
-      it "does not send them the letter again" do
+      it "does not send it the letter again" do
         service
 
-        expect(notify_client).to have_received(:send_letter).exactly(3).times
-        expect(shared_contact_registrations.first.reload.communication_logs.count).to eq(1)
+        expect(OctoberReformCommsLetterService).not_to have_received(:run)
+          .with(hash_including(registrations: include(shared_contact_registrations.first)))
       end
     end
 
     context "when there are more letters to send than the batch size" do
       let(:batch_size) { 2 }
 
-      it "sends the batch size number of letters, starting from the lowest registration ids" do
-        service
-
-        expect(notify_client).to have_received(:send_letter).twice
-        expect(same_address_other_name_registration.reload.communication_logs).to be_empty
-      end
-
-      it "returns the number of letters still to send" do
+      it "sends the batch size number of letters and returns the number still to send" do
         expect(service).to include(letters_sent: 2, letters_remaining: 1)
+        expect(OctoberReformCommsLetterService).to have_received(:run).twice
       end
     end
 
@@ -152,110 +128,62 @@ RSpec.describe SendOctoberReformCommsLettersService do
         create_registration(premises: nil, street_address: nil, city: nil, postcode: "BS2 2BB")
       end
 
-      it "does not send it a letter" do
-        service
-
-        expect(notify_client).to have_received(:send_letter).exactly(3).times
-      end
-
-      it "returns it as unsendable with the reason" do
-        expect(service[:unsendable]).to contain_exactly(
-          { references: [no_address_registration.reference], reason: "no contact address" },
-          { references: [no_postcode_registration.reference], reason: "no contact address postcode" },
-          { references: [too_few_lines_registration.reference], reason: "too few contact address lines" }
+      it "returns it as unsendable with the reason, without sending it a letter" do
+        expect(service).to include(
+          letters_sent: 3,
+          unsendable: contain_exactly(
+            { references: [no_address_registration.reference], reason: "no contact address" },
+            { references: [no_postcode_registration.reference], reason: "no contact address postcode" },
+            { references: [too_few_lines_registration.reference], reason: "too few contact address lines" }
+          )
         )
       end
     end
 
     context "when Notify rejects a letter" do
-      before do
-        allow(notify_client).to receive(:send_letter)
-          .with(hash_including(personalisation: hash_including("address_line_2" => "2")))
-          .and_raise(bad_request_error)
-      end
+      let(:error) { notify_error(Notifications::Client::BadRequestError, "400", "ValidationError") }
+
+      before { fail_letter_for(same_name_other_address_registration, error) }
 
       it "returns the registrations as unsendable with Notify's message and carries on" do
         expect(service).to include(
           letters_sent: 2,
-          unsendable: [{ references: [same_name_other_address_registration.reference],
-                         reason: bad_request_error.message }]
+          unsendable: [{ references: [same_name_other_address_registration.reference], reason: error.message }]
         )
-      end
-
-      it "does not record the letter in the communication history" do
-        service
-
-        expect(same_name_other_address_registration.reload.communication_logs).to be_empty
       end
     end
 
     context "when a letter fails to send for another reason" do
-      before do
-        allow(notify_client).to receive(:send_letter)
-          .with(hash_including(personalisation: hash_including("address_line_2" => "2")))
-          .and_raise(StandardError, "Connection reset")
-      end
+      before { fail_letter_for(same_name_other_address_registration, StandardError.new("Connection reset")) }
 
-      it "notifies Airbrake" do
-        service
-
-        expect(Airbrake).to have_received(:notify)
-          .with(an_instance_of(StandardError), registration: same_name_other_address_registration.reference)
-      end
-
-      it "returns the registrations as failed and carries on" do
+      it "notifies Airbrake, returns the registrations as failed and carries on" do
         expect(service).to include(
           letters_sent: 2,
-          failed: [{ references: [same_name_other_address_registration.reference], error: "Connection reset" }],
-          letters_remaining: 1
+          failed: [{ references: [same_name_other_address_registration.reference], error: "Connection reset" }]
         )
+        expect(Airbrake).to have_received(:notify)
+          .with(an_instance_of(StandardError), registration: same_name_other_address_registration.reference)
       end
     end
 
     context "when Notify rejects a letter for exceeding a limit" do
-      before do
-        allow(notify_client).to receive(:send_letter)
-          .with(hash_including(personalisation: hash_including("address_line_2" => "2")))
-          .and_raise(rate_limit_error)
-      end
+      let(:error) { notify_error(Notifications::Client::RateLimitError, "429", "RateLimitError") }
 
-      it "notifies Airbrake" do
-        service
+      before { allow(OctoberReformCommsLetterService).to receive(:run).and_raise(error) }
 
-        expect(Airbrake).to have_received(:notify).with(rate_limit_error)
-      end
-
-      it "stops sending letters" do
-        service
-
-        expect(same_address_other_name_registration.reload.communication_logs).to be_empty
-      end
-
-      it "returns that it was stopped by the limit, with the letters still to send" do
-        expect(service).to include(letters_sent: 1, letters_remaining: 2, rate_limited: true)
+      it "notifies Airbrake, stops sending and returns that it was stopped by the limit" do
+        expect(service).to include(letters_sent: 0, letters_remaining: 3, rate_limited: true)
+        expect(OctoberReformCommsLetterService).to have_received(:run).once
+        expect(Airbrake).to have_received(:notify).with(error)
       end
     end
 
     context "when running in dry run mode" do
       let(:dry_run) { true }
 
-      it "does not send any letters" do
-        service
-
-        expect(notify_client).not_to have_received(:send_letter)
-      end
-
-      it "does not record anything in the communication history" do
-        expect { service }.not_to change(WasteExemptionsEngine::CommunicationLog, :count)
-      end
-
-      it "returns the letters it would send" do
+      it "returns the letters it would send, without sending them" do
         expect(service).to include(letters_sent: 3, registrations_covered: 4, letters_remaining: 0)
-        expect(service[:letters].pluck(:references)).to eq(
-          [shared_contact_registrations.map(&:reference),
-           [same_name_other_address_registration.reference],
-           [same_address_other_name_registration.reference]]
-        )
+        expect(OctoberReformCommsLetterService).not_to have_received(:run)
       end
     end
   end
