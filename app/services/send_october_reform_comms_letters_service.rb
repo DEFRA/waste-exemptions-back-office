@@ -2,10 +2,10 @@
 
 require "notifications/client"
 
-# Sends the reform comms letter once to each unique contact name and address on an active
-# registration with no contact email, skipping registrations already sent it. Sends at most
-# batch_size letters per run, so re-run to send the rest.
-class SendReformCommsLettersService < WasteExemptionsEngine::BaseService
+# Sends the October reform comms letter once to each unique contact name and address on an
+# active registration with no contact email, skipping registrations already sent it. Sends at
+# most batch_size letters per run, so re-run to send the rest.
+class SendOctoberReformCommsLettersService < WasteExemptionsEngine::BaseService
   DEFAULT_BATCH_SIZE = 1_000
   # Notify needs at least 3 address lines, and the contact name is the first
   MINIMUM_ADDRESS_LINES = 2
@@ -42,7 +42,9 @@ class SendReformCommsLettersService < WasteExemptionsEngine::BaseService
   end
 
   def sendable_recipients
-    recipients = registrations_to_send.map { |registration| ReformCommsLetterRecipientPresenter.new(registration) }
+    recipients = registrations_to_send.map do |registration|
+      OctoberReformCommsLetterRecipientPresenter.new(registration)
+    end
     unsendable, sendable = recipients.partition { |recipient| unsendable_reason(recipient) }
     unsendable.each { |recipient| add_unsendable([recipient], unsendable_reason(recipient)) }
     sendable
@@ -60,7 +62,7 @@ class SendReformCommsLettersService < WasteExemptionsEngine::BaseService
   def already_sent_registration_ids
     WasteExemptionsEngine::RegistrationCommunicationLog
       .joins(:communication_log)
-      .where(communication_logs: { template_id: ReformCommsLetterService::TEMPLATE_ID })
+      .where(communication_logs: { template_id: OctoberReformCommsLetterService::TEMPLATE_ID })
       .select(:registration_id)
   end
 
@@ -84,8 +86,8 @@ class SendReformCommsLettersService < WasteExemptionsEngine::BaseService
     recipient = group.min_by(&:id)
 
     unless @dry_run
-      ReformCommsLetterService.run(first_name: recipient.first_name, last_name: recipient.last_name,
-                                   address_lines: recipient.address_lines, registrations: group.map(&:model))
+      OctoberReformCommsLetterService.run(first_name: recipient.first_name, last_name: recipient.last_name,
+                                          address_lines: recipient.address_lines, registrations: group.map(&:model))
     end
 
     add_letter(group, recipient)

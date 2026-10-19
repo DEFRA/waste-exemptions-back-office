@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# The contact name and address of a registration, as used for the comms letters
-class ReformCommsLetterRecipientPresenter < BasePresenter
+# The contact name and address of a registration, as used for the October reform comms letters
+class OctoberReformCommsLetterRecipientPresenter < BasePresenter
   # For displayable_address()
   include WasteExemptionsEngine::ApplicationHelper
 

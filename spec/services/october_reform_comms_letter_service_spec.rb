@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ReformCommsLetterService do
+RSpec.describe OctoberReformCommsLetterService do
   describe ".run" do
     subject(:run_service) do
       described_class.run(first_name: "Jane", last_name: "Smith", address_lines:, registrations:)

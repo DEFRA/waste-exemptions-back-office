@@ -2,10 +2,10 @@
 
 require "notifications/client"
 
-# Sends one reform comms letter to the given contact and records it in the communication
-# history of each of the given registrations. This is for cases where multiple registrations
-# share a contact name and address, and a letter needs to be sent only once.
-class ReformCommsLetterService < WasteExemptionsEngine::BaseService
+# Sends one October reform comms letter to the given contact and records it in the
+# communication history of each of the given registrations. This is for cases where multiple
+# registrations share a contact name and address, and a letter needs to be sent only once.
+class OctoberReformCommsLetterService < WasteExemptionsEngine::BaseService
   include WasteExemptionsEngine::CanHaveCommunicationLog
 
   TEMPLATE_ID = "cdbd027b-aa13-49f2-b904-0fe9ec636958"

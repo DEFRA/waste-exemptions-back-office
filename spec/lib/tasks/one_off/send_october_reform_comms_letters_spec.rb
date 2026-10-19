@@ -3,15 +3,15 @@
 require "rails_helper"
 
 # rubocop:disable-next RSpec/ExpectOutput
-RSpec.describe "one_off:send_reform_comms_letters", type: :rake do
+RSpec.describe "one_off:send_october_reform_comms_letters", type: :rake do
   original_stdout = $stdout # rubocop:disable RSpec/LeakyLocalVariable
 
   subject(:run_rake_task) { rake_task.invoke("500", "live-run") }
 
   include_context "rake"
 
-  let(:rake_task) { Rake::Task["one_off:send_reform_comms_letters"] }
-  let(:default_batch_size) { SendReformCommsLettersService::DEFAULT_BATCH_SIZE }
+  let(:rake_task) { Rake::Task["one_off:send_october_reform_comms_letters"] }
+  let(:default_batch_size) { SendOctoberReformCommsLettersService::DEFAULT_BATCH_SIZE }
 
   let(:result) do
     {
@@ -30,7 +30,7 @@ RSpec.describe "one_off:send_reform_comms_letters", type: :rake do
 
   before do
     $stdout = StringIO.new
-    allow(SendReformCommsLettersService).to receive(:run).and_return(result)
+    allow(SendOctoberReformCommsLettersService).to receive(:run).and_return(result)
   end
 
   after do
@@ -43,7 +43,7 @@ RSpec.describe "one_off:send_reform_comms_letters", type: :rake do
   it "sends a batch of letters" do
     run_rake_task
 
-    expect(SendReformCommsLettersService).to have_received(:run).with(batch_size: 500, dry_run: false)
+    expect(SendOctoberReformCommsLettersService).to have_received(:run).with(batch_size: 500, dry_run: false)
   end
 
   it "outputs the letters sent, the registrations they cover and the letters remaining" do
@@ -56,7 +56,7 @@ RSpec.describe "one_off:send_reform_comms_letters", type: :rake do
     it "sends the default batch size of letters" do
       rake_task.invoke("", "live-run")
 
-      expect(SendReformCommsLettersService).to have_received(:run).with(batch_size: default_batch_size, dry_run: false)
+      expect(SendOctoberReformCommsLettersService).to have_received(:run).with(batch_size: default_batch_size, dry_run: false)
     end
   end
 
@@ -90,7 +90,7 @@ RSpec.describe "one_off:send_reform_comms_letters", type: :rake do
     it "does not send the letters" do
       run_rake_task
 
-      expect(SendReformCommsLettersService).to have_received(:run).with(batch_size: default_batch_size, dry_run: true)
+      expect(SendOctoberReformCommsLettersService).to have_received(:run).with(batch_size: default_batch_size, dry_run: true)
     end
 
     it "outputs each letter it would send and the totals" do

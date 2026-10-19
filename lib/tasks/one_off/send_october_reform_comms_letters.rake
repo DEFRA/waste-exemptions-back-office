@@ -2,16 +2,16 @@
 
 namespace :one_off do
   # https://eaflood.atlassian.net/browse/RUBY-4501
-  # rake one_off:send_reform_comms_letters[500,live-run] to send a batch of up to 500 letters,
+  # rake one_off:send_october_reform_comms_letters[500,live-run] to send a batch of up to 500 letters,
   # otherwise runs in dry-run mode by default. Leave the batch size blank to use the default (1,000).
-  desc "Send a batch of reform comms letters to each unique contact on an active registration with no contact email"
-  task :send_reform_comms_letters, %i[batch_size mode] => [:environment] do |_task, args|
+  desc "Send a batch of October reform comms letters to unique contacts on active registrations with no contact email"
+  task :send_october_reform_comms_letters, %i[batch_size mode] => [:environment] do |_task, args|
     dry_run = args[:mode] != "live-run"
-    batch_size = (args[:batch_size].presence || SendReformCommsLettersService::DEFAULT_BATCH_SIZE).to_i
+    batch_size = (args[:batch_size].presence || SendOctoberReformCommsLettersService::DEFAULT_BATCH_SIZE).to_i
 
     puts "[DRY RUN] No letters will be sent" if dry_run
 
-    result = SendReformCommsLettersService.run(batch_size:, dry_run:)
+    result = SendOctoberReformCommsLettersService.run(batch_size:, dry_run:)
 
     if dry_run
       result[:letters].each do |letter|

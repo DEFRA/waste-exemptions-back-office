@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe SendReformCommsLettersService do
+RSpec.describe SendOctoberReformCommsLettersService do
   subject(:service) { described_class.run(batch_size:, dry_run:) }
 
   let(:batch_size) { 10 }
   let(:dry_run) { false }
-  let(:template_id) { ReformCommsLetterService::TEMPLATE_ID }
+  let(:template_id) { OctoberReformCommsLetterService::TEMPLATE_ID }
 
   let(:notify_client) { instance_double(Notifications::Client) }
   let(:rate_limit_error) { notify_error(Notifications::Client::RateLimitError, "429", "RateLimitError") }
