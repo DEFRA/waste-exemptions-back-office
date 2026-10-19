@@ -18,6 +18,10 @@ class OctoberReformCommsLetterService < WasteExemptionsEngine::BaseService
     notify_result = client.send_letter(template_id: TEMPLATE_ID, personalisation: personalisation)
     registrations.each { |registration| create_log(registration:, notify_response: notify_result) }
     notify_result
+  rescue Notifications::Client::BadRequestError
+    # Notify will reject the letter every time, so record that to stop it being sent again
+    registrations.each { |registration| create_rejection_log(registration:) }
+    raise
   end
 
   # For CanHaveCommunicationLog
@@ -31,6 +35,13 @@ class OctoberReformCommsLetterService < WasteExemptionsEngine::BaseService
   end
 
   private
+
+  # Like CanHaveCommunicationLog#create_log, for a letter Notify rejected
+  def create_rejection_log(registration:)
+    registration.communication_logs << WasteExemptionsEngine::CommunicationLog.new(
+      communications_log_params.merge(status: "permanent-failure")
+    )
+  end
 
   def personalisation
     {

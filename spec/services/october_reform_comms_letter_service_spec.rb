@@ -54,6 +54,29 @@ RSpec.describe OctoberReformCommsLetterService do
         )
       end
     end
+
+    context "when Notify rejects the letter" do
+      let(:error) do
+        Notifications::Client::BadRequestError.new(
+          instance_double(Net::HTTPResponse,
+                          code: "400",
+                          body: { errors: [{ error: "ValidationError", message: "Rejected by Notify" }] }.to_json)
+        )
+      end
+
+      before { allow(notify_client).to receive(:send_letter).and_raise(error) }
+
+      it "records the rejection in the communication history of each registration and raises the error" do
+        expect { run_service }.to raise_error(error)
+
+        registrations.each do |registration|
+          expect(registration.reload.communication_logs.sole).to have_attributes(
+            template_id: described_class::TEMPLATE_ID,
+            status: "permanent-failure"
+          )
+        end
+      end
+    end
   end
 
   it_behaves_like "CanHaveCommunicationLog" do

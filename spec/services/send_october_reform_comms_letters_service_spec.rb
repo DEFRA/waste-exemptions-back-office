@@ -148,7 +148,8 @@ RSpec.describe SendOctoberReformCommsLettersService do
       it "returns the registrations as unsendable with Notify's message and carries on" do
         expect(service).to include(
           letters_sent: 2,
-          unsendable: [{ references: [same_name_other_address_registration.reference], reason: error.message }]
+          unsendable: [{ references: [same_name_other_address_registration.reference], reason: error.message }],
+          letters_remaining: 0
         )
       end
     end

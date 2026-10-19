@@ -22,18 +22,21 @@ class SendOctoberReformCommsLettersService < WasteExemptionsEngine::BaseService
                 letters_remaining: 0, rate_limited: false }
 
     letters = letters_to_send
+    letters_rejected = 0
     letters.first(batch_size).each do |letter|
       send_letter(letter)
     rescue Notifications::Client::RateLimitError => e
       record_rate_limit(e)
       break
     rescue Notifications::Client::BadRequestError => e
+      letters_rejected += 1
       record_unsendable(letter.registrations, e.message)
     rescue StandardError => e
       record_failure(letter, e)
     end
 
-    @result[:letters_remaining] = letters.size - @result[:letters_sent]
+    # Rejected letters are recorded in the communication history, so later runs skip them
+    @result[:letters_remaining] = letters.size - @result[:letters_sent] - letters_rejected
     @result
   end
 
@@ -62,16 +65,17 @@ class SendOctoberReformCommsLettersService < WasteExemptionsEngine::BaseService
     end
   end
 
-  # Active registrations with no contact email that haven't been sent the letter yet
+  # Active registrations with no contact email that don't yet have the letter in their
+  # communication history, as sent or as rejected by Notify
   def eligible_registrations
     WasteExemptionsEngine::Registration
       .with_current_exemptions
       .contact_email_not_present
-      .where.not(id: registration_ids_already_sent_letter)
+      .where.not(id: registration_ids_with_letter_in_history)
       .includes(:contact_address)
   end
 
-  def registration_ids_already_sent_letter
+  def registration_ids_with_letter_in_history
     WasteExemptionsEngine::RegistrationCommunicationLog
       .joins(:communication_log)
       .where(communication_logs: { template_id: OctoberReformCommsLetterService::TEMPLATE_ID })
