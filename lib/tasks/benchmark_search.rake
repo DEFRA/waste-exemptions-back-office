@@ -9,10 +9,9 @@ task :benchmark_search, %i[term filter page] => :environment do |_t, args|
   page = args[:page]
   puts "Searching with term: \"#{term}\", model: \"#{model}\", page: #{page}\n" unless Rails.env.test?
 
-  res = nil
   Benchmark.bmbm do |x|
     x.report("search benchmark") do
-      res = SearchService.new.search(term, model, page)
+      SearchService.new.search(term, model, page)
     end
   end
 end
