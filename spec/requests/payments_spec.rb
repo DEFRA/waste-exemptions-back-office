@@ -130,9 +130,14 @@ RSpec.describe "Add Payment Forms" do
     end
 
     context "when submitted data is valid" do
+      around do |example|
+        original_adapter = ActiveJob::Base.queue_adapter
+        ActiveJob::Base.queue_adapter = :test
+        example.run
+        ActiveJob::Base.queue_adapter = original_adapter
+      end
+
       before do
-        allow(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to receive(:perform_later)
-        allow(SendProofOfPaymentJob).to receive(:perform_later)
         post registration_add_payment_form_path(registration.reference), params: request_body
       end
 
@@ -166,11 +171,11 @@ RSpec.describe "Add Payment Forms" do
       end
 
       it "triggers the SendRegistrationConfirmationWhenBalanceFullyPaidJob job" do
-        expect(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to have_received(:perform_later).with(reference: registration.reference)
+        expect(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to have_been_enqueued.with(reference: registration.reference)
       end
 
       it "triggers the SendProofOfPaymentJob job" do
-        expect(SendProofOfPaymentJob).to have_received(:perform_later).with(reference: registration.reference)
+        expect(SendProofOfPaymentJob).to have_been_enqueued.with(reference: registration.reference)
       end
     end
 

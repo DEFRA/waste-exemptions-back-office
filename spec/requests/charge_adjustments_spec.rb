@@ -97,6 +97,13 @@ RSpec.describe "Charge Adjustments" do
 
     context "when the user is signed in" do
       context "with valid params" do
+        around do |example|
+          original_adapter = ActiveJob::Base.queue_adapter
+          ActiveJob::Base.queue_adapter = :test
+          example.run
+          ActiveJob::Base.queue_adapter = original_adapter
+        end
+
         it "creates a new charge adjustment" do
           expect do
             post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
@@ -119,17 +126,15 @@ RSpec.describe "Charge Adjustments" do
         end
 
         it "triggers the SendRegistrationConfirmationWhenBalanceFullyPaidJob job" do
-          allow(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to receive(:perform_later)
-          post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
-
-          expect(SendRegistrationConfirmationWhenBalanceFullyPaidJob).to have_received(:perform_later).with(reference: registration.reference)
+          expect do
+            post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
+          end.to have_enqueued_job(SendRegistrationConfirmationWhenBalanceFullyPaidJob).with(reference: registration.reference)
         end
 
         it "triggers the SendProofOfPaymentJob job" do
-          allow(SendProofOfPaymentJob).to receive(:perform_later)
-          post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
-
-          expect(SendProofOfPaymentJob).to have_received(:perform_later).with(reference: registration.reference)
+          expect do
+            post registration_charge_adjustments_path(registration_reference: registration.reference), params: valid_params
+          end.to have_enqueued_job(SendProofOfPaymentJob).with(reference: registration.reference)
         end
       end
 
