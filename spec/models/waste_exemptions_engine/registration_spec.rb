@@ -23,7 +23,7 @@ RSpec.describe WasteExemptionsEngine::Registration do
   describe ".contact_email_present" do
     let(:registration) { create(:registration) }
 
-    it "returns registrations that don't have a blank contact email" do
+    it "returns registrations with a contact email" do
       registration.update(contact_email: "test@example.com")
 
       result = described_class.contact_email_present
@@ -31,12 +31,66 @@ RSpec.describe WasteExemptionsEngine::Registration do
       expect(result).to include(registration)
     end
 
-    it "does not return registrations that do have a blank contact email" do
-      registration.update(contact_email: nil)
+    [nil, ""].each do |blank_email|
+      it "does not return registrations with a contact email of #{blank_email.inspect}" do
+        registration.update(contact_email: blank_email)
 
-      result = described_class.contact_email_present
+        result = described_class.contact_email_present
+
+        expect(result).not_to include(registration)
+      end
+    end
+  end
+
+  describe ".contact_email_not_present" do
+    let(:registration) { create(:registration) }
+
+    [nil, ""].each do |blank_email|
+      it "returns registrations with a contact email of #{blank_email.inspect}" do
+        registration.update(contact_email: blank_email)
+
+        result = described_class.contact_email_not_present
+
+        expect(result).to include(registration)
+      end
+    end
+
+    it "does not return registrations with a contact email" do
+      registration.update(contact_email: "test@example.com")
+
+      result = described_class.contact_email_not_present
 
       expect(result).not_to include(registration)
+    end
+  end
+
+  describe ".with_current_exemptions" do
+    it "returns registrations with at least one active, unexpired exemption" do
+      registration = create(:registration,
+                            registration_exemptions: [build(:registration_exemption, :active),
+                                                      build(:registration_exemption, :ceased)])
+
+      result = described_class.with_current_exemptions
+
+      expect(result).to include(registration)
+    end
+
+    it "does not return registrations with no current exemptions" do
+      registration = create(:registration, registration_exemptions: [build(:registration_exemption, :active,
+                                                                           expires_on: Time.zone.yesterday)])
+
+      result = described_class.with_current_exemptions
+
+      expect(result).not_to include(registration)
+    end
+
+    it "returns each registration once regardless of how many current exemptions it has" do
+      registration = create(:registration,
+                            registration_exemptions: build_list(:registration_exemption, 3, :active))
+
+      result = described_class.with_current_exemptions
+
+      expect(result.where(id: registration.id).count).to eq(1)
     end
   end
 

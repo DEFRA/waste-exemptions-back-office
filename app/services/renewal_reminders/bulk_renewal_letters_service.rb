@@ -26,7 +26,7 @@ module RenewalReminders
       @_ad_expiring_registrations ||= lambda do
         WasteExemptionsEngine::Registration
           .order(:reference)
-          .where(contact_email: nil)
+          .contact_email_not_present
           .where(
             id: WasteExemptionsEngine::RegistrationExemption
                 .all_active_exemptions

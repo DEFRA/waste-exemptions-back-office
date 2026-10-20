@@ -70,6 +70,15 @@ module RenewalReminders
         end
       end
 
+      it "does not email registrations with an empty contact email" do
+        create(:registration, contact_email: "",
+                              registration_exemptions: [build(:registration_exemption, :active, expires_on:)])
+
+        run_bulk_service
+
+        expect(notify_client).not_to have_received(:send_email).with(hash_including(email_address: ""))
+      end
+
       shared_examples "email sent to registration" do
         it "sends an email to the registration" do
           run_bulk_service
