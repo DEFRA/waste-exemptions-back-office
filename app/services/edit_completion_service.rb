@@ -20,6 +20,8 @@ class EditCompletionService < WasteExemptionsEngine::BaseService
   end
 
   def copy_data_from_edit_registration
+    validate_address_integrity!
+
     related_objects_changed?
 
     # Preload associations before making any changes (to avoid losing unsaved changes)
@@ -82,5 +84,11 @@ class EditCompletionService < WasteExemptionsEngine::BaseService
 
   def comparable_data(items)
     items.to_json(except: %w[id created_at updated_at registration_id transient_registration_id])
+  end
+
+  def validate_address_integrity!
+    return if @edit_registration.transient_addresses.site.any?
+
+    raise StandardError, "site address missing"
   end
 end
