@@ -54,6 +54,19 @@ RSpec.describe "Edit Complete Forms" do
         expect { get request_path }.to raise_error(ActionController::RoutingError)
       end
     end
+
+    context "when transient site address is missing" do
+      before do
+        form.transient_registration.transient_addresses.site.destroy_all
+      end
+
+      it "redirects to the registration page with an error" do
+        get request_path
+
+        expect(response).to redirect_to(registration_path(form.transient_registration.reference))
+        expect(flash[:error]).to include("Edit could not be completed")
+      end
+    end
   end
 
   describe "unable to go submit GET back" do

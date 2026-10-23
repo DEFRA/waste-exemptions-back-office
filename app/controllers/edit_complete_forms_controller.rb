@@ -10,5 +10,10 @@ class EditCompleteFormsController < EditFormsBaseController
     return unless super(EditCompleteForm, "edit_complete_form")
 
     EditCompletionService.run(edit_registration: @transient_registration)
+  rescue ActionController::RoutingError
+    raise
+  rescue StandardError => e
+    flash[:error] = "Edit could not be completed: #{e.message}"
+    redirect_to registration_path(@transient_registration.reference)
   end
 end
