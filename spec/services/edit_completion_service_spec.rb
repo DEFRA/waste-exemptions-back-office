@@ -186,6 +186,18 @@ RSpec.describe EditCompletionService do
       }.to(0)
     end
 
+    context "when transient site address is missing" do
+      it "raises an error to prevent data loss" do
+        registration = create(:registration)
+        edit_registration = WasteExemptionsEngine::BackOfficeEditRegistration.new(reference: registration.reference)
+        edit_registration.save!
+        edit_registration.transient_addresses.site.destroy_all
+
+        expect { described_class.run(edit_registration: edit_registration) }
+          .to raise_error(StandardError, /site address missing/)
+      end
+    end
+
     describe "PaperTrail", :versioning do
       it "creates a new version" do
         expect { run_service }.to change { registration.versions.count }.by(1)
