@@ -76,6 +76,18 @@ module WasteExemptionsEngine
       "ceased"
     end
 
+    def restorable?
+      %w[ceased revoked].include?(state)
+    end
+
+    # True when some of the deregistered exemptions were ceased or revoked
+    # before the registration itself was deregistered. Restoring the whole
+    # registration would be ambiguous in that case, so it has to be done
+    # exemption by exemption.
+    def previously_deregistered_exemptions?
+      registration_exemptions.deregistered.map(&:deregistered_at).uniq.many?
+    end
+
     def renewable?
       in_renewal_window? && in_renewable_state?
     end

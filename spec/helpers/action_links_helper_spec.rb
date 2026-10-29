@@ -272,6 +272,49 @@ RSpec.describe ActionLinksHelper do
     end
   end
 
+  describe "display_restore_link_for?" do
+    context "when the resource is a deregistered registration" do
+      let(:resource) do
+        registration = create(:registration)
+        registration.registration_exemptions.each(&:revoke!)
+        registration
+      end
+
+      before { allow(helper).to receive(:can?).with(:restore, resource).and_return(can) }
+
+      context "when the user has permission to restore a registration" do
+        let(:can) { true }
+
+        it { expect(helper.display_restore_link_for?(resource)).to be(true) }
+      end
+
+      context "when the user does not have permission to restore a registration" do
+        let(:can) { false }
+
+        it { expect(helper.display_restore_link_for?(resource)).to be(false) }
+      end
+    end
+
+    context "when the resource is an active registration" do
+      let(:resource) do
+        registration = create(:registration)
+        registration.registration_exemptions.each do |re|
+          re.state = "active"
+          re.save!
+        end
+        registration
+      end
+
+      it { expect(helper.display_restore_link_for?(resource)).to be(false) }
+    end
+
+    context "when the resource is not a registration" do
+      let(:resource) { nil }
+
+      it { expect(helper.display_restore_link_for?(resource)).to be(false) }
+    end
+  end
+
   describe "display_send_edit_invite_email_link_for?" do
     let(:can) { true }
 

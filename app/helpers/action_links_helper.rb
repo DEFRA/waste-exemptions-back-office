@@ -63,6 +63,10 @@ module ActionLinksHelper
     resource.is_a?(WasteExemptionsEngine::Registration) && can?(:deregister, resource)
   end
 
+  def display_restore_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) && can?(:restore, resource)
+  end
+
   def display_send_edit_invite_email_link_for?(resource)
     resource.is_a?(WasteExemptionsEngine::Registration) &&
       can?(:send_comms, resource) &&

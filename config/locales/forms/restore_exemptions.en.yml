@@ -1,0 +1,23 @@
+en:
+  restore_exemptions:
+    new:
+      title: "Restore Exemptions"
+      registration_heading: "Reason for restoring registration %{registration_reference}"
+      exemption_heading: "Reason for restoring this exemption"
+      labels:
+        message: "Restoration Reason"
+        message_hint: "(Maximum: 500 characters) The message is stored in the database as a log to explain the restoration."
+      confirm_button: "Confirm"
+    blocked:
+      heading: "Restore registration %{registration_reference}"
+      previously_deregistered: "This registration includes exemptions that were ceased or revoked before it was deregistered."
+      restore_exemptions_first: "You need to restore the exemptions before you can restore the registration."
+  activemodel:
+    errors:
+      models:
+        restore_exemptions_form: &restore_exemptions_form
+          attributes:
+            message:
+              blank: "Please include a message explaining why this is being restored"
+              too_long: "The message can not exceed 500 characters in length"
+        test/restoration_message_validatable: *restore_exemptions_form

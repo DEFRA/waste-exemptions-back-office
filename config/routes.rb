@@ -98,6 +98,14 @@ Rails.application.routes.draw do
   get "/registration-exemptions/deregister/:id", to: "deregister_exemptions#new", as: :deregister_exemptions_form
   post "/registration-exemptions/deregister/:id", to: "deregister_exemptions#update", as: :deregister_exemptions
 
+  # Restore Registrations
+  get "/registrations/restore/:id", to: "restore_registrations#new", as: :restore_registrations_form
+  post "/registrations/restore/:id", to: "restore_registrations#update", as: :restore_registrations
+
+  # Restore Exemptions
+  get "/registration-exemptions/restore/:id", to: "restore_exemptions#new", as: :restore_exemptions_form
+  post "/registration-exemptions/restore/:id", to: "restore_exemptions#update", as: :restore_exemptions
+
   resources :exemptions, only: :index do
     put :update, on: :collection
   end

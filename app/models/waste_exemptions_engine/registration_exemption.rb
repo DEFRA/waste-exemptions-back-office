@@ -28,6 +28,10 @@ module WasteExemptionsEngine
         .order(:registered_on, :registration_id)
     }
 
+    def restorable?
+      ceased? || revoked?
+    end
+
     # This is called "renewal" rather than "renewal?" so that it can behave
     # like an attribute in the Boxi export service without any mapping logic.
     def renewal

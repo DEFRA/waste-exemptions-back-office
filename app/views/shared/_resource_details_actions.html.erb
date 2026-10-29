@@ -106,6 +106,12 @@
     </p>
   <% end %>
 
+  <% if display_restore_link_for?(resource) %>
+    <p class="govuk-body">
+      <%= button_to t(".actions.restore"), restore_registrations_form_path(resource), class: "button-link clear-background", method: :get %>
+    </p>
+  <% end %>
+
   <% if display_communication_logs_link_for?(resource) %>
     <p class="govuk-body">
       <%= button_to t(".actions.show_communication_history"), registration_communication_logs_path(resource.reference), class: "button-link clear-background", method: :get %>

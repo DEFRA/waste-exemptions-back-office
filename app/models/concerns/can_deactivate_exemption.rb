@@ -28,12 +28,23 @@ module CanDeactivateExemption
         transitions from: :active,
                     to: :expired
       end
-    end
 
-    # Transition effects
-    def update_deregistered_at
-      self.deregistered_at = Time.zone.today
-      save!
+      event :restore do
+        transitions from: %i[ceased revoked], to: :active, after: :clear_deregistration_details
+      end
     end
+  end
+
+  # Transition effects
+  def update_deregistered_at
+    self.deregistered_at = Time.zone.today
+    save!
+  end
+
+  def clear_deregistration_details
+    self.deregistered_at = nil
+    self.deregistration_message = nil
+    self.deregistered_by = nil
+    save!
   end
 end
