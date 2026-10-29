@@ -729,7 +729,7 @@ DEPENDENCIES
   defra_ruby_features (~> 0.2)
   defra_ruby_mocks (>= 5.4.1)
   defra_ruby_style
-  defra_ruby_template (~> 6.4)
+  defra_ruby_template (= 6.4.0)
   devise
   devise-security
   devise_invitable
