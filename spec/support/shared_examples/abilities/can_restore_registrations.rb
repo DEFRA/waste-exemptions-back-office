@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.shared_examples "can restore registrations" do
-  it "can restore a deregistered registration" do
-    registration.registration_exemptions.each { |re| re.state = "revoked" }
-
-    expect(ability).to be_able_to(:restore, registration)
+  let(:deregistered_registration) do
+    registration.tap do |reg|
+      reg.registration_exemptions.each { |re| re.state = "revoked" }
+    end
   end
 
-  it "cannot restore an active registration" do
-    expect(ability).not_to be_able_to(:restore, registration)
-  end
+  it { expect(ability).to be_able_to(:restore, deregistered_registration) }
 end

@@ -6,6 +6,7 @@ RSpec.describe RestorationService do
   let(:admin_team_user) { build(:user, :admin_team_user) }
   let(:data_viewer_user) { build(:user, :data_viewer) }
   let(:restoration_message) { "This registration was deregistered in error." }
+  let(:deregistration_message) { "This resource is no longer relevant." }
   let(:active_registration) do
     registration = create(:registration)
     registration.registration_exemptions.each do |re|
@@ -21,7 +22,12 @@ RSpec.describe RestorationService do
 
       let(:registration) do
         registration = active_registration
-        DeregistrationService.new(admin_team_user, registration).deregister!(:revoke, "Did not pay")
+        registration.registration_exemptions.each do |re|
+          re.revoke!
+          re.deregistration_message = deregistration_message
+          re.deregistered_by = admin_team_user.email
+          re.save!
+        end
         registration
       end
 
@@ -47,6 +53,7 @@ RSpec.describe RestorationService do
           re.reload
           expect(re.deregistered_at).to be_nil
           expect(re.deregistration_message).to be_nil
+          # deregistered_by falls back to the last version author, so read the column
           expect(re[:deregistered_by]).to be_nil
         end
       end
@@ -93,7 +100,10 @@ RSpec.describe RestorationService do
 
       let(:registration_exemption) do
         re = active_registration.registration_exemptions.first
-        DeregistrationService.new(admin_team_user, re).deregister!(:cease, "Asked to stop")
+        re.cease!
+        re.deregistration_message = deregistration_message
+        re.deregistered_by = admin_team_user.email
+        re.save!
         re
       end
 

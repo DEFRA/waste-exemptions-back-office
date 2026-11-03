@@ -10,31 +10,27 @@ RSpec.describe "Restore Exemptions Forms" do
   let(:successful_redirection_code) { WasteExemptionsEngine::ApplicationController::SUCCESSFUL_REDIRECTION_CODE }
   let(:unsuccessful_redirection_code) { WasteExemptionsEngine::ApplicationController::UNSUCCESSFUL_REDIRECTION_CODE }
 
-  def active_registration
-    registration = create(:registration)
-    registration.registration_exemptions.each do |re|
-      re.state = "active"
-      re.save!
-    end
-    registration
-  end
-
   before do
     sign_in(user)
   end
 
   describe "Registration Restoration" do
-    let(:revoked_registration) do
-      registration = active_registration
+    let(:active_registration) do
+      registration = create(:registration)
       registration.registration_exemptions.each do |re|
-        re.revoke!
+        re.state = "active"
         re.save!
       end
       registration
     end
+    let(:revoked_registration) do
+      registration = create(:registration)
+      registration.registration_exemptions.each(&:revoke!)
+      registration
+    end
     # A registration where one exemption was ceased before the rest were revoked.
     let(:partially_deregistered_registration) do
-      registration = active_registration
+      registration = create(:registration)
       registration.registration_exemptions.first.update!(state: "ceased", deregistered_at: 1.month.ago)
       registration.registration_exemptions.drop(1).each(&:revoke!)
       registration
@@ -125,11 +121,16 @@ RSpec.describe "Restore Exemptions Forms" do
 
   describe "Registration Exemption Restoration" do
     let(:revoked_registration_exemption) do
-      reg_exemption = active_registration.registration_exemptions.first
+      reg_exemption = create(:registration).registration_exemptions.first
       reg_exemption.revoke!
       reg_exemption
     end
-    let(:active_registration_exemption) { active_registration.registration_exemptions.first }
+    let(:active_registration_exemption) do
+      reg_exemption = create(:registration).registration_exemptions.first
+      reg_exemption.state = "active"
+      reg_exemption.save!
+      reg_exemption
+    end
     let(:good_request_path) { "/registration-exemptions/restore/#{revoked_registration_exemption.id}" }
     let(:bad_request_path) { "/registration-exemptions/restore/#{active_registration_exemption.id}" }
 
