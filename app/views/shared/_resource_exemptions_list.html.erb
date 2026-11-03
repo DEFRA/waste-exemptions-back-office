@@ -47,19 +47,23 @@
             end
           %>
           <% if can? :restore, re %>
-            <a class="govuk-link" href="<%= restore_exemptions_form_path(id: re.id) %>">
-              Restore
+            <div>
+              <a class="govuk-link" href="<%= restore_exemptions_form_path(id: re.id) %>">
+                Restore
+                <span class="govuk-visually-hidden">
+                  exemption <%= re.exemption.code %> &mdash; <%= re.exemption.summary %>
+                </span>
+              </a>
+            </div>
+          <% end %>
+          <div>
+            <a class="govuk-link" href="<%= details_path %>">
+              Details
               <span class="govuk-visually-hidden">
                 exemption <%= re.exemption.code %> &mdash; <%= re.exemption.summary %>
               </span>
             </a>
-          <% end %>
-          <a class="govuk-link" href="<%= details_path %>">
-            Details
-            <span class="govuk-visually-hidden">
-              exemption <%= re.exemption.code %> &mdash; <%= re.exemption.summary %>
-            </span>
-          </a>
+          </div>
         <% end %>
       </td>
     </tr>
