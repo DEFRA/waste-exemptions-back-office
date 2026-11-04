@@ -19,7 +19,6 @@ class RestoreExemptionsController < ApplicationController
       redirect_to successful_redirect_path, status: successful_redirection
     else
       render :new
-      false
     end
   end
 
