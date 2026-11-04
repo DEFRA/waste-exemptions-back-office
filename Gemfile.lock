@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DEFRA/waste-exemptions-engine
-  revision: a1fbf21f6a6c7271ffffc99f09b3a7d56d5cff72
+  revision: 706dc4cb0125e379c6a0142e53855c37a3a99167
   branch: main
   specs:
     waste_exemptions_engine (0.1.0)
@@ -215,7 +215,7 @@ GEM
       rest-client (~> 2.0)
     defra_ruby_aws (0.6.0)
       aws-sdk-s3
-    defra_ruby_companies_house (1.0.3)
+    defra_ruby_companies_house (1.0.4)
       i18n
       rest-client (~> 2.0)
     defra_ruby_email (1.3.0)
@@ -277,7 +277,7 @@ GEM
       railties (>= 6.1.0)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.15.0)
+    faraday (2.15.1)
       faraday-net_http (>= 2.0, < 3.6)
       json
       logger
@@ -835,7 +835,7 @@ CHECKSUMS
   defra_ruby_alert (2.2.1) sha256=2629373d30f8d120211af413a535c0a2565c1991a719950102e53903ac0ad091
   defra_ruby_area (2.2.0) sha256=697bc2abbfa0a4c6be57a3ad4081b22c5a590f517b95dc3d5a3b4fbbdfcde123
   defra_ruby_aws (0.6.0) sha256=4898afaf2f2dd25d345121d970666fbddd48970342e4a862184f6ec29aaca5ee
-  defra_ruby_companies_house (1.0.3) sha256=4e61e44e3939a8865f29d0a7c9ddc84069e474168b0b351e6052b6e0451e1f8a
+  defra_ruby_companies_house (1.0.4) sha256=761e0a81594b533fc206cbf2b5b5e4cac5630131305d78ac66a3d0e6af1ac61d
   defra_ruby_email (1.3.0) sha256=8c253d9ac48eb8efd19bf44ca9b8bbda3d46c9a0426791419c62e3f7e85fb8c6
   defra_ruby_features (0.2.0) sha256=9df436de26729af81dfaa4307ce37f76c02c5c6aab243414acd5b556a1234a81
   defra_ruby_govpay (1.1.0) sha256=aa62ee2a2a9b875f6e0dc611fe6dbe8d2cac6e27be78c66fa7c9d917b2238db2
@@ -858,7 +858,7 @@ CHECKSUMS
   factory_bot (6.6.0) sha256=1fc1b3b5620ec980a6a27aec1b6ec8c250ca82962e970e8a40f93e8d388d4b89
   factory_bot_rails (6.5.1) sha256=d3cc4851eae4dea8a665ec4a4516895045e710554d2b5ac9e68b94d351bc6d68
   faker (3.8.0) sha256=c147b308df73a90f27a4fc84f18d4c22ef0ad9c2a64b2b61c86fd0ca71753efc
-  faraday (2.15.0) sha256=3be0eff0187ed913a1b4f679e9fcfe845b542cdd4f75b76cd6181a4ae1335fff
+  faraday (2.15.1) sha256=8708154deda739c5e86cc42b74960e23e8491fce0eba9e11639a6a34b1ac288f
   faraday-http-cache (3.0.0) sha256=44e0b5441825b80aa59446fdb0ceb5a1cf83e9f58fc89752b336d87a991c7994
   faraday-net_http (3.5.0) sha256=2e7094c34e38754ee048cc3df47376f8657005d9375f8473bce1c3b526a22e36
   faraday-retry (2.4.0) sha256=7b79c48fb7e56526faf247b12d94a680071ff40c9fda7cf1ec1549439ad11ebe
