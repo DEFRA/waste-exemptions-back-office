@@ -7,6 +7,17 @@ en:
         linear: "Linear registration details for %{reference}"
         multisite: "Multiple site registration details for %{reference}"
       back_link_label: Back to search results
+    statuses:
+      active: "Active"
+      pending_payment: "Active - pending payment"
+      expired: "Expired"
+      ceased: "Ceased"
+      revoked: "Revoked"
+    heading_statuses:
+      pending_payment: "Pending payment"
+      expired: "Expired"
+      ceased: "Ceased"
+      revoked: "Revoked"
     linear:
       title: "Linear registrations"
       heading: "Linear registrations"

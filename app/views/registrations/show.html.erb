@@ -5,7 +5,7 @@
     <%= render("shared/error", error: flash[:error], details: flash[:error_details]) if flash[:error].present? %>
 
     <h1 class="govuk-heading-l">
-      <%= resource_heading_for(@resource) %>
+      <%= "#{resource_heading_for(@resource)}#{registration_status_heading_suffix(@resource)}" %>
     </h1>
   </div>
 </div>
