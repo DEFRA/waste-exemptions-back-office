@@ -58,10 +58,7 @@ module RegistrationsHelper
   end
 
   def registration_status_date(registration)
-    case registration.state
-    when "expired" then registration.expires_on
-    when "ceased", "revoked" then registration.deregistered_on
-    end
+    registration.expired? ? registration.expires_on : registration.deregistered_on
   end
 
   def back_path
