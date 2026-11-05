@@ -65,6 +65,10 @@ Rails.application.routes.draw do
               only: %i[new create],
               path: "charge-adjustment"
 
+    resource :permit_application,
+             only: %i[new create edit update destroy],
+             path: "permit-application"
+
     resources :sites, only: :index do
       resources :exemptions, only: %i[index], controller: "site_exemptions"
       get :deregister, on: :member, to: "deregister_sites#new"
