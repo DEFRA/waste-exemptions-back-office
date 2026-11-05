@@ -28,6 +28,8 @@ en:
         contact_email: Contact email
         on_a_farm: On a farm
         is_a_farmer: Is a farmer
+        permit_application_number: Permit application number
+        permit_application_status: Permit status
         addresses:
           contact: "Contact address"
           site: "Site address"

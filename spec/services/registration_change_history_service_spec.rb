@@ -195,5 +195,34 @@ RSpec.describe RegistrationChangeHistoryService do
         ["~", "registration_exemptions.expires_on", 3.years.from_now.to_date.to_fs(:year_month_day), 4.years.from_now.to_date.to_fs(:year_month_day)]
       ], "Extending expiry date", "developer@wex.gov.uk"
     end
+
+    context "when marking a registration as permit application in progress" do
+      before do
+        PaperTrail.request.whodunnit = "developer@wex.gov.uk"
+        registration.update(permit_application_number: "EPR/AB1234CD/A001",
+                            permit_application_status: "assigned_to_po",
+                            reason_for_change: "Marked as permit application in progress")
+      end
+
+      it_behaves_like "includes the correct changes", [
+        ["+", "permit_application_number", "", "EPR/AB1234CD/A001"],
+        ["+", "permit_application_status", "", "assigned_to_po"]
+      ], "Marked as permit application in progress", "developer@wex.gov.uk"
+    end
+
+    context "when unmarking a registration as permit application in progress" do
+      before do
+        PaperTrail.request.whodunnit = "developer@wex.gov.uk"
+        registration.update(permit_application_number: "EPR/AB1234CD/A001", permit_application_status: "duly_made")
+        registration.update(permit_application_number: nil,
+                            permit_application_status: nil,
+                            reason_for_change: "Unmarked as permit application in progress")
+      end
+
+      it_behaves_like "includes the correct changes", [
+        ["-", "permit_application_number", "EPR/AB1234CD/A001", ""],
+        ["-", "permit_application_status", "duly_made", ""]
+      ], "Unmarked as permit application in progress", "developer@wex.gov.uk"
+    end
   end
 end
