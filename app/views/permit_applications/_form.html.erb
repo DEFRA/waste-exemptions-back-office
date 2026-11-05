@@ -1,0 +1,34 @@
+<% content_for :title, t("permit_applications.form.title") %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render("waste_exemptions_engine/shared/back", back_path: registration_path(@resource.reference)) %>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">
+      <%= t("permit_applications.form.heading") %>
+    </h1>
+
+    <%= form_for @permit_application_form,
+                 url: registration_permit_application_path(registration_reference: @resource.reference),
+                 method: form_method,
+                 builder: GOVUKDesignSystemFormBuilder::FormBuilder do |f| %>
+
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
+
+      <%= f.govuk_text_field :permit_application_number,
+          width: 20,
+          label: { text: t("permit_applications.form.number_label") } %>
+
+      <%= f.govuk_collection_radio_buttons :permit_application_status,
+          @permit_application_form.status_options,
+          :id,
+          :name,
+          legend: { text: t("permit_applications.form.status_legend"), size: "s" } %>
+
+      <%= f.govuk_submit t("permit_applications.form.submit") %>
+    <% end %>
+  </div>
+</div>
