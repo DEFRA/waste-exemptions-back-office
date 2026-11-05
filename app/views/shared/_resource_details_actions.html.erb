@@ -141,4 +141,28 @@
                     method: :patch %>
     </p>
   <% end %>
+
+  <% if display_mark_as_permit_application_link_for?(resource) %>
+    <p class="govuk-body">
+      <%= button_to t(".actions.mark_as_permit_application"),
+                    new_registration_permit_application_path(resource.reference),
+                    class: "button-link clear-background",
+                    method: :get %>
+    </p>
+  <% end %>
+
+  <% if display_permit_application_links_for?(resource) %>
+    <p class="govuk-body">
+      <%= button_to t(".actions.update_permit_application"),
+                    edit_registration_permit_application_path(resource.reference),
+                    class: "button-link clear-background",
+                    method: :get %>
+    </p>
+    <p class="govuk-body">
+      <%= button_to t(".actions.unmark_as_permit_application"),
+                    registration_permit_application_path(resource.reference),
+                    class: "button-link clear-background",
+                    method: :delete %>
+    </p>
+  <% end %>
 </div>
