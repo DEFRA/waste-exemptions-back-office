@@ -19,8 +19,7 @@ class RestorationService
     else
       # Assign current_user's email address as version author
       PaperTrail.request(whodunnit: current_user.email) do
-        # Set the reason before the transition so it is part of the version
-        # the transition writes. Applies the new state via the AASM helper.
+        # Set the reason first so it lands in the version the transition writes.
         resource.reason_for_change = restoration_message
         resource.restore!
       end
