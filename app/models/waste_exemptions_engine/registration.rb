@@ -53,6 +53,17 @@ module WasteExemptionsEngine
 
     scope :linear, -> { where(is_linear: true) }
 
+    PERMIT_APPLICATION_STATUSES = %w[
+      not_assigned
+      assigned_to_po
+      returned_not_duly_made
+      duly_made
+      issued
+      refused
+    ].freeze
+
+    scope :permit_application_in_progress, -> { where.not(permit_application_status: nil) }
+
     def active?
       state == "active"
     end
@@ -63,6 +74,10 @@ module WasteExemptionsEngine
 
     def linear?
       is_linear == true
+    end
+
+    def permit_application_in_progress?
+      permit_application_status.present?
     end
 
     # rubocop:disable-next Metrics/CyclomaticComplexity

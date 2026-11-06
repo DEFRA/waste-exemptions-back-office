@@ -41,7 +41,8 @@ class Ability
     reverse_payment: [:reverse_payment, WasteExemptionsEngine::Registration],
     refund_payment: [:refund_payment, WasteExemptionsEngine::Registration],
     writeoff_payment: [:writeoff_payment, WasteExemptionsEngine::Registration],
-    mark_as_legacy_bulk_or_linear: [:mark_as_legacy_bulk_or_linear, WasteExemptionsEngine::Registration]
+    mark_as_legacy_bulk_or_linear: [:mark_as_legacy_bulk_or_linear, WasteExemptionsEngine::Registration],
+    manage_permit_application: [:manage_permit_application, WasteExemptionsEngine::Registration]
   }.freeze
 
   # placeholder to be populated by the roles_and_permissions initializer

@@ -9,6 +9,7 @@ en:
         renewal_history: Renewal history
         actions: Actions
         current_balance: Current balance
+        permit_application: Permit application in progress
       labels:
         workflow_state: Workflow state
         reference: Reference
@@ -26,6 +27,7 @@ en:
         submitted_at: Submitted at
         amount: Amount
       values:
+        permit_application_in_progress: "Yes"
         business_or_organisation_type:
           charity: Third sector, community group or trust
           limitedCompany: Limited company

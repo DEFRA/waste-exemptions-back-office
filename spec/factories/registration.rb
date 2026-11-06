@@ -110,6 +110,11 @@ FactoryBot.define do
       registration_exemptions { build_list(:registration_exemption, 3, :ceased, address: site_address) }
     end
 
+    trait :permit_application_in_progress do
+      permit_application_number { "EPR/AB1234CD/A001" }
+      permit_application_status { "assigned_to_po" }
+    end
+
     trait :eligible_for_deregistration do
       submitted_at do
         7.months.ago.to_date

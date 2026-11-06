@@ -145,6 +145,19 @@ module ActionLinksHelper
     true
   end
 
+  def display_mark_as_permit_application_link_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) &&
+      can?(:manage_permit_application, resource) &&
+      resource.active? &&
+      !resource.permit_application_in_progress?
+  end
+
+  def display_permit_application_links_for?(resource)
+    resource.is_a?(WasteExemptionsEngine::Registration) &&
+      can?(:manage_permit_application, resource) &&
+      resource.permit_application_in_progress?
+  end
+
   private
 
   def should_show_legacy_bulk_linear_link_for?(resource)
