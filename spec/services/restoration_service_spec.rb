@@ -74,6 +74,22 @@ RSpec.describe RestorationService do
         end
       end
 
+      it "creates only one version per registration_exemption", :versioning do
+        exemption_count = registration.registration_exemptions.count
+
+        expect { restoration_service.restore!(restoration_message) }
+          .to change(PaperTrail::Version, :count)
+          .by(exemption_count)
+      end
+
+      it "records the restoration reason in the version", :versioning do
+        restoration_service.restore!(restoration_message)
+
+        registration.registration_exemptions.each do |re|
+          expect(re.versions.last.object_changes["reason_for_change"]).to eq([nil, restoration_message])
+        end
+      end
+
       context "when the user has insufficient permissions" do
         subject(:restoration_service) { described_class.new(data_viewer_user, registration) }
 
