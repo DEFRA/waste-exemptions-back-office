@@ -49,13 +49,21 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
       end
     end
 
-    inactive_states.each do |inactive_state|
-      context "when the state is #{inactive_state}" do
-        before { registration_exemption.state = inactive_state }
+    %i[ceased revoked].each do |deregistered_state|
+      context "when the state is #{deregistered_state}" do
+        before { registration_exemption.state = deregistered_state }
 
-        it "can not transition to any other status" do
-          expect(permitted_states).to be_empty
+        it "can only transition back to active" do
+          expect(permitted_states).to contain_exactly(:active)
         end
+      end
+    end
+
+    context "when the state is expired" do
+      before { registration_exemption.state = :expired }
+
+      it "can not transition to any other status" do
+        expect(permitted_states).to be_empty
       end
     end
   end
@@ -205,6 +213,37 @@ RSpec.describe WasteExemptionsEngine::RegistrationExemption do
       it "returns the email of the user who last changed the state to ceased or revoked" do
         expect(registration_exemption.deregistered_by).to eq(another_user.email)
       end
+    end
+  end
+
+  describe "#restorable?" do
+    %w[ceased revoked].each do |state|
+      context "when the registration_exemption is #{state}" do
+        it { expect(build(:registration_exemption, state: state)).to be_restorable }
+      end
+    end
+
+    %w[active expired].each do |state|
+      context "when the registration_exemption is #{state}" do
+        it { expect(build(:registration_exemption, state: state)).not_to be_restorable }
+      end
+    end
+  end
+
+  describe "#restore!" do
+    subject(:registration_exemption) do
+      create(:registration_exemption, state: "revoked", deregistered_at: 1.day.ago,
+                                      deregistration_message: "Did not pay", deregistered_by: "someone@example.com")
+    end
+
+    it "makes the registration_exemption active again and clears the deregistration details" do
+      registration_exemption.restore!
+      registration_exemption.reload
+
+      expect(registration_exemption.state).to eq("active")
+      expect(registration_exemption.deregistered_at).to be_nil
+      expect(registration_exemption.deregistration_message).to be_nil
+      expect(registration_exemption[:deregistered_by]).to be_nil
     end
   end
 end

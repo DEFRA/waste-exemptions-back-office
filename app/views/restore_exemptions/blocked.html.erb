@@ -1,0 +1,14 @@
+<% content_for :title, t(".heading", registration_reference: @restorations.registration_reference) %>
+
+<%= render("waste_exemptions_engine/shared/back", back_path: @restorations.back_path) %>
+
+<h1 class="govuk-heading-l">
+  <%= t(".heading", registration_reference: @restorations.registration_reference) %>
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"><%= t(".previously_deregistered") %></p>
+    <p class="govuk-body"><%= t(".restore_exemptions_first") %></p>
+  </div>
+</div>

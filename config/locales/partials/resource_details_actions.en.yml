@@ -7,6 +7,7 @@ en:
         edit: Edit
         edit_expiry_date: Set a new expiry date
         deregister: Deregister
+        restore: Restore registration
         show_communication_history: Show communication history
         show_change_history: Show change history
         resume: Resume
