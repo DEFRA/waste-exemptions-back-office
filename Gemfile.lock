@@ -680,7 +680,7 @@ GEM
     validates_email_format_of (1.8.2)
       i18n (>= 0.8.0)
       simpleidn
-    vcr (6.4.0)
+    vcr (6.4.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.3.0)
@@ -1038,7 +1038,7 @@ CHECKSUMS
   uri (1.1.2) sha256=89292e98eabbef6248b0a0ed5e7e398e152f83f17560023a6d94a7f492b169fb
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
   validates_email_format_of (1.8.2) sha256=e2dfcf3e933547d06c41dacf066c7b07614819439c8780c3a2521ce047052577
-  vcr (6.4.0) sha256=077ac92cc16efc5904eb90492a18153b5e6ca5398046d8a249a7c96a9ea24ae6
+  vcr (6.4.1) sha256=74870fc87d1bdf1f24e847f57977ac9a5e55cde681f56f1172c7c82dc9f006aa
   warden (1.2.9) sha256=46684f885d35a69dbb883deabf85a222c8e427a957804719e143005df7a1efd0
   waste_exemptions_engine (0.1.0)
   web-console (4.3.0) sha256=e13b71301cdfc2093f155b5aa3a622db80b4672d1f2f713119cc7ec7ac6a6da4
