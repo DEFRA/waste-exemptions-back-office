@@ -121,6 +121,9 @@ RSpec.describe "Permit applications" do
       expect(marked_registration.permit_application_status).to eq("duly_made")
       expect(marked_registration.reason_for_change).to eq("Permit application details updated")
       expect(response).to redirect_to(registration_path(marked_registration.reference))
+
+      follow_redirect!
+      expect(response.body).to include("You have updated the permit application details")
     end
   end
 

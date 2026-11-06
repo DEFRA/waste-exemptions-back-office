@@ -20,11 +20,11 @@ class PermitApplicationsController < ApplicationController
   end
 
   def create
-    submit_form(:new, t(".success"))
+    submit_form(:new)
   end
 
   def update
-    submit_form(:edit, t(".success"))
+    submit_form(:edit)
   end
 
   def destroy
@@ -56,11 +56,11 @@ class PermitApplicationsController < ApplicationController
     redirect_to registration_path(@resource.reference)
   end
 
-  def submit_form(template, success_message)
+  def submit_form(template)
     @permit_application_form = PermitApplicationForm.new(registration: @resource)
 
     if @permit_application_form.submit(permit_application_params)
-      flash_success(success_message)
+      flash_success(t(".success"))
       redirect_to registration_path(@resource.reference)
     else
       render template
