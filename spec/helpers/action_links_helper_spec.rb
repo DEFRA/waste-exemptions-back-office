@@ -802,4 +802,61 @@ RSpec.describe ActionLinksHelper do
       end
     end
   end
+
+  describe "permit application links" do
+    let(:can) { true }
+    let(:resource) { create(:registration, :with_active_exemptions) }
+
+    before do
+      allow(helper).to receive(:can?).with(:manage_permit_application, resource).and_return(can)
+    end
+
+    describe "#display_mark_as_permit_application_link_for?" do
+      context "when the resource is not a registration" do
+        let(:resource) { build(:new_charged_registration) }
+
+        it { expect(helper.display_mark_as_permit_application_link_for?(resource)).to be(false) }
+      end
+
+      context "when the user does not have permission" do
+        let(:can) { false }
+
+        it { expect(helper.display_mark_as_permit_application_link_for?(resource)).to be(false) }
+      end
+
+      context "when the registration is not active" do
+        let(:resource) { create(:registration, :with_ceased_exemptions) }
+
+        it { expect(helper.display_mark_as_permit_application_link_for?(resource)).to be(false) }
+      end
+
+      context "when the registration is already marked" do
+        let(:resource) { create(:registration, :with_active_exemptions, :permit_application_in_progress) }
+
+        it { expect(helper.display_mark_as_permit_application_link_for?(resource)).to be(false) }
+      end
+
+      context "when the registration is active and not marked" do
+        it { expect(helper.display_mark_as_permit_application_link_for?(resource)).to be(true) }
+      end
+    end
+
+    describe "#display_permit_application_links_for?" do
+      context "when the registration is not marked" do
+        it { expect(helper.display_permit_application_links_for?(resource)).to be(false) }
+      end
+
+      context "when the registration is marked" do
+        let(:resource) { create(:registration, :with_active_exemptions, :permit_application_in_progress) }
+
+        it { expect(helper.display_permit_application_links_for?(resource)).to be(true) }
+
+        context "when the user does not have permission" do
+          let(:can) { false }
+
+          it { expect(helper.display_permit_application_links_for?(resource)).to be(false) }
+        end
+      end
+    end
+  end
 end
