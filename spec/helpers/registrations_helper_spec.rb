@@ -77,6 +77,100 @@ RSpec.describe RegistrationsHelper do
     end
   end
 
+  describe "#registration_status" do
+    let(:registration) { create(:registration, registration_exemptions: registration_exemptions) }
+
+    context "when the registration is active" do
+      let(:registration_exemptions) { build_list(:registration_exemption, 1, :active) }
+
+      it "returns the active status" do
+        expect(helper.registration_status(registration)).to eq "Active"
+      end
+    end
+
+    context "when the registration has an outstanding charge" do
+      let(:registration_exemptions) { build_list(:registration_exemption, 1, :active) }
+
+      before { allow(registration).to receive(:pending_payment?).and_return(true) }
+
+      it "returns the pending payment status" do
+        expect(helper.registration_status(registration)).to eq "Active - pending payment"
+      end
+    end
+
+    context "when the registration is expired" do
+      let(:registration_exemptions) do
+        build_list(:registration_exemption, 1, :expired, expires_on: Date.new(2028, 12, 22))
+      end
+
+      it "returns the status with the expiry date" do
+        expect(helper.registration_status(registration)).to eq "Expired (22 December 2028)"
+      end
+    end
+
+    context "when the registration is ceased" do
+      let(:registration_exemptions) do
+        build_list(:registration_exemption, 1, :ceased, deregistered_at: Date.new(2026, 10, 23))
+      end
+
+      it "returns the status with the date it was ceased" do
+        expect(helper.registration_status(registration)).to eq "Ceased (23 October 2026)"
+      end
+    end
+
+    context "when the registration is revoked" do
+      let(:registration_exemptions) do
+        build_list(:registration_exemption, 1, :revoked, deregistered_at: Date.new(2026, 10, 23))
+      end
+
+      it "returns the status with the date it was revoked" do
+        expect(helper.registration_status(registration)).to eq "Revoked (23 October 2026)"
+      end
+    end
+
+    context "when a deregistered registration has no deregistration date" do
+      let(:registration_exemptions) do
+        build_list(:registration_exemption, 1, :ceased, deregistered_at: nil)
+      end
+
+      it "returns the status on its own" do
+        expect(helper.registration_status(registration)).to eq "Ceased"
+      end
+    end
+  end
+
+  describe "#registration_status_heading_suffix" do
+    let(:registration) { create(:registration, registration_exemptions: registration_exemptions) }
+
+    context "when the registration is active" do
+      let(:registration_exemptions) { build_list(:registration_exemption, 1, :active) }
+
+      it "returns an empty string" do
+        expect(helper.registration_status_heading_suffix(registration)).to eq ""
+      end
+    end
+
+    context "when the registration has an outstanding charge" do
+      let(:registration_exemptions) { build_list(:registration_exemption, 1, :active) }
+
+      before { allow(registration).to receive(:pending_payment?).and_return(true) }
+
+      it "returns the pending payment suffix" do
+        expect(helper.registration_status_heading_suffix(registration)).to eq " (Pending payment)"
+      end
+    end
+
+    %w[expired ceased revoked].each do |state|
+      context "when the registration is #{state}" do
+        let(:registration_exemptions) { build_list(:registration_exemption, 1, state.to_sym) }
+
+        it "returns the #{state} suffix without a date" do
+          expect(helper.registration_status_heading_suffix(registration)).to eq " (#{state.capitalize})"
+        end
+      end
+    end
+  end
+
   describe "#back_path" do
     context "when the back_to param is present" do
       before do

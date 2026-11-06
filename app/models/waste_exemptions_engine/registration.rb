@@ -91,6 +91,14 @@ module WasteExemptionsEngine
       "ceased"
     end
 
+    def pending_payment?
+      active? && account&.balance.to_i.negative?
+    end
+
+    def deregistered_on
+      registration_exemptions.select { |re| re.state == state }.filter_map(&:deregistered_at).max
+    end
+
     def renewable?
       in_renewal_window? && in_renewable_state?
     end
