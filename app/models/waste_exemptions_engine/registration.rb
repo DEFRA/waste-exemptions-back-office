@@ -81,7 +81,9 @@ module WasteExemptionsEngine
     end
 
     def deregistered_on
-      registration_exemptions.select { |re| re.state == state }.filter_map(&:deregistered_at).max
+      current_state = state
+
+      registration_exemptions.select { |re| re.state == current_state }.filter_map(&:deregistered_at).max
     end
 
     def renewable?
