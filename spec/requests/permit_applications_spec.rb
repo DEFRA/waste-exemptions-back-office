@@ -33,6 +33,14 @@ RSpec.describe "Permit applications" do
       it { expect(response).to have_http_status(:ok) }
     end
 
+    context "when the user is a policy adviser" do
+      let(:user) { create(:user, :policy_adviser) }
+
+      before { get new_registration_permit_application_path(registration.reference) }
+
+      it { expect(response).to have_http_status(:ok) }
+    end
+
     context "when the registration is already marked" do
       before { get new_registration_permit_application_path(marked_registration.reference) }
 
@@ -47,7 +55,7 @@ RSpec.describe "Permit applications" do
       it { expect(response).to redirect_to(registration_path(registration.reference)) }
     end
 
-    %i[admin_team_user customer_service_adviser data_viewer admin_team_lead policy_adviser finance_user].each do |role|
+    %i[admin_team_user customer_service_adviser data_viewer admin_team_lead finance_user].each do |role|
       context "when the user is a #{role}" do
         let(:user) { create(:user, role) }
 
