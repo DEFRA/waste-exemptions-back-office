@@ -34,6 +34,8 @@ class RegistrationChangeHistoryService < WasteExemptionsEngine::BaseService
     contact_email
     on_a_farm
     is_a_farmer
+    permit_application_number
+    permit_application_status
   ].freeze
 
   def run(registration)

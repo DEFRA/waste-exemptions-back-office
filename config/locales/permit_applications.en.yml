@@ -1,0 +1,35 @@
+en:
+  permit_applications:
+    form:
+      title: "Add details of the permit application"
+      heading: "Add details of the permit application"
+      number_label: "Add the permit application number"
+      status_legend: "Add a permit status"
+      submit: "Continue"
+    statuses:
+      not_assigned: "Not assigned"
+      assigned_to_po: "Assigned to PO"
+      returned_not_duly_made: "Returned not duly made"
+      duly_made: "Duly made"
+      issued: "Issued"
+      refused: "Refused"
+    create:
+      success: "You have marked this registration as permit application in progress"
+    update:
+      success: "You have updated the permit application details"
+    destroy:
+      success: "You have unmarked this registration as permit application in progress"
+      reason_for_change: "Unmarked as permit application in progress"
+  permit_application_form:
+    reason_for_change:
+      marked: "Marked as permit application in progress"
+      updated: "Permit application details updated"
+  activemodel:
+    errors:
+      models:
+        permit_application_form:
+          attributes:
+            permit_application_number:
+              blank: "Enter the permit application number"
+            permit_application_status:
+              inclusion: "Select a permit status"

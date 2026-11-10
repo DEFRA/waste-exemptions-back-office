@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_19_173129) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "postgis"
@@ -328,6 +328,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_19_173129) do
     t.string "location"
     t.boolean "on_a_farm"
     t.string "operator_name"
+    t.string "permit_application_number"
+    t.string "permit_application_status"
     t.boolean "placeholder", default: false
     t.string "reason_for_change", limit: 500
     t.string "reference"

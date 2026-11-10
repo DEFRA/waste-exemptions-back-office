@@ -160,6 +160,19 @@
           <% end %>
         </dd>
       </div>
+
+      <% if resource.is_a?(WasteExemptionsEngine::Registration) && resource.permit_application_in_progress? %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".subheadings.permit_application") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <p class="govuk-body">
+              <%= t(".values.permit_application_in_progress") %>
+            </p>
+          </dd>
+        </div>
+      <% end %>
     </dl>
   </div>
 
