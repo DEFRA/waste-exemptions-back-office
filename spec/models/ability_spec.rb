@@ -177,6 +177,7 @@ RSpec.describe Ability do
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"
     it_behaves_like "can manage charges and bands"
+    it_behaves_like "can manage permit application"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, RegistrationNonPaymentsService) }
@@ -193,7 +194,6 @@ RSpec.describe Ability do
     it_behaves_like "can restore registrations"
     it_behaves_like "cannot deregister sites"
     it_behaves_like "cannot mark legacy bulk or linear"
-    it_behaves_like "cannot manage permit application"
   end
 
   context "when the user role is finance_user" do
