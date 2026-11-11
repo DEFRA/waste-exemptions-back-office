@@ -43,6 +43,45 @@ RSpec.describe "Registrations" do
         end
       end
 
+      it "shows the registration status without a heading suffix for an active registration" do
+        get "/registrations/#{registration.reference}"
+
+        aggregate_failures do
+          expect(response.body).to include("Registration status")
+          expect(response.body).to include("Active")
+          expect(response.body).to include("Registration details for #{registration.reference}")
+          expect(response.body).not_to include("Registration details for #{registration.reference} (")
+        end
+      end
+
+      it "shows the status and the date it happened for a ceased registration" do
+        ceased_registration = create(
+          :registration,
+          registration_exemptions: build_list(:registration_exemption, 1, :ceased,
+                                              deregistered_at: Date.new(2026, 10, 23))
+        )
+
+        get "/registrations/#{ceased_registration.reference}"
+
+        aggregate_failures do
+          expect(response.body).to include("Ceased (23 October 2026)")
+          expect(response.body).to include("Registration details for #{ceased_registration.reference} (Ceased)")
+        end
+      end
+
+      it "labels an active registration with an outstanding charge as pending payment" do
+        registration.account.orders.create!(
+          charge_detail: build(:charge_detail, registration_charge_amount: 129_200, band_charge_details: [])
+        )
+
+        get "/registrations/#{registration.reference}"
+
+        aggregate_failures do
+          expect(response.body).to include("Active - pending payment")
+          expect(response.body).to include("Registration details for #{registration.reference} (Pending payment)")
+        end
+      end
+
       it "pluralises the linked site count for multisite registrations" do
         multisite_registration = create(:registration, :multisite_complete)
 

@@ -101,6 +101,16 @@ module WasteExemptionsEngine
       registration_exemptions.deregistered.map(&:deregistered_at).uniq.many?
     end
 
+    def pending_payment?
+      active? && account&.balance.to_i.negative?
+    end
+
+    def deregistered_on
+      current_state = state
+
+      registration_exemptions.select { |re| re.state == current_state }.filter_map(&:deregistered_at).max
+    end
+
     def renewable?
       in_renewal_window? && in_renewable_state?
     end

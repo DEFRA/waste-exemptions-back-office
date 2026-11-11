@@ -494,6 +494,82 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
   end
 
+  describe "#pending_payment?" do
+    let(:registration) { create(:registration, registration_exemptions: [build(:registration_exemption, :active)]) }
+
+    context "when the account still owes money" do
+      before { allow(registration.account).to receive(:balance).and_return(-1_000) }
+
+      it "returns `true`" do
+        expect(registration.pending_payment?).to be true
+      end
+    end
+
+    context "when the account is paid up" do
+      before { allow(registration.account).to receive(:balance).and_return(0) }
+
+      it "returns `false`" do
+        expect(registration.pending_payment?).to be false
+      end
+    end
+
+    context "when there is no account" do
+      before { registration.account = nil }
+
+      it "returns `false`" do
+        expect(registration.pending_payment?).to be false
+      end
+    end
+
+    context "when the registration is not active" do
+      let(:registration) { create(:registration, registration_exemptions: [build(:registration_exemption, :ceased)]) }
+
+      before { allow(registration.account).to receive(:balance).and_return(-1_000) }
+
+      it "returns `false`" do
+        expect(registration.pending_payment?).to be false
+      end
+    end
+  end
+
+  describe "#deregistered_on" do
+    let(:registration) { create(:registration, registration_exemptions: registration_exemptions) }
+
+    context "when the registration is ceased" do
+      let(:registration_exemptions) do
+        [
+          build(:registration_exemption, :ceased, deregistered_at: Date.new(2026, 10, 20)),
+          build(:registration_exemption, :ceased, deregistered_at: Date.new(2026, 10, 23))
+        ]
+      end
+
+      it "returns the most recent deregistration date" do
+        expect(registration.deregistered_on).to eq Date.new(2026, 10, 23)
+      end
+    end
+
+    context "when the registration is revoked and some exemptions were ceased earlier" do
+      let(:registration_exemptions) do
+        [
+          build(:registration_exemption, :ceased, deregistered_at: Date.new(2026, 10, 20)),
+          build(:registration_exemption, :revoked, deregistered_at: Date.new(2026, 10, 23))
+        ]
+      end
+
+      it "returns the date the exemptions matching the registration state were deregistered" do
+        expect(registration.deregistered_on).to eq Date.new(2026, 10, 23)
+      end
+    end
+
+    context "when the registration is active" do
+      let(:registration_exemptions) { [build(:registration_exemption, :active)] }
+
+      it "returns `nil`" do
+        expect(registration.deregistered_on).to be_nil
+      end
+    end
+  end
+
   describe "#state" do
     %w[active ceased revoked expired].each do |state|
       context "when all of the registration's exemption registrations are #{state}" do
