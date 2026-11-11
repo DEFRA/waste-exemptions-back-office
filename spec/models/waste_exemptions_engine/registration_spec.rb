@@ -146,6 +146,47 @@ RSpec.describe WasteExemptionsEngine::Registration do
     end
   end
 
+  describe "#restorable?" do
+    %w[ceased revoked].each do |state|
+      context "when the registration is #{state}" do
+        let(:registration) { create(:registration, registration_exemptions: build_list(:registration_exemption, 2, state: state)) }
+
+        it { expect(registration).to be_restorable }
+      end
+    end
+
+    %w[active expired].each do |state|
+      context "when the registration is #{state}" do
+        let(:registration) { create(:registration, registration_exemptions: build_list(:registration_exemption, 2, state: state)) }
+
+        it { expect(registration).not_to be_restorable }
+      end
+    end
+  end
+
+  describe "#previously_deregistered_exemptions?" do
+    let(:registration) { create(:registration, registration_exemptions: build_list(:registration_exemption, 3, state: :active)) }
+
+    context "when all of the exemptions were deregistered at the same time" do
+      before { registration.registration_exemptions.each(&:revoke!) }
+
+      it { expect(registration).not_to be_previously_deregistered_exemptions }
+    end
+
+    context "when an exemption was deregistered before the rest" do
+      before do
+        registration.registration_exemptions.first.update!(state: "ceased", deregistered_at: 1.month.ago)
+        registration.registration_exemptions.drop(1).each(&:revoke!)
+      end
+
+      it { expect(registration).to be_previously_deregistered_exemptions }
+    end
+
+    context "when there are no deregistered exemptions" do
+      it { expect(registration).not_to be_previously_deregistered_exemptions }
+    end
+  end
+
   describe "#renewable?" do
 
     before do

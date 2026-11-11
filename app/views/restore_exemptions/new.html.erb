@@ -1,0 +1,36 @@
+<% content_for :title, @restorations.heading %>
+
+<%= render("waste_exemptions_engine/shared/back", back_path: @restorations.back_path) %>
+
+<h1 class="govuk-heading-l">
+  <%= @restorations.heading %>
+</h1>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% if @restorations.exemption_description.present? %>
+      <p class="govuk-body"><%= @restorations.exemption_description %></p>
+    <% end %>
+
+    <% if @restorations.site.present? %>
+      <p class="govuk-body">
+        <%= @restorations.site.located_by_grid_reference? ? @restorations.site.grid_reference : displayable_address(@restorations.site).join(", ") %>
+      </p>
+    <% end %>
+
+    <%= form_for(
+        @restore_exemptions_form,
+        url: @restorations.form_path,
+            builder: GOVUKDesignSystemFormBuilder::FormBuilder) do |f| %>
+
+      <%= render partial: "waste_exemptions_engine/shared/error_summary", locals: { f: f } %>
+
+      <%= f.govuk_text_area :message,
+          label: { text: t(".labels.message") },
+          hint: { text: t(".labels.message_hint") },
+          max_chars: 500 %>
+
+      <%= f.govuk_submit t(".confirm_button") %>
+    <% end %>
+  </div>
+</div>

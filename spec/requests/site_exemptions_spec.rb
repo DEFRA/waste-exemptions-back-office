@@ -81,6 +81,7 @@ RSpec.describe "Site Exemptions" do
       it "includes the expected action links based on exemption state" do
         expect(response.body).to include("Deregister")
         expect(response.body).to include("Details")
+        expect(response.body).to include("Restore")
       end
 
       it "does not display exemptions for other sites" do
@@ -105,6 +106,7 @@ RSpec.describe "Site Exemptions" do
       it "does not list any exemptions" do
         expect(response.body).not_to include("Deregister")
         expect(response.body).not_to include("Details")
+        expect(response.body).not_to include("Restore")
       end
     end
   end
