@@ -25,6 +25,7 @@ RSpec.describe Ability do
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"
     it_behaves_like "can manage registrations"
+    it_behaves_like "can restore registrations"
     it_behaves_like "can add charge adjustments"
     it_behaves_like "can add payments"
     it_behaves_like "can reverse payments"
@@ -56,6 +57,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
     it_behaves_like "cannot deregister registrations"
+    it_behaves_like "cannot restore registrations"
     it_behaves_like "cannot deregister sites"
     it_behaves_like "cannot mark legacy bulk or linear"
     it_behaves_like "cannot manage permit application"
@@ -83,6 +85,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
     it_behaves_like "cannot deregister registrations"
+    it_behaves_like "cannot restore registrations"
     it_behaves_like "cannot deregister sites"
     it_behaves_like "cannot mark legacy bulk or linear"
     it_behaves_like "cannot manage permit application"
@@ -104,6 +107,7 @@ RSpec.describe Ability do
     it_behaves_like "can refund payments"
     it_behaves_like "can write-off payments"
     it_behaves_like "can deregister registrations"
+    it_behaves_like "can restore registrations"
     it_behaves_like "can deregister sites"
 
     it { expect(ability).to be_able_to(:manage, WasteExemptionsEngine::FeatureToggle) }
@@ -124,6 +128,7 @@ RSpec.describe Ability do
     it_behaves_like "can manage registrations"
     it_behaves_like "can manage charges and bands"
     it_behaves_like "can deregister registrations"
+    it_behaves_like "can restore registrations"
     it_behaves_like "can deregister sites"
     it_behaves_like "cannot mark legacy bulk or linear"
     it_behaves_like "can manage permit application"
@@ -151,6 +156,7 @@ RSpec.describe Ability do
     it_behaves_like "can refund payments"
     it_behaves_like "can write-off payments"
     it_behaves_like "can deregister registrations"
+    it_behaves_like "can restore registrations"
     it_behaves_like "can deregister sites"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
@@ -171,6 +177,7 @@ RSpec.describe Ability do
     it_behaves_like "can use back office"
     it_behaves_like "can manage users"
     it_behaves_like "can manage charges and bands"
+    it_behaves_like "can manage permit application"
 
     it { expect(ability).to be_able_to(:read, Reports::DefraQuarterlyStatsService) }
     it { expect(ability).to be_able_to(:read, RegistrationNonPaymentsService) }
@@ -184,9 +191,9 @@ RSpec.describe Ability do
     it_behaves_like "cannot refund payments"
     it_behaves_like "cannot write-off payments"
     it_behaves_like "cannot deregister registrations"
+    it_behaves_like "can restore registrations"
     it_behaves_like "cannot deregister sites"
     it_behaves_like "cannot mark legacy bulk or linear"
-    it_behaves_like "cannot manage permit application"
   end
 
   context "when the user role is finance_user" do
@@ -203,6 +210,7 @@ RSpec.describe Ability do
     it_behaves_like "cannot manage charges and bands"
     it_behaves_like "cannot add charge adjustments"
     it_behaves_like "cannot deregister registrations"
+    it_behaves_like "cannot restore registrations"
     it_behaves_like "cannot deregister sites"
     it_behaves_like "cannot mark legacy bulk or linear"
     it_behaves_like "cannot manage permit application"
