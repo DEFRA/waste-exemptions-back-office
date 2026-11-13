@@ -10,6 +10,11 @@ module RenewalReminders
 
       let(:registration) { create(:registration, :with_active_exemptions) }
 
+      it_behaves_like "calls notify with reference" do
+        let(:send_action) { :send_email }
+        let(:reference) { registration.reference }
+      end
+
       context "when the registration is not legacy bulk or linear" do
         before { registration.update(is_legacy_bulk: false, is_linear: false) }
 

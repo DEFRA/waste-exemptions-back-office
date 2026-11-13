@@ -12,7 +12,8 @@ module RenewalReminders
     def run(registration:, skip_opted_out_check: false)
       if registration.reminder_opt_in? || skip_opted_out_check
         @registration = registration
-        client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
+
+        client = WasteExemptionsEngine::NotifyClient.new(reference: @registration.reference)
 
         notify_result = client.send_email(email_address: @registration.contact_email,
                                           template_id: template,
