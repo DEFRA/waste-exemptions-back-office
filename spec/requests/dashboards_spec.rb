@@ -12,7 +12,11 @@ RSpec.describe "Dashboards" do
         sign_in(create(:user))
         # Stub the service to reduce database hits
         allow_any_instance_of(SearchService).to receive(:search).and_return(results)
+        # Bullet can't see eager loading that happens before the request (results are stubbed)
+        Bullet.n_plus_one_query_enable = false
       end
+
+      after { Bullet.n_plus_one_query_enable = true }
 
       it "renders the index template and returns a 200 response" do
         get "/"
@@ -71,6 +75,37 @@ RSpec.describe "Dashboards" do
 
           expect(response.body).not_to include("Applicant")
           expect(response.body).not_to include("#{registration.applicant_first_name} #{registration.applicant_last_name}")
+        end
+      end
+
+      context "when the SearchService returns a registration with an outstanding charge" do
+        let(:registration) do
+          create(:registration).tap do |reg|
+            reg.account.orders.create!(
+              charge_detail: build(:charge_detail, registration_charge_amount: 129_200, band_charge_details: [])
+            )
+          end
+        end
+        let(:results) { Kaminari.paginate_array([registration]).page(1) }
+
+        it "shows the registration as pending payment" do
+          get "/", params: { term: "foo" }
+
+          expect(response.body).to include("active - pending payment")
+        end
+      end
+
+      context "when the SearchService returns a registration with no outstanding charge" do
+        let(:registration) { create(:registration) }
+        let(:results) { Kaminari.paginate_array([registration]).page(1) }
+
+        it "shows the registration as active" do
+          get "/", params: { term: "foo" }
+
+          aggregate_failures do
+            expect(response.body).to include(">active<")
+            expect(response.body).not_to include("pending payment")
+          end
         end
       end
     end

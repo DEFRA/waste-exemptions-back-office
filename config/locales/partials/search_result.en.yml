@@ -11,6 +11,7 @@ en:
         actions: "Actions"
       statuses:
         active: "active"
+        pending_payment: "active - pending payment"
         pending: "not yet submitted"
         revoked: "revoked"
         ceased: "ceased"

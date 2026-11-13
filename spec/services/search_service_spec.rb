@@ -63,6 +63,22 @@ RSpec.describe SearchService do
           expect(results).to be_empty
         end
       end
+
+      context "with the data needed to work out each result's status" do
+        let(:term) { registration.reference }
+
+        it "preloads the exemptions, the account and its charges and payments" do
+          result = results.first
+
+          aggregate_failures do
+            expect(result.association(:registration_exemptions)).to be_loaded
+            expect(result.association(:account)).to be_loaded
+            expect(result.account.association(:orders)).to be_loaded
+            expect(result.account.association(:payments)).to be_loaded
+            expect(result.account.association(:charge_adjustments)).to be_loaded
+          end
+        end
+      end
     end
 
     context "when the model is set to 'new_registrations'" do

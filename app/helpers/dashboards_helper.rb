@@ -16,6 +16,7 @@ module DashboardsHelper
 
   def status_tag_for(result)
     return :pending if result.is_a?(WasteExemptionsEngine::TransientRegistration)
+    return "pending_payment" if result.pending_payment?
 
     result.state
   end
