@@ -12,7 +12,7 @@ module RenewalReminders
 
       @registration = registration
 
-      client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
+      client = WasteExemptionsEngine::NotifyClient.new(reference: @registration.reference)
 
       notify_result = client.send_sms(
         phone_number: @registration.contact_phone,

@@ -6,7 +6,7 @@ module RenewalReminders
 
   RSpec.describe RenewalLetterService do
     describe ".run" do
-      subject(:response) { described_class.run(registration: registration) }
+      subject(:run_service) { described_class.run(registration: registration) }
 
       let(:registration) { create(:registration) }
       let(:address_instance) { instance_double(WasteExemptionsEngine::Address) }
@@ -18,16 +18,21 @@ module RenewalReminders
         allow(address_instance).to receive(:postcode).and_return("BS1 1AA")
       end
 
+      it_behaves_like "calls notify with reference" do
+        let(:send_action) { :send_letter }
+        let(:reference) { registration.reference }
+      end
+
       # rubocop:disable-next RSpec/AnyInstance
       it "sends a letter" do
         VCR.use_cassette("notify_renewal_letter") do
           allow_any_instance_of(Notifications::Client).to receive(:send_letter).and_call_original
 
-          expect(response).to be_a(Notifications::Client::ResponseNotification)
-          expect(response.template["id"]).to eq("931a9338-9177-4470-a51a-3a6991561863")
-          expect(response.content["subject"]).to include("Renew your waste exemptions")
-          expect(response.content["subject"]).to include("Renew your waste exemptions by 1 July 2030")
-          expect(response.content["subject"]).to include("You can renew from 3 June 2030")
+          expect(run_service).to be_a(Notifications::Client::ResponseNotification)
+          expect(run_service.template["id"]).to eq("931a9338-9177-4470-a51a-3a6991561863")
+          expect(run_service.content["subject"]).to include("Renew your waste exemptions")
+          expect(run_service.content["subject"]).to include("Renew your waste exemptions by 1 July 2030")
+          expect(run_service.content["subject"]).to include("You can renew from 3 June 2030")
         end
       end
     end

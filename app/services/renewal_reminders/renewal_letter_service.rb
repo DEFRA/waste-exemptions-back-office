@@ -12,7 +12,7 @@ module RenewalReminders
     def run(registration:)
       @registration = NotifyRenewalLetterPresenter.new(registration)
 
-      client = Notifications::Client.new(WasteExemptionsEngine.configuration.notify_api_key)
+      client = WasteExemptionsEngine::NotifyClient.new(reference: @registration.reference)
 
       notify_result = client.send_letter(template_id: template,
                                          personalisation: personalisation)
