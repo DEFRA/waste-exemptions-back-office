@@ -16,6 +16,11 @@ module RenewalReminders
         allow(notifications_client).to receive(:send_sms)
       end
 
+      it_behaves_like "calls notify with reference" do
+        let(:send_action) { :send_sms }
+        let(:reference) { registration.reference }
+      end
+
       context "when registration phone number is valid" do
 
         shared_examples "sends a text with the correct template" do
