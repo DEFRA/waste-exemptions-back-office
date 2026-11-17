@@ -451,7 +451,7 @@ GEM
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
-    passenger (6.2.1)
+    passenger (6.2.2)
       logger (>= 1.7.0)
       rack (>= 1.6.13)
       rackup (>= 1.0.1)
@@ -951,7 +951,7 @@ CHECKSUMS
   paper_trail (17.0.0) sha256=1c2842061d3874ca7015908e821e2aa14f9b982af2acb2a7974713bf79021c85
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
-  passenger (6.2.1) sha256=d2ef98d19339fd2e3176f0ff7b8dcd585354b2a493e2d939ca32881249538ecc
+  passenger (6.2.2) sha256=e57ef1d9ba871bb99c2504823b966dd819a601ebc5f2122f432721400c7507cc
   pg (1.7.0) sha256=f7b536501284e883d4c9ef86dbde0313063e4aaafc23575b0017b0d572a26afb
   pg (1.7.0-aarch64-linux) sha256=101dd3a261000eb64b03ff41a5890674b735b626dbdce88652969b59fb0b1157
   pg (1.7.0-aarch64-linux-musl) sha256=5ca4d4619a1a39fb22de47350130956ece69cf0512858ee68dca926e46f65e4a
