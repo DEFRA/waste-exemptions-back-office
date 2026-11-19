@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org", cooldown: 7
-ruby "3.4.6"
+ruby "3.4.13"
 
 # GOV.UK design system styling
 gem "defra_ruby_template", "~> 6.6.0"
