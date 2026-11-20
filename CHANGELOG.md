@@ -2,7 +2,28 @@
 
 ## [Unreleased](https://github.com/defra/waste-exemptions-back-office/tree/HEAD)
 
-[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.3.2...HEAD)
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.3.3...HEAD)
+
+**Implemented enhancements:**
+
+- \[RUBY-4580\] Send a follow-up reform comms email to bounced addresses [\#2228](https://github.com/DEFRA/waste-exemptions-back-office/pull/2228) ([jjromeo](https://github.com/jjromeo))
+- Feature/ruby 4499 notify refs [\#2224](https://github.com/DEFRA/waste-exemptions-back-office/pull/2224) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- \[RUBY-4563\] Show pending payment status in search results [\#2222](https://github.com/DEFRA/waste-exemptions-back-office/pull/2222) ([jjromeo](https://github.com/jjromeo))
+- Feature/ruby 4498 add policy advisor permissions [\#2216](https://github.com/DEFRA/waste-exemptions-back-office/pull/2216) ([brujeo](https://github.com/brujeo))
+- Feature/ruby 4498 mark permit application [\#2212](https://github.com/DEFRA/waste-exemptions-back-office/pull/2212) ([brujeo](https://github.com/brujeo))
+- \[RUBY-4555\] Show registration status in registration details [\#2209](https://github.com/DEFRA/waste-exemptions-back-office/pull/2209) ([jjromeo](https://github.com/jjromeo))
+- \[RUBY-4355\] Allow ceased or revoked registrations to be restored [\#2205](https://github.com/DEFRA/waste-exemptions-back-office/pull/2205) ([jjromeo](https://github.com/jjromeo))
+
+**Merged pull requests:**
+
+- \[RUBY-4603\] Bump Ruby version to 3.4.13 [\#2232](https://github.com/DEFRA/waste-exemptions-back-office/pull/2232) ([brujeo](https://github.com/brujeo))
+- bump gem versions [\#2231](https://github.com/DEFRA/waste-exemptions-back-office/pull/2231) ([PaulDoyle-EA](https://github.com/PaulDoyle-EA))
+- Bump rspec-rails from 8.0.4 to 8.1.0 [\#2227](https://github.com/DEFRA/waste-exemptions-back-office/pull/2227) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump selenium-webdriver from 4.51.0 to 4.52.0 [\#2211](https://github.com/DEFRA/waste-exemptions-back-office/pull/2211) ([dependabot[bot]](https://github.com/apps/dependabot))
+
+## [v4.3.3](https://github.com/defra/waste-exemptions-back-office/tree/v4.3.3) (2026-11-03)
+
+[Full Changelog](https://github.com/defra/waste-exemptions-back-office/compare/v4.3.2...v4.3.3)
 
 **Fixed bugs:**
 
@@ -10,6 +31,7 @@
 
 **Merged pull requests:**
 
+- Release/v4.3.3 [\#2206](https://github.com/DEFRA/waste-exemptions-back-office/pull/2206) ([brujeo](https://github.com/brujeo))
 - \[RUBY-4493\] Update defra\_ruby\_template to 6.6.0 [\#2203](https://github.com/DEFRA/waste-exemptions-back-office/pull/2203) ([jjromeo](https://github.com/jjromeo))
 - \[RUBY-4493\] Pin defra\_ruby\_template to 6.4.0 [\#2201](https://github.com/DEFRA/waste-exemptions-back-office/pull/2201) ([jjromeo](https://github.com/jjromeo))
 - Bump waste\_exemptions\_engine from `48e422a` to `a1fbf21` [\#2197](https://github.com/DEFRA/waste-exemptions-back-office/pull/2197) ([dependabot[bot]](https://github.com/apps/dependabot))
