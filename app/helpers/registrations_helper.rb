@@ -36,6 +36,31 @@ module RegistrationsHelper
     link_to link_text, view_link_for(resource), id: "view_#{resource.reference}"
   end
 
+  def registration_status(registration)
+    status = t("registrations.statuses.#{registration_status_key(registration)}")
+    date = registration_status_date(registration)
+
+    return status if date.blank?
+
+    "#{status} (#{date.to_fs(:day_month_year)})"
+  end
+
+  def registration_status_heading_suffix(registration)
+    return "" if registration.active? && !registration.pending_payment?
+
+    " (#{t("registrations.heading_statuses.#{registration_status_key(registration)}")})"
+  end
+
+  def registration_status_key(registration)
+    return "pending_payment" if registration.pending_payment?
+
+    registration.state
+  end
+
+  def registration_status_date(registration)
+    registration.expired? ? registration.expires_on : registration.deregistered_on
+  end
+
   def back_path
     params[:back_to].presence || root_path
   end

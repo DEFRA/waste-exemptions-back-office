@@ -132,6 +132,19 @@
         </dd>
       </div>
 
+      <% if resource.is_a?(WasteExemptionsEngine::Registration) %>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            <%= t(".subheadings.registration_status") %>
+          </dt>
+          <dd class="govuk-summary-list__value">
+            <p class="govuk-body" id="registration_status">
+              <%= registration_status(resource) %>
+            </p>
+          </dd>
+        </div>
+      <% end %>
+
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">
           <%= t(".subheadings.renewal_history") %>

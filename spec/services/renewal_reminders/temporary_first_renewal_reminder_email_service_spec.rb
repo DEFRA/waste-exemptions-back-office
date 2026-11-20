@@ -23,6 +23,11 @@ module RenewalReminders
         end
       end
 
+      it_behaves_like "calls notify with reference" do
+        let(:send_action) { :send_email }
+        let(:reference) { registration.reference }
+      end
+
       shared_examples "uses the correct template id" do
         it do
           VCR.use_cassette(cassette_name) do

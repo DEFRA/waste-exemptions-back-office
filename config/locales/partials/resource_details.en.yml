@@ -6,6 +6,7 @@ en:
         business_or_organisation_details: Business or organisation details
         exemptions: Exemptions
         assistance_mode: Registration method
+        registration_status: Registration status
         renewal_history: Renewal history
         actions: Actions
         current_balance: Current balance

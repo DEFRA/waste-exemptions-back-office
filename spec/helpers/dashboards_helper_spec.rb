@@ -67,6 +67,32 @@ RSpec.describe DashboardsHelper do
         expect(helper.status_tag_for(result)).to eq(result.state)
       end
     end
+
+    context "when the registration has an outstanding charge" do
+      let(:result) { build(:registration) }
+
+      before { allow(result).to receive(:pending_payment?).and_return(true) }
+
+      it "returns the pending payment status" do
+        expect(helper.status_tag_for(result)).to eq("pending_payment")
+      end
+    end
+
+    context "when a deregistered registration has an outstanding charge" do
+      let(:result) do
+        create(:registration, registration_exemptions: build_list(:registration_exemption, 1, :ceased))
+      end
+
+      before do
+        result.account.orders.create!(
+          charge_detail: build(:charge_detail, registration_charge_amount: 129_200, band_charge_details: [])
+        )
+      end
+
+      it "returns the deregistered state rather than the pending payment status" do
+        expect(helper.status_tag_for(result)).to eq("ceased")
+      end
+    end
   end
 
   describe "result_name_for_visually_hidden_text" do
