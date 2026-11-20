@@ -40,7 +40,7 @@ gem "cancancan", "~> 3.5"
 
 # Use Devise for user authentication
 gem "devise"
-gem "devise_invitable"
+gem "devise_invitable", "~> 2.0"
 gem "devise-security"
 
 # Use Kaminari for pagination
