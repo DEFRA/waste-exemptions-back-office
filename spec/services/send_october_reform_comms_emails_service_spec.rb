@@ -24,9 +24,10 @@ RSpec.describe SendOctoberReformCommsEmailsService do
 
   before do
     allow(Notifications::Client).to receive(:new).and_return(notify_client)
-    allow(notify_client).to receive(:send_email) do |email_address:, **|
+    # NotifyClient passes the arguments on to Notify as a single hash
+    allow(notify_client).to receive(:send_email) do |args|
       instance_double(Notifications::Client::ResponseNotification,
-                      id: "#{email_address}-notification-id",
+                      id: "#{args[:email_address]}-notification-id",
                       content: { "subject" => "Waste exemptions are changing", "body" => "Email body" })
     end
     allow(Airbrake).to receive(:notify)
