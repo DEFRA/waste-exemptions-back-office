@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe OctoberReformCommsLetterRecipientPresenter do
+RSpec.describe ReformCommsLetterRecipientPresenter do
   subject(:presenter) { described_class.new(registration) }
 
   let(:registration) { create(:registration, contact_first_name: " Jane ", contact_last_name: "van  Smith") }
