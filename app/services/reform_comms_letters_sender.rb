@@ -63,7 +63,7 @@ class ReformCommsLettersSender < WasteExemptionsEngine::BaseService
   # Recipients whose contact address can be used for a letter. The rest are recorded as unsendable.
   def addressable_recipients
     recipients = eligible_registrations.map do |registration|
-      OctoberReformCommsLetterRecipientPresenter.new(registration)
+      ReformCommsLetterRecipientPresenter.new(registration)
     end
 
     recipients.reject do |recipient|
