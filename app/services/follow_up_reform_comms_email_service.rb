@@ -5,12 +5,4 @@
 class FollowUpReformCommsEmailService < ReformCommsEmailService
   TEMPLATE_ID = OctoberReformCommsEmailService::TEMPLATE_ID
   TEMPLATE_LABEL = "Reform comms follow-up email - November 2026"
-  # One email covers every registration sharing an address, so this identifies the send
-  NOTIFY_REFERENCE = "reform-comms-follow-up"
-
-  private
-
-  def notify_client
-    WasteExemptionsEngine::NotifyClient.new(reference: NOTIFY_REFERENCE)
-  end
 end

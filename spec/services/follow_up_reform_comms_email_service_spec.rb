@@ -11,14 +11,14 @@ RSpec.describe FollowUpReformCommsEmailService do
     it_behaves_like "a reform comms email service" do
       let(:expected_send_args) do
         { email_address: "contact@example.com", template_id: described_class::TEMPLATE_ID,
-          reference: described_class::NOTIFY_REFERENCE }
+          reference: a_kind_of(String) }
       end
       let(:receipt_status) { "permanent-failure" }
     end
 
     it_behaves_like "calls notify with reference" do
       let(:send_action) { :send_email }
-      let(:reference) { described_class::NOTIFY_REFERENCE }
+      let(:reference) { a_kind_of(String) }
     end
 
     it "uses the same Notify template as the original reform comms email" do

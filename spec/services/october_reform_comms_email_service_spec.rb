@@ -10,7 +10,8 @@ RSpec.describe OctoberReformCommsEmailService do
 
     it_behaves_like "a reform comms email service" do
       let(:expected_send_args) do
-        { email_address: "contact@example.com", template_id: described_class::TEMPLATE_ID }
+        { email_address: "contact@example.com", template_id: described_class::TEMPLATE_ID,
+          reference: a_kind_of(String) }
       end
       let(:receipt_status) { "delivered" }
     end
