@@ -7,10 +7,12 @@ class ReformCommsEmailService < WasteExemptionsEngine::BaseService
     @email = email
     @notify_reference = SecureRandom.uuid
 
-    # Written before the send because the delivery receipt can arrive while they still are being
-    registrations.each { |registration| create_log(registration:) }
+    notify_result = create_logs_and_send(registrations)
 
-    send_email
+    # rubocop:disable-next Rails/SkipsModelValidations
+    logs.update_all(notify_response_params(notify_result)) if notify_result
+
+    notify_result
   end
 
   # For CanHaveCommunicationLog
@@ -26,13 +28,11 @@ class ReformCommsEmailService < WasteExemptionsEngine::BaseService
 
   private
 
-  def send_email
-    notify_result = notify_client.send_email(email_address: @email, template_id: self.class::TEMPLATE_ID)
+  # Logs created before the send because the delivery receipt can arrive while they are still being written
+  def create_logs_and_send(registrations)
+    registrations.each { |registration| create_log(registration:) }
 
-    # rubocop:disable-next Rails/SkipsModelValidations
-    logs.update_all(notify_response_params(notify_result)) if notify_result
-
-    notify_result
+    notify_client.send_email(email_address: @email, template_id: self.class::TEMPLATE_ID)
   rescue StandardError
     discard_logs
     raise
